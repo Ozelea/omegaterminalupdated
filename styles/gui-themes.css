@@ -1,0 +1,745 @@
+/* GUI Theme Styles for Omega Terminal - COMPLETE INTERFACE TRANSFORMATIONS */
+
+/* Remove any ChatGPT default styling */
+body.gui-chatgpt {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #212121 !important;
+}
+
+body.gui-aol {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #c0c0c0 !important;
+}
+
+body.gui-discord {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #2c2f33 !important;
+}
+
+body.gui-windows95 {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #c0c0c0 !important;
+}
+
+body.gui-limewire {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: linear-gradient(45deg, #1a237e 0%, #283593 100%) !important;
+}
+
+/* ChatGPT Interface Styles */
+.gui-chatgpt .chatgpt-header {
+    background: #212121;
+    color: #ececec;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    border-bottom: 1px solid #424242;
+}
+
+.gui-chatgpt .chatgpt-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gui-chatgpt .chatgpt-controls button {
+    background: #424242;
+    color: #ececec;
+    border: 1px solid #565656;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.gui-chatgpt .chatgpt-conversation {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    background: #212121;
+}
+
+.gui-chatgpt .chat-message {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    max-width: 800px;
+}
+
+.gui-chatgpt .message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #424242;
+    color: #ececec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.gui-chatgpt .message-content {
+    background: transparent;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #ececec;
+}
+
+.gui-chatgpt .chat-message.user .message-avatar {
+    background: #19c37d;
+}
+
+.gui-chatgpt .chatgpt-input {
+    padding: 20px 24px;
+    background: #212121;
+    border-top: 1px solid #424242;
+}
+
+.gui-chatgpt .input-container {
+    display: flex;
+    gap: 12px;
+    max-width: 800px;
+}
+
+.gui-chatgpt .input-container input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #565656;
+    border-radius: 24px;
+    font-size: 14px;
+    outline: none;
+    background: #2f2f2f;
+    color: #ececec;
+}
+
+.gui-chatgpt .input-container button {
+    background: #19c37d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* AOL Interface Styles */
+.gui-aol .aol-window {
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 11px;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.gui-aol .aol-titlebar {
+    background: linear-gradient(to bottom, #000080, #000040);
+    color: white;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+
+.gui-aol .aol-buttons button {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    color: #000;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.gui-aol .aol-content {
+    display: flex;
+    flex: 1;
+}
+
+.gui-aol .aol-buddylist {
+    width: 150px;
+    background: #c0c0c0;
+    border-right: 1px inset #c0c0c0;
+    padding: 8px;
+}
+
+.gui-aol .aol-section {
+    margin-bottom: 16px;
+}
+
+.gui-aol .buddy {
+    padding: 2px 4px;
+    margin: 2px 0;
+    background: white;
+    border: 1px inset #c0c0c0;
+    cursor: pointer;
+}
+
+.gui-aol .buddy.clickable:hover {
+    background: #0080ff;
+    color: white;
+}
+
+.gui-aol .aol-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px inset #c0c0c0;
+    margin: 4px;
+}
+
+.gui-aol .aol-messages {
+    flex: 1;
+    padding: 8px;
+    overflow-y: auto;
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.gui-aol .aol-message {
+    margin: 4px 0;
+    font-size: 11px;
+    color: #000000 !important;
+    background: #ffffff !important;
+    padding: 2px 4px;
+    border: 1px inset #c0c0c0;
+}
+
+.gui-aol .aol-input {
+    border-top: 1px inset #c0c0c0;
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    background: #e6e6e6;
+}
+
+.gui-aol .aol-input input,
+.gui-aol #aolInput {
+    flex: 1 !important;
+    border: 1px inset #c0c0c0 !important;
+    font-family: 'MS Sans Serif', sans-serif !important;
+    font-size: 18px !important; /* Even bigger font */
+    padding: 12px 16px !important; /* Even bigger padding */
+    min-height: 40px !important; /* Much bigger minimum height */
+    height: 40px !important; /* Force specific height */
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
+}
+
+.gui-aol .aol-input button {
+    background: #c0c0c0 !important;
+    border: 1px outset #c0c0c0 !important;
+    font-family: 'MS Sans Serif', sans-serif !important;
+    font-size: 16px !important;
+    padding: 12px 20px !important;
+    min-height: 40px !important; /* Match input height */
+    height: 40px !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+}
+
+/* Discord Interface Styles */
+.gui-discord .discord-app {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    background: #36393f;
+    color: #dcddde;
+    font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.gui-discord .discord-sidebar {
+    width: 240px;
+    background: #2f3136;
+    display: flex;
+    flex-direction: column;
+}
+
+.gui-discord .discord-server {
+    width: 48px;
+    height: 48px;
+    background: #7289da;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    margin: 12px auto;
+    cursor: pointer;
+}
+
+.gui-discord .discord-channels {
+    padding: 8px;
+}
+
+.gui-discord .channel-category {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8e9297;
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.gui-discord .channel {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #8e9297;
+    margin: 1px 0;
+}
+
+.gui-discord .channel:hover {
+    background: #40444b;
+    color: #dcddde;
+}
+
+.gui-discord .channel.active {
+    background: #42464d;
+    color: #ffffff;
+}
+
+.gui-discord .discord-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #36393f;
+}
+
+.gui-discord .discord-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #40444b;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.gui-discord .discord-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.gui-discord .discord-message {
+    margin-bottom: 16px;
+}
+
+.gui-discord .message-author {
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.gui-discord .message-text {
+    font-size: 14px;
+    line-height: 1.375;
+    color: #dcddde;
+}
+
+.gui-discord .discord-input {
+    padding: 16px;
+    border-top: 1px solid #40444b;
+    display: flex;
+    gap: 8px;
+}
+
+.gui-discord .discord-input input {
+    flex: 1;
+    background: #40444b;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #dcddde;
+    font-size: 14px;
+    outline: none;
+}
+
+.gui-discord .discord-input button {
+    background: #7289da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Windows 95 Interface Styles */
+.gui-windows95 .win95-desktop {
+    height: 100vh;
+    width: 100vw;
+    background: #c0c0c0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 11px;
+}
+
+.gui-windows95 .win95-window {
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.gui-windows95 .win95-titlebar {
+    background: linear-gradient(to right, #008080, #004040);
+    color: white;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.gui-windows95 .win95-buttons button {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    width: 16px;
+    height: 14px;
+}
+
+.gui-windows95 .win95-menubar {
+    background: #c0c0c0;
+    border-bottom: 1px solid #808080;
+    padding: 4px;
+    display: flex;
+    gap: 16px;
+}
+
+.gui-windows95 .menu-item {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.gui-windows95 .menu-item:hover {
+    background: #0080ff;
+    color: white;
+}
+
+.gui-windows95 .win95-content {
+    flex: 1;
+    background: black;
+    color: #c0c0c0;
+    font-family: 'Courier New', monospace;
+    padding: 8px;
+    overflow-y: auto;
+}
+
+.gui-windows95 .dos-prompt {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.gui-windows95 .dos-input-line {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.gui-windows95 .dos-input-line input {
+    background: black;
+    color: #c0c0c0;
+    border: none;
+    outline: none;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    flex: 1;
+}
+
+.gui-windows95 .win95-taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: #c0c0c0;
+    border-top: 1px outset #c0c0c0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gui-windows95 .start-button {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    padding: 4px 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.gui-windows95 .taskbar-item {
+    background: #c0c0c0;
+    border: 1px inset #c0c0c0;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+/* LimeWire Interface Styles */
+.gui-limewire .limewire-app {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #00ff41;
+}
+
+.gui-limewire .limewire-header {
+    background: linear-gradient(90deg, #0d47a1, #1565c0);
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00ff41;
+}
+
+.gui-limewire .limewire-logo {
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff41;
+}
+
+.gui-limewire .limewire-header button {
+    background: rgba(0, 255, 65, 0.2);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 4px 8px;
+    cursor: pointer;
+    text-shadow: 0 0 3px #00ff41;
+}
+
+.gui-limewire .limewire-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #00ff41;
+}
+
+.gui-limewire .tab {
+    padding: 8px 16px;
+    cursor: pointer;
+    border-right: 1px solid #00ff41;
+}
+
+.gui-limewire .tab.active {
+    background: rgba(0, 255, 65, 0.2);
+    text-shadow: 0 0 5px #00ff41;
+}
+
+.gui-limewire .limewire-search {
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.gui-limewire .search-bar {
+    display: flex;
+    gap: 8px;
+}
+
+.gui-limewire .search-bar input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 8px;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px #00ff41;
+    outline: none;
+}
+
+.gui-limewire .search-bar button {
+    background: rgba(0, 255, 65, 0.3);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-shadow: 0 0 3px #00ff41;
+}
+
+.gui-limewire .limewire-results {
+    flex: 1;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+}
+
+.gui-limewire .result-header {
+    margin-bottom: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff41;
+}
+
+.gui-limewire .result-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    margin-bottom: 4px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.gui-limewire .result-item:hover {
+    background: rgba(0, 255, 65, 0.1);
+}
+
+.gui-limewire .file-name {
+    flex: 2;
+    font-weight: bold;
+}
+
+.gui-limewire .file-size, .gui-limewire .file-type {
+    flex: 1;
+}
+
+.gui-limewire .result-item button {
+    background: rgba(0, 255, 65, 0.2);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.gui-limewire .limewire-status {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px 16px;
+    border-top: 1px solid #00ff41;
+    font-size: 12px;
+    text-shadow: 0 0 3px #00ff41;
+}
+
+/* Hide original terminal elements in themed modes */
+.gui-chatgpt .terminal-header,
+.gui-chatgpt .tab-bar,
+.gui-chatgpt #faucetInfoBox,
+.gui-chatgpt .terminal-input-section,
+.gui-aol .terminal-header,
+.gui-aol .tab-bar,
+.gui-aol #faucetInfoBox,
+.gui-aol .terminal-input-section,
+.gui-discord .terminal-header,
+.gui-discord .tab-bar,
+.gui-discord #faucetInfoBox,
+.gui-discord .terminal-input-section,
+.gui-windows95 .terminal-header,
+.gui-windows95 .tab-bar,
+.gui-windows95 #faucetInfoBox,
+.gui-windows95 .terminal-input-section,
+.gui-limewire .terminal-header,
+.gui-limewire .tab-bar,
+.gui-limewire #faucetInfoBox,
+.gui-limewire .terminal-input-section {
+    display: none !important;
+}
+
+/* Ensure terminal input is always visible in normal mode */
+body:not([class*="gui-"]) .terminal-input-section,
+body.gui-terminal .terminal-input-section,
+body:not(.gui-chatgpt):not(.gui-aol):not(.gui-discord):not(.gui-windows95):not(.gui-limewire) .terminal-input-section {
+    display: flex !important;
+}
+
+body:not([class*="gui-"]) #commandInput,
+body.gui-terminal #commandInput,
+body:not(.gui-chatgpt):not(.gui-aol):not(.gui-discord):not(.gui-windows95):not(.gui-limewire) #commandInput {
+    display: block !important;
+    width: 100% !important;
+    flex: 1 !important;
+    min-width: 300px !important;
+    max-width: none !important;
+    caret-color: transparent !important; /* Hide the blinking cursor */
+    color: transparent !important; /* Hide text color to hide cursor */
+    text-shadow: 0 0 0 #ffffff !important; /* Make text visible with shadow */
+    overflow: visible !important; /* Allow text to be fully visible */
+    text-overflow: clip !important; /* Don't add ellipsis */
+}
+
+/* Common input focus styles */
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    border: none !important;
+    caret-color: transparent !important; /* Hide the blinking cursor even when focused */
+}
+
+/* Force terminal input to be full width */
+#commandInput {
+    width: 100% !important;
+    flex: 1 !important;
+    min-width: 300px !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    caret-color: transparent !important; /* Hide the blinking cursor */
+    color: transparent !important; /* Hide text color to hide cursor */
+    text-shadow: 0 0 0 #ffffff !important; /* Make text visible with shadow */
+    overflow: visible !important; /* Allow text to be fully visible */
+    text-overflow: clip !important; /* Don't add ellipsis */
+}
+
+.gui-chatgpt input:focus {
+    border-color: #19c37d;
+    box-shadow: 0 0 0 2px rgba(25, 195, 125, 0.2);
+}
+
+.gui-discord input:focus {
+    box-shadow: 0 0 0 2px rgba(114, 137, 218, 0.3);
+}
+
+.gui-limewire input:focus {
+    box-shadow: 0 0 8px #00ff41;
+}
+
+/* Button hover effects */
+button:hover {
+    opacity: 0.9;
+}
+
+.gui-aol button:hover {
+    border: 1px inset #c0c0c0;
+}
+
+.gui-windows95 button:hover {
+    border: 1px inset #c0c0c0;
+} 

@@ -1,0 +1,258 @@
+/* Theme System */
+
+/* Dark Theme (Default) */
+body.theme-dark {
+    background: #000;
+    color: #fff;
+}
+
+/* Light Theme Styles */
+.terminal.light-theme {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    color: #000000;
+}
+
+.terminal.light-theme .terminal-header {
+    border-bottom: 1px solid #000000;
+}
+
+.terminal.light-theme .terminal-title {
+    color: #000000;
+    text-shadow: 0 0 15px #000000, 0 0 30px #000000;
+}
+
+.terminal.light-theme .terminal-status {
+    color: #333333;
+}
+
+.terminal.light-theme .theme-toggle {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+.terminal.light-theme .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.terminal.light-theme .terminal-input-section {
+    border-top: 1px solid #000000;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #000000;
+}
+
+.terminal.light-theme .prompt {
+    color: #000000;
+}
+
+.terminal.light-theme .command {
+    color: #000000;
+}
+
+.terminal.light-theme .output {
+    color: #333333;
+}
+
+.terminal.light-theme .error {
+    color: #cc0000;
+}
+
+.terminal.light-theme .success {
+    color: #000000;
+}
+
+.terminal.light-theme .warning {
+    color: #cc6600;
+}
+
+.terminal.light-theme .info {
+    color: #0066cc;
+}
+
+.terminal.light-theme .input-prompt {
+    color: #000000;
+}
+
+.terminal.light-theme .input-field {
+    color: #000000;
+}
+
+.terminal.light-theme .input-field::placeholder {
+    color: #666666;
+}
+
+.terminal.light-theme .cursor {
+    color: #000000;
+}
+
+.terminal.light-theme .mining-status {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #000000;
+}
+
+.terminal.light-theme .stat-box {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #000000;
+}
+
+.terminal.light-theme .stat-label {
+    color: #333333;
+}
+
+.terminal.light-theme .stat-value {
+    color: #000000;
+}
+
+body.theme-light {
+    background: #fff;
+    color: #111;
+}
+
+/* Matrix Theme Styles */
+body.theme-matrix {
+    background: #000 !important;
+    color: #00ff00 !important;
+}
+
+body.theme-matrix .terminal {
+    background: #000 !important;
+    color: #00ff00 !important;
+}
+
+body.theme-matrix .terminal-header {
+    border-bottom: 1px solid #00ff00 !important;
+}
+
+body.theme-matrix .prompt,
+body.theme-matrix .input-prompt {
+    color: #00ff00 !important;
+    font-weight: bold;
+}
+
+body.theme-matrix .command {
+    color: #00ff00 !important;
+}
+
+body.theme-matrix .output {
+    color: #00ff00 !important;
+}
+
+body.theme-matrix .error {
+    color: #ff3333 !important;
+}
+
+body.theme-matrix .success {
+    color: #00ff00 !important;
+}
+
+body.theme-matrix .warning {
+    color: #ffff00 !important;
+}
+
+body.theme-matrix .info {
+    color: #00ffff !important;
+}
+
+.theme-matrix .terminal-header,
+.theme-retro .terminal-header {
+    border-bottom: 1px solid #00ff00;
+}
+
+.theme-matrix .input-prompt,
+.theme-retro .input-prompt {
+    color: #39ff14;
+}
+
+/* Retro Theme Styles */
+body.theme-retro {
+    background: #181200 !important;
+    color: #39ff14 !important;
+}
+
+body.theme-retro .terminal {
+    background: #181200 !important;
+    color: #39ff14 !important;
+}
+
+body.theme-retro .terminal-header {
+    border-bottom: 1px solid #ffaa00 !important;
+}
+
+body.theme-retro .prompt,
+body.theme-retro .input-prompt {
+    color: #ffaa00 !important;
+    font-weight: bold;
+}
+
+body.theme-retro .command {
+    color: #39ff14 !important;
+}
+
+body.theme-retro .output {
+    color: #39ff14 !important;
+}
+
+body.theme-retro .error {
+    color: #ff3333 !important;
+}
+
+body.theme-retro .success {
+    color: #ffaa00 !important;
+}
+
+body.theme-retro .warning {
+    color: #ffff00 !important;
+}
+
+body.theme-retro .info {
+    color: #00ffff !important;
+}
+
+.theme-retro .input-prompt {
+    color: orange;
+}
+
+/* PowerShell Theme Styles */
+body.theme-powershell {
+    background: #012456 !important;
+    color: #ffffff !important;
+}
+
+body.theme-powershell .terminal {
+    background: #012456 !important;
+    color: #ffffff !important;
+}
+
+body.theme-powershell .terminal-header {
+    border-bottom: 1px solid #00bcf2 !important;
+}
+
+body.theme-powershell .prompt,
+body.theme-powershell .input-prompt {
+    color: #f9f1a5 !important;
+    font-weight: bold;
+}
+
+body.theme-powershell .command {
+    color: #ffffff !important;
+}
+
+body.theme-powershell .output {
+    color: #d7eaff !important;
+}
+
+body.theme-powershell .error {
+    color: #ff3333 !important;
+}
+
+body.theme-powershell .success {
+    color: #00bcf2 !important;
+}
+
+body.theme-powershell .warning {
+    color: #f9f1a5 !important;
+}
+
+body.theme-powershell .info {
+    color: #00bcf2 !important;
+} 
