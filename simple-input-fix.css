@@ -1,0 +1,88 @@
+/* ===================================
+   SIMPLE INPUT FIX - CSS ONLY
+   Fixes disappearing text in Apple UI
+   =================================== */
+
+/* IMMEDIATE TEXT VISIBILITY - NO DELAYS */
+.terminal.apple-ui .input-field,
+.terminal.apple-ui #commandInput,
+.terminal.apple-ui input[type="text"] {
+    /* Force immediate visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #1D1D1F !important;
+    -webkit-text-fill-color: #1D1D1F !important;
+    
+    /* Disable ALL animations and transitions */
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+    text-shadow: none !important;
+    
+    /* Ensure proper display */
+    display: block !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* Dark mode input fix */
+.terminal.apple-ui.dark .input-field,
+.terminal.apple-ui.dark #commandInput,
+.terminal.apple-ui.dark input[type="text"] {
+    color: #F2F2F7 !important;
+    -webkit-text-fill-color: #F2F2F7 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Override any animation classes that might be applied */
+.terminal.apple-ui .input-field[class*="slide"],
+.terminal.apple-ui .input-field[class*="fade"],
+.terminal.apple-ui .input-field[class*="animate"] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+}
+
+/* Disable problematic terminal-wide animations */
+.terminal.apple-ui * {
+    /* Remove the global transition that might be causing issues */
+    transition: none !important;
+}
+
+/* Re-enable transitions only for specific elements that need them */
+.terminal.apple-ui .input-line,
+.terminal.apple-ui button,
+.terminal.apple-ui .tab {
+    transition: var(--apple-transition) !important;
+}
+
+/* Ensure input text never becomes transparent */
+.terminal.apple-ui .input-field {
+    -webkit-text-stroke: none !important;
+    text-stroke: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Input focus state - no animation delays */
+.terminal.apple-ui .input-field:focus,
+.terminal.apple-ui .input-field:active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+    transition: none !important;
+    color: #1D1D1F !important;
+    -webkit-text-fill-color: #1D1D1F !important;
+}
+
+.terminal.apple-ui.dark .input-field:focus,
+.terminal.apple-ui.dark .input-field:active {
+    color: #F2F2F7 !important;
+    -webkit-text-fill-color: #F2F2F7 !important;
+} 
