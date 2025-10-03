@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- OMEGA TERMINAL v2.0.1 - FUNDING ENABLED - CACHE BUST 20250114-1705 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+          <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+      <meta http-equiv="Pragma" content="no-cache">
+      <meta http-equiv="Expires" content="0">
+      <meta name="version" content="2.0.1">
+      <meta name="build-time" content="2025-01-14">
+    <title>Omega Terminal - Mining Interface - v2.0.1</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eth-crypto@2.1.2/dist/lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
+    <!-- NEAR JavaScript SDK - Try multiple sources -->
+    <script src="https://unpkg.com/near-api-js@4.0.3/dist/near-api-js.min.js" 
+            onerror="console.log('[DEBUG] NEAR SDK from unpkg failed')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/near-api-js@4.0.3/dist/near-api-js.min.js" 
+            onerror="console.log('[DEBUG] NEAR SDK from jsdelivr failed')"></script>
+    
+    <!-- Chain Signatures SDK for REAL multi-chain operations -->
+    <script src="https://unpkg.com/chainsig.js@latest/dist/chainsig.min.js" 
+            onerror="console.log('[DEBUG] Chain Signatures SDK from unpkg failed')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chainsig.js@latest/dist/chainsig.min.js" 
+            onerror="console.log('[DEBUG] Chain Signatures SDK from jsdelivr failed')"></script>
+    
+    <!-- Shade Agent SDK -->
+    <script src="https://unpkg.com/@neardefi/shade-agent-js@latest/dist/index.min.js" 
+            onerror="console.log('[DEBUG] Shade Agent SDK from unpkg failed')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@neardefi/shade-agent-js@latest/dist/index.min.js" 
+            onerror="console.log('[DEBUG] Shade Agent SDK from jsdelivr failed')"></script>
+
+    <script>
+        // Ensure NEAR SDK is available after loading
+        setTimeout(function() {
+            if (typeof nearApi === 'undefined' && typeof near !== 'undefined') {
+                window.nearApi = near;
+                console.log('[DEBUG] Set nearApi from near object');
+            }
+            
+            // Debug Chain Signatures availability
+            if (typeof chainsig !== 'undefined') {
+                window.chainsig = chainsig;
+                console.log('[DEBUG] Chain Signatures SDK loaded successfully');
+            } else if (typeof window.chainsig === 'undefined') {
+                console.log('[DEBUG] Chain Signatures SDK not available - using fallback');
+            }
+        }, 1000);
+    </script>
+    
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="styles/base.css?v=2.0.1">
+    <link rel="stylesheet" href="styles/themes.css?v=2.0.1">
+    <link rel="stylesheet" href="styles/animations.css?v=2.0.1">
+    <link rel="stylesheet" href="styles/gui-themes.css?v=2.0.1">
+    
+    <!-- Configuration and Core -->
+    <script>
+        console.log('[DEBUG] 🚀 About to load config.js...');
+    </script>
+    <script src="js/config.js?v=2.0.1"></script>
+    <script>
+        console.log('[DEBUG] 🚀 Config.js v2.0.1 loaded!');
+        // Force title update to bypass cache
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('[DEBUG] 🔄 Checking terminal title...');
+            setTimeout(() => {
+                const titleEl = document.querySelector('.terminal-title');
+                if (titleEl) {
+                    console.log('[DEBUG] 📝 Current title:', titleEl.textContent);
+                    if (titleEl.textContent.includes('v1.1.13')) {
+                        console.log('[DEBUG] ⚡ FORCING title update to v2.0.1');
+                        titleEl.textContent = 'Omega Terminal v2.0.1';
+                    }
+                }
+            }, 100);
+        });
+    </script>
+    <script src="js/utils.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/wallet.js"></script>
+    
+            <!-- Command Modules -->
+        <script src="js/commands/basic.js?v=2.0.1"></script>
+        <script src="js/commands/wallet-commands.js?v=2.0.1-FUNDING-ENABLED"></script>
+        <script src="js/commands/mining.js"></script>
+        <script src="js/commands/network.js"></script>
+        <script src="js/commands/mixer.js"></script>
+        <script src="js/commands/api.js"></script>
+        <script src="js/commands/entertainment.js"></script>
+        <script src="js/commands/remaining.js"></script>
+
+        <script src="js/commands/solana.js"></script>
+        <script src="js/commands/near.js"></script>
+        <script src="js/commands/eclipse.js"></script>
+        <script src="js/commands/referral.js?v=1.0.0"></script>
+    
+    <!-- Core Terminal Class -->
+    <script src="js/terminal-core.js?v=2.0.1-1705"></script>
+    
+    <!-- Initialization Script -->
+    <script src="js/init.js?v=2.0.1"></script>
+</head>
+<body>
+    <!-- Boot Animation -->
+    <div class="boot-animation" id="bootAnimation" style="display: none;">
+        <div class="welcome-text">
+            Welcome To Omega Terminal
+        </div>
+        <div class="loading-dots">Loading...</div>
+    </div>
+
+    <div class="terminal" id="terminal">
+        <div class="terminal-header">
+            <div class="terminal-title">Omega Terminal v2.0.1</div>
+            <div style="display: flex; align-items: center; gap: 18px; margin-left: auto;">
+                <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">AI Mode (off)</button>
+                <button class="theme-toggle" title="Toggle Theme"></button>
+                <div class="terminal-status" id="connectionStatus">DISCONNECTED</div>
+            </div>
+        </div>
+        <div class="tab-bar" id="tabBar" style="display: flex; align-items: center; background: #111; border-bottom: 1px solid #fff;">
+            <div class="tab active" data-tab="0" style="padding: 8px 18px; cursor: pointer; border-right: 1px solid #333; color: #fff; font-weight: bold;">Terminal 1</div>
+            <div id="addTabBtn" style="padding: 8px 18px; cursor: pointer; color: #00bcf2; font-size: 1.3em;">+</div>
+        </div>
+        
+        <!-- Faucet Info Box -->
+        <div id="faucetInfoBox" style="background: rgba(0, 153, 255, 0.10); border: 1px solid #99ccff; color: #99ccff; padding: 10px 16px; border-radius: 6px; margin: 0 0 12px 0; font-size: 15px; display: none;">
+            <b>Note:</b> Each wallet can only claim from the faucet once every 24 hours.<br>
+            If you try to claim again before the cooldown is over, the transaction will fail.
+        </div>
+        <div class="terminal-content" id="terminalContent"></div>
+        <div class="terminal-input-section">
+            <div class="input-line">
+                <span class="input-prompt">root@omega-miner:~$</span>
+                <input type="text" class="input-field" id="commandInput" placeholder="" autocomplete="off">
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
