@@ -1,4 +1,4 @@
-# 🚀 Omega Terminal v1.5.9
+# 🚀 Omega Terminal v2.0.1
 
 **The Ultimate Multi-Chain Web3 Terminal** - A powerful, modular terminal interface for Web3 trading, NFTs, DeFi, and more.
 
