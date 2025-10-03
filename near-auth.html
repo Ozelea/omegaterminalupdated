@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEAR Wallet Authentication</title>
+    <style>
+        body { 
+            font-family: 'Courier New', monospace; 
+            text-align: center; 
+            padding: 50px; 
+            background: #000000; 
+            color: #00ff41; 
+            margin: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            background: rgba(0, 255, 65, 0.05);
+        }
+        .status { 
+            font-size: 18px; 
+            margin: 20px 0; 
+            padding: 15px;
+            border: 1px solid #00ff41;
+            border-radius: 5px;
+        }
+        .success { 
+            color: #4CAF50; 
+            background: rgba(76, 175, 80, 0.1);
+            border-color: #4CAF50;
+        }
+        .error { 
+            color: #f44336; 
+            background: rgba(244, 67, 54, 0.1);
+            border-color: #f44336;
+        }
+        .loading {
+            color: #ffaa00;
+            background: rgba(255, 170, 0, 0.1);
+            border-color: #ffaa00;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,255,65,.3);
+            border-radius: 50%;
+            border-top-color: #00ff41;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        h2 {
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41;
+        }
+        .omega-logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ff41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="omega-logo">Ω</div>
+        <h2>NEAR Wallet Authentication</h2>
+        <div id="status" class="status loading">
+            <div class="spinner"></div>
+            <div>Initializing NEAR connection...</div>
+        </div>
+    </div>
+    
+    <!-- Load NEAR SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/near-api-js@4.0.3/dist/near-api-js.min.js"></script>
+    
+    <script>
+        async function checkAuth() {
+            const statusEl = document.getElementById('status');
+            
+            try {
+                // Update status
+                statusEl.innerHTML = '<div class="spinner"></div><div>Loading NEAR SDK...</div>';
+                statusEl.className = 'status loading';
+                
+                // Give NEAR SDK time to load
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                if (typeof nearApi === 'undefined') {
+                    throw new Error('NEAR SDK failed to load');
+                }
+                
+                console.log('NEAR SDK loaded successfully');
+                
+                // Update status
+                statusEl.innerHTML = '<div class="spinner"></div><div>Configuring NEAR connection...</div>';
+                
+                const nearConfig = {
+                    networkId: 'mainnet',
+                    keyStore: new nearApi.keyStores.BrowserLocalStorageKeyStore(),
+                    nodeUrl: 'https://rpc.mainnet.near.org',
+                    walletUrl: 'https://app.mynearwallet.com',
+                    helperUrl: 'https://helper.mainnet.near.org',
+                    explorerUrl: 'https://explorer.mainnet.near.org'
+                };
+                
+                console.log('Connecting to NEAR...');
+                const nearConnection = await nearApi.connect(nearConfig);
+                const wallet = new nearApi.WalletConnection(nearConnection, 'omega-terminal');
+                
+                console.log('Checking sign-in status...');
+                
+                if (wallet.isSignedIn()) {
+                    // Already signed in!
+                    const accountId = wallet.getAccountId();
+                    console.log('Already signed in as:', accountId);
+                    
+                    statusEl.innerHTML = 
+                        '<div class="success">✅ Connected: ' + accountId + '</div>' +
+                        '<div>Notifying terminal...</div>';
+                    statusEl.className = 'status success';
+                    
+                    // Notify parent window
+                    if (window.opener) {
+                        window.opener.postMessage({
+                            type: 'NEAR_AUTH_SUCCESS',
+                            accountId: accountId
+                        }, '*');
+                        
+                        // Auto-close after 2 seconds
+                        setTimeout(() => {
+                            statusEl.innerHTML = 
+                                '<div class="success">✅ Success! Closing window...</div>';
+                            setTimeout(() => window.close(), 1000);
+                        }, 2000);
+                    } else {
+                        statusEl.innerHTML = 
+                            '<div class="success">✅ Connected: ' + accountId + '</div>' +
+                            '<div>You can close this window</div>';
+                    }
+                } else {
+                    // Need to sign in
+                    console.log('Not signed in, redirecting to wallet...');
+                    
+                    statusEl.innerHTML = '<div class="spinner"></div><div>Redirecting to NEAR wallet...</div>';
+                    
+                    // Get current URL for redirect back
+                    const currentUrl = window.location.href;
+                    
+                    // Redirect to wallet for authentication
+                    wallet.requestSignIn({
+                        successUrl: currentUrl,
+                        failureUrl: currentUrl
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Authentication error:', error);
+                statusEl.innerHTML = 
+                    '<div class="error">❌ Authentication failed</div>' +
+                    '<div>Error: ' + error.message + '</div>' +
+                    '<div style="margin-top: 10px; font-size: 14px;">You can close this window and try again</div>';
+                statusEl.className = 'status error';
+            }
+        }
+        
+        // Start auth check when page loads
+        console.log('NEAR auth page loaded, starting authentication...');
+        checkAuth();
+    </script>
+</body>
+</html> 

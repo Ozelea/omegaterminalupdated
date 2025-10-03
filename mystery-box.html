@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Omega Mystery Box - Terminal Hacker Style</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: #000000;
+            font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+            color: #00ff00;
+            overflow: hidden;
+            height: 100vh;
+            cursor: crosshair;
+        }
+
+        /* Matrix Binary Rain Background */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100vh;
+            font-family: 'Fira Code', monospace;
+            font-size: 18px;
+            line-height: 20px;
+            color: #00ff00;
+            animation: matrixFall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes matrixFall {
+            0% { 
+                transform: translateY(-100vh); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh); 
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Terminal Title */
+        .title {
+            font-family: 'Fira Code', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00ff00;
+            text-shadow: 
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00;
+            margin-bottom: 2rem;
+            animation: terminalGlow 3s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes terminalGlow {
+            0% { 
+                text-shadow: 
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00,
+                    0 0 30px #00ff00;
+                opacity: 0.8;
+            }
+            100% { 
+                text-shadow: 
+                    0 0 15px #00ff00,
+                    0 0 25px #00ff00,
+                    0 0 35px #00ff00,
+                    0 0 45px #00ff00;
+                opacity: 1;
+            }
+        }
+
+        .title::before {
+            content: '> ';
+            color: #00ffff;
+        }
+
+        .title::after {
+            content: ' <';
+            color: #00ffff;
+        }
+
+        /* Wallet Connect Panel */
+        .wallet-panel {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1rem;
+            color: #00ff00;
+            font-family: 'Fira Code', monospace;
+            border: 2px solid #00ff00;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 4px;
+            min-width: 250px;
+            z-index: 20;
+        }
+
+        .wallet-status {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .wallet-buttons {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .wallet-btn {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(45deg, #003300, #006600);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-btn:hover {
+            background: linear-gradient(45deg, #004400, #008800);
+            text-shadow: 0 0 8px #00ff00;
+        }
+
+        .wallet-btn.connected {
+            background: linear-gradient(45deg, #002200, #004400);
+            border-color: #00ffff;
+            color: #00ffff;
+        }
+
+        /* Mystery Box Container */
+        .mystery-box-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        /* Terminal Mystery Box */
+        .mystery-box {
+            width: 300px;
+            height: 300px;
+            background: 
+                linear-gradient(45deg, #001100 0%, #002200 50%, #001100 100%);
+            border: 3px solid #00ff00;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 
+                0 0 30px #00ff00,
+                inset 0 0 30px rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: terminalBoxPulse 4s ease-in-out infinite alternate;
+            overflow: hidden;
+        }
+
+        .mystery-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff00, #00ffff, #00ff00, #00ffff);
+            border-radius: 8px;
+            z-index: -1;
+            animation: terminalBorderGlow 2s linear infinite;
+        }
+
+        .mystery-box:hover {
+            transform: scale(1.03);
+            box-shadow: 
+                0 0 50px #00ff00,
+                inset 0 0 50px rgba(0, 255, 0, 0.3);
+        }
+
+        @keyframes terminalBoxPulse {
+            0% { 
+                box-shadow: 
+                    0 0 30px #00ff00,
+                    inset 0 0 30px rgba(0, 255, 0, 0.2);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 60px #00ff00,
+                    inset 0 0 40px rgba(0, 255, 0, 0.4);
+            }
+        }
+
+        @keyframes terminalBorderGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Terminal Question Mark */
+        .question-mark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6rem;
+            color: #00ff00;
+            text-shadow: 
+                0 0 20px #00ff00,
+                0 0 40px #00ff00;
+            animation: terminalQuestionGlow 3s ease-in-out infinite alternate;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+        }
+
+        @keyframes terminalQuestionGlow {
+            0% { 
+                transform: translate(-50%, -50%) scale(0.95);
+                text-shadow: 
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00;
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1.05);
+                text-shadow: 
+                    0 0 30px #00ff00,
+                    0 0 50px #00ff00,
+                    0 0 70px #00ffff;
+            }
+        }
+
+        /* Spinning Animation */
+        .mystery-box.spinning {
+            animation: boxSpin 0.1s linear infinite;
+        }
+
+        .mystery-box.spinning .question-mark {
+            animation: none;
+            opacity: 0;
+        }
+
+        @keyframes boxSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Reward Display */
+        .reward-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid;
+            border-radius: 15px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: rewardReveal 1s ease-out;
+        }
+
+        @keyframes rewardReveal {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .reward-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .reward-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .reward-rarity {
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Terminal Rarity Colors */
+        .common { 
+            border-color: #666666; 
+            background: rgba(102, 102, 102, 0.1);
+        }
+        .common .reward-rarity { color: #cccccc; }
+
+        .rare { 
+            border-color: #0099ff; 
+            background: rgba(0, 153, 255, 0.1);
+        }
+        .rare .reward-rarity { color: #0099ff; }
+
+        .epic { 
+            border-color: #9933ff; 
+            background: rgba(153, 51, 255, 0.1);
+        }
+        .epic .reward-rarity { color: #9933ff; }
+
+        .legendary { 
+            border-color: #ffaa00; 
+            background: rgba(255, 170, 0, 0.1);
+        }
+        .legendary .reward-rarity { color: #ffaa00; }
+
+        .mythic { 
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #ff0000, #ff6600, #ffff00, #00ff00, #0099ff, #9933ff) 1;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .mythic .reward-rarity { 
+            background: linear-gradient(45deg, #ff0000, #ff6600, #ffff00, #00ff00, #0099ff, #9933ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(45deg, #003300, #006600);
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '> ';
+            color: #00ffff;
+        }
+
+        .btn::after {
+            content: ' <';
+            color: #00ffff;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 0, 0.6);
+            background: linear-gradient(45deg, #004400, #008800);
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .btn:active {
+            transform: translateY(0px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            background: #333333;
+            color: #666666;
+            border-color: #666666;
+        }
+
+
+
+        /* Terminal Status Messages */
+        .status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            display: none;
+            animation: terminalStatusPulse 0.5s ease-in-out;
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .status::before {
+            content: '[';
+            color: #00ffff;
+        }
+
+        .status::after {
+            content: ']';
+            color: #00ffff;
+        }
+
+        @keyframes terminalStatusPulse {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ff00;
+            border-radius: 0;
+            opacity: 0;
+            animation: terminalParticleFall 4s linear infinite;
+        }
+
+        @keyframes terminalParticleFall {
+            0% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(0);
+            }
+            5% { 
+                opacity: 1; 
+                transform: translateY(0px) scale(1);
+            }
+            95% { 
+                opacity: 1; 
+                transform: translateY(calc(100vh - 100px)) scale(1);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(100vh) scale(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .title { font-size: 2rem; }
+            .mystery-box-container { width: 250px; height: 250px; }
+            .mystery-box { width: 250px; height: 250px; }
+            .question-mark { font-size: 6rem; }
+            .controls { flex-direction: column; gap: 1rem; }
+            .points { top: 20px; right: 20px; font-size: 1.2rem; }
+            .info { bottom: 20px; left: 20px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Rain Effect -->
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Particle Effects Container -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Wallet Connect Panel -->
+    <div class="wallet-panel">
+        <div class="wallet-status" id="walletStatus">🔐 Wallet Disconnected</div>
+        <div class="wallet-buttons">
+            <button class="wallet-btn" id="metamaskBtn">Connect MetaMask</button>
+            <button class="wallet-btn" id="phantomBtn">Connect Phantom</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Title -->
+        <h1 class="title">OMEGA MYSTERY BOX</h1>
+
+        <!-- Mystery Box -->
+        <div class="mystery-box-container">
+            <div class="mystery-box" id="mysteryBox">
+                <div class="question-mark" id="questionMark">?</div>
+                <div class="reward-display" id="rewardDisplay">
+                    <div class="reward-icon" id="rewardIcon">🔫</div>
+                    <div class="reward-name" id="rewardName">AK-47</div>
+                    <div class="reward-rarity" id="rewardRarity">Legendary</div>
+                </div>
+                <div class="status" id="statusMessage">SPINNING...</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn" id="spinBtn" onclick="spinMysteryBox()">
+                EXECUTE (500 Credits)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let points = 1000;
+        let isSpinning = false;
+        let currentReward = null;
+        let connectedWallet = null;
+
+        // Reward Pool - Call of Duty Zombies Style
+        const rewards = {
+            common: [
+                { name: 'M1911 Pistol', icon: '🔫', rarity: 'common' },
+                { name: 'Combat Knife', icon: '🔪', rarity: 'common' },
+                { name: 'Bandages', icon: '🩹', rarity: 'common' },
+                { name: 'Ammo Pack', icon: '📦', rarity: 'common' },
+                { name: 'Grenades', icon: '💣', rarity: 'common' }
+            ],
+            rare: [
+                { name: 'MP40 SMG', icon: '🔫', rarity: 'rare' },
+                { name: 'Shotgun', icon: '🔫', rarity: 'rare' },
+                { name: 'Health Kit', icon: '⛑️', rarity: 'rare' },
+                { name: 'Double Points', icon: '💰', rarity: 'rare' },
+                { name: 'Max Ammo', icon: '🎯', rarity: 'rare' }
+            ],
+            epic: [
+                { name: 'AK-47 Assault', icon: '🔫', rarity: 'epic' },
+                { name: 'Ray Gun Mk1', icon: '⚡', rarity: 'epic' },
+                { name: 'Mystery Perk', icon: '🧪', rarity: 'epic' },
+                { name: 'Nuke Drop', icon: '☢️', rarity: 'epic' }
+            ],
+            legendary: [
+                { name: 'Pack-a-Punch', icon: '⚙️', rarity: 'legendary' },
+                { name: 'Ray Gun Mk2', icon: '⚡', rarity: 'legendary' },
+                { name: 'Wonder Weapon', icon: '🌟', rarity: 'legendary' },
+                { name: 'Revive Token', icon: '💖', rarity: 'legendary' }
+            ],
+            mythic: [
+                { name: 'Staff of Fire', icon: '🔥', rarity: 'mythic' },
+                { name: 'Omega Device', icon: '🌀', rarity: 'mythic' },
+                { name: 'Teddy Bear', icon: '🧸', rarity: 'mythic' }
+            ]
+        };
+
+        // Rarity Chances
+        const rarityChances = {
+            common: 0.50,    // 50%
+            rare: 0.30,      // 30%
+            epic: 0.15,      // 15%
+            legendary: 0.04, // 4%
+            mythic: 0.01     // 1%
+        };
+
+        // DOM Elements
+        const mysteryBox = document.getElementById('mysteryBox');
+        const questionMark = document.getElementById('questionMark');
+        const rewardDisplay = document.getElementById('rewardDisplay');
+        const rewardIcon = document.getElementById('rewardIcon');
+        const rewardName = document.getElementById('rewardName');
+        const rewardRarity = document.getElementById('rewardRarity');
+        const statusMessage = document.getElementById('statusMessage');
+        const spinBtn = document.getElementById('spinBtn');
+        const matrixRain = document.getElementById('matrixRain');
+        const walletStatus = document.getElementById('walletStatus');
+        const metamaskBtn = document.getElementById('metamaskBtn');
+        const phantomBtn = document.getElementById('phantomBtn');
+
+        // Initialize
+        createMatrixRain();
+        createParticles();
+        setupWalletConnections();
+
+        // Click box to spin
+        mysteryBox.addEventListener('click', () => {
+            if (!isSpinning) {
+                spinMysteryBox();
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !isSpinning) {
+                e.preventDefault();
+                spinMysteryBox();
+            }
+        });
+
+        // Matrix Rain Effect
+        function createMatrixRain() {
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = `${i * 20}px`;
+                column.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                column.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // Generate random binary string
+                let binaryString = '';
+                const length = Math.floor(Math.random() * 30) + 10;
+                for (let j = 0; j < length; j++) {
+                    binaryString += Math.random() < 0.5 ? '0' : '1';
+                    if (j % 8 === 7) binaryString += '<br>';
+                }
+                column.innerHTML = binaryString;
+                
+                matrixRain.appendChild(column);
+                
+                // Remove and recreate column after animation
+                setTimeout(() => {
+                    if (column.parentNode) {
+                        column.parentNode.removeChild(column);
+                        createSingleColumn(i);
+                    }
+                }, (Math.random() * 3 + 2) * 1000 + Math.random() * 2000);
+            }
+        }
+        
+        function createSingleColumn(index) {
+            const column = document.createElement('div');
+            column.className = 'matrix-column';
+            column.style.left = `${index * 20}px`;
+            column.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            let binaryString = '';
+            const length = Math.floor(Math.random() * 30) + 10;
+            for (let j = 0; j < length; j++) {
+                binaryString += Math.random() < 0.5 ? '0' : '1';
+                if (j % 8 === 7) binaryString += '<br>';
+            }
+            column.innerHTML = binaryString;
+            
+            matrixRain.appendChild(column);
+            
+            setTimeout(() => {
+                if (column.parentNode) {
+                    column.parentNode.removeChild(column);
+                    createSingleColumn(index);
+                }
+            }, (Math.random() * 3 + 2) * 1000 + Math.random() * 2000);
+        }
+
+        // Wallet Connection Functions
+        function setupWalletConnections() {
+            metamaskBtn.addEventListener('click', connectMetaMask);
+            phantomBtn.addEventListener('click', connectPhantom);
+            updateWalletDisplay();
+        }
+
+        async function connectMetaMask() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ 
+                        method: 'eth_requestAccounts' 
+                    });
+                    connectedWallet = {
+                        type: 'metamask',
+                        address: accounts[0]
+                    };
+                    updateWalletDisplay();
+                    console.log('🦊 MetaMask Connected:', accounts[0]);
+                } catch (error) {
+                    console.error('MetaMask connection failed:', error);
+                    showStatus('METAMASK CONNECTION FAILED');
+                }
+            } else {
+                showStatus('METAMASK NOT INSTALLED');
+                window.open('https://metamask.io/download/', '_blank');
+            }
+        }
+
+        async function connectPhantom() {
+            if (typeof window.solana !== 'undefined' && window.solana.isPhantom) {
+                try {
+                    const response = await window.solana.connect();
+                    connectedWallet = {
+                        type: 'phantom',
+                        address: response.publicKey.toString()
+                    };
+                    updateWalletDisplay();
+                    console.log('👻 Phantom Connected:', response.publicKey.toString());
+                } catch (error) {
+                    console.error('Phantom connection failed:', error);
+                    showStatus('PHANTOM CONNECTION FAILED');
+                }
+            } else {
+                showStatus('PHANTOM NOT INSTALLED');
+                window.open('https://phantom.app/', '_blank');
+            }
+        }
+
+        function updateWalletDisplay() {
+            if (connectedWallet) {
+                walletStatus.innerHTML = `🟢 ${connectedWallet.type.toUpperCase()} Connected<br><small>${connectedWallet.address.substring(0, 6)}...${connectedWallet.address.substring(connectedWallet.address.length - 4)}</small>`;
+                metamaskBtn.classList.add('connected');
+                phantomBtn.classList.add('connected');
+                metamaskBtn.textContent = 'MetaMask Connected';
+                phantomBtn.textContent = 'Phantom Connected';
+                
+                // Enable spinning with wallet connected
+                points = 1000; // Give some credits when wallet connects
+                updateSpinButton();
+            } else {
+                walletStatus.innerHTML = '🔐 Wallet Disconnected';
+                metamaskBtn.classList.remove('connected');
+                phantomBtn.classList.remove('connected');
+                metamaskBtn.textContent = 'Connect MetaMask';
+                phantomBtn.textContent = 'Connect Phantom';
+            }
+        }
+
+        function updateSpinButton() {
+            if (points < 500) {
+                spinBtn.style.opacity = '0.5';
+                spinBtn.textContent = 'INSUFFICIENT CREDITS';
+            } else {
+                spinBtn.style.opacity = '1';
+                spinBtn.textContent = 'EXECUTE (500 Credits)';
+            }
+        }
+
+        // Main spin function
+        async function spinMysteryBox() {
+            if (isSpinning || points < 500) {
+                if (points < 500) {
+                    showStatus('INSUFFICIENT CREDITS!');
+                }
+                return;
+            }
+
+            // Deduct points
+            points -= 500;
+            updateSpinButton();
+            
+            // Start spinning
+            isSpinning = true;
+            spinBtn.disabled = true;
+            mysteryBox.classList.add('spinning');
+            rewardDisplay.style.display = 'none';
+            
+            showStatus('EXECUTING...');
+            
+            // Play execution sound (would add actual audio here)
+            console.log('🎵 SYSTEM EXECUTION SOUND');
+
+            // Spin for random duration (2-4 seconds)
+            const spinDuration = 2000 + Math.random() * 2000;
+            
+            setTimeout(() => {
+                // Stop spinning
+                mysteryBox.classList.remove('spinning');
+                statusMessage.style.display = 'none';
+                
+                // Determine reward
+                const reward = getRandomReward();
+                currentReward = reward;
+                
+                // Show reward
+                displayReward(reward);
+                
+                // Re-enable controls
+                isSpinning = false;
+                spinBtn.disabled = false;
+                
+                console.log('🎵 DATA RETRIEVED SOUND');
+                
+            }, spinDuration);
+        }
+
+        // Get random reward based on rarity chances
+        function getRandomReward() {
+            const rand = Math.random();
+            let cumulative = 0;
+            
+            for (const [rarity, chance] of Object.entries(rarityChances)) {
+                cumulative += chance;
+                if (rand <= cumulative) {
+                    const items = rewards[rarity];
+                    return items[Math.floor(Math.random() * items.length)];
+                }
+            }
+            
+            // Fallback to common
+            const commons = rewards.common;
+            return commons[Math.floor(Math.random() * commons.length)];
+        }
+
+        // Display reward
+        function displayReward(reward) {
+            rewardIcon.textContent = reward.icon;
+            rewardName.textContent = reward.name;
+            rewardRarity.textContent = reward.rarity;
+            
+            // Remove all rarity classes
+            rewardDisplay.classList.remove('common', 'rare', 'epic', 'legendary', 'mythic');
+            rewardDisplay.classList.add(reward.rarity);
+            
+            rewardDisplay.style.display = 'flex';
+            
+            // Add particles effect for rare+ items
+            if (reward.rarity !== 'common') {
+                createRewardParticles(reward.rarity);
+            }
+            
+            console.log(`🎉 Got ${reward.rarity.toUpperCase()}: ${reward.name}`);
+        }
+
+        // Show status message
+        function showStatus(message) {
+            statusMessage.textContent = message;
+            statusMessage.style.display = 'block';
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 2000);
+        }
+
+
+
+        // Create ambient particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                
+                // Terminal colors
+                const colors = ['#00ff00', '#00ffff', '#33ff33', '#66ff66'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 4000);
+                
+            }, 500);
+        }
+
+        // Create reward particles
+        function createRewardParticles(rarity) {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = rarity === 'mythic' ? 50 : rarity === 'legendary' ? 30 : 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = (40 + Math.random() * 20) + '%';
+                    particle.style.top = (40 + Math.random() * 20) + '%';
+                    particle.style.width = '6px';
+                    particle.style.height = '6px';
+                    
+                    // Terminal rarity colors
+                    const rarityColors = {
+                        rare: '#0099ff',
+                        epic: '#9933ff', 
+                        legendary: '#ffaa00',
+                        mythic: '#ff00ff'
+                    };
+                    
+                    particle.style.background = rarityColors[rarity] || '#ffffff';
+                    particle.style.animation = 'particleFall 2s ease-out forwards';
+                    
+                    particlesContainer.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 2000);
+                    
+                }, i * 50);
+            }
+        }
+
+        // Add points (for testing)
+        function addPoints(amount) {
+            points += amount;
+            updatePointsDisplay();
+            console.log(`💰 Added ${amount} points! Total: ${points}`);
+        }
+
+        // Console commands for testing
+        console.log('💻 TERMINAL MYSTERY BOX LOADED!');
+        console.log('💡 Try: addPoints(1000) for more credits');
+        console.log('🎯 Spacebar to execute, connect wallet first');
+        console.log('🎲 Security Levels: Common(50%), Rare(30%), Epic(15%), Legendary(4%), Mythic(1%)');
+        console.log('🔐 Wallets: MetaMask (Ethereum) & Phantom (Solana)');
+
+        // Easter egg - add points with Konami code
+        let konamiCode = [];
+        const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.code);
+            if (konamiCode.length > konami.length) {
+                konamiCode.shift();
+            }
+            
+            if (JSON.stringify(konamiCode) === JSON.stringify(konami)) {
+                addPoints(5000);
+                showStatus('KONAMI CODE ACTIVATED!');
+                konamiCode = [];
+            }
+        });
+    </script>
+</body>
+</html> 
+</html> 
+</html> 

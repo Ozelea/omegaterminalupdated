@@ -1,0 +1,1056 @@
+/* ===================================
+   APPLE UI THEME v1.0 - PREMIUM DESIGN
+   Sleek, Modern, Glass-morphism Terminal
+   =================================== */
+
+/* Import Apple's San Francisco font (fallback to system fonts) */
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+/* Apple UI Theme Root Variables */
+.terminal.apple-ui {
+    /* Color Palette */
+    --apple-primary: #007AFF;
+    --apple-secondary: #5AC8FA;
+    --apple-success: #34C759;
+    --apple-warning: #FF9500;
+    --apple-error: #FF3B30;
+    --apple-text: #1D1D1F;
+    --apple-text-secondary: #86868B;
+    --apple-background: #F5F5F7;
+    --apple-surface: rgba(255, 255, 255, 0.8);
+    --apple-glass: rgba(255, 255, 255, 0.1);
+    --apple-border: rgba(0, 0, 0, 0.1);
+    --apple-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Typography */
+    --apple-font: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    
+    /* Spacing */
+    --apple-radius: 16px;
+    --apple-radius-large: 24px;
+    --apple-spacing: 16px;
+    --apple-spacing-large: 24px;
+    
+    /* Animations */
+    --apple-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --apple-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===================================
+   MAIN TERMINAL CONTAINER
+   =================================== */
+
+.terminal.apple-ui {
+    background: linear-gradient(135deg, #F5F5F7 0%, #E5E5EA 100%);
+    font-family: var(--apple-font);
+    color: var(--apple-text);
+    border-radius: 24px; /* Extra rounded corners */
+    overflow: hidden;
+    box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: var(--apple-transition);
+    border: 1px solid var(--apple-border);
+}
+
+/* ===================================
+   TERMINAL HEADER (macOS style)
+   =================================== */
+
+.terminal.apple-ui .terminal-header {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid var(--apple-border);
+    border-radius: 24px 24px 0 0; /* Rounded top corners */
+    padding: var(--apple-spacing);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center everything */
+    position: relative;
+    text-align: center;
+}
+
+/* macOS Traffic Light Buttons */
+.terminal.apple-ui .terminal-header::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #FF5F56;
+    box-shadow: 
+        20px 0 0 #FFBD2E,
+        40px 0 0 #27CA3F,
+        0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.terminal.apple-ui .terminal-title {
+    font-family: var(--apple-font);
+    font-size: 22px; /* Bigger and more prominent */
+    font-weight: 700;
+    color: #1565C0; /* Dark blue for better visibility */
+    text-align: center;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    margin: 0 auto;
+    flex: 1;
+    /* Override any uppercase text transform */
+    text-transform: none !important;
+}
+
+/* Position controls on the right side */
+.terminal.apple-ui .terminal-header > div:last-child {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Status and Controls */
+.terminal.apple-ui .terminal-status {
+    background: var(--apple-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--apple-border);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--apple-text-secondary);
+    transition: var(--apple-transition);
+}
+
+.terminal.apple-ui .terminal-status.connected {
+    background: linear-gradient(135deg, var(--apple-success), #30D158);
+    color: white;
+    border-color: var(--apple-success);
+}
+
+/* Enhanced theme toggle button for Apple UI - Clean Design */
+.terminal.apple-ui .theme-toggle {
+    background: var(--apple-surface) !important;
+    border: 1px solid var(--apple-border) !important;
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    cursor: pointer !important;
+    transition: var(--apple-transition) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    /* Remove any emoji content */
+    font-size: 0 !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+}
+
+.terminal.apple-ui .theme-toggle::before {
+    content: '' !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+}
+
+/* Remove all text content from theme toggle - AGGRESSIVE CLEANING */
+.terminal.apple-ui .theme-toggle {
+    text-indent: -9999px !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    position: relative !important;
+}
+
+.terminal.apple-ui .theme-toggle *,
+.terminal.apple-ui .theme-toggle::first-letter,
+.terminal.apple-ui .theme-toggle span,
+.terminal.apple-ui .theme-toggle i {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.terminal.apple-ui .theme-toggle::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.2), rgba(0, 122, 255, 0.05)) !important;
+    border: 1px solid rgba(0, 122, 255, 0.15) !important;
+    pointer-events: none !important;
+}
+
+/* Completely override any existing content */
+.terminal.apple-ui .theme-toggle {
+    speak: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+.terminal.apple-ui .theme-toggle:hover {
+    transform: translateY(-1px) scale(1.05) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.terminal.apple-ui .ai-toggle {
+    background: var(--apple-surface) !important;
+    border: 1px solid var(--apple-border) !important;
+    border-radius: 16px !important;
+    padding: 6px 12px !important;
+    font-family: var(--apple-font) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: var(--apple-text-secondary) !important;
+    cursor: pointer !important;
+    transition: var(--apple-transition) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* ===================================
+   TAB BAR (Safari-style) - FIXED
+   =================================== */
+
+.terminal.apple-ui .tab-bar {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    ) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--apple-border) !important;
+    padding: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    /* Override any existing dark styling */
+    color: var(--apple-text) !important;
+}
+
+.terminal.apple-ui .tab {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid var(--apple-border) !important;
+    padding: 12px 20px !important;
+    font-family: var(--apple-font) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--apple-text-secondary) !important;
+    cursor: pointer !important;
+    transition: var(--apple-transition) !important;
+    border-radius: 16px !important; /* Much more rounded */
+    margin-right: 8px !important;
+    position: relative !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.terminal.apple-ui .tab.active {
+    background: linear-gradient(135deg, var(--apple-primary), var(--apple-secondary)) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border-color: var(--apple-primary) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.terminal.apple-ui .tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: var(--apple-text) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ===================================
+   TERMINAL CONTENT AREA - FIXED
+   =================================== */
+
+.terminal.apple-ui .terminal-content {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(248, 248, 250, 0.9) 100%
+    ) !important;
+    padding: var(--apple-spacing-large) !important;
+    min-height: 600px !important;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    /* Ensure proper stacking and no weird artifacts */
+    position: relative !important;
+    z-index: 1 !important;
+    /* Force readable text colors */
+    color: #2E3440 !important; /* Dark readable color */
+    border: none !important;
+    /* No sharp corners in content area */
+    border-radius: 0 !important;
+}
+
+/* Force all text in terminal content to be readable */
+.terminal.apple-ui .terminal-content * {
+    color: inherit !important;
+    text-shadow: none !important;
+}
+
+/* Specific text color fixes */
+.terminal.apple-ui .terminal-content div,
+.terminal.apple-ui .terminal-content span,
+.terminal.apple-ui .terminal-content p {
+    color: #2E3440 !important;
+}
+
+/* ===================================
+   INPUT SECTION (Modern) - FIXED
+   =================================== */
+
+.terminal.apple-ui .terminal-input-section {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    ) !important;
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    border-top: 1px solid var(--apple-border) !important;
+    border-radius: 0 0 24px 24px !important; /* Rounded bottom corners */
+    padding: 24px 40px !important; /* Wider padding for larger input */
+}
+
+.terminal.apple-ui .input-line {
+    display: flex !important;
+    align-items: center !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid var(--apple-border) !important;
+    border-radius: 24px !important; /* Even more rounded */
+    padding: 20px 28px !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transition: var(--apple-transition) !important;
+    min-height: 64px !important;
+    width: 100% !important;
+    max-width: none !important; /* Allow full width */
+    margin: 0 auto !important;
+}
+
+.terminal.apple-ui .input-line:focus-within {
+    border-color: var(--apple-primary) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 122, 255, 0.2),
+        0 0 0 4px rgba(0, 122, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-2px) !important;
+}
+
+.terminal.apple-ui .input-prompt {
+    font-family: var(--apple-font) !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #1565C0 !important; /* Dark blue for better contrast */
+    margin-right: 20px !important;
+    white-space: nowrap !important;
+    min-width: fit-content !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    flex-shrink: 0 !important; /* Don't let prompt shrink */
+}
+
+.terminal.apple-ui .input-field {
+    flex: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    font-family: 'SF Mono', 'Monaco', monospace !important;
+    font-size: 17px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 28px !important;
+    line-height: 1.5 !important;
+    pointer-events: auto !important;
+    z-index: 1000 !important;
+    position: relative !important;
+    font-weight: 600 !important;
+}
+
+.terminal.apple-ui .input-field:focus {
+    outline: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.terminal.apple-ui .input-field::placeholder {
+    color: #8E8E93 !important; /* Apple's secondary text color */
+    opacity: 0.8 !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+}
+
+/* Removed complex fixes - using simple-input-fix.css instead */
+
+/* ===================================
+   BUTTONS & CONTROLS (Apple style)
+   =================================== */
+
+.terminal.apple-ui button {
+    font-family: var(--apple-font);
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--apple-radius);
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: var(--apple-transition);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Primary Button (Apple Blue) */
+.terminal.apple-ui button:not(.secondary):not(.danger) {
+    background: linear-gradient(135deg, var(--apple-primary), var(--apple-secondary));
+    color: white;
+    box-shadow: 
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.terminal.apple-ui button:not(.secondary):not(.danger):hover {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 6px 16px rgba(0, 122, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.terminal.apple-ui button:not(.secondary):not(.danger):active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 8px rgba(0, 122, 255, 0.3),
+        inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary Button */
+.terminal.apple-ui button.secondary {
+    background: var(--apple-surface);
+    color: var(--apple-text);
+    border: 1px solid var(--apple-border);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.terminal.apple-ui button.secondary:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ===================================
+   TEXT STYLING (Apple Typography)
+   =================================== */
+
+.terminal.apple-ui .log-entry {
+    margin: 8px 0;
+    padding: 12px 16px;
+    border-radius: var(--apple-radius);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: var(--apple-transition);
+}
+
+/* Info Messages */
+.terminal.apple-ui .log-entry.log-info {
+    background: rgba(255, 255, 255, 0.8);
+    color: #2E3440; /* Dark gray-blue for excellent readability */
+    border: 1px solid rgba(46, 52, 64, 0.1);
+    font-weight: 500;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Success Messages */
+.terminal.apple-ui .log-entry.log-success {
+    background: linear-gradient(135deg, 
+        rgba(52, 199, 89, 0.1), 
+        rgba(52, 199, 89, 0.05)
+    );
+    color: #1B5E20;
+    border: 1px solid rgba(52, 199, 89, 0.2);
+    box-shadow: 
+        0 2px 8px rgba(52, 199, 89, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Error Messages */
+.terminal.apple-ui .log-entry.log-error {
+    background: linear-gradient(135deg, 
+        rgba(255, 59, 48, 0.1), 
+        rgba(255, 59, 48, 0.05)
+    );
+    color: #C62828;
+    border: 1px solid rgba(255, 59, 48, 0.2);
+    box-shadow: 
+        0 2px 8px rgba(255, 59, 48, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Warning Messages */
+.terminal.apple-ui .log-entry.log-warning {
+    background: linear-gradient(135deg, 
+        rgba(255, 149, 0, 0.1), 
+        rgba(255, 149, 0, 0.05)
+    );
+    color: #E65100;
+    border: 1px solid rgba(255, 149, 0, 0.2);
+    box-shadow: 
+        0 2px 8px rgba(255, 149, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Output Messages */
+.terminal.apple-ui .log-entry.log-output {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1565C0; /* Dark blue for better readability */
+    border: 1px solid rgba(21, 101, 192, 0.1);
+    font-family: 'SF Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 
+        0 2px 8px rgba(21, 101, 192, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ===================================
+   CARDS & CONTAINERS (Glass-morphism)
+   =================================== */
+
+.terminal.apple-ui div[style*="background:rgba"] {
+    background: var(--apple-surface) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--apple-border) !important;
+    border-radius: var(--apple-radius) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transition: var(--apple-transition) !important;
+}
+
+.terminal.apple-ui div[style*="background:rgba"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ===================================
+   TOKEN CARDS (Premium Design)
+   =================================== */
+
+.terminal.apple-ui div[style*="border:1px solid #00ff80"] {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95),
+        rgba(248, 248, 250, 0.9)
+    ) !important;
+    border: 1px solid rgba(0, 122, 255, 0.2) !important;
+    border-radius: var(--apple-radius-large) !important;
+    padding: 20px !important;
+    margin: 16px 0 !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    transition: var(--apple-transition) !important;
+}
+
+.terminal.apple-ui div[style*="border:1px solid #00ff80"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.15),
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* ===================================
+   TYPOGRAPHY ENHANCEMENTS
+   =================================== */
+
+.terminal.apple-ui * {
+    font-family: var(--apple-font) !important;
+    /* Override any uppercase transforms globally */
+    text-transform: none !important;
+}
+
+/* Specifically target the title to ensure proper case */
+.terminal.apple-ui .terminal-title {
+    text-transform: none !important;
+}
+
+.terminal.apple-ui.dark .terminal-title {
+    text-transform: none !important;
+}
+
+.terminal.apple-ui h1, .terminal.apple-ui h2, .terminal.apple-ui h3 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--apple-text);
+    margin-bottom: var(--apple-spacing);
+}
+
+.terminal.apple-ui code {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-family: 'SF Mono', monospace !important;
+    font-size: 13px;
+    color: var(--apple-primary);
+}
+
+/* ===================================
+   ENHANCED BUTTON STYLES
+   =================================== */
+
+.terminal.apple-ui button[style*="background:#00ff80"] {
+    background: linear-gradient(135deg, var(--apple-success), #30D158) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--apple-radius) !important;
+    font-weight: 600 !important;
+    box-shadow: 
+        0 4px 12px rgba(52, 199, 89, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: var(--apple-transition) !important;
+}
+
+.terminal.apple-ui button[style*="background:#00ff80"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 
+        0 6px 16px rgba(52, 199, 89, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.terminal.apple-ui button[style*="background:#0088ff"] {
+    background: linear-gradient(135deg, var(--apple-primary), var(--apple-secondary)) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--apple-radius) !important;
+    font-weight: 600 !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: var(--apple-transition) !important;
+}
+
+.terminal.apple-ui button[style*="background:#ff8800"] {
+    background: linear-gradient(135deg, var(--apple-warning), #FF9F0A) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--apple-radius) !important;
+    font-weight: 600 !important;
+    box-shadow: 
+        0 4px 12px rgba(255, 149, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: var(--apple-transition) !important;
+}
+
+/* ===================================
+   SCROLLBAR (macOS style)
+   =================================== */
+
+.terminal.apple-ui::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal.apple-ui::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal.apple-ui::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: var(--apple-transition);
+}
+
+.terminal.apple-ui::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   ANIMATIONS & MICRO-INTERACTIONS
+   =================================== */
+
+.terminal.apple-ui * {
+    transition: var(--apple-transition);
+}
+
+/* DISABLED: Log entry animations interfere with input visibility */
+.terminal.apple-ui .log-entry {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Disable the problematic animation completely */
+@keyframes apple-slide-in {
+    0%, 100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects for interactive elements */
+.terminal.apple-ui [onclick]:hover {
+    cursor: pointer;
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+/* ===================================
+   LOADING STATES (Apple style)
+   =================================== */
+
+.terminal.apple-ui .loading {
+    background: var(--apple-surface);
+    border-radius: var(--apple-radius);
+    padding: 16px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.terminal.apple-ui .loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--apple-border);
+    border-top: 2px solid var(--apple-primary);
+    border-radius: 50%;
+    animation: apple-spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes apple-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+/* Wider input field on larger screens */
+@media (min-width: 769px) {
+    .terminal.apple-ui .terminal-input-section {
+        padding: 24px 60px !important; /* Optimized width for desktop */
+    }
+    
+    .terminal.apple-ui .input-line {
+        max-width: 1400px !important; /* Even wider input container */
+        margin: 0 auto !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .terminal.apple-ui .terminal-input-section {
+        padding: 24px 40px !important; /* Let input field expand more on large screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal.apple-ui {
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    .terminal.apple-ui .terminal-header::before {
+        display: none; /* Hide traffic lights on mobile */
+    }
+    
+    .terminal.apple-ui .terminal-input-section {
+        padding: 20px !important;
+    }
+}
+
+/* ===================================
+   DARK MODE VARIANT (Apple Dark)
+   =================================== */
+
+.terminal.apple-ui.dark {
+    /* Dark Mode Color Palette */
+    --apple-primary: #0A84FF;
+    --apple-secondary: #64D2FF;
+    --apple-success: #32D74B;
+    --apple-warning: #FF9F0A;
+    --apple-error: #FF453A;
+    --apple-text: #F2F2F7;
+    --apple-text-secondary: #8E8E93;
+    --apple-background: #000000;
+    --apple-surface: rgba(28, 28, 30, 0.9);
+    --apple-glass: rgba(28, 28, 30, 0.4);
+    --apple-border: rgba(255, 255, 255, 0.15);
+    --apple-shadow: rgba(0, 0, 0, 0.5);
+    
+    background: linear-gradient(135deg, #000000 0%, #1C1C1E 100%) !important;
+}
+
+.terminal.apple-ui.dark .terminal-header {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+    border-radius: 24px 24px 0 0 !important; /* Rounded top corners in dark mode */
+}
+
+.terminal.apple-ui.dark .terminal-title {
+    color: #F2F2F7 !important; /* Light text for dark mode */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    /* Override any uppercase text transform in dark mode too */
+    text-transform: none !important;
+}
+
+.terminal.apple-ui.dark .terminal-content {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+    color: #F2F2F7 !important;
+}
+
+.terminal.apple-ui.dark .terminal-content *,
+.terminal.apple-ui.dark .terminal-content div,
+.terminal.apple-ui.dark .terminal-content span,
+.terminal.apple-ui.dark .terminal-content p {
+    color: #F2F2F7 !important;
+}
+
+.terminal.apple-ui.dark .input-line {
+    background: rgba(28, 28, 30, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 24px !important; /* Smooth rounded corners in dark mode */
+}
+
+/* Dark mode input styling moved to simple-input-fix.css */
+
+.terminal.apple-ui.dark .input-prompt {
+    color: #0A84FF !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+.terminal.apple-ui.dark .terminal-input-section {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+    border-radius: 0 0 24px 24px !important; /* Rounded bottom corners in dark mode */
+}
+
+.terminal.apple-ui.dark .log-entry.log-info {
+    background: rgba(28, 28, 30, 0.8) !important;
+    color: #F2F2F7 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.terminal.apple-ui.dark .log-entry.log-output {
+    background: rgba(28, 28, 30, 0.8) !important;
+    color: #64D2FF !important; /* Light blue for dark mode */
+    border: 1px solid rgba(100, 210, 255, 0.2) !important;
+}
+
+.terminal.apple-ui.dark .tab-bar {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.terminal.apple-ui.dark .tab {
+    background: rgba(44, 44, 46, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #8E8E93 !important;
+    border-radius: 16px !important; /* Consistent rounded corners */
+    padding: 12px 20px !important;
+}
+
+.terminal.apple-ui.dark .tab.active {
+    background: linear-gradient(135deg, #0A84FF, #64D2FF) !important;
+    color: white !important;
+    border-color: #0A84FF !important;
+}
+
+.terminal.apple-ui.dark .tab:hover:not(.active) {
+    background: rgba(58, 58, 60, 0.9) !important;
+    color: #F2F2F7 !important;
+}
+
+.terminal.apple-ui.dark .theme-toggle {
+    background: rgba(44, 44, 46, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    /* Ensure no emoji in dark mode */
+    font-size: 0 !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+    color: transparent !important;
+}
+
+.terminal.apple-ui.dark .theme-toggle *,
+.terminal.apple-ui.dark .theme-toggle::first-letter,
+.terminal.apple-ui.dark .theme-toggle span,
+.terminal.apple-ui.dark .theme-toggle i {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.terminal.apple-ui.dark .theme-toggle::before {
+    content: '' !important;
+    background: transparent !important;
+}
+
+.terminal.apple-ui.dark .theme-toggle::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.3), rgba(10, 132, 255, 0.1)) !important;
+    border: 1px solid rgba(10, 132, 255, 0.2) !important;
+    pointer-events: none !important;
+}
+
+.terminal.apple-ui.dark .ai-toggle {
+    background: rgba(44, 44, 46, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #8E8E93 !important;
+}
+
+/* ===================================
+   SPECIAL EFFECTS
+   =================================== */
+
+/* Glassmorphism blur effect */
+.terminal.apple-ui::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Subtle animated gradient */
+.terminal.apple-ui {
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal.apple-ui::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        linear-gradient(45deg, 
+            transparent, 
+            rgba(0, 122, 255, 0.03), 
+            transparent, 
+            rgba(52, 199, 89, 0.03), 
+            transparent
+        );
+    animation: apple-gradient-shift 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes apple-gradient-shift {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
+
+/* ===================================
+   PREMIUM FOCUS STATES
+   =================================== */
+
+.terminal.apple-ui *:focus {
+    outline: none;
+    box-shadow: 
+        0 0 0 3px rgba(0, 122, 255, 0.2),
+        0 4px 12px rgba(0, 122, 255, 0.1);
+}
+
+/* ===================================
+   SMOOTH TRANSITIONS (SELECTIVE)
+   =================================== */
+
+.terminal.apple-ui {
+    transition: var(--apple-transition);
+}
+
+.terminal.apple-ui button,
+.terminal.apple-ui .tab,
+.terminal.apple-ui .input-line {
+    transition: var(--apple-transition);
+}
+
+/* EXPLICITLY EXCLUDE input field from transitions */
+.terminal.apple-ui .input-field,
+.terminal.apple-ui #commandInput {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* ===================================
+   MODERN SELECTION STYLING
+   =================================== */
+
+.terminal.apple-ui ::selection {
+    background: rgba(0, 122, 255, 0.2);
+    color: var(--apple-text);
+}
+
+.terminal.apple-ui ::-moz-selection {
+    background: rgba(0, 122, 255, 0.2);
+    color: var(--apple-text);
+} 
