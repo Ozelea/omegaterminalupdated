@@ -34,6 +34,9 @@
 
 
     <script src="profile-command-only.js"></script>
+    <script src="python-integration-system.js"></script>
+    <script src="pgt-integration-plugin.js"></script>
+    <script src="terminal-games-system.js"></script>
     <script>
         // VERSION CHECK - This should be visible in console if updated code is loaded
         console.log('🚀 OMEGA TERMINAL VERSION 2.0.1 LOADED');
@@ -847,7 +850,7 @@
         <div class="omega-symbols">Ω Ω Ω Ω Ω</div>
         <div class="pickaxe">⛏️</div>
         <div class="welcome-text">
-            Welcome to Omega Terminal v1<br>
+            Welcome to Omega Terminal v2.0.1<br>
             <span style="font-size: 16px; color: #cccccc;">Type below to get started</span>
         </div>
         <div class="loading-dots">Loading...</div>
@@ -999,8 +1002,8 @@
         class OmegaMinerTerminal {
             constructor() {
                         // VERSION CHECK - This should be visible in terminal if updated code is loaded
-                        console.log('🚀 OMEGA TERMINAL CONSTRUCTOR VERSION 1.5.9');
-                this.version = '1.5.9';
+                        console.log('🚀 OMEGA TERMINAL CONSTRUCTOR VERSION 2.0.1');
+                this.version = '2.0.1';
                 this.tabs = [{ id: 0, name: 'Terminal 1', history: [], output: [] }];
                 this.activeTab = 0;
                 console.log('[DEBUG] OmegaMinerTerminal constructor called');
@@ -1344,7 +1347,7 @@
             }
             
             async init() {
-                this.log('🚀 OMEGA TERMINAL v1.5.9 INITIALIZING', 'info');
+                this.log('🚀 OMEGA TERMINAL v2.0.1 INITIALIZING', 'info');
                 // Show boot animation first
                 await this.showBootAnimation();
                 // Always set up event listeners immediately after boot
@@ -1530,7 +1533,7 @@
                         'send', 'ens', 'mixer', 'stress', 'stopstress', 'stressstats', 'theme', 'rickroll', 'fortune', 'matrix', 'hack', 'disco', 'stop', 'tab',
                         'email', 'inbox', 'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds', 'cg', 'alpha', 'airdrop',
                         'solana', 'eclipse', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'ambassador', 'profile', 'gui',
-                        'bot', 'bots', 'py', 'near-wallet', 'nearwallet', 'near', 'ref',
+                        'bot', 'bots', 'py', 'python', 'pgt', 'game', 'play', 'near-wallet', 'nearwallet', 'near', 'ref',
                         'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile'
                     ];
                     input.addEventListener('keydown', (e) => {
@@ -3315,6 +3318,43 @@
                         }
                         return;
                         
+                    case 'python':
+                        // Python Integration System
+                        console.log('🐍 Python command detected, checking handlers...');
+                        console.log('omegaPython exists:', !!window.omegaPython);
+                        console.log('handlePythonCommand exists:', typeof window.handlePythonCommand);
+                        
+                        if (window.omegaPython && typeof window.handlePythonCommand === 'function') {
+                            this.log('🐍 Executing Python command...', 'info');
+                            window.handlePythonCommand(args.slice(0));
+                        } else {
+                            this.log('🐍 Python Integration System', 'info');
+                            if (!window.omegaPython) {
+                                this.log('⏳ Python environment is initializing... Please wait.', 'warning');
+                                this.log('💡 This may take 10-30 seconds on first load.', 'info');
+                            } else if (typeof window.handlePythonCommand !== 'function') {
+                                this.log('❌ Python command handler not ready. Please refresh and try again.', 'error');
+                            } else {
+                                this.log('❌ Python system not ready. Please try again.', 'error');
+                            }
+                            this.log('💡 Commands: python help | python upload | python run <script>', 'info');
+                        }
+                        return;
+                        
+                    case 'pgt':
+                        // PGT Integration System
+                        if (window.omegaPGT && typeof window.handlePGTCommand === 'function') {
+                            window.handlePGTCommand(args.slice(0));
+                        } else {
+                            this.log('🎯 PGT (Playground Tools) Integration', 'info');
+                            this.log('📊 Multi-chain portfolio tracking and wallet management', 'info');
+                            this.log('💡 Commands: pgt help | pgt portfolio | pgt wallets', 'info');
+                            if (!window.omegaPGT) {
+                                this.log('❌ PGT integration not loaded. Please refresh.', 'error');
+                            }
+                        }
+                        return;
+                        
                     case 'hyperliquid':
                         if (args[1] === '-help' || args[1] === 'help') {
                             let html = `<b>Hyperliquid Commands:</b><br>`;
@@ -4547,6 +4587,18 @@
                   '<span style="color:#888888">TVL & price data</span>' +
                   '</td>' +
                   '<td style="vertical-align:top;width:25%;">' +
+                  '<span style="color:#FF9500">🐍 Python Scripts:</span><br>' +
+                  '<span style="color:#99ccff">python upload | run | list | exec</span><br>' +
+                  '<span style="color:#888888">Trading bots & custom scripts</span>' +
+                  '</td>' +
+                  '</tr></table>', 'output');
+                this.logHtml('<table style="width:100%;border:none;"><tr>' +
+                  '<td style="vertical-align:top;width:50%;padding-right:16px;">' +
+                  '<span style="color:#FF6B35">🎯 PGT Portfolio:</span><br>' +
+                  '<span style="color:#99ccff">pgt portfolio | pgt wallets | pgt add</span><br>' +
+                  '<span style="color:#888888">Multi-chain portfolio tracking</span>' +
+                  '</td>' +
+                  '<td style="vertical-align:top;width:50%;">' +
                   '<span style="color:#96CEB4">🔵 NEAR Wallet:</span><br>' +
                   '<span style="color:#99ccff">near connect | balance | swap</span><br>' +
                   '<span style="color:#888888">NEAR ecosystem integration</span>' +
@@ -4642,8 +4694,26 @@
                   '<span style="color:#99ccff">polymarket help</span>' +
                   '</td>' +
                   '<td style="vertical-align:top;width:25%;">' +
+                  '<span style="color:#9B59B6">🎮 Games:</span><br>' +
+                  '<span style="color:#99ccff">game list | play <game></span>' +
+                  '</td>' +
+                  '</tr></table>', 'output');
+                this.logHtml('<table style="width:100%;border:none;"><tr>' +
+                  '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
+                  '<span style="color:#FF9500">🐍 Python:</span><br>' +
+                  '<span style="color:#99ccff">python help | python upload</span>' +
+                  '</td>' +
+                  '<td style="vertical-align:top;width:75%;">' +
+                  '<span style="color:#888888">Upload & run Python trading bots</span>' +
+                  '</td>' +
+                  '</tr></table>', 'output');
+                this.logHtml('<table style="width:100%;border:none;"><tr>' +
+                  '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
                   '<span style="color:#33bbff">Email:</span><br>' +
                   '<span style="color:#99ccff">email | inbox</span>' +
+                  '</td>' +
+                  '<td style="vertical-align:top;width:75%;">' +
+                  '<span style="color:#888888">Encrypted messaging system</span>' +
                   '</td>' +
                   '</tr></table>', 'output');
                 
@@ -4653,6 +4723,9 @@
                 this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#4ECDC4">dexscreener search BONK</span> for token analysis</span>', 'info');
                 this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#45B7D1">defillama tvl</span> for DeFi data</span>', 'info');
                 this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#8A2BE2">nft trending</span> for hot NFT collections</span>', 'info');
+                this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#FF9500">python help</span> for trading bot integration</span>', 'info');
+                this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#FF6B35">pgt portfolio</span> for multi-chain portfolio tracking</span>', 'info');
+                this.logHtml('<span style="color:#FFE66D">💡 Try: <span style="color:#9B59B6">game list</span> for interactive games</span>', 'info');
                 
                 this.log('--- Economy & Trading ---', 'output');
                 this.logHtml('<span style="color:#33bbff">alpha help</span> <span style="color:#888888">stocks & economy data</span>', 'info');
