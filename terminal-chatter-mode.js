@@ -16,6 +16,8 @@ console.log('💬 Loading Terminal Chatter Mode...');
         users: new Map(),
         currentUser: null,
         isConnected: false,
+        channel: null,
+        roomId: 'omega-terminal-global',
         settings: {
             soundEnabled: true,
             notifications: true,
@@ -23,6 +25,153 @@ console.log('💬 Loading Terminal Chatter Mode...');
             showTimestamps: true
         }
     };
+    
+    // ===================================
+    // REAL-TIME MESSAGING VIA BROADCAST CHANNEL
+    // ===================================
+    
+    function initializeBroadcastChannel() {
+        try {
+            // Use BroadcastChannel for same-origin communication
+            chatData.channel = new BroadcastChannel('omega-chat-channel');
+            
+            chatData.channel.onmessage = (event) => {
+                const { type, data } = event.data;
+                
+                if (type === 'message') {
+                    // Received message from another user
+                    receiveMessage(data);
+                } else if (type === 'user-join') {
+                    // User joined
+                    addSystemMessage(`${data.username} joined the chat`);
+                    chatData.users.set(data.userId, data);
+                } else if (type === 'user-leave') {
+                    // User left
+                    addSystemMessage(`${data.username} left the chat`);
+                    chatData.users.delete(data.userId);
+                }
+            };
+            
+            console.log('✅ Broadcast channel initialized');
+            return true;
+        } catch (error) {
+            console.error('❌ Broadcast channel not supported:', error);
+            // Fallback to Firebase or WebSocket
+            initializeFirebaseChat();
+            return false;
+        }
+    }
+    
+    // ===================================
+    // FIREBASE REAL-TIME DATABASE FALLBACK
+    // ===================================
+    
+    function initializeFirebaseChat() {
+        console.log('🔥 Firebase fallback disabled (BroadcastChannel only for now)');
+        console.log('💡 Messages will sync across tabs on the same domain');
+        // Firebase/server fallback disabled to prevent CORS errors
+        // In production, you would implement a proper WebSocket server
+    }
+    
+    function getLastMessageTime() {
+        if (chatData.messages.length === 0) return 0;
+        return new Date(chatData.messages[chatData.messages.length - 1].timestamp).getTime();
+    }
+    
+    function receiveMessage(messageData) {
+        // Don't add our own messages again
+        if (messageData.userId === getCurrentUserId()) return;
+        
+        const message = {
+            id: messageData.id || (Date.now() + Math.random()),
+            content: messageData.content,
+            type: messageData.type || 'user',
+            username: messageData.username,
+            timestamp: messageData.timestamp ? new Date(messageData.timestamp) : new Date(),
+            avatar: getAvatarForUser(messageData.username),
+            userId: messageData.userId
+        };
+        
+        chatData.messages.push(message);
+        saveChatData();
+        
+        // Update UI if chat is open
+        if (document.getElementById('chat-container')) {
+            updateChatUI();
+            scrollToBottom();
+        }
+        
+        // Play sound if enabled
+        if (chatData.settings.soundEnabled) {
+            playMessageSound();
+        }
+        
+        // Show notification if enabled
+        if (chatData.settings.notifications && document.hidden) {
+            showNotification(`New message from ${message.username}`);
+        }
+    }
+    
+    function broadcastMessage(content, type = 'user') {
+        const messageData = {
+            id: Date.now() + Math.random(),
+            content: content,
+            type: type,
+            username: chatData.currentUser ? chatData.currentUser.username : 'Anonymous',
+            timestamp: new Date().toISOString(),
+            userId: getCurrentUserId()
+        };
+        
+        // Send via BroadcastChannel
+        if (chatData.channel) {
+            try {
+                chatData.channel.postMessage({
+                    type: 'message',
+                    data: messageData
+                });
+            } catch (error) {
+                console.error('Broadcast error:', error);
+            }
+        }
+        
+        // Also send to Firebase fallback
+        sendToFirebase(messageData);
+        
+        return messageData;
+    }
+    
+    async function sendToFirebase(messageData) {
+        // Disabled to prevent CORS errors
+        // In production, implement a proper WebSocket or server-sent events solution
+        console.log('💬 Message broadcast via BroadcastChannel only');
+    }
+    
+    function getCurrentUserId() {
+        let userId = localStorage.getItem('omega-chat-user-id');
+        if (!userId) {
+            userId = 'user-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('omega-chat-user-id', userId);
+        }
+        return userId;
+    }
+    
+    function addSystemMessage(content) {
+        const message = {
+            id: Date.now() + Math.random(),
+            content: content,
+            type: 'system',
+            username: 'System',
+            timestamp: new Date(),
+            avatar: { color: '#888', initial: 'S' }
+        };
+        
+        chatData.messages.push(message);
+        
+        if (document.getElementById('chat-container')) {
+            updateChatUI();
+            scrollToBottom();
+        }
+    }
     
     // Load saved chat data
     function loadChatData() {
@@ -46,18 +195,24 @@ console.log('💬 Loading Terminal Chatter Mode...');
     // CHAT MESSAGE MANAGEMENT
     // ===================================
     
-    function addMessage(content, type = 'user', username = null) {
+    function addMessage(content, type = 'user', username = null, broadcast = true) {
         const message = {
             id: Date.now() + Math.random(),
             content: content,
             type: type, // 'user', 'system', 'bot'
             username: username || (chatData.currentUser ? chatData.currentUser.username : 'Anonymous'),
             timestamp: new Date(),
-            avatar: getAvatarForUser(username || 'Anonymous')
+            avatar: getAvatarForUser(username || 'Anonymous'),
+            userId: getCurrentUserId()
         };
         
         chatData.messages.push(message);
         saveChatData();
+        
+        // Broadcast to other users if this is a user message
+        if (broadcast && type === 'user') {
+            broadcastMessage(content, type);
+        }
         
         // Update UI if chat is open
         if (document.getElementById('chat-container')) {
@@ -142,6 +297,16 @@ console.log('💬 Loading Terminal Chatter Mode...');
                             color: #34C759;
                             border: 1px solid rgba(52, 199, 89, 0.3);
                         ">🟢 Connected</div>
+                        
+                        <button onclick="clearChatMessages()" style="
+                            background: rgba(255, 159, 10, 0.2);
+                            color: #FF9F0A;
+                            border: none;
+                            padding: 8px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 1em;
+                        " title="Clear Chat">🗑️</button>
                         
                         <button onclick="toggleChatSettings()" style="
                             background: rgba(255, 255, 255, 0.1);
@@ -326,12 +491,33 @@ console.log('💬 Loading Terminal Chatter Mode...');
     // ===================================
     
     function initializeChat() {
+        // Try to get username from profile ENS or profile data
+        let username = 'Anonymous';
+        
+        // Check for ENS from profile
+        try {
+            const profileData = localStorage.getItem('omega-profile-data');
+            if (profileData) {
+                const profile = JSON.parse(profileData);
+                if (profile.ensName && profile.ensRegistered) {
+                    username = profile.ensName;
+                } else if (profile.username) {
+                    username = profile.username;
+                }
+            }
+        } catch (error) {
+            // Silently fail and use Anonymous
+        }
+        
         // Set current user
         if (!chatData.currentUser) {
             chatData.currentUser = {
-                username: 'Anonymous',
+                username: username,
                 id: 'user_' + Date.now()
             };
+        } else {
+            // Update username if changed in profile
+            chatData.currentUser.username = username;
         }
         
         // Add user to users map
@@ -339,7 +525,7 @@ console.log('💬 Loading Terminal Chatter Mode...');
         
         // Add welcome message if no messages exist
         if (chatData.messages.length === 0) {
-            addMessage('Welcome to Terminal Chatter! Start chatting with the Omega Terminal community.', 'system');
+            addMessage('Welcome to Terminal Chatter! Start chatting with the Omega Terminal community.', 'system', null, false);
         }
         
         chatData.isConnected = true;
@@ -350,8 +536,10 @@ console.log('💬 Loading Terminal Chatter Mode...');
         if (!messagesContainer) return;
         
         messagesContainer.innerHTML = chatData.messages.map(message => {
+            // Ensure timestamp is a Date object
+            const timestamp = message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp);
             const timeStr = chatData.settings.showTimestamps ? 
-                message.timestamp.toLocaleTimeString() : '';
+                timestamp.toLocaleTimeString() : '';
             
             const isCurrentUser = message.username === chatData.currentUser.username;
             
@@ -420,6 +608,27 @@ console.log('💬 Loading Terminal Chatter Mode...');
     // ===================================
     
     window.openChat = function() {
+        // Initialize broadcast channel if not already done
+        if (!chatData.channel && !chatData.pollInterval) {
+            const broadcastSuccess = initializeBroadcastChannel();
+            if (!broadcastSuccess) {
+                console.log('Using Firebase fallback for chat');
+            }
+            
+            // Announce user joined
+            if (chatData.currentUser) {
+                if (chatData.channel) {
+                    chatData.channel.postMessage({
+                        type: 'user-join',
+                        data: {
+                            userId: getCurrentUserId(),
+                            username: chatData.currentUser.username
+                        }
+                    });
+                }
+            }
+        }
+        
         createChatInterface();
     };
     
@@ -441,8 +650,8 @@ console.log('💬 Loading Terminal Chatter Mode...');
         const message = input.value.trim();
         input.value = '';
         
-        // Add message
-        addMessage(message, 'user');
+        // Add message locally and broadcast
+        addMessage(message, 'user', null, true);
         
         // Simulate responses (in real implementation, this would be server-side)
         setTimeout(() => {
@@ -488,6 +697,21 @@ console.log('💬 Loading Terminal Chatter Mode...');
         closeChatSettings();
         
         window.terminal.log('✅ Chat settings saved', 'success');
+    };
+    
+    window.clearChatMessages = function() {
+        if (confirm('Are you sure you want to clear all chat messages?')) {
+            chatData.messages = [];
+            saveChatData();
+            updateChatUI();
+            
+            // Add system message
+            addMessage('Chat cleared by ' + (chatData.currentUser ? chatData.currentUser.username : 'user'), 'system', null, false);
+            
+            if (window.terminal) {
+                window.terminal.log('🗑️ Chat messages cleared', 'success');
+            }
+        }
     };
     
     // ===================================
@@ -556,6 +780,10 @@ console.log('💬 Loading Terminal Chatter Mode...');
                 closeChat();
                 break;
                 
+            case 'clear':
+                clearChatMessages();
+                break;
+                
             case 'settings':
                 if (document.getElementById('chat-container')) {
                     toggleChatSettings();
@@ -578,12 +806,13 @@ console.log('💬 Loading Terminal Chatter Mode...');
         window.terminal.log('', 'output');
         window.terminal.log('  chat open      - Open chat interface', 'output');
         window.terminal.log('  chat close     - Close chat', 'output');
+        window.terminal.log('  chat clear     - Clear all messages', 'output');
         window.terminal.log('  chat settings  - Open chat settings', 'output');
         window.terminal.log('  chat help      - Show this help', 'output');
         window.terminal.log('', 'output');
         window.terminal.log('Features:', 'info');
-        window.terminal.log('  💬 Real-time messaging', 'output');
-        window.terminal.log('  👤 User avatars & usernames', 'output');
+        window.terminal.log('  💬 Real-time messaging across tabs', 'output');
+        window.terminal.log('  👤 ENS username integration', 'output');
         window.terminal.log('  🔊 Sound effects', 'output');
         window.terminal.log('  🔔 Notifications', 'output');
         window.terminal.log('  ⚙️ Customizable settings', 'output');

@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="themes-crypto.css">
     <link rel="stylesheet" href="apple-ui-theme.css">
     <link rel="stylesheet" href="simple-input-fix.css">
+    <link rel="stylesheet" href="mobile-terminal-fix.css">
+    <link rel="stylesheet" href="mobile-games-fix.css">
     <script src="dexscreener-enhanced-fixed.js"></script>
     <script src="dexscreener-analytics-ultimate.js"></script>
     <script src="metamask-connection-fix.js"></script>
@@ -3342,6 +3344,18 @@
                                 this.log('❌ Python system not ready. Please try again.', 'error');
                             }
                             this.log('💡 Commands: python help | python upload | python run <script>', 'info');
+                        }
+                        return;
+                        
+                    case 'pgt':
+                        // PGT Portfolio Tracking Integration
+                        if (window.handlePGTCommand) {
+                            window.handlePGTCommand(args.slice(1));
+                        } else {
+                            this.log('🎯 PGT Portfolio Tracking', 'info');
+                            this.log('📊 Multi-chain wallet tracking and portfolio management', 'info');
+                            this.log('💡 Commands: pgt track | pgt portfolio | pgt wallets | pgt help', 'info');
+                            this.log('⚠️ Note: Use "pgt-demo" for local testing (CORS-free)', 'warning');
                         }
                         return;
                         
