@@ -42,6 +42,7 @@
     <script src="pgt-cors-proxy.js"></script>
     <script src="terminal-games-system.js"></script>
     <script src="simple-terminal-builder.js"></script>
+    <script src="omega-nft-onchain.js"></script>
     <script>
         // VERSION CHECK - This should be visible in console if updated code is loaded
         console.log('🚀 OMEGA TERMINAL VERSION 2.0.1 LOADED');
@@ -1539,7 +1540,7 @@
                         'email', 'inbox', 'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds', 'cg', 'alpha', 'airdrop',
                         'solana', 'eclipse', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'ambassador', 'profile', 'gui',
                         'bot', 'bots', 'py', 'python', 'pgt', 'pgt-demo', 'game', 'play', 'chat', 'near-wallet', 'nearwallet', 'near', 'ref',
-                        'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile', 'terminal'
+                        'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile', 'terminal', 'mint'
                     ];
                     input.addEventListener('keydown', (e) => {
                         // Up arrow: previous command
@@ -3304,12 +3305,24 @@
                     
                     case 'nft':
                     case 'opensea':
-                        // Enhanced NFT commands with full trading capabilities
-                        if (typeof this.handleNFTCommand === 'function') {
-                            await this.handleNFTCommand(args);
+                        // Check if it's a minting command
+                        const nftSubcommand = args[1]?.toLowerCase();
+                        if (nftSubcommand === 'mint' || nftSubcommand === 'collection' || nftSubcommand === 'view' || nftSubcommand === 'list') {
+                            // NFT Minting commands
+                            if (window.handleNFTMintCommand) {
+                                window.handleNFTMintCommand(args.slice(1));
+                            } else {
+                                this.log('❌ NFT Minter not loaded. Please refresh.', 'error');
+                            }
                         } else {
-                            this.log('❌ Enhanced NFT functionality not loaded. Please refresh the page.', 'error');
-                            this.log('💡 Commands: nft setup | nft search | nft assets | nft buy | nft bid', 'info');
+                            // OpenSea trading commands
+                            if (typeof this.handleNFTCommand === 'function') {
+                                await this.handleNFTCommand(args);
+                            } else {
+                                this.log('❌ Enhanced NFT functionality not loaded. Please refresh the page.', 'error');
+                                this.log('💡 Trading: nft setup | nft search | nft assets | nft buy | nft bid', 'info');
+                                this.log('💡 Minting: nft mint | nft collection | nft view <#>', 'info');
+                            }
                         }
                         return;
                     
@@ -3381,6 +3394,15 @@
                             if (!window.simpleTerminalBuilder) {
                                 this.log('❌ Terminal builder not loaded. Please refresh.', 'error');
                             }
+                        }
+                        return;
+                        
+                    case 'mint':
+                        // Shortcut for nft mint
+                        if (window.handleNFTMintCommand) {
+                            window.handleNFTMintCommand(['mint']);
+                        } else {
+                            this.log('❌ NFT Minter not loaded. Please refresh.', 'error');
                         }
                         return;
                         
