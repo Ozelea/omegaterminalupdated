@@ -33,10 +33,13 @@
 
 
 
-    <script src="profile-command-only.js"></script>
+    <script src="enhanced-profile-system.js"></script>
+    <script src="terminal-chatter-mode.js"></script>
     <script src="python-integration-system.js"></script>
-    <script src="pgt-integration-plugin.js"></script>
+    <script src="pgt-integration-live.js"></script>
+    <script src="pgt-cors-proxy.js"></script>
     <script src="terminal-games-system.js"></script>
+    <script src="simple-terminal-builder.js"></script>
     <script>
         // VERSION CHECK - This should be visible in console if updated code is loaded
         console.log('🚀 OMEGA TERMINAL VERSION 2.0.1 LOADED');
@@ -1533,8 +1536,8 @@
                         'send', 'ens', 'mixer', 'stress', 'stopstress', 'stressstats', 'theme', 'rickroll', 'fortune', 'matrix', 'hack', 'disco', 'stop', 'tab',
                         'email', 'inbox', 'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds', 'cg', 'alpha', 'airdrop',
                         'solana', 'eclipse', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'ambassador', 'profile', 'gui',
-                        'bot', 'bots', 'py', 'python', 'pgt', 'game', 'play', 'near-wallet', 'nearwallet', 'near', 'ref',
-                        'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile'
+                        'bot', 'bots', 'py', 'python', 'pgt', 'pgt-demo', 'game', 'play', 'chat', 'near-wallet', 'nearwallet', 'near', 'ref',
+                        'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile', 'terminal'
                     ];
                     input.addEventListener('keydown', (e) => {
                         // Up arrow: previous command
@@ -3308,13 +3311,14 @@
                         }
                         return;
                     
-                    case 'profile':
-                        // User Profile System
-                        if (typeof this.handleProfileCommand === 'function') {
-                            await this.handleProfileCommand(args);
+                    case 'chat':
+                        // Terminal Chatter Mode (Telegram-like chat)
+                        if (window.handleChatCommand) {
+                            window.handleChatCommand(args.slice(1));
                         } else {
-                            this.log('❌ Profile system not loaded. Please refresh the page.', 'error');
-                            this.log('💡 Commands: profile create | profile view | profile settings', 'info');
+                            this.log('💬 Terminal Chatter', 'info');
+                            this.log('🚀 Telegram-like community chat', 'info');
+                            this.log('💡 Commands: chat open | chat settings | chat help', 'info');
                         }
                         return;
                         
@@ -3341,19 +3345,31 @@
                         }
                         return;
                         
-                    case 'pgt':
-                        // PGT Integration System
-                        if (window.omegaPGT && typeof window.handlePGTCommand === 'function') {
-                            window.handlePGTCommand(args.slice(0));
+                    case 'pgt-demo':
+                        // PGT Demo Mode (CORS-free local testing)
+                        if (window.handlePGTDemoCommand) {
+                            window.handlePGTDemoCommand(args.slice(1));
                         } else {
-                            this.log('🎯 PGT (Playground Tools) Integration', 'info');
-                            this.log('📊 Multi-chain portfolio tracking and wallet management', 'info');
-                            this.log('💡 Commands: pgt help | pgt portfolio | pgt wallets', 'info');
-                            if (!window.omegaPGT) {
-                                this.log('❌ PGT integration not loaded. Please refresh.', 'error');
+                            this.log('🎮 PGT Demo Mode', 'info');
+                            this.log('📊 CORS-free local testing for PGT commands', 'info');
+                            this.log('💡 Commands: pgt-demo track | pgt-demo portfolio', 'info');
+                        }
+                        return;
+                        
+                    case 'terminal':
+                        // Simple Terminal Builder System
+                        if (window.simpleTerminalBuilder && typeof window.handleSimpleTerminalCommand === 'function') {
+                            window.handleSimpleTerminalCommand(args.slice(1));
+                        } else {
+                            this.log('🏗️ Simple Terminal Builder', 'info');
+                            this.log('📝 Create custom terminals with custom URLs', 'info');
+                            this.log('💡 Commands: terminal create | terminal list | terminal launch', 'info');
+                            if (!window.simpleTerminalBuilder) {
+                                this.log('❌ Terminal builder not loaded. Please refresh.', 'error');
                             }
                         }
                         return;
+                        
                         
                     case 'hyperliquid':
                         if (args[1] === '-help' || args[1] === 'help') {
@@ -3827,8 +3843,22 @@
                         await this.handleAmbassadorCommand(args);
                         break;
                     case 'profile':
-                        await this.handleProfileCommand(args);
-                        break;
+                        // Enhanced Profile System (ENS, Address Book, Chat, Fullscreen)
+                        if (window.handleEnhancedProfileCommand) {
+                            window.handleEnhancedProfileCommand(args.slice(1));
+                        } else if (window.openEnhancedProfile) {
+                            // Direct fallback to open profile
+                            window.openEnhancedProfile();
+                        } else {
+                            this.log('👤 Enhanced Profile System', 'info');
+                            this.log('🔗 Omega ENS registration & management', 'info');
+                            this.log('📇 Address book for contacts', 'info');
+                            this.log('💬 Terminal Chatter (Telegram-like)', 'info');
+                            this.log('🐍 Python script management', 'info');
+                            this.log('🖥️ Fullscreen profile mode', 'info');
+                            this.log('💡 Commands: profile open | profile help', 'info');
+                        }
+                        return;
                     case 'gui':
                         this.handleGuiCommand(args);
                         break;
@@ -4593,15 +4623,32 @@
                   '</td>' +
                   '</tr></table>', 'output');
                 this.logHtml('<table style="width:100%;border:none;"><tr>' +
-                  '<td style="vertical-align:top;width:50%;padding-right:16px;">' +
+                  '<td style="vertical-align:top;width:33%;padding-right:16px;">' +
                   '<span style="color:#FF6B35">🎯 PGT Portfolio:</span><br>' +
                   '<span style="color:#99ccff">pgt portfolio | pgt wallets | pgt add</span><br>' +
                   '<span style="color:#888888">Multi-chain portfolio tracking</span>' +
                   '</td>' +
+                  '<td style="vertical-align:top;width:50%;padding-right:16px;">' +
+                  '<span style="color:#8B5CF6">🏗️ Terminal Builder:</span><br>' +
+                  '<span style="color:#99ccff">terminal create | list | launch</span><br>' +
+                  '<span style="color:#888888">Create custom terminals with URLs</span>' +
+                  '</td>' +
                   '<td style="vertical-align:top;width:50%;">' +
+                  '<span style="color:#F59E0B">🎮 Games:</span><br>' +
+                  '<span style="color:#99ccff">game list | play snake | play pacman</span><br>' +
+                  '<span style="color:#888888">Interactive popup games</span>' +
+                  '</td>' +
+                  '</tr></table>', 'output');
+                this.logHtml('<table style="width:100%;border:none;"><tr>' +
+                  '<td style="vertical-align:top;width:50%;padding-right:16px;">' +
                   '<span style="color:#96CEB4">🔵 NEAR Wallet:</span><br>' +
                   '<span style="color:#99ccff">near connect | balance | swap</span><br>' +
                   '<span style="color:#888888">NEAR ecosystem integration</span>' +
+                  '</td>' +
+                  '<td style="vertical-align:top;width:50%;">' +
+                  '<span style="color:#FF6B6B">🍎 Modern UI:</span><br>' +
+                  '<span style="color:#99ccff">modern ui | modern-dark</span><br>' +
+                  '<span style="color:#888888">Apple-style glass-morphism</span>' +
                   '</td>' +
                   '</tr></table>', 'output');
                 this.logHtml('<table style="width:100%;border:none;"><tr>' +
@@ -6651,68 +6698,22 @@
                 }
             }
 
-            // 👤 PROFILE COMMAND HANDLER
+            // 👤 PROFILE COMMAND HANDLER - Enhanced Profile System
             async handleProfileCommand(args) {
-                if (!args || args.length < 2) {
-                    this.log('👤 OMEGA NETWORK USER PROFILE COMMANDS', 'info');
-                    this.log('══════════════════════════════════════════', 'info');
-                    this.log('', 'info');
-                    this.log('📋 BASIC COMMANDS:', 'info');
-                    this.log('  profile                          View your profile', 'output');
-                    this.log('  profile view [address]           View specific user profile', 'output');
-                    this.log('  profile register                 Register/setup your profile', 'output');
-                    this.log('  profile update                   Update your existing profile', 'output');
-                    this.log('  profile activity                 View your activity history', 'output');
-                    this.log('  profile debug [address]          Debug profile data (local vs production)', 'output');
-                    this.log('  profile test                     Test profile endpoints', 'output');
-                    this.log('', 'info');
-                    this.log('🎯 EXAMPLES:', 'info');
-                    this.log('  profile                          # Your profile (if connected)', 'info');
-                    this.log('  profile view 0x1234...           # View someone else\'s profile', 'info');
-                    this.log('  profile register                 # Start guided profile setup', 'info');
-                    this.log('  profile update                   # Update your existing profile', 'info');
-                    this.log('', 'info');
-                    this.log('💡 Tip: Connect your wallet first for personalized commands!', 'success');
-                    return;
-                }
-
-                const subCommand = args[1].toLowerCase();
-                
-                try {
-                    switch (subCommand) {
-                        case 'view':
-                            await this.getUserProfile(args[2]);
-                            break;
-                        case 'register':
-                            await this.registerUserProfile();
-                            break;
-                        case 'update':
-                            await this.updateUserProfile();
-                            break;
-                        case 'activity':
-                            await this.getUserActivity(args[2]);
-                            break;
-                        case 'debug':
-                            await this.debugUserProfile(args[2]);
-                            break;
-                        case 'test':
-                            await this.testProfileEndpoints();
-                            break;
-                        case 'help':
-                            await this.handleProfileCommand([]);
-                            break;
-                        default:
-                            // If no subcommand, show user's own profile
-                            if (args.length === 1) {
-                                await this.getUserProfile();
-                            } else {
-                                this.log(`❌ Unknown profile command: ${subCommand}`, 'error');
-                                this.log('Type "profile help" for available commands', 'info');
-                            }
-                    }
-                } catch (error) {
-                    console.error('Profile command error:', error);
-                    this.log(`❌ Profile command failed: ${error.message}`, 'error');
+                // Use the enhanced profile system
+                if (window.handleEnhancedProfileCommand) {
+                    window.handleEnhancedProfileCommand(args.slice(1));
+                } else if (window.openEnhancedProfile) {
+                    // Direct fallback to open profile
+                    window.openEnhancedProfile();
+                } else {
+                    this.log('👤 Enhanced Profile System', 'info');
+                    this.log('🔗 Omega ENS registration & management', 'info');
+                    this.log('📇 Address book for contacts', 'info');
+                    this.log('💬 Terminal Chatter (Telegram-like)', 'info');
+                    this.log('🐍 Python script management', 'info');
+                    this.log('🖥️ Fullscreen profile mode', 'info');
+                    this.log('💡 Commands: profile open | profile help', 'info');
                 }
             }
 
