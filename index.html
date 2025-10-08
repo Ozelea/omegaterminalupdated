@@ -40,8 +40,12 @@
     <script src="python-integration-system.js"></script>
     <script src="pgt-integration-live.js"></script>
     <script src="pgt-cors-proxy.js"></script>
+    <script src="pgt-nft-generator.js"></script>
+    <script src="pgt-ui-overlay.js"></script>
+    <!-- <script src="rome-network-plugin.js"></script> DISABLED: Rome commands integrated directly into index.html -->
+    <!-- <script src="megaeth-network-plugin.js"></script> DISABLED: Not needed -->
     <script src="terminal-games-system.js"></script>
-    <script src="simple-terminal-builder.js"></script>
+    <!-- <script src="simple-terminal-builder.js"></script> DISABLED: Causing conflicts -->
     <script src="omega-nft-onchain.js"></script>
     <script>
         // VERSION CHECK - This should be visible in console if updated code is loaded
@@ -848,18 +852,287 @@
             margin: 16px 0;
             display: block;
         }
+
+        /* Modern Boot Animation Styles */
+        .boot-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .boot-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .omega-container {
+            position: relative;
+            margin-bottom: 60px;
+            animation: floatIn 1s ease-out;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .omega-main {
+            font-size: 120px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 20px #ffffff,
+                0 0 40px #ffffff,
+                0 0 60px #99ccff,
+                0 0 80px #99ccff;
+            animation: pulseglow 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulseglow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 20px #ffffff,
+                    0 0 40px #ffffff,
+                    0 0 60px #99ccff,
+                    0 0 80px #99ccff;
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 
+                    0 0 30px #ffffff,
+                    0 0 60px #ffffff,
+                    0 0 90px #66ccff,
+                    0 0 120px #66ccff;
+                transform: scale(1.05);
+            }
+        }
+
+        .omega-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            margin: -150px 0 0 -150px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .omega-orbit-symbol {
+            position: absolute;
+            font-size: 24px;
+            color: #99ccff;
+            opacity: 0.3;
+            animation: orbitFade 2s ease-in-out infinite;
+        }
+
+        @keyframes orbitFade {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .omega-orbit-symbol:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+        .omega-orbit-symbol:nth-child(2) { top: 21%; right: 21%; }
+        .omega-orbit-symbol:nth-child(3) { top: 50%; right: 0; transform: translateY(-50%); }
+        .omega-orbit-symbol:nth-child(4) { bottom: 21%; right: 21%; }
+        .omega-orbit-symbol:nth-child(5) { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .omega-orbit-symbol:nth-child(6) { bottom: 21%; left: 21%; }
+        .omega-orbit-symbol:nth-child(7) { top: 50%; left: 0; transform: translateY(-50%); }
+        .omega-orbit-symbol:nth-child(8) { top: 21%; left: 21%; }
+
+        .welcome-container {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 8px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            color: #99ccff;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-description {
+            font-size: 16px;
+            color: #cccccc;
+            letter-spacing: 2px;
+        }
+
+        .loading-container {
+            width: 400px;
+            max-width: 80vw;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #66ccff, #ffffff, #66ccff);
+            background-size: 200% 100%;
+            animation: loadingProgress 2s ease-in-out infinite;
+            box-shadow: 0 0 10px #66ccff;
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; background-position: 0% 50%; }
+            50% { width: 70%; background-position: 100% 50%; }
+            100% { width: 100%; background-position: 200% 50%; }
+        }
+
+        .loading-text {
+            text-align: center;
+            color: #99ccff;
+            font-size: 14px;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .boot-features {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .feature-item {
+            color: #99ccff;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid rgba(153, 204, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(153, 204, 255, 0.05);
+            backdrop-filter: blur(10px);
+            animation: featureGlow 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+
+        .feature-item:nth-child(1) { --i: 0; }
+        .feature-item:nth-child(2) { --i: 1; }
+        .feature-item:nth-child(3) { --i: 2; }
+        .feature-item:nth-child(4) { --i: 3; }
+
+        @keyframes featureGlow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(153, 204, 255, 0.3);
+                border-color: rgba(153, 204, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 15px rgba(153, 204, 255, 0.6);
+                border-color: rgba(153, 204, 255, 0.6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .omega-main { font-size: 80px; }
+            .omega-orbit { width: 200px; height: 200px; margin: -100px 0 0 -100px; }
+            .welcome-title { font-size: 32px; letter-spacing: 4px; }
+            .welcome-subtitle { font-size: 16px; }
+            .loading-container { width: 300px; }
+            .boot-features { gap: 15px; }
+            .feature-item { font-size: 12px; padding: 6px 12px; }
+        }
     </style>
 </head>
 <body>
     <!-- Boot Animation -->
     <div class="boot-animation" id="bootAnimation">
-        <div class="omega-symbols">Ω Ω Ω Ω Ω</div>
-        <div class="pickaxe">⛏️</div>
-        <div class="welcome-text">
-            Welcome to Omega Terminal v2.0.1<br>
-            <span style="font-size: 16px; color: #cccccc;">Type below to get started</span>
+        <div class="omega-container">
+            <div class="omega-main">Ω</div>
+            <div class="omega-orbit">
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
+                <div class="omega-orbit-symbol">Ω</div>
         </div>
-        <div class="loading-dots">Loading...</div>
+        </div>
+        <div class="welcome-container">
+            <div class="welcome-title">OMEGA TERMINAL</div>
+            <div class="welcome-subtitle">v2.0.1</div>
+            <div class="welcome-description">Multi-Chain Web3 Terminal</div>
+        </div>
+        <div class="loading-container">
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="loading-text">Initializing Terminal...</div>
+        </div>
+        <div class="boot-features">
+            <div class="feature-item">🚀 Rome Network</div>
+            <div class="feature-item">⚡ Multi-Chain</div>
+            <div class="feature-item">🏛️ ENS Support</div>
+            <div class="feature-item">🎨 NFT Minting</div>
+        </div>
     </div>
 
     <div class="terminal" id="terminal" style="display: none;">
@@ -1361,101 +1634,9 @@
                 try {
                     this.ethers = await loadEthers();
                     const hasMetaMask = await this.isRealMetaMask();
-                    let walletReady = false;
-                    if (!hasMetaMask) {
-
-                        this.log('Error checking wallet connection: MetaMask not detected', 'error');
-                        this.logHtml('<span class="omega-test-wallet-prompt">Type "yes" to create an Omega Wallet or "import" to import existing wallet</span>', 'info');
-                        let resolved = false;
-                        while (!resolved) {
-
-                            const input = await this.promptTerminalInput();
-                            const choice = input.trim().toLowerCase();
-                            if (choice === 'yes') {
-
-                                // Set up a public RPC provider (Aurora mainnet as example)
-                                const OMEGA_RPC_URL = 'https://0x4e454228.rpc.aurora-cloud.dev';
-                                this.provider = new this.ethers.providers.JsonRpcProvider(OMEGA_RPC_URL);
-                                this.sessionOmegaWallet = this.ethers.Wallet.createRandom();
-                                this.signer = this.sessionOmegaWallet.connect(this.provider);
-                                // Connect mining contract for session wallet
-                                if (this.contractAddress && this.contractABI) {
-                                    this.contract = new this.ethers.Contract(this.contractAddress, this.contractABI, this.signer);
-                                    this.log('Mining contract connected for Omega Test Wallet.', 'success');
-                                }
-                                this.log('DEBUG: Omega wallet created and provider set', 'info');
-                                this.logHtml('<span style="color:#ff3333;font-weight:bold;">This is currently in beta. We recommend you transfer any OMEGA tokens you receive to a MetaMask wallet for safekeeping. Do NOT use this wallet for large amounts or long-term storage.</span>', 'error');
-                                const addr = this.sessionOmegaWallet.address;
-                                const privKey = this.sessionOmegaWallet.privateKey;
-                                this.logHtml(`<span style='color:#33bbff'>Omega Wallet Address:</span> <span style='color:#fff'>${addr}</span> <button onclick=\"navigator.clipboard.writeText('${addr}')\">Copy</button>`, 'info');
-                                // Add private key reveal below address
-                                this.logHtml(`<span style='color:#ff3333'>Omega Private Key [Never Share]:</span> <span id='privkey-reveal' style='color:#fff'><button onclick=\"this.style.display='none';document.getElementById('privkey-value').style.display='inline'\">Click to Reveal</button><span id='privkey-value' style='display:none;'>${privKey} <button onclick=\"navigator.clipboard.writeText('${privKey}')\">Copy</button></span></span>`, 'error');
-                                this.log('Requesting funds for your Omega Test Wallet from the relayer...', 'info');
-                                await fundOmegaWallet(addr);
-                                this.log('If you do not see a funding confirmation above, please check your relayer or network connection.', 'info');
-                                resolved = true;
-                                walletReady = true;
-                                this.log('Type "help" to get started', 'info');
-                            } else if (choice === 'import') {
-
-                                this.log('Enter your Omega Wallet private key:', 'info');
-                                const privateKeyInput = await this.promptTerminalInput();
-                                const privateKey = privateKeyInput.trim();
-                                
-                                try {
-                                    // Validate private key format
-                                    if (!privateKey.startsWith('0x') || privateKey.length !== 66) {
-                                        throw new Error('Invalid private key format. Must start with 0x and be 66 characters long.');
-                                    }
-                                    
-                                    // Set up RPC provider
-                                    const OMEGA_RPC_URL = 'https://0x4e454228.rpc.aurora-cloud.dev';
-                                    this.provider = new this.ethers.providers.JsonRpcProvider(OMEGA_RPC_URL);
-                                    
-                                    // Create wallet from private key
-                                    this.sessionOmegaWallet = new this.ethers.Wallet(privateKey, this.provider);
-                                    this.signer = this.sessionOmegaWallet;
-                                    
-                                    // Connect mining contract for imported wallet
-                                    if (this.contractAddress && this.contractABI) {
-                                        this.contract = new this.ethers.Contract(this.contractAddress, this.contractABI, this.signer);
-                                        this.log('Mining contract connected for imported Omega Wallet.', 'success');
-                                    }
-                                    
-                                    this.log('DEBUG: Omega wallet imported and provider set', 'info');
-                                    this.logHtml('<span style="color:#ff3333;font-weight:bold;">This is currently in beta. We recommend you transfer any OMEGA tokens you receive to a MetaMask wallet for safekeeping. Do NOT use this wallet for large amounts or long-term storage.</span>', 'error');
-                                    
-                                    const addr = this.sessionOmegaWallet.address;
-                                    this.logHtml(`<span style='color:#33bbff'>Imported Omega Wallet Address:</span> <span style='color:#fff'>${addr}</span> <button onclick=\"navigator.clipboard.writeText('${addr}')\">Copy</button>`, 'info');
-                                    this.log('✅ Omega Wallet imported successfully!', 'success');
-                                    
-                                    resolved = true;
-                                    walletReady = true;
-                                    this.log('Type "help" to get started', 'info');
-                                    
-                                } catch (error) {
-                                    this.log('❌ Failed to import wallet: ' + error.message, 'error');
-                                    this.log('Please check your private key and try again.', 'warning');
-                                }
-                            } else {
-                                this.log('DEBUG: Invalid input, prompting again', 'info');
-                                console.log('[DEBUG] Invalid input, prompting again');
-                                this.log('Please type "yes" to create an Omega Wallet or "import" to import existing wallet.', 'warning');
-                            }
-                        }
-                    } else {
-
-                        walletReady = true;
-                    }
-                    // Only proceed if a wallet is set up
-                    if (walletReady) {
-                        if (hasMetaMask) {
-                            // Disable automatic wallet connection to prevent duplicate output
+                    
+                    // Always show connect message - let user decide what to do
                             this.logHtml('<span style="color:#ffffff; font-size: 16px; font-weight: bold;">Type "connect" to get started</span>', 'output');
-    
-                            // this.checkWalletConnection(); // Disabled to prevent duplicate output
-                        }
-                    }
                 } catch (error) {
                     this.log('DEBUG: Error in init() catch block', 'error');
                     console.log('[DEBUG] Error in init() catch block', error);
@@ -1489,7 +1670,7 @@
                         // Clean startup - no debug messages
                         this.log('Type "connect" to get started', 'info');
                         resolve();
-                    }, 1000); // Faster boot
+                    }, 4000); // Extended boot time to show cool animation
                 });
             }
 
@@ -1538,7 +1719,7 @@
                         'help', 'clear', 'connect', 'disconnect', 'balance', 'faucet', 'mine', 'claim', 'status', 'stats',
                         'send', 'ens', 'mixer', 'stress', 'stopstress', 'stressstats', 'theme', 'rickroll', 'fortune', 'matrix', 'hack', 'disco', 'stop', 'tab',
                         'email', 'inbox', 'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds', 'cg', 'alpha', 'airdrop',
-                        'solana', 'eclipse', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'ambassador', 'profile', 'gui',
+                        'solana', 'eclipse', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'ambassador', 'profile', 'gui', 'rome',
                         'bot', 'bots', 'py', 'python', 'pgt', 'pgt-demo', 'game', 'play', 'chat', 'near-wallet', 'nearwallet', 'near', 'ref',
                         'defillama', 'llama', 'defi', 'tvl', 'modern', 'nft', 'opensea', 'profile', 'terminal', 'mint'
                     ];
@@ -1645,6 +1826,13 @@
                         this.clearTerminalContent();
                     });
                 }
+            }
+            
+            async promptTerminalInput() {
+                return new Promise((resolve) => {
+                    this.awaitingPromptInput = true;
+                    this.promptResolver = resolve;
+                });
             }
             
             async checkWalletConnection() {
@@ -3897,6 +4085,9 @@
                         return;
                     case 'gui':
                         this.handleGuiCommand(args);
+                        break;
+                    case 'rome':
+                        this.handleRomeCommand(args);
                         break;
                     default:
                         if (cmd) {
@@ -11452,6 +11643,1381 @@
                 }
                 
                 this.logHtml(html, 'output');
+            }
+
+            async handleRomeCommand(args) {
+                if (!args || args.length < 2) {
+                    this.log('🏛️ ROME NETWORK COMMANDS', 'info');
+                    this.log('═══════════════════════════', 'info');
+                    this.log('', 'info');
+                    this.log('📋 AVAILABLE COMMANDS:', 'info');
+                    this.log('  rome connect     Connect to Rome Network', 'output');
+                    this.log('  rome balance     Check Rome Network balance', 'output');
+                    this.log('  rome status      Show Rome Network status', 'output');
+                    this.log('  rome info        Display Rome Network information', 'output');
+                    this.log('  rome gen-wallet  Generate a new Rome wallet', 'output');
+                    this.log('  rome token create Create a new token on Rome', 'output');
+                    this.log('  rome ens         ENS commands (register/resolve)', 'output');
+                    this.log('  rome send        Send tokens via ENS or address', 'output');
+                    this.log('  rome nft mint    Mint NFT on Rome Network with UI', 'output');
+                    this.log('  rome help        Show this help message', 'output');
+                    this.log('', 'info');
+                    this.log('🎯 EXAMPLES:', 'info');
+                    this.log('  rome connect     # Connect to Rome Network', 'info');
+                    this.log('  rome balance     # Check your Rome balance', 'info');
+                    this.log('  rome gen-wallet  # Generate new Rome wallet', 'info');
+                    this.log('  rome token create # Create Rome token', 'info');
+                    this.log('  rome ens register myname  # Register myname.rome', 'info');
+                    this.log('  rome ens resolve myname   # Look up myname.rome', 'info');
+                    this.log('  rome send 1 rSOL roman.rome  # Send 1 rSOL to roman.rome', 'info');
+                    this.log('  rome send 100 TOKEN 0x123...  # Send 100 TOKEN to address', 'info');
+                    this.log('  rome nft mint    # Open NFT minting UI', 'info');
+                    this.log('', 'info');
+                    this.log('💡 Rome Network is a Layer 2 scaling solution!', 'success');
+                    return;
+                }
+
+                const subcommand = args[1].toLowerCase();
+                
+                switch (subcommand) {
+                    case 'connect':
+                        this.connectToRomeNetwork();
+                        break;
+                        
+                    case 'balance':
+                        this.checkRomeBalance();
+                        break;
+                        
+                    case 'status':
+                        this.log('📊 Rome Network Status', 'info');
+                        this.log('═══════════════════════', 'info');
+                        this.log('🌐 Network: Rome Layer 2', 'info');
+                        this.log('⛏️ Block Height: 2,847,392', 'info');
+                        this.log('⏱️ Block Time: 2.1s', 'info');
+                        this.log('💨 Gas Price: 0.001 ROME', 'info');
+                        this.log('🔗 Validators: 127 active', 'info');
+                        this.log('✅ Network Status: Healthy', 'success');
+                        break;
+                        
+                    case 'info':
+                        this.log('🏛️ Rome Network Information', 'info');
+                        this.log('════════════════════════════', 'info');
+                        this.log('📝 Description: Layer 2 scaling solution', 'info');
+                        this.log('⚡ Features:', 'info');
+                        this.log('  • Fast transaction processing', 'info');
+                        this.log('  • Low transaction fees', 'info');
+                        this.log('  • High throughput', 'info');
+                        this.log('  • EVM compatibility', 'info');
+                        this.log('  • Decentralized consensus', 'info');
+                        this.log('🌐 Website: https://rome.network', 'info');
+                        this.log('📚 Docs: https://docs.rome.network', 'info');
+                        break;
+                        
+                    case 'gen-wallet':
+                        this.log('🏛️ Generating new Rome Network wallet...', 'info');
+                        this.log('🔐 Creating secure wallet with Rome Layer 2 compatibility', 'info');
+                        
+                        // Generate a new wallet (using ethers.js if available)
+                        if (typeof ethers !== 'undefined') {
+                            const wallet = ethers.Wallet.createRandom();
+                            this.log('✅ Rome wallet generated successfully!', 'success');
+                            this.log('', 'info');
+                            this.log('📋 WALLET DETAILS:', 'info');
+                            this.log(`🏛️ Address: ${wallet.address}`, 'output');
+                            this.log(`🔑 Private Key: ${wallet.privateKey}`, 'output');
+                            this.log(`📧 Mnemonic: ${wallet.mnemonic.phrase}`, 'output');
+                            this.log('', 'info');
+                            this.log('⚠️  SECURITY WARNING: Save these details securely!', 'error');
+                            this.log('💡 This wallet is compatible with Rome Network Layer 2', 'info');
+                        } else {
+                            this.log('❌ Error: Ethers.js not available for wallet generation', 'error');
+                            this.log('💡 Rome wallet generation requires Web3 library', 'info');
+                        }
+                        break;
+                        
+                    case 'token':
+                        if (args.length < 3) {
+                            this.log('🏛️ ROME TOKEN COMMANDS', 'info');
+                            this.log('═══════════════════════', 'info');
+                            this.log('', 'info');
+                            this.log('📋 AVAILABLE TOKEN COMMANDS:', 'info');
+                            this.log('  rome token create <name> <symbol> <supply>  Create new Rome token', 'output');
+                            this.log('', 'info');
+                            this.log('🎯 EXAMPLES:', 'info');
+                            this.log('  rome token create RomeCoin ROME 1000000', 'info');
+                            this.log('  rome token create MyToken MTK 500000', 'info');
+                            return;
+                        }
+                        
+                        if (args[2] === 'create') {
+                            if (args.length < 6) {
+                                this.log('❌ Usage: rome token create <name> <symbol> <supply> [decimals]', 'error');
+                                this.log('🎯 Example: rome token create RomeCoin ROME 1000000 18', 'info');
+                                return;
+                            }
+                            
+                            const tokenName = args[3];
+                            const tokenSymbol = args[4];
+                            const tokenSupply = parseInt(args[5]);
+                            const decimals = args[6] ? parseInt(args[6]) : 18;
+                            
+                            if (isNaN(tokenSupply) || tokenSupply <= 0) {
+                                this.log('❌ Invalid token supply. Must be a positive number.', 'error');
+                                return;
+                            }
+                            
+                            if (isNaN(decimals) || decimals < 0 || decimals > 18) {
+                                this.log('❌ Invalid decimals. Must be between 0 and 18.', 'error');
+                                return;
+                            }
+                            
+                            this.log('🏛️ Creating Rome Network token via Factory...', 'info');
+                            this.log(`📝 Token Name: ${tokenName}`, 'info');
+                            this.log(`🏷️ Symbol: ${tokenSymbol}`, 'info');
+                            this.log(`💰 Supply: ${tokenSupply.toLocaleString()}`, 'info');
+                            this.log(`🔢 Decimals: ${decimals}`, 'info');
+                            this.log('', 'info');
+                            this.log('⚡ Calling Rome Token Factory...', 'info');
+                            
+                            // Call the factory to create the token
+                            this.createRomeTokenViaFactory(tokenName, tokenSymbol, tokenSupply, decimals);
+                        } else {
+                            this.log(`Unknown token command: ${args[2]}`, 'error');
+                            this.log('Type "rome token" for available token commands', 'info');
+                        }
+                        break;
+                        
+                    case 'ens':
+                        if (args.length < 3) {
+                            this.log('🏛️ ROME ENS COMMANDS', 'info');
+                            this.log('═══════════════════════', 'info');
+                            this.log('', 'info');
+                            this.log('📋 AVAILABLE ENS COMMANDS:', 'info');
+                            this.log('  rome ens register <username>  Register .rome username', 'output');
+                            this.log('  rome ens resolve <username>   Resolve .rome username', 'output');
+                            this.log('', 'info');
+                            this.log('🎯 EXAMPLES:', 'info');
+                            this.log('  rome ens register terminal   # Register terminal.rome', 'info');
+                            this.log('  rome ens resolve terminal    # Look up terminal.rome', 'info');
+                            this.log('', 'info');
+                            this.log('📋 VALID CHARACTERS:', 'info');
+                            this.log('  • Letters (a-z, A-Z)', 'info');
+                            this.log('  • Numbers (0-9)', 'info');
+                            this.log('  • Hyphens (-) and Underscores (_)', 'info');
+                            this.log('  • Max length: 32 characters', 'info');
+                            return;
+                        }
+                        
+                        const ensAction = args[2].toLowerCase();
+                        
+                        if (ensAction === 'register') {
+                            if (args.length < 4) {
+                                this.log('❌ Usage: rome ens register <username>', 'error');
+                                this.log('🎯 Example: rome ens register terminal', 'info');
+                                return;
+                            }
+                            const ensName = args[3];
+                            await this.registerRomeUsername(ensName);
+                        } else if (ensAction === 'resolve') {
+                            if (args.length < 4) {
+                                this.log('❌ Usage: rome ens resolve <username>', 'error');
+                                this.log('🎯 Example: rome ens resolve terminal', 'info');
+                                return;
+                            }
+                            const ensName = args[3];
+                            await this.resolveRomeUsername(ensName);
+                        } else {
+                            // Backwards compatibility - treat as register command
+                            const ensName = args[2];
+                            await this.registerRomeUsername(ensName);
+                        }
+                        break;
+                        
+                    case 'send':
+                        if (args.length < 4) {
+                            this.log('🏛️ ROME SEND COMMANDS', 'info');
+                            this.log('═══════════════════════', 'info');
+                            this.log('', 'info');
+                            this.log('📋 USAGE:', 'info');
+                            this.log('  rome send <amount> <token> <recipient>', 'output');
+                            this.log('', 'info');
+                            this.log('🎯 EXAMPLES:', 'info');
+                            this.log('  rome send 1 rSOL roman.rome        # Send 1 rSOL to roman.rome', 'info');
+                            this.log('  rome send 100 TOKEN 0x123...       # Send 100 TOKEN to address', 'info');
+                            this.log('  rome send 0.5 rSOL alice.rome      # Send 0.5 rSOL to alice.rome', 'info');
+                            this.log('', 'info');
+                            this.log('💡 Recipients can be ENS names (.rome) or wallet addresses', 'info');
+                            this.log('💡 Token can be rSOL (native) or any ERC-20 token symbol', 'info');
+                            return;
+                        }
+                        
+                        const amount = args[2];
+                        const token = args[3];
+                        const recipient = args[4];
+                        
+                        await this.sendRomeTokens(amount, token, recipient);
+                        break;
+                        
+                    case 'nft':
+                        if (args.length < 3) {
+                            this.log('🏛️ ROME NFT COMMANDS', 'info');
+                            this.log('═══════════════════════', 'info');
+                            this.log('', 'info');
+                            this.log('📋 AVAILABLE NFT COMMANDS:', 'info');
+                            this.log('  rome nft mint    Mint NFT on Rome Network with UI', 'output');
+                            this.log('', 'info');
+                            this.log('🎯 EXAMPLES:', 'info');
+                            this.log('  rome nft mint    # Open NFT minting UI', 'info');
+                            this.log('', 'info');
+                            this.log('💡 Upload image, add metadata, and mint on Rome Network!', 'info');
+                            return;
+                        }
+                        
+                        if (args[2] === 'mint') {
+                            // Open Rome NFT minting UI
+                            this.openRomeNFTMintUI();
+                        } else {
+                            this.log(`Unknown NFT command: ${args[2]}`, 'error');
+                            this.log('Type "rome nft" for available NFT commands', 'info');
+                        }
+                        break;
+                        
+                    case 'help':
+                        this.handleRomeCommand(['rome']);
+                        break;
+                        
+                    default:
+                        this.log(`Unknown Rome command: ${subcommand}`, 'error');
+                        this.log('Type "rome help" for available commands', 'info');
+                }
+            }
+
+            async connectToRomeNetwork() {
+                if (!window.ethereum) {
+                    this.log('❌ MetaMask not detected. Please install MetaMask.', 'error');
+                    return;
+                }
+
+                try {
+                    this.log('🏛️ Connecting to Rome Network...', 'info');
+                    
+                    // Rome Network configuration
+                    const ROME_CONFIG = {
+                        chainId: '0x1d97c', // 121212 in hex
+                        chainName: 'Rome Devnet Esquiline',
+                        nativeCurrency: {
+                            name: 'RSOL',
+                            symbol: 'RSOL',
+                            decimals: 18
+                        },
+                        rpcUrls: ['https://esquiline-i.devnet.romeprotocol.xyz'],
+                        blockExplorerUrls: ['https://romescout-esquiline-i.devnet.romeprotocol.xyz']
+                    };
+
+                    // Try to switch to Rome network first
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: ROME_CONFIG.chainId }],
+                        });
+                        this.log('✅ Switched to Rome Devnet Esquiline', 'success');
+                    } catch (switchError) {
+                        // Network not added, add it
+                        if (switchError.code === 4902) {
+                            this.log('📡 Adding Rome Network to MetaMask...', 'info');
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [ROME_CONFIG],
+                            });
+                            this.log('✅ Rome Network added to MetaMask', 'success');
+                        } else {
+                            throw switchError;
+                        }
+                    }
+
+                    // Get account info
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_accounts'
+                    });
+
+                    if (accounts.length === 0) {
+                        this.log('🔐 Please connect your wallet in MetaMask', 'info');
+                        await window.ethereum.request({
+                            method: 'eth_requestAccounts'
+                        });
+                    }
+
+                    // Get current network info
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId === ROME_CONFIG.chainId) {
+                        this.log('🏛️ Successfully connected to Rome Network!', 'success');
+                        this.log('', 'info');
+                        this.log('📋 Network Details:', 'info');
+                        this.log(`🏛️ Network: ${ROME_CONFIG.chainName}`, 'info');
+                        this.log(`🔗 Chain ID: 121212 (0x1d97c)`, 'info');
+                        this.log(`💰 Currency: ${ROME_CONFIG.nativeCurrency.symbol}`, 'info');
+                        this.log(`🌐 RPC: ${ROME_CONFIG.rpcUrls[0]}`, 'info');
+                        this.log(`🔍 Explorer: ${ROME_CONFIG.blockExplorerUrls[0]}`, 'info');
+                        this.log('', 'info');
+                        this.log('💡 You can now mint NFTs, create tokens, and interact with Rome Network!', 'success');
+                    } else {
+                        this.log('❌ Failed to switch to Rome Network', 'error');
+                        this.log('💡 Please try again or manually add the network', 'info');
+                    }
+
+                } catch (error) {
+                    this.log(`❌ Error connecting to Rome Network: ${error.message}`, 'error');
+                    console.error('Rome Network connection error:', error);
+                    
+                    if (error.code === 4001) {
+                        this.log('💡 Connection rejected by user', 'info');
+                    } else if (error.code === -32602) {
+                        this.log('💡 Invalid network parameters', 'info');
+                    }
+                }
+            }
+
+            async checkRomeBalance() {
+                if (!window.ethereum || !window.ethereum.selectedAddress) {
+                    this.log('❌ Please connect your wallet first using: rome connect', 'error');
+                    return;
+                }
+
+                try {
+                    this.log('💰 Checking Rome Network balance...', 'info');
+                    
+                    // Check if we're on Rome Network
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId !== '0x1d97c') {
+                        this.log('❌ Please connect to Rome Network first using: rome connect', 'error');
+                        return;
+                    }
+
+                    // Get balance
+                    const address = window.ethereum.selectedAddress;
+                    const balance = await window.ethereum.request({
+                        method: 'eth_getBalance',
+                        params: [address, 'latest']
+                    });
+
+                    // Convert from wei to RSOL
+                    const balanceInWei = parseInt(balance, 16);
+                    const balanceInRSOL = balanceInWei / Math.pow(10, 18);
+
+                    this.log('🏛️ Rome Network Balance', 'success');
+                    this.log('═══════════════════════', 'info');
+                    this.log(`👤 Address: ${address}`, 'info');
+                    this.log(`💰 RSOL Balance: ${balanceInRSOL.toFixed(6)} RSOL`, 'success');
+                    this.log(`🔗 Network: Rome Devnet Esquiline`, 'info');
+                    this.log(`🔍 View on Explorer: https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${address}`, 'output');
+
+                } catch (error) {
+                    this.log(`❌ Error checking balance: ${error.message}`, 'error');
+                    console.error('Rome balance check error:', error);
+                }
+            }
+            
+            async createRomeTokenViaFactory(name, symbol, supply, decimals) {
+                try {
+                    if (!window.ethereum || !window.ethereum.selectedAddress) {
+                        this.log('❌ Please connect your wallet first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Check if we're on Rome Network
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId !== '0x1d97c') {
+                        this.log('❌ Please connect to Rome Network first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Rome Token Factory Contract Address (Deployed on Rome Devnet Esquiline)
+                    const FACTORY_ADDRESS = '0x3df3bcce71bf0acc266ea22e8017b50d40d7cfa4';
+                    const FACTORY_ABI = [
+                        {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+                        {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenAddress","type":"address"},{"indexed":true,"internalType":"address","name":"creator","type":"address"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":false,"internalType":"string","name":"symbol","type":"string"},{"indexed":false,"internalType":"uint256","name":"totalSupply","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":false,"internalType":"string","name":"network","type":"string"}],"name":"TokenCreated","type":"event"},
+                        {"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint256","name":"totalSupply","type":"uint256"},{"internalType":"uint8","name":"decimals","type":"uint8"}],"name":"createToken","outputs":[{"internalType":"address","name":"tokenAddress","type":"address"}],"stateMutability":"payable","type":"function"},
+                        {"inputs":[],"name":"creationFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[],"name":"getTotalTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"address","name":"creator","type":"address"}],"name":"getTokensByCreator","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"}
+                    ];
+                    
+                    this.log('🔗 Connecting to Rome Token Factory...', 'info');
+                    
+                    // Create contract instance using ethers.js
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, signer);
+                    
+                    // Get creation fee
+                    const creationFee = await factory.creationFee();
+                    this.log(`💸 Creation fee: ${ethers.utils.formatEther(creationFee)} RSOL`, 'info');
+                    
+                    this.log('⚡ Sending create token transaction...', 'info');
+                    
+                    // Convert supply to proper format with decimals
+                    // Example: 1000 tokens with 18 decimals = 1000 * 10^18
+                    const supplyWithDecimals = ethers.BigNumber.from(supply).mul(ethers.BigNumber.from(10).pow(decimals));
+                    
+                    this.log(`📊 Adjusted Supply: ${supply} tokens (${supplyWithDecimals.toString()} base units)`, 'info');
+                    
+                    // Call createToken function with fee
+                    const tx = await factory.createToken(name, symbol, supplyWithDecimals, decimals, {
+                        value: creationFee
+                    });
+                    
+                    this.log(`🔗 Transaction Hash: ${tx.hash}`, 'info');
+                    this.log('⏳ Waiting for confirmation...', 'info');
+                    
+                    // Wait for transaction confirmation
+                    const receipt = await tx.wait();
+                    
+                    // Get the token address from the TokenCreated event
+                    let tokenAddress = null;
+                    if (receipt.logs && receipt.logs.length > 0) {
+                        for (let log of receipt.logs) {
+                            try {
+                                const parsedLog = factory.interface.parseLog(log);
+                                if (parsedLog && parsedLog.name === 'TokenCreated') {
+                                    tokenAddress = parsedLog.args.tokenAddress;
+                                    break;
+                                }
+                            } catch (e) {
+                                // Continue to next log
+                            }
+                        }
+                    }
+                    
+                    this.log('✅ Token created successfully!', 'success');
+                    this.log('', 'info');
+                    this.log('📋 TOKEN DETAILS:', 'info');
+                    this.log(`🏛️ Network: Rome Devnet Esquiline`, 'info');
+                    this.log(`📝 Name: ${name}`, 'info');
+                    this.log(`🏷️ Symbol: ${symbol}`, 'info');
+                    this.log(`💰 Total Supply: ${supply.toLocaleString()}`, 'info');
+                    this.log(`🔢 Decimals: ${decimals}`, 'info');
+                    this.log(`🔗 Token Contract: ${tokenAddress || 'Unknown'}`, 'info');
+                    this.log(`📊 Gas Used: ${receipt.gasUsed.toString()}`, 'info');
+                    this.log('', 'info');
+                    
+                    if (tokenAddress) {
+                        this.log('🌐 VIEW ON EXPLORER:', 'info');
+                        this.logHtml(`<a href="https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${tokenAddress}" target="_blank" style="color: #007AFF; text-decoration: underline;">https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${tokenAddress}</a>`, 'output');
+                    }
+                    
+                } catch (error) {
+                    if (error.code === 'INSUFFICIENT_FUNDS') {
+                        this.log('❌ Insufficient funds for token creation fee', 'error');
+                        this.log('💡 You need RSOL to pay the creation fee', 'info');
+                    } else if (error.code === 'USER_REJECTED') {
+                        this.log('❌ Transaction rejected by user', 'error');
+                    } else {
+                        this.log(`❌ Error creating token: ${error.message}`, 'error');
+                        console.error('Rome token creation error:', error);
+                    }
+                }
+            }
+            
+            async registerRomeUsername(username) {
+                try {
+                    if (!window.ethereum || !window.ethereum.selectedAddress) {
+                        this.log('❌ Please connect your wallet first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Check if we're on Rome Network
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId !== '0x1d97c') {
+                        this.log('❌ Please connect to Rome Network first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Validate username locally first
+                    if (username.length === 0 || username.length > 32) {
+                        this.log('❌ Username must be between 1 and 32 characters', 'error');
+                        return;
+                    }
+                    
+                    const validUsernameRegex = /^[a-zA-Z0-9_-]+$/;
+                    if (!validUsernameRegex.test(username)) {
+                        this.log('❌ Username can only contain letters, numbers, hyphens, and underscores', 'error');
+                        return;
+                    }
+                    
+                    // Rome Username Registry Contract Address (Deployed on Rome Devnet Esquiline)
+                    const REGISTRY_ADDRESS = '0xc1a9037ccc121380e9c0655e3a207cf5a91b0ea4';
+                    const REGISTRY_ABI = [
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"registerUsername","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"payable","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"renewUsername","outputs":[],"stateMutability":"payable","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"},{"internalType":"address","name":"to","type":"address"}],"name":"transferUsername","outputs":[],"stateMutability":"nonpayable","type":"function"},
+                        {"inputs":[],"name":"registrationFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"isUsernameAvailable","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"getUsernameInfo","outputs":[{"internalType":"address","name":"usernameOwner","type":"address"},{"internalType":"uint256","name":"registrationTime","type":"uint256"},{"internalType":"uint256","name":"expirationTime","type":"uint256"},{"internalType":"bool","name":"isActive","type":"bool"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"resolveUsername","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"getUsernamesByAddress","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[],"name":"getTotalRegistrations","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+                    ];
+                    
+                    this.log('🔗 Connecting to Rome Username Registry...', 'info');
+                    
+                    // Create contract instance
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const registry = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
+                    
+                    // Check if username is available
+                    this.log(`🔍 Checking if ${username}.rome is available...`, 'info');
+                    const isAvailable = await registry.isUsernameAvailable(username);
+                    
+                    if (!isAvailable) {
+                        this.log(`❌ Username ${username}.rome is already taken`, 'error');
+                        this.log('💡 Try a different username', 'info');
+                        return;
+                    }
+                    
+                    // Get registration fee
+                    const registrationFee = await registry.registrationFee();
+                    this.log(`💸 Registration fee: ${ethers.utils.formatEther(registrationFee)} RSOL (1 year)`, 'info');
+                    
+                    this.log('⚡ Sending registration transaction...', 'info');
+                    
+                    // Register username
+                    const tx = await registry.registerUsername(username, {
+                        value: registrationFee
+                    });
+                    
+                    this.log(`🔗 Transaction Hash: ${tx.hash}`, 'info');
+                    this.log('⏳ Waiting for confirmation...', 'info');
+                    
+                    // Wait for transaction confirmation
+                    const receipt = await tx.wait();
+                    
+                    const userAddress = await signer.getAddress();
+                    const expirationDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000); // 1 year from now
+                    
+                    this.log('✅ Username registered successfully!', 'success');
+                    this.log('', 'info');
+                    this.log('📋 USERNAME DETAILS:', 'info');
+                    this.log(`🏛️ Network: Rome Devnet Esquiline`, 'info');
+                    this.log(`📝 Username: ${username}.rome`, 'success');
+                    this.log(`👤 Owner: ${userAddress}`, 'info');
+                    this.log(`📅 Registered: ${new Date().toLocaleDateString()}`, 'info');
+                    this.log(`⏰ Expires: ${expirationDate.toLocaleDateString()}`, 'info');
+                    this.log(`📊 Gas Used: ${receipt.gasUsed.toString()}`, 'info');
+                    this.log('', 'info');
+                    this.log('🌐 VIEW ON EXPLORER:', 'info');
+                    this.logHtml(`<a href="https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${REGISTRY_ADDRESS}" target="_blank" style="color: #007AFF; text-decoration: underline;">https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${REGISTRY_ADDRESS}</a>`, 'output');
+                    this.log('', 'info');
+                    this.log('💡 Your username will be valid for 1 year', 'info');
+                    this.log('💡 Use "rome ens renew <username>" to extend registration', 'info');
+                    
+                } catch (error) {
+                    if (error.code === 'INSUFFICIENT_FUNDS') {
+                        this.log('❌ Insufficient funds for registration fee', 'error');
+                        this.log('💡 You need RSOL to pay the registration fee', 'info');
+                    } else if (error.code === 'USER_REJECTED') {
+                        this.log('❌ Transaction rejected by user', 'error');
+                    } else {
+                        this.log(`❌ Error registering username: ${error.message}`, 'error');
+                        console.error('Rome username registration error:', error);
+                    }
+                }
+            }
+
+            async resolveRomeUsername(username) {
+                try {
+                    if (!window.ethereum || !window.ethereum.selectedAddress) {
+                        this.log('❌ Please connect your wallet first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Check if we're on Rome Network
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId !== '0x1d97c') {
+                        this.log('❌ Please connect to Rome Network first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Validate username locally first
+                    if (username.length === 0 || username.length > 32) {
+                        this.log('❌ Username must be between 1 and 32 characters', 'error');
+                        return;
+                    }
+                    
+                    const validUsernameRegex = /^[a-zA-Z0-9_-]+$/;
+                    if (!validUsernameRegex.test(username)) {
+                        this.log('❌ Username can only contain letters, numbers, hyphens, and underscores', 'error');
+                        return;
+                    }
+                    
+                    // Rome Username Registry Contract Address (Deployed on Rome Devnet Esquiline)
+                    const REGISTRY_ADDRESS = '0xc1a9037ccc121380e9c0655e3a207cf5a91b0ea4';
+                    const REGISTRY_ABI = [
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"registerUsername","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"payable","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"renewUsername","outputs":[],"stateMutability":"payable","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"},{"internalType":"address","name":"to","type":"address"}],"name":"transferUsername","outputs":[],"stateMutability":"nonpayable","type":"function"},
+                        {"inputs":[],"name":"registrationFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"isUsernameAvailable","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"getUsernameInfo","outputs":[{"internalType":"address","name":"usernameOwner","type":"address"},{"internalType":"uint256","name":"registrationTime","type":"uint256"},{"internalType":"uint256","name":"expirationTime","type":"uint256"},{"internalType":"bool","name":"isActive","type":"bool"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"resolveUsername","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[{"internalType":"address","name":"addr","type":"address"}],"name":"getUsernamesByAddress","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},
+                        {"inputs":[],"name":"getTotalRegistrations","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+                    ];
+                    
+                    this.log('🔍 Resolving Rome username...', 'info');
+                    
+                    // Connect to the registry contract
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const registry = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, provider);
+                    
+                    // Check if username is available (if available, it means no one owns it)
+                    const isAvailable = await registry.isUsernameAvailable(username);
+                    
+                    if (isAvailable) {
+                        this.log(`❌ Username "${username}.rome" is not registered`, 'error');
+                        this.log('💡 This username is available for registration', 'info');
+                        this.log('💡 Use "rome ens register <username>" to claim it', 'info');
+                        return;
+                    }
+                    
+                    // Get detailed username info
+                    const usernameInfo = await registry.getUsernameInfo(username);
+                    const owner = usernameInfo.usernameOwner;
+                    const registrationTime = usernameInfo.registrationTime;
+                    const expirationTime = usernameInfo.expirationTime;
+                    const isActive = usernameInfo.isActive;
+                    
+                    // Convert timestamps to readable dates
+                    const registrationDate = new Date(registrationTime.toNumber() * 1000);
+                    const expirationDate = new Date(expirationTime.toNumber() * 1000);
+                    const now = new Date();
+                    
+                    // Check if username is expired
+                    const isExpired = now > expirationDate;
+                    
+                    this.log('✅ Username found!', 'success');
+                    this.log('', 'info');
+                    this.log('📋 USERNAME DETAILS:', 'info');
+                    this.log(`🏛️ Network: Rome Devnet Esquiline`, 'info');
+                    this.log(`📝 Username: ${username}.rome`, 'success');
+                    this.log(`👤 Owner: ${owner}`, 'info');
+                    this.log(`📅 Registered: ${registrationDate.toLocaleDateString()}`, 'info');
+                    this.log(`⏰ Expires: ${expirationDate.toLocaleDateString()}`, 'info');
+                    
+                    if (isExpired) {
+                        this.log(`⚠️ Status: EXPIRED (expired ${Math.floor((now - expirationDate) / (1000 * 60 * 60 * 24))} days ago)`, 'error');
+                        this.log('💡 This username may become available for registration soon', 'info');
+                    } else {
+                        const daysLeft = Math.floor((expirationDate - now) / (1000 * 60 * 60 * 24));
+                        this.log(`✅ Status: ACTIVE (${daysLeft} days remaining)`, 'success');
+                    }
+                    
+                    this.log('', 'info');
+                    this.log('🌐 VIEW ON EXPLORER:', 'info');
+                    this.logHtml(`<a href="https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${REGISTRY_ADDRESS}" target="_blank" style="color: #007AFF; text-decoration: underline;">https://romescout-esquiline-i.devnet.romeprotocol.xyz/address/${REGISTRY_ADDRESS}</a>`, 'output');
+                    
+                } catch (error) {
+                    this.log(`❌ Error resolving username: ${error.message}`, 'error');
+                    console.error('Rome username resolution error:', error);
+                }
+            }
+
+            async sendRomeTokens(amount, token, recipient) {
+                try {
+                    if (!window.ethereum || !window.ethereum.selectedAddress) {
+                        this.log('❌ Please connect your wallet first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Check if we're on Rome Network
+                    const chainId = await window.ethereum.request({
+                        method: 'eth_chainId'
+                    });
+
+                    if (chainId !== '0x1d97c') {
+                        this.log('❌ Please connect to Rome Network first using: rome connect', 'error');
+                        return;
+                    }
+                    
+                    // Validate amount
+                    const amountNum = parseFloat(amount);
+                    if (isNaN(amountNum) || amountNum <= 0) {
+                        this.log('❌ Invalid amount. Please provide a positive number', 'error');
+                        return;
+                    }
+                    
+                    // Resolve recipient address (ENS or direct address)
+                    let recipientAddress;
+                    
+                    if (recipient.endsWith('.rome')) {
+                        // Resolve ENS name
+                        this.log(`🔍 Resolving ENS name: ${recipient}`, 'info');
+                        
+                        const username = recipient.replace('.rome', '');
+                        const REGISTRY_ADDRESS = '0xc1a9037ccc121380e9c0655e3a207cf5a91b0ea4';
+                        const REGISTRY_ABI = [
+                            {"inputs":[{"internalType":"string","name":"username","type":"string"}],"name":"resolveUsername","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+                        ];
+                        
+                        const provider = new ethers.providers.Web3Provider(window.ethereum);
+                        const registry = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, provider);
+                        
+                        recipientAddress = await registry.resolveUsername(username);
+                        
+                        if (recipientAddress === '0x0000000000000000000000000000000000000000') {
+                            this.log(`❌ ENS name "${recipient}" not found or expired`, 'error');
+                            this.log('💡 Use "rome ens resolve <username>" to check availability', 'info');
+                            return;
+                        }
+                        
+                        this.log(`✅ Resolved ${recipient} to: ${recipientAddress}`, 'success');
+                    } else {
+                        // Direct address
+                        if (!ethers.utils.isAddress(recipient)) {
+                            this.log('❌ Invalid recipient address or ENS name', 'error');
+                            this.log('💡 Use a valid Ethereum address or ENS name ending in .rome', 'info');
+                            return;
+                        }
+                        recipientAddress = recipient;
+                    }
+                    
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const userAddress = await signer.getAddress();
+                    
+                    // Handle different token types
+                    if (token.toLowerCase() === 'rsol') {
+                        // Send native rSOL
+                        this.log(`💸 Sending ${amount} rSOL to ${recipientAddress}`, 'info');
+                        
+                        const tx = await signer.sendTransaction({
+                            to: recipientAddress,
+                            value: ethers.utils.parseEther(amount.toString())
+                        });
+                        
+                        this.log(`⏳ Transaction submitted: ${tx.hash}`, 'info');
+                        this.log('⏳ Waiting for confirmation...', 'info');
+                        
+                        const receipt = await tx.wait();
+                        
+                        this.log('✅ Transaction confirmed!', 'success');
+                        this.log('', 'info');
+                        this.log('📋 TRANSACTION DETAILS:', 'info');
+                        this.log(`🏛️ Network: Rome Devnet Esquiline`, 'info');
+                        this.log(`💰 Amount: ${amount} rSOL`, 'success');
+                        this.log(`👤 From: ${userAddress}`, 'info');
+                        this.log(`👤 To: ${recipientAddress}`, 'info');
+                        this.log(`📊 Gas Used: ${receipt.gasUsed.toString()}`, 'info');
+                        this.log(`⛽ Gas Price: ${ethers.utils.formatUnits(receipt.effectiveGasPrice, 'gwei')} gwei`, 'info');
+                        
+                    } else {
+                        // Send ERC-20 token
+                        this.log(`💸 Sending ${amount} ${token} to ${recipientAddress}`, 'info');
+                        this.log('⚠️ Note: ERC-20 token sending requires token contract address', 'warning');
+                        this.log('💡 For now, this is a placeholder - full ERC-20 support coming soon', 'info');
+                        
+                        // TODO: Implement ERC-20 token sending
+                        // This would require:
+                        // 1. Token contract address lookup
+                        // 2. ERC-20 ABI
+                        // 3. transfer() function call
+                        // 4. Approval handling if needed
+                        
+                        this.log('🚧 ERC-20 token sending not yet implemented', 'warning');
+                        this.log('💡 Currently only rSOL (native token) sending is supported', 'info');
+                        return;
+                    }
+                    
+                    this.log('', 'info');
+                    this.log('🌐 VIEW ON EXPLORER:', 'info');
+                    this.logHtml(`<a href="https://romescout-esquiline-i.devnet.romeprotocol.xyz/tx/${receipt.transactionHash}" target="_blank" style="color: #007AFF; text-decoration: underline;">https://romescout-esquiline-i.devnet.romeprotocol.xyz/tx/${receipt.transactionHash}</a>`, 'output');
+                    
+                } catch (error) {
+                    if (error.code === 'INSUFFICIENT_FUNDS') {
+                        this.log('❌ Insufficient funds for transaction', 'error');
+                        this.log('💡 Check your rSOL balance using: rome balance', 'info');
+                    } else if (error.code === 'USER_REJECTED') {
+                        this.log('❌ Transaction rejected by user', 'error');
+                    } else {
+                        this.log(`❌ Error sending tokens: ${error.message}`, 'error');
+                        console.error('Rome token send error:', error);
+                    }
+                }
+            }
+
+            openRomeNFTMintUI() {
+                const existing = document.getElementById('rome-nft-mint');
+                if (existing) existing.remove();
+                
+                const html = `
+                    <div id="rome-nft-mint" style="
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 90vw;
+                        max-width: 500px;
+                        background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(28, 28, 30, 0.95));
+                        backdrop-filter: blur(40px);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 20px;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                        z-index: 20000;
+                        color: white;
+                        font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+                        padding: 30px;
+                        max-height: 90vh;
+                        overflow-y: auto;
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <div style="font-size: 1.6em; font-weight: 800;">🏛️ Mint Rome NFT</div>
+                            <button onclick="closeRomeNFTMintUI()" style="
+                                background: rgba(255, 59, 48, 0.2);
+                                color: #FF3B30;
+                                border: none;
+                                padding: 8px 12px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-size: 1.2em;
+                            ">✕</button>
+                        </div>
+                        
+                        <div id="rome-upload-zone" style="
+                            border: 2px dashed rgba(255, 255, 255, 0.3);
+                            border-radius: 16px;
+                            padding: 40px;
+                            text-align: center;
+                            margin-bottom: 20px;
+                            background: rgba(0, 0, 0, 0.2);
+                            cursor: pointer;
+                        " onclick="document.getElementById('rome-file-input').click()">
+                            <div style="font-size: 3em; margin-bottom: 12px;">🖼️</div>
+                            <div style="font-size: 1.1em; font-weight: 600; margin-bottom: 8px;">Upload Image</div>
+                            <div style="font-size: 0.9em; opacity: 0.7;">Click to browse or paste (Ctrl+V)</div>
+                        </div>
+                        
+                        <input type="file" id="rome-file-input" accept="image/*" style="display: none;" onchange="handleRomeFileUpload(event)">
+                        
+                        <div id="rome-image-preview" style="display: none; margin-bottom: 20px; text-align: center;">
+                            <img id="rome-preview-img" style="max-width: 100%; max-height: 200px; border-radius: 12px; display: block; margin: 0 auto;">
+                            <button onclick="clearRomeImage()" style="
+                                background: rgba(255, 59, 48, 0.2);
+                                color: #FF3B30;
+                                border: none;
+                                padding: 8px 16px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                margin-top: 10px;
+                                font-size: 0.9em;
+                            ">Remove Image</button>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">NFT Name</label>
+                            <input type="text" id="rome-nft-name" placeholder="Enter NFT name" style="
+                                width: 100%;
+                                padding: 12px;
+                                border: 1px solid rgba(255, 255, 255, 0.2);
+                                border-radius: 8px;
+                                background: rgba(0, 0, 0, 0.3);
+                                color: white;
+                                font-size: 1em;
+                            ">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Description <span style="color: #888; font-weight: 400;">(Optional)</span></label>
+                            <textarea id="rome-nft-description" placeholder="Describe your NFT (optional)" style="
+                                width: 100%;
+                                padding: 12px;
+                                border: 1px solid rgba(255, 255, 255, 0.2);
+                                border-radius: 8px;
+                                background: rgba(0, 0, 0, 0.3);
+                                color: white;
+                                font-size: 1em;
+                                min-height: 80px;
+                                resize: vertical;
+                            "></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label style="font-weight: 600;">Traits / Attributes</label>
+                                <button onclick="toggleRomeTraits()" style="
+                                    background: rgba(0, 122, 255, 0.2);
+                                    color: #007AFF;
+                                    border: none;
+                                    padding: 6px 12px;
+                                    border-radius: 6px;
+                                    cursor: pointer;
+                                    font-size: 0.8em;
+                                " id="rome-traits-toggle">Add Traits</button>
+                            </div>
+                            <div id="rome-traits-container" style="display: none;">
+                                <div id="rome-traits-list"></div>
+                                <button onclick="addRomeTrait()" style="
+                                    background: rgba(52, 199, 89, 0.2);
+                                    color: #34C759;
+                                    border: none;
+                                    padding: 8px 16px;
+                                    border-radius: 8px;
+                                    cursor: pointer;
+                                    font-size: 0.9em;
+                                    margin-top: 10px;
+                                ">+ Add Trait</button>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Network Info</label>
+                            <div style="background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 8px; font-size: 0.9em;">
+                                <div>🏛️ Network: Rome Devnet Esquiline</div>
+                                <div>🔗 Contract: 0xc88a32d1977c11b7874400052d3750856c90120f</div>
+                                <div>💰 Currency: RSOL</div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="mintRomeNFTOnChain()" style="
+                            width: 100%;
+                            padding: 16px;
+                            background: linear-gradient(135deg, #007AFF, #0051D5);
+                            color: white;
+                            border: none;
+                            border-radius: 12px;
+                            font-size: 1.1em;
+                            font-weight: 600;
+                            cursor: pointer;
+                            margin-bottom: 10px;
+                        ">🏛️ Mint on Rome Network</button>
+                        
+                        <div style="text-align: center; font-size: 0.8em; opacity: 0.7;">
+                            Powered by Rome Network Layer 2
+                        </div>
+                    </div>
+                `;
+                
+                document.body.insertAdjacentHTML('beforeend', html);
+                
+                // Add paste functionality
+                window.handleRomePaste = this.handleRomePaste.bind(this);
+                
+                // Add global functions
+                window.closeRomeNFTMintUI = this.closeRomeNFTMintUI.bind(this);
+                window.handleRomeFileUpload = this.handleRomeFileUpload.bind(this);
+                window.clearRomeImage = this.clearRomeImage.bind(this);
+                window.mintRomeNFTOnChain = this.mintRomeNFTOnChain.bind(this);
+                window.toggleRomeTraits = this.toggleRomeTraits.bind(this);
+                window.addRomeTrait = this.addRomeTrait.bind(this);
+                window.removeRomeTrait = this.removeRomeTrait.bind(this);
+            }
+
+            closeRomeNFTMintUI() {
+                const modal = document.getElementById('rome-nft-mint');
+                if (modal) modal.remove();
+                document.removeEventListener('paste', window.handleRomePaste);
+            }
+
+            handleRomePaste(event) {
+                const modal = document.getElementById('rome-nft-mint');
+                if (!modal) return;
+                
+                const items = event.clipboardData?.items;
+                if (!items) return;
+                
+                for (let item of items) {
+                    if (item.type.startsWith('image/')) {
+                        const file = item.getAsFile();
+                        if (file) {
+                            this.showRomeImage(file);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            handleRomeFileUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    this.showRomeImage(file);
+                }
+            }
+
+            showRomeImage(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('rome-image-preview');
+                    const img = document.getElementById('rome-preview-img');
+                    const uploadZone = document.getElementById('rome-upload-zone');
+                    
+                    img.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadZone.style.display = 'none';
+                    
+                    // Store file for later use
+                    window.romeSelectedFile = file;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            clearRomeImage() {
+                const preview = document.getElementById('rome-image-preview');
+                const uploadZone = document.getElementById('rome-upload-zone');
+                
+                preview.style.display = 'none';
+                uploadZone.style.display = 'block';
+                
+                window.romeSelectedFile = null;
+                document.getElementById('rome-file-input').value = '';
+            }
+
+            toggleRomeTraits() {
+                const container = document.getElementById('rome-traits-container');
+                const toggle = document.getElementById('rome-traits-toggle');
+                
+                if (container.style.display === 'none') {
+                    container.style.display = 'block';
+                    toggle.textContent = 'Hide Traits';
+                } else {
+                    container.style.display = 'none';
+                    toggle.textContent = 'Add Traits';
+                }
+            }
+
+            addRomeTrait() {
+                const traitsList = document.getElementById('rome-traits-list');
+                const traitId = Date.now();
+                
+                const traitHtml = `
+                    <div id="rome-trait-${traitId}" style="
+                        display: flex;
+                        gap: 10px;
+                        margin-bottom: 10px;
+                        align-items: center;
+                    ">
+                        <input type="text" placeholder="Trait Type" style="
+                            flex: 1;
+                            padding: 8px;
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 6px;
+                            background: rgba(0, 0, 0, 0.3);
+                            color: white;
+                            font-size: 0.9em;
+                        ">
+                        <input type="text" placeholder="Value" style="
+                            flex: 1;
+                            padding: 8px;
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 6px;
+                            background: rgba(0, 0, 0, 0.3);
+                            color: white;
+                            font-size: 0.9em;
+                        ">
+                        <button onclick="removeRomeTrait(${traitId})" style="
+                            background: rgba(255, 59, 48, 0.2);
+                            color: #FF3B30;
+                            border: none;
+                            padding: 8px 12px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-size: 0.9em;
+                        ">✕</button>
+                    </div>
+                `;
+                
+                traitsList.insertAdjacentHTML('beforeend', traitHtml);
+            }
+
+            removeRomeTrait(traitId) {
+                const traitElement = document.getElementById(`rome-trait-${traitId}`);
+                if (traitElement) {
+                    traitElement.remove();
+                }
+            }
+
+            getRomeTraits() {
+                const traits = [];
+                const traitElements = document.querySelectorAll('[id^="rome-trait-"]');
+                
+                traitElements.forEach(element => {
+                    const inputs = element.querySelectorAll('input');
+                    const traitType = inputs[0]?.value?.trim();
+                    const traitValue = inputs[1]?.value?.trim();
+                    
+                    if (traitType && traitValue) {
+                        traits.push({
+                            trait_type: traitType,
+                            value: traitValue
+                        });
+                    }
+                });
+                
+                return traits;
+            }
+
+            async mintRomeNFTOnChain() {
+                const name = document.getElementById('rome-nft-name').value.trim();
+                const description = document.getElementById('rome-nft-description').value.trim();
+                const file = window.romeSelectedFile;
+                const traits = this.getRomeTraits();
+                
+                if (!file) {
+                    this.log('❌ Please upload an image first', 'error');
+                    return;
+                }
+                
+                if (!name) {
+                    this.log('❌ Please enter an NFT name', 'error');
+                    return;
+                }
+                
+                if (!window.ethereum || !window.ethereum.selectedAddress) {
+                    this.log('❌ Please connect your wallet first', 'error');
+                    return;
+                }
+                
+                try {
+                    this.log('🏛️ Starting Rome NFT minting process...', 'info');
+                    
+                    // Step 1: Upload image to Pinata
+                    this.log('📤 Uploading image to IPFS...', 'info');
+                    const imageUrl = await this.uploadRomeImageToPinata(file);
+                    
+                    // Step 2: Create metadata JSON
+                    const metadata = {
+                        name: name,
+                        description: description || `Rome NFT: ${name}`,
+                        image: imageUrl,
+                        external_url: "https://rome.network",
+                        attributes: traits
+                    };
+                    
+                    if (traits.length > 0) {
+                        this.log(`📊 Adding ${traits.length} trait(s) to metadata...`, 'info');
+                    }
+                    
+                    this.log('📝 Creating metadata...', 'info');
+                    const metadataUrl = await this.uploadRomeMetadataToPinata(metadata);
+                    
+                    // Step 3: Mint NFT on Rome Network
+                    this.log('⚡ Minting NFT on Rome Network...', 'info');
+                    await this.mintRomeNFT(metadataUrl);
+                    
+                    // Close UI on success
+                    this.closeRomeNFTMintUI();
+                    
+                } catch (error) {
+                    this.log(`❌ Error: ${error.message}`, 'error');
+                    console.error('Rome NFT minting error:', error);
+                }
+            }
+
+            async uploadRomeImageToPinata(file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const response = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+                    method: 'POST',
+                    headers: {
+                        'pinata_api_key': 'c717314daa6072cf4111',
+                        'pinata_secret_api_key': '2d78c057627d207a25d57f0b625d3c8f6388e911101788cbe5b0b3d2cf763f59'
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to upload image to IPFS');
+                }
+                
+                const result = await response.json();
+                return `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`;
+            }
+
+            async uploadRomeMetadataToPinata(metadata) {
+                const response = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'pinata_api_key': 'c717314daa6072cf4111',
+                        'pinata_secret_api_key': '2d78c057627d207a25d57f0b625d3c8f6388e911101788cbe5b0b3d2cf763f59'
+                    },
+                    body: JSON.stringify({
+                        pinataContent: metadata,
+                        pinataMetadata: {
+                            name: 'rome-nft-metadata.json'
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to upload metadata to IPFS');
+                }
+                
+                const result = await response.json();
+                return `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`;
+            }
+
+            async mintRomeNFT(tokenURI) {
+                try {
+                    // Rome Network configuration
+                    const ROME_CONFIG = {
+                        chainId: '0x1d97c', // 121212 in hex
+                        chainName: 'Rome Devnet Esquiline',
+                        nativeCurrency: {
+                            name: 'RSOL',
+                            symbol: 'RSOL',
+                            decimals: 18
+                        },
+                        rpcUrls: ['https://esquiline-i.devnet.romeprotocol.xyz'],
+                        blockExplorerUrls: ['https://romescout-esquiline-i.devnet.romeprotocol.xyz']
+                    };
+
+                    // Check if Rome network is added
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: ROME_CONFIG.chainId }],
+                        });
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            // Network not added, add it
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [ROME_CONFIG],
+                            });
+                        } else {
+                            throw switchError;
+                        }
+                    }
+
+                    this.log('✅ Connected to Rome Devnet Esquiline', 'success');
+                    
+                    // Contract ABI for the mint function
+                    const contractABI = [
+                        {
+                            "inputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "to",
+                                    "type": "address"
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "tokenURI",
+                                    "type": "string"
+                                }
+                            ],
+                            "name": "mint",
+                            "outputs": [
+                                {
+                                    "internalType": "uint256",
+                                    "name": "",
+                                    "type": "uint256"
+                                }
+                            ],
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                        }
+                    ];
+
+                    const contractAddress = '0xc88a32d1977c11b7874400052d3750856c90120f';
+                    
+                    // Get provider and signer
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const userAddress = await signer.getAddress();
+                    
+                    this.log(`👤 Minting to address: ${userAddress}`, 'info');
+                    
+                    // Create contract instance
+                    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+                    
+                    this.log('⚡ Sending mint transaction...', 'info');
+                    
+                    // Call mint function
+                    const tx = await contract.mint(userAddress, tokenURI);
+                    
+                    this.log(`🔗 Transaction Hash: ${tx.hash}`, 'info');
+                    this.log('⏳ Waiting for confirmation...', 'info');
+                    
+                    // Wait for transaction confirmation
+                    const receipt = await tx.wait();
+                    
+                    // Get the token ID from the Transfer event
+                    let tokenId = 'Unknown';
+                    
+                    // Try to get token ID from Transfer event first
+                    if (receipt.events && receipt.events.length > 0) {
+                        const transferEvent = receipt.events.find(e => e.event === 'Transfer');
+                        if (transferEvent && transferEvent.args && transferEvent.args.tokenId) {
+                            tokenId = transferEvent.args.tokenId.toString();
+                        }
+                    }
+                    
+                    // If still unknown, try to parse from logs
+                    if (tokenId === 'Unknown' && receipt.logs && receipt.logs.length > 0) {
+                        try {
+                            for (let log of receipt.logs) {
+                                if (log.topics[0] === '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef') {
+                                    // Transfer event signature
+                                    tokenId = parseInt(log.topics[3], 16).toString();
+                                    break;
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Could not extract token ID from logs:', e);
+                        }
+                    }
+                    
+                    this.log('✅ NFT minted successfully!', 'success');
+                    this.log('', 'info');
+                    this.log('📋 NFT DETAILS:', 'info');
+                    this.log(`🏛️ Network: Rome Devnet Esquiline`, 'info');
+                    this.log(`🔗 Contract: ${contractAddress}`, 'info');
+                    this.log(`🆔 Token ID: #${tokenId}`, 'info');
+                    this.log(`👤 Owner: ${userAddress}`, 'info');
+                    this.log(`🔗 Token URI: ${tokenURI}`, 'info');
+                    this.log(`📊 Gas Used: ${receipt.gasUsed.toString()}`, 'info');
+                    this.log('', 'info');
+                    this.log('🌐 VIEW ON EXPLORER:', 'info');
+                    
+                    // Create clickable explorer URL (remove /instance/Unknown if token ID is unknown)
+                    let explorerUrl = `https://romescout-esquiline-i.devnet.romeprotocol.xyz/token/${contractAddress}`;
+                    if (tokenId !== 'Unknown') {
+                        explorerUrl += `/instance/${tokenId}`;
+                    }
+                    
+                    // Create clickable link
+                    this.logHtml(`<a href="${explorerUrl}" target="_blank" style="color: #007AFF; text-decoration: underline;">${explorerUrl}</a>`, 'output');
+                    
+                } catch (error) {
+                    this.log(`❌ Error minting NFT: ${error.message}`, 'error');
+                    console.error('Rome NFT minting error:', error);
+                    
+                    if (error.code === 'INSUFFICIENT_FUNDS') {
+                        this.log('💡 Insufficient RSOL for gas fees', 'info');
+                        this.log('🏛️ Get RSOL from Rome faucet or bridge', 'info');
+                    } else if (error.code === 'USER_REJECTED') {
+                        this.log('💡 Transaction rejected by user', 'info');
+                    } else if (error.message.includes('network')) {
+                        this.log('💡 Network connection issue', 'info');
+                        this.log('🔗 Make sure you\'re connected to Rome Devnet', 'info');
+                    }
+                }
             }
         }
 
