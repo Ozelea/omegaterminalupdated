@@ -4,8 +4,6 @@
 
 ![Omega Terminal](https://img.shields.io/badge/version-1.5.9-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Web3](https://img.shields.io/badge/Web3-Multi--Chain-purple.svg)
 
-## ✨ **Live Demo**
-🌐 **[Try Omega Terminal](https://your-username.github.io/omega-terminal)** (Replace with your GitHub Pages URL)
 
 ## 🎯 **Key Features**
 
@@ -191,8 +189,4 @@ MIT License - see LICENSE file for details
 
 ---
 
-**Built with ❤️ for the Web3 community**
 
-⭐ **Star this repo** if you find it useful!  
-🐦 **Follow us** for updates and new features  
-💬 **Join the community** and share your feedback
