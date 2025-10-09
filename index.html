@@ -1649,6 +1649,7 @@
                 this.awaitingDMMessage = false;
                 this.tempDMRecipient = '';
                 this.solanaAddress = null;
+                this.awaitingWalletChoice = false;
             }
             
             async init() {
@@ -1942,7 +1943,12 @@
                             }
                         }
                     } else {
-                        this.log('No EVM wallet found. Please install MetaMask.', 'error');
+                        this.log('No EVM wallet found.', 'error');
+                        this.log('', 'info');
+                        this.log('Would you like to create an Omega Wallet instead?', 'info');
+                        this.log('Type "yes" to generate an Omega Wallet and receive 0.1 OMEGA tokens', 'info');
+                        this.log('Type "no" to cancel', 'info');
+                        this.awaitingWalletChoice = true;
                         return;
                     }
                     
@@ -2163,6 +2169,63 @@
                 }
 
                 // --- Handle awaiting input states before command parsing ---
+                
+                // Handle wallet choice (yes/no for creating Omega Wallet)
+                if (this.awaitingWalletChoice) {
+                    this.awaitingWalletChoice = false;
+                    if (cmd === 'yes') {
+                        this.log('🔑 Generating Omega Wallet...', 'info');
+                        const wallet = this.ethers.Wallet.createRandom();
+                        this.storedPrivateKey = wallet.privateKey;
+                        this.log('✅ Omega Wallet generated successfully!', 'success');
+                        this.log('', 'info');
+                        this.log('📋 WALLET DETAILS:', 'info');
+                        this.logHtml(`🏛️ Address: <span class="copyable" onclick="navigator.clipboard.writeText('${wallet.address}').then(() => window.terminal.log('✅ Address copied!', 'success'))">${wallet.address}</span>`, 'output');
+                        this.logHtml(`🔑 Private Key: <span class="copyable" onclick="navigator.clipboard.writeText('${wallet.privateKey}').then(() => window.terminal.log('✅ Private key copied!', 'success'))">${wallet.privateKey}</span>`, 'output');
+                        this.log('', 'info');
+                        this.log('⚠️  SECURITY WARNING: Save these details securely!', 'error');
+                        this.log('💰 Requesting 0.1 OMEGA tokens from relayer...', 'info');
+                        
+                        // Fund the wallet via relayer
+                        try {
+                            const response = await fetch(`${RELAYER_URL}/fund`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ address: wallet.address, amount: '0.1' })
+                            });
+                            const data = await response.json();
+                            if (data.success) {
+                                this.log(`✅ Your wallet has been funded! Tx: ${data.txHash}`, 'success');
+                                this.log('✨ You can now use the terminal!', 'info');
+                                this.log('', 'info');
+                                this.log('💡 To use your Omega Wallet, type commands like:', 'info');
+                                this.log('   - "balance" to check your balance', 'info');
+                                this.log('   - "mine" to start mining', 'info');
+                                this.log('   - "faucet" to claim more tokens', 'info');
+                                
+                                // Set up the wallet for use
+                                const OMEGA_RPC_URL = 'https://0x4e454228.rpc.aurora-cloud.dev';
+                                this.provider = new this.ethers.providers.JsonRpcProvider(OMEGA_RPC_URL);
+                                this.signer = new this.ethers.Wallet(wallet.privateKey, this.provider);
+                                this.updateConnectionStatus('CONNECTED (Omega Wallet)');
+                            } else {
+                                this.log('❌ Funding failed: ' + (data.error || 'Unknown error'), 'error');
+                                this.log('💡 You can still use this wallet by funding it manually', 'info');
+                            }
+                        } catch (err) {
+                            this.log('❌ Funding request failed: ' + err.message, 'error');
+                            this.log('💡 You can still use this wallet by funding it manually', 'info');
+                        }
+                    } else if (cmd === 'no') {
+                        this.log('Wallet creation cancelled.', 'info');
+                        this.log('💡 Please install MetaMask to connect a browser wallet', 'info');
+                    } else {
+                        this.log('❌ Invalid response. Please type "yes" or "no"', 'error');
+                        this.awaitingWalletChoice = true;
+                    }
+                    return;
+                }
+                
                 if (this.awaitingMixerDirectInput && args.length === 2) {
                     this.awaitingMixerDirectInput = false;
                     const privateKeyInput = args[0];
