@@ -1,198 +1,352 @@
-# 🚀 Omega Terminal v2.0.1
+# Omega Terminal v2.0.1
 
-**The Ultimate Multi-Chain Web3 Terminal** - A powerful, modular terminal interface for Web3 trading, NFTs, DeFi, and more.
+**The Ultimate Multi-Chain Web3 Terminal** - A powerful, modular terminal interface for Web3 trading, NFTs, DeFi, and blockchain interactions.
 
-![Omega Terminal](https://img.shields.io/badge/version-1.5.9-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Web3](https://img.shields.io/badge/Web3-Multi--Chain-purple.svg)
+![Version](https://img.shields.io/badge/version-2.0.1-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Web3](https://img.shields.io/badge/Web3-Multi--Chain-purple.svg)
 
-## ✨ **Live Demo**
-🌐 **[Try Omega Terminal](https://your-username.github.io/omega-terminal)** (Replace with your GitHub Pages URL)
-
-## 🎯 **Key Features**
-
-### 🔗 **Multi-Chain Support**
-- **Ethereum, Solana, NEAR, Eclipse, BSC, Polygon** and more
-- **Wallet Integration**: MetaMask, Phantom, NEAR Wallet, Shade Agents
-- **Cross-chain** portfolio tracking and trading
-
-### 💎 **NFT Trading Suite**
-- **OpenSea Integration** with real-time data
-- **NFT Discovery** - search, analytics, marketplace
-- **Collection Analytics** with floor prices and trends
-- **Activity Feed** with real-time events
-
-### 📊 **Advanced Analytics**
-- **DexScreener** ultimate analytics dashboard
-- **DeFi Llama** TVL and protocol data  
-- **Price Tracking** across multiple DEXs
-- **Portfolio Analytics** with P&L tracking
-
-### 🎮 **Omega Arcade**
-- **Built-in Games**: Flappy Omega, Snake.io, Brick Breaker
-- **Leaderboards** with on-chain integration
-- **Credit System** with wallet-based authentication
-
-### 🤖 **AI-Powered Features**
-- **Intelligent Commands** with natural language processing
-- **Market Analysis** and trading insights
-- **Automated Responses** for common queries
-
-### 👤 **Profile & API Management**
-- **User Profiles** with customizable settings
-- **API Key Management** for enhanced features
-- **Personal Settings** and preferences
-
-## 🚀 **Quick Start**
-
-### **1. Open the Terminal**
-Simply open `index-modular.html` in your browser or visit the live demo.
-
-### **2. Connect a Wallet**
-```bash
-# For MetaMask/Ethereum
-connect
-
-# For Shade Agents (Multi-chain)
-shade
-
-# For Solana/Phantom
-solana wallet
-```
-
-### **3. Explore Features**
-```bash
-# NFT commands
-nft assets boredapeyachtclub
-nft analytics cryptopunks
-
-# Trading analytics  
-dexscreener BTC
-defillama protocols
-
-# Profile setup
-profile
-
-# Help system
-help
-```
-
-## 📁 **Project Structure**
-
-```
-omega-terminal/
-├── index-modular.html          # Main terminal interface
-├── js/
-│   ├── terminal-core.js        # Core terminal logic
-│   ├── commands/               # Modular command system
-│   │   ├── basic.js           # Basic commands (help, clear, etc.)
-│   │   ├── api.js             # API integrations
-│   │   ├── solana.js          # Solana blockchain commands
-│   │   ├── near.js            # NEAR Protocol commands
-│   │   └── ...
-│   ├── wallet.js              # Wallet connection logic
-│   └── themes.js              # Theme management
-├── styles/
-│   ├── base.css               # Core styling
-│   ├── themes.css             # Color themes
-│   ├── animations.css         # Boot animations
-│   └── gui-themes.css         # GUI theme modes
-├── profile-command-only.js     # Profile & API key management
-├── opensea-enhanced-plugin.js   # NFT trading suite
-├── dexscreener-analytics-ultimate.js  # Trading analytics
-├── omega-arcade-sdk.js         # Gaming integration
-└── relayer-faucet.js          # Backend API integration
-```
-
-## 🔧 **Configuration**
-
-### **API Keys (Optional)**
-Add your own API keys for enhanced features:
-
-1. Type `profile` to open settings
-2. Configure API keys for:
-   - **OpenSea** - NFT data and trading
-   - **DexScreener** - Enhanced analytics  
-   - **DeFi Llama** - Protocol data
-   - **CoinGecko** - Price data
-   - **Alpha Vantage** - Stock market data
-
-### **Themes**
-Switch between multiple themes:
-```bash
-# GUI Themes
-theme chatgpt    # Conversational AI interface
-theme discord    # Discord-style chat
-theme windows95  # Retro DOS interface
-theme aol        # 90s instant messenger
-theme limewire   # P2P file sharing style
-
-# Color Themes  
-theme modern     # Default modern theme
-theme crypto     # Crypto-focused colors
-theme dark       # Dark mode
-theme light      # Light mode
-```
-
-## 🛠 **Development**
-
-### **Adding New Commands**
-1. Create a new file in `js/commands/`
-2. Follow the modular command pattern
-3. Add to the command registry in `terminal-core.js`
-
-### **Adding New Themes**
-1. Add CSS variables to `styles/themes.css`
-2. Update theme switcher in `js/themes.js`
-3. Test across all GUI modes
-
-### **API Integrations**
-1. Add API logic to `js/commands/api.js`
-2. Implement error handling and rate limiting
-3. Add to the API key management system
-
-## 📱 **Mobile Support**
-- **Responsive Design** works on all devices
-- **Touch-friendly** interface with mobile optimizations
-- **PWA Ready** - can be installed as an app
-
-## 🔐 **Security**
-- **Client-side Only** - no server required
-- **Local Storage** for settings and API keys
-- **No Private Keys** stored - wallet integrations only
-- **CORS Compliant** API integrations
-
-## 🤝 **Contributing**
-1. Fork the repository
-2. Create a feature branch
-3. Add your improvements
-4. Submit a pull request
-
-## 📄 **License**
-MIT License - see LICENSE file for details
-
-## 🆘 **Support**
-- **Commands**: Type `help` in the terminal
-- **Documentation**: See README files in the repo
-- **Issues**: Create a GitHub issue for bugs
-
-## 🎉 **Latest Updates (v1.5.9)**
-
-### ✅ **New Features:**
-- **Command-only Profile System** with API key management
-- **Enhanced NFT Trading** with OpenSea integration
-- **Ultimate DexScreener Analytics** dashboard
-- **Modular Architecture** with clean separation
-- **5 GUI Themes** with seamless switching
-
-### 🐛 **Bug Fixes:**
-- **Mobile responsiveness** improvements
-- **API error handling** enhancements  
-- **Theme consistency** across all modes
-- **Performance optimizations**
+## Live Demo
+**[Try Omega Terminal](https://omeganetwork.co)** 
 
 ---
 
-**Built with ❤️ for the Web3 community**
+## Key Features
 
-⭐ **Star this repo** if you find it useful!  
-🐦 **Follow us** for updates and new features  
-💬 **Join the community** and share your feedback
+### Multi-Chain Support
+- Ethereum, Solana, NEAR, Eclipse, BSC, Polygon, and more
+- Wallet Integration: MetaMask, Phantom, NEAR Wallet, Shade Agents
+- Cross-chain portfolio tracking and trading
+- Omega Network native support
+
+### Trading & Analytics
+- **Polymarket**: Prediction markets with categories (politics, sports, crypto, tech)
+- **Perpetuals Trading**: Integrated Omega Perps interface
+- **DexScreener**: Ultimate analytics dashboard with real-time data
+- **DeFi Llama**: TVL and protocol analytics
+- **Price Tracking**: Across multiple DEXs and exchanges
+- **Portfolio Analytics**: P&L tracking and performance metrics
+
+### NFT Trading Suite
+- OpenSea Integration with real-time market data
+- NFT Discovery, search, and analytics
+- Collection Analytics with floor prices and trends
+- Activity Feed with real-time blockchain events
+- On-chain NFT minting capabilities
+
+### Profile & API Management
+- User Profiles with customizable settings
+- API Key Management for enhanced features
+- Personal preferences and wallet connections
+- Command history and favorites
+
+### Omega Arcade
+- Built-in Games: Flappy Omega, Snake.io, Brick Breaker
+- Leaderboards with on-chain integration
+- Credit System with wallet-based authentication
+
+### AI-Powered Features
+- Intelligent command processing
+- Market analysis and trading insights
+- Automated responses for common queries
+
+---
+
+## Quick Start
+
+### 1. Open the Terminal
+Open `index.html` in your browser or visit the live demo at https://omeganetwork.co
+
+### 2. Connect a Wallet
+
+**Option A: Browser Wallet (Recommended)**
+```bash
+connect
+```
+This will connect your MetaMask or compatible EVM wallet.
+
+**Option B: Create Omega Wallet**
+If you don't have a browser wallet installed:
+```bash
+connect
+# When prompted, type:
+yes
+```
+This generates a new Omega Wallet and funds it with 0.1 OMEGA tokens automatically.
+
+**Option C: Other Chains**
+```bash
+# For Solana/Phantom
+solana wallet
+
+# For NEAR Protocol  
+near connect
+
+# For Shade Agents (Multi-chain)
+shade
+```
+
+### 3. Explore Features
+
+**Trading Commands:**
+```bash
+polymarket trending          # View trending prediction markets
+polymarket crypto            # Crypto-focused markets
+perp                         # Open Omega Perps trading interface
+```
+
+**NFT Commands:**
+```bash
+nft assets boredapeyachtclub    # View NFT collection
+nft analytics cryptopunks        # Collection analytics
+```
+
+**Analytics Commands:**
+```bash
+dexscreener BTC              # Token analytics
+defillama protocols          # DeFi protocol data
+```
+
+**Profile & Settings:**
+```bash
+profile                      # Open profile management
+help                         # View all available commands
+```
+
+---
+
+## Command Reference
+
+### Core Commands
+- `connect` - Connect wallet or create Omega Wallet
+- `disconnect` - Disconnect current wallet
+- `balance` - Check wallet balance
+- `help` - Display all available commands
+- `clear` - Clear terminal screen
+
+### Polymarket Commands
+- `polymarket trending` - Trending markets
+- `polymarket markets` - Recent markets  
+- `polymarket events` - All events
+- `polymarket politics` - Politics category
+- `polymarket sports` - Sports betting
+- `polymarket crypto` - Crypto markets
+- `polymarket tech` - Technology markets
+
+### Trading Commands
+- `perp` - Open Omega Perps interface
+- `dexscreener <TOKEN>` - Token analytics
+- `defillama` - DeFi protocol data
+
+### NFT Commands
+- `nft assets <collection>` - View collection
+- `nft analytics <collection>` - Collection stats
+- `nft search <query>` - Search NFTs
+
+### Profile Commands
+- `profile` - Open profile management
+- `profile apikeys` - Manage API keys
+
+---
+
+## Project Structure
+
+```
+omega-terminal/
+├── index.html                     # Main terminal interface
+├── js/
+│   ├── terminal-core.js          # Core terminal logic
+│   ├── commands/                 # Modular command system
+│   ├── wallet.js                 # Wallet connection
+│   └── themes.js                 # Theme management
+├── styles/
+│   ├── base.css                  # Core styling
+│   ├── themes.css                # Color themes
+│   └── animations.css            # Boot animations
+├── relayer-faucet.js             # Backend API server
+├── polymarket-proxy.js           # CORS proxy for Polymarket
+└── README.md                     # This file
+```
+
+---
+
+## Configuration
+
+### API Keys (Optional)
+Enhance functionality with your own API keys:
+
+1. Type `profile` in the terminal
+2. Navigate to API Keys section
+3. Add keys for:
+   - **OpenSea** - Enhanced NFT data
+   - **DexScreener** - Advanced analytics
+   - **DeFi Llama** - Protocol insights
+   - **CoinGecko** - Price data
+   - **Alpha Vantage** - Market data
+
+### Themes
+Switch between multiple visual themes:
+```bash
+theme chatgpt      # Conversational AI interface
+theme discord      # Discord-style chat
+theme windows95    # Retro DOS interface
+theme aol          # 90s instant messenger
+theme modern       # Default modern theme
+```
+
+---
+
+## Development
+
+### Running Locally
+
+**1. Start Python HTTP Server:**
+```bash
+python -m http.server 8000
+```
+
+**2. Start Polymarket Proxy (Optional):**
+```bash
+node polymarket-proxy.js
+```
+
+**3. Start Relayer Server (Optional):**
+```bash
+node relayer-faucet.js
+```
+
+**4. Open Browser:**
+Navigate to `http://localhost:8000`
+
+### Adding New Commands
+
+1. Create a new function in `index.html` or modular command file
+2. Add case handler in the command switch statement
+3. Update help documentation
+4. Test thoroughly
+
+### Adding New Features
+
+1. Follow existing code patterns
+2. Maintain modular architecture
+3. Add error handling
+4. Update README with new commands
+
+---
+
+## Technical Details
+
+### Architecture
+- **Frontend**: Pure HTML/CSS/JavaScript
+- **Blockchain**: Ethers.js v5 for EVM chains
+- **APIs**: Direct integration with multiple Web3 APIs
+- **Storage**: LocalStorage for settings and preferences
+
+### Supported Networks
+- Omega Network (0x4e454228)
+- Ethereum Mainnet
+- Solana Mainnet
+- NEAR Protocol
+- Eclipse Mainnet
+- BSC, Polygon, Arbitrum, Avalanche
+
+### Browser Compatibility
+- Chrome/Brave (Recommended)
+- Firefox
+- Edge
+- Safari (Limited wallet support)
+
+---
+
+## Security
+
+### Best Practices
+- **Never share private keys** - Use browser wallet extensions
+- **API keys stored locally** - Only in your browser
+- **No server-side storage** - All data stays client-side
+- **CORS compliant** - Secure API integrations
+
+### Omega Wallet Security
+- Generated wallets are client-side only
+- Save your private key securely
+- Use hardware wallets for large amounts
+- Test with small amounts first
+
+---
+
+## Troubleshooting
+
+### Connection Issues
+**Problem**: "No EVM wallet found"  
+**Solution**: Install MetaMask or type `yes` to create Omega Wallet
+
+**Problem**: "Failed to switch network"  
+**Solution**: Manually add Omega Network to MetaMask
+
+### API Issues
+**Problem**: "API request failed"  
+**Solution**: Check if proxy servers are running (polymarket-proxy.js, relayer-faucet.js)
+
+### Cache Issues
+**Problem**: "Old version loading"  
+**Solution**: Hard refresh browser (Ctrl+Shift+R or Cmd+Shift+R)
+
+---
+
+## Contributing
+
+We welcome contributions! Here's how:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow existing code style
+- Test all changes thoroughly
+- Update documentation
+- Keep commits atomic and descriptive
+
+---
+
+## Latest Updates (v2.0.1)
+
+### New Features
+- **Omega Wallet Creation**: Generate wallets without browser extensions
+- **Polymarket Integration**: Full prediction market support with categories
+- **Omega Perps Command**: One-click access to perpetuals trading
+- **Updated Loading Screen**: Modernized feature display (AI, Defi, NFTs)
+- **Enhanced Profile System**: Improved API key management
+
+### Improvements
+- Better wallet detection and connection flow
+- Improved error handling for API requests
+- Cleaner UI with neutral color schemes
+- Enhanced mobile responsiveness
+
+### Bug Fixes
+- Fixed wallet creation when no browser extension detected
+- Improved cache busting for updates
+- Fixed Polymarket category filtering
+- Enhanced network switching logic
+
+---
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Support
+
+- **Documentation**: This README and in-terminal `help` command
+- **Issues**: Report bugs via GitHub Issues
+- **Community**: Join our Discord/Telegram for support
+- **Updates**: Star the repo to receive notifications
+
+---
+
+**Built for the Web3 Community**
+
+If you find this project useful, please star the repository and share it with others!
+
+[GitHub Repository](https://github.com/OmegaNetwork-source/omegaterminalupdated) | [Live Demo](https://omeganetwork.co) | [Documentation](https://github.com/OmegaNetwork-source/omegaterminalupdated/wiki)
