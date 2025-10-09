@@ -475,187 +475,6 @@ console.log('🔧 Loading Enhanced Profile System...');
                         </div>
                     </div>
                     
-                    <!-- API Keys Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">🔑 API Keys</div>
-                        
-                        <div style="
-                            padding: 16px;
-                            border-radius: 12px;
-                            background: rgba(255, 149, 0, 0.1);
-                            border: 1px solid rgba(255, 149, 0, 0.2);
-                            margin-bottom: 16px;
-                        ">
-                            <div style="color: #FF9500; font-weight: 600; margin-bottom: 8px;">🔐 Centralized API Management</div>
-                            <div style="color: #8E8E93; font-size: 0.9em; line-height: 1.4;">
-                                Store all your API keys in one place. Once set, commands will automatically use these keys.
-                            </div>
-                        </div>
-                        
-                        <!-- Kalshi API Key (RSA) -->
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">📊 Kalshi API Key ID</label>
-                            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                                <input type="text" id="api-key-kalshi" placeholder="Enter Kalshi API Key ID (e.g., ed60297a-477f-4857-8dd2-3ebeb4601c51)" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
-                                <button onclick="saveAPIKey('kalshi')" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                    white-space: nowrap;
-                                ">Save</button>
-                            </div>
-                            <div style="
-                                padding: 12px;
-                                border-radius: 8px;
-                                background: rgba(255, 149, 0, 0.1);
-                                border: 1px solid rgba(255, 149, 0, 0.2);
-                                font-size: 0.85em;
-                                color: #FF9500;
-                                margin-bottom: 8px;
-                            ">
-                                <div style="font-weight: 600; margin-bottom: 4px;">🔐 RSA Private Key Required</div>
-                                <div>Kalshi requires an RSA private key for authentication. Use the terminal command:</div>
-                                <div style="margin-top: 4px;"><code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">kalshi set-key YOUR_PRIVATE_KEY</code></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Alpha Vantage API Key -->
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">📈 Alpha Vantage API Key</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="password" id="api-key-alpha" placeholder="Enter Alpha Vantage API key" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
-                                <button onclick="saveAPIKey('alpha')" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                    white-space: nowrap;
-                                ">Save</button>
-                            </div>
-                        </div>
-                        
-                        <!-- OpenSea API Key -->
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🌊 OpenSea API Key</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="password" id="api-key-opensea" placeholder="Enter OpenSea API key" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
-                                <button onclick="saveAPIKey('opensea')" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                    white-space: nowrap;
-                                ">Save</button>
-                            </div>
-                        </div>
-                        
-                        <!-- Magic Eden API Key -->
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🪄 Magic Eden API Key</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="password" id="api-key-magiceden" placeholder="Enter Magic Eden API key" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
-                                <button onclick="saveAPIKey('magiceden')" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                    white-space: nowrap;
-                                ">Save</button>
-                            </div>
-                        </div>
-                        
-                        <!-- CoinGecko API Key -->
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🦎 CoinGecko API Key</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="password" id="api-key-coingecko" placeholder="Enter CoinGecko API key" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
-                                <button onclick="saveAPIKey('coingecko')" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                    white-space: nowrap;
-                                ">Save</button>
-                            </div>
-                        </div>
-                        
-                        <div style="
-                            padding: 12px;
-                            border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.05);
-                            font-size: 0.9em;
-                            color: #8E8E93;
-                        ">
-                            <div style="margin-bottom: 8px;">💡 Terminal Commands:</div>
-                            <div style="margin-left: 12px;">
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">profile apikeys list</code> - View all keys</div>
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">profile apikeys show &lt;service&gt;</code> - Show key</div>
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">profile apikeys remove &lt;service&gt;</code> - Remove key</div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!-- Python Scripts Section -->
                     <div style="margin-bottom: 32px;">
                         <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">🐍 Python Scripts</div>
@@ -960,38 +779,15 @@ console.log('🔧 Loading Enhanced Profile System...');
     }
     
     function updateAPIKeysUI() {
-        // Load API keys from the unified storage system in index.html
-        const apiKeyStorage = localStorage.getItem('omega_terminal_api_keys');
-        let keys = {};
+        const openseaKey = document.getElementById('opensea-key');
+        const dexscreenerKey = document.getElementById('dexscreener-key');
+        const defillamaKey = document.getElementById('defillama-key');
+        const pgtKey = document.getElementById('pgt-key');
         
-        if (apiKeyStorage) {
-            try {
-                keys = JSON.parse(apiKeyStorage);
-            } catch (e) {
-                console.error('Failed to parse API keys:', e);
-            }
-        }
-        
-        // Update all API key fields with stored values
-        const services = ['kalshi', 'alpha', 'opensea', 'magiceden', 'coingecko'];
-        services.forEach(service => {
-            const field = document.getElementById(`api-key-${service}`);
-            if (field && keys[service]) {
-                // Special handling for Kalshi - only show API key ID, not private key
-                if (service === 'kalshi') {
-                    // Don't show the private key in the API key ID field
-                    const privateKey = localStorage.getItem('kalshi_private_key');
-                    if (privateKey && keys[service] === privateKey) {
-                        // If the stored value is actually the private key, clear the field
-                        field.value = '';
-                    } else {
-                        field.value = keys[service];
-                    }
-                } else {
-                    field.value = keys[service];
-                }
-            }
-        });
+        if (openseaKey) openseaKey.value = profileData.apiKeys.opensea;
+        if (dexscreenerKey) dexscreenerKey.value = profileData.apiKeys.dexscreener;
+        if (defillamaKey) defillamaKey.value = profileData.apiKeys.defillama;
+        if (pgtKey) pgtKey.value = profileData.apiKeys.pgt;
     }
     
     function updateFullscreenUI() {
@@ -1209,63 +1005,6 @@ console.log('🔧 Loading Enhanced Profile System...');
             window.terminal.log('💬 Opening Terminal Chatter...', 'info');
         } else {
             window.terminal.log('❌ Terminal Chatter not available', 'error');
-        }
-    };
-    
-    // API Key Management
-    window.saveAPIKey = function(service) {
-        const field = document.getElementById(`api-key-${service}`);
-        if (!field) {
-            window.terminal.log('❌ API key field not found', 'error');
-            return;
-        }
-        
-        const key = field.value.trim();
-        if (!key) {
-            window.terminal.log('❌ Please enter an API key', 'error');
-            return;
-        }
-        
-        // Save to unified API key storage
-        const apiKeyStorage = localStorage.getItem('omega_terminal_api_keys');
-        let keys = {};
-        
-        if (apiKeyStorage) {
-            try {
-                keys = JSON.parse(apiKeyStorage);
-            } catch (e) {
-                console.error('Failed to parse existing API keys:', e);
-            }
-        }
-        
-        keys[service] = key;
-        
-        try {
-            localStorage.setItem('omega_terminal_api_keys', JSON.stringify(keys));
-            window.terminal.log(`✅ ${service.toUpperCase()} API key saved successfully!`, 'success');
-            window.terminal.log(`💡 You can now use ${service} commands without setting the API key each time`, 'info');
-            
-            // Give service-specific tips
-            switch (service) {
-                case 'kalshi':
-                    window.terminal.log('💡 Try: kalshi markets', 'info');
-                    break;
-                case 'alpha':
-                    window.terminal.log('💡 Try: alpha quote AAPL', 'info');
-                    break;
-                case 'opensea':
-                    window.terminal.log('💡 Try: opensea collection <collection-slug>', 'info');
-                    break;
-                case 'magiceden':
-                    window.terminal.log('💡 Try: magiceden popular', 'info');
-                    break;
-                case 'coingecko':
-                    window.terminal.log('💡 Try: cg trending', 'info');
-                    break;
-            }
-        } catch (e) {
-            console.error('Failed to save API key:', e);
-            window.terminal.log('❌ Failed to save API key', 'error');
         }
     };
     
