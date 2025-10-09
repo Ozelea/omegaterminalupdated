@@ -1,0 +1,417 @@
+/* ===================================
+   OMEGA TERMINAL - MOBILE OPTIMIZATION
+   Complete mobile responsive design for all themes
+   =================================== */
+
+/* Base mobile viewport settings */
+@media only screen and (max-width: 768px) {
+    
+    /* Terminal container */
+    .terminal-container,
+    #terminal {
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Terminal output area */
+    .terminal-output,
+    #output {
+        padding: 10px !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        max-height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+    }
+    
+    /* Input container */
+    .input-container,
+    #input-container {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        padding: 12px !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        z-index: 1000 !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Input field */
+    #user-input,
+    .terminal-input,
+    input[type="text"] {
+        width: 100% !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+        box-sizing: border-box !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+    
+    /* Prompt symbol */
+    .prompt,
+    .input-prompt {
+        font-size: 14px !important;
+        margin-right: 8px !important;
+    }
+    
+    /* Header/Title */
+    .terminal-header,
+    h1,
+    .title {
+        font-size: 20px !important;
+        padding: 12px !important;
+        text-align: center !important;
+    }
+    
+    /* Buttons */
+    button,
+    .btn,
+    .terminal-button {
+        min-height: 44px !important; /* iOS touch target */
+        min-width: 44px !important;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+        margin: 4px !important;
+        touch-action: manipulation !important;
+    }
+    
+    /* Command suggestions */
+    .suggestions,
+    .autocomplete {
+        bottom: 70px !important;
+        max-height: 200px !important;
+        overflow-y: auto !important;
+        font-size: 14px !important;
+    }
+    
+    /* Status bar */
+    .status-bar {
+        font-size: 12px !important;
+        padding: 8px !important;
+    }
+    
+    /* Wallet info */
+    .wallet-info {
+        font-size: 12px !important;
+        padding: 8px !important;
+        word-break: break-all !important;
+    }
+    
+    /* Tables */
+    table {
+        font-size: 12px !important;
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Code blocks */
+    pre,
+    code {
+        font-size: 12px !important;
+        overflow-x: auto !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Theme selector */
+    .theme-selector,
+    #theme-menu {
+        width: 90vw !important;
+        max-width: 90vw !important;
+        font-size: 14px !important;
+    }
+    
+    /* Modal/Popup */
+    .modal,
+    .popup {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Sidebar */
+    .sidebar,
+    #profile-sidebar {
+        width: 90vw !important;
+        max-width: 400px !important;
+    }
+    
+    /* AI Mode Button */
+    #ai-mode-btn,
+    .ai-button {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        min-height: 40px !important;
+    }
+    
+    /* Theme Toggle */
+    #theme-toggle,
+    .theme-btn {
+        padding: 8px !important;
+        font-size: 20px !important;
+        min-height: 40px !important;
+        min-width: 40px !important;
+    }
+}
+
+/* Portrait mode specific */
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    
+    .terminal-output,
+    #output {
+        font-size: 13px !important;
+        padding: 8px !important;
+        max-height: calc(100vh - 100px) !important;
+    }
+    
+    #user-input,
+    .terminal-input {
+        font-size: 16px !important;
+        padding: 10px 14px !important;
+    }
+    
+    .terminal-header,
+    h1 {
+        font-size: 18px !important;
+        padding: 10px !important;
+    }
+    
+    button,
+    .btn {
+        font-size: 13px !important;
+        padding: 8px 12px !important;
+    }
+    
+    table {
+        font-size: 11px !important;
+    }
+}
+
+/* Landscape mode specific */
+@media only screen and (max-height: 600px) and (orientation: landscape) {
+    
+    .terminal-output,
+    #output {
+        max-height: calc(100vh - 80px) !important;
+        font-size: 12px !important;
+    }
+    
+    .input-container,
+    #input-container {
+        padding: 8px !important;
+    }
+    
+    #user-input,
+    .terminal-input {
+        padding: 8px 12px !important;
+    }
+    
+    .terminal-header,
+    h1 {
+        font-size: 16px !important;
+        padding: 8px !important;
+    }
+    
+    button,
+    .btn {
+        padding: 6px 10px !important;
+        min-height: 36px !important;
+    }
+}
+
+/* Modern UI Theme Specific Mobile Fixes */
+@media only screen and (max-width: 768px) {
+    
+    /* Modern UI glass effect */
+    .modern-ui .terminal-container,
+    .modern-ui #terminal {
+        background: rgba(0, 0, 0, 0.85) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+    }
+    
+    /* Modern UI input */
+    .modern-ui #user-input,
+    .modern-ui .terminal-input {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+    }
+    
+    /* Modern UI buttons */
+    .modern-ui button,
+    .modern-ui .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        color: white !important;
+    }
+    
+    /* Modern UI output */
+    .modern-ui .terminal-output,
+    .modern-ui #output {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+}
+
+/* Touch-friendly enhancements */
+@media (hover: none) and (pointer: coarse) {
+    
+    /* All interactive elements */
+    button,
+    input,
+    select,
+    textarea,
+    a,
+    .clickable {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+        touch-action: manipulation;
+    }
+    
+    /* Prevent text selection on UI elements */
+    .terminal-header,
+    .status-bar,
+    button,
+    .btn {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Allow text selection in output */
+    .terminal-output,
+    #output,
+    pre,
+    code {
+        -webkit-user-select: text;
+        user-select: text;
+    }
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px !important; /* Prevents iOS zoom */
+    }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+    .terminal-container,
+    #terminal {
+        padding-top: max(0px, env(safe-area-inset-top)) !important;
+        padding-bottom: max(0px, env(safe-area-inset-bottom)) !important;
+        padding-left: max(0px, env(safe-area-inset-left)) !important;
+        padding-right: max(0px, env(safe-area-inset-right)) !important;
+    }
+    
+    .input-container,
+    #input-container {
+        padding-bottom: max(12px, calc(12px + env(safe-area-inset-bottom))) !important;
+    }
+}
+
+/* Scrollbar styling for mobile */
+@media only screen and (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 6px !important;
+        height: 6px !important;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 3px !important;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
+}
+
+/* Fix for keyboard covering input */
+@media only screen and (max-width: 768px) {
+    body.keyboard-open .terminal-output,
+    body.keyboard-open #output {
+        max-height: calc(50vh - 60px) !important;
+    }
+}
+
+/* Loading screen mobile */
+@media only screen and (max-width: 768px) {
+    .loading-screen,
+    .boot-animation {
+        font-size: 14px !important;
+        padding: 20px !important;
+    }
+    
+    .loading-logo {
+        max-width: 80vw !important;
+        max-height: 30vh !important;
+    }
+}
+
+/* Error messages mobile */
+@media only screen and (max-width: 768px) {
+    .error-message,
+    .warning-message,
+    .success-message {
+        font-size: 13px !important;
+        padding: 10px !important;
+        margin: 8px 0 !important;
+        border-radius: 8px !important;
+    }
+}
+
+/* Charts and graphs mobile */
+@media only screen and (max-width: 768px) {
+    .chart-container,
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* NFT grid mobile */
+@media only screen and (max-width: 768px) {
+    .nft-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+        gap: 10px !important;
+    }
+    
+    .nft-card {
+        font-size: 12px !important;
+    }
+}
+
+/* Wallet connect modal mobile */
+@media only screen and (max-width: 768px) {
+    .wallet-modal {
+        width: 95vw !important;
+        padding: 16px !important;
+    }
+    
+    .wallet-option {
+        padding: 12px !important;
+        font-size: 14px !important;
+        min-height: 60px !important;
+    }
+}

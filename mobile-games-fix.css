@@ -1,0 +1,167 @@
+/* ===================================
+   MOBILE GAME OPTIMIZATION
+   Responsive design for all game popups
+   =================================== */
+
+/* Base mobile responsive styles for all game popups */
+@media only screen and (max-width: 768px) {
+    #omega-game-popup {
+        width: 95vw !important;
+        height: 90vh !important;
+        max-width: 95vw !important;
+        max-height: 90vh !important;
+        border-radius: 12px !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+    
+    /* Game canvas responsive sizing */
+    #snake-canvas,
+    #circle-canvas,
+    #pacman-canvas,
+    #brick-canvas {
+        max-width: 90vw !important;
+        max-height: 50vh !important;
+        width: auto !important;
+        height: auto !important;
+    }
+    
+    /* Game headers on mobile */
+    #omega-game-popup > div:first-child {
+        padding: 12px !important;
+        font-size: 18px !important;
+    }
+    
+    /* Game buttons on mobile */
+    #omega-game-popup button {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        min-height: 44px !important; /* Touch-friendly */
+        min-width: 44px !important;
+    }
+    
+    /* Score displays on mobile */
+    #omega-game-popup > div[style*="display: flex"] {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Fullscreen button positioning */
+    button[onclick*="Fullscreen"] {
+        position: absolute !important;
+        top: 12px !important;
+        right: 50px !important;
+        padding: 8px !important;
+        font-size: 18px !important;
+    }
+    
+    /* Close button positioning */
+    button[onclick*="closeCurrentGame"] {
+        position: absolute !important;
+        top: 12px !important;
+        right: 12px !important;
+        padding: 8px !important;
+        font-size: 18px !important;
+    }
+}
+
+/* Portrait mode specific */
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+    #omega-game-popup {
+        width: 98vw !important;
+        height: 85vh !important;
+        border-radius: 8px !important;
+    }
+    
+    #snake-canvas,
+    #circle-canvas,
+    #pacman-canvas,
+    #brick-canvas {
+        max-width: 85vw !important;
+        max-height: 45vh !important;
+    }
+    
+    /* Smaller text on small screens */
+    #omega-game-popup {
+        font-size: 13px !important;
+    }
+    
+    #omega-game-popup > div:first-child {
+        font-size: 16px !important;
+        padding: 10px !important;
+    }
+}
+
+/* Landscape mode specific */
+@media only screen and (max-height: 600px) and (orientation: landscape) {
+    #omega-game-popup {
+        width: 90vw !important;
+        height: 95vh !important;
+    }
+    
+    #snake-canvas,
+    #circle-canvas,
+    #pacman-canvas,
+    #brick-canvas {
+        max-width: 60vw !important;
+        max-height: 70vh !important;
+    }
+    
+    /* Compact header in landscape */
+    #omega-game-popup > div:first-child {
+        padding: 8px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Compact score display */
+    #omega-game-popup > div[style*="display: flex"] {
+        padding: 8px 12px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* Touch-friendly controls */
+@media (hover: none) and (pointer: coarse) {
+    /* All buttons should be touch-friendly */
+    #omega-game-popup button,
+    #omega-game-popup input[type="button"] {
+        min-height: 48px !important;
+        min-width: 48px !important;
+        padding: 12px 20px !important;
+        font-size: 16px !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Increase touch target for close button */
+    button[onclick*="closeCurrentGame"] {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+}
+
+/* Prevent zoom on double-tap for game elements */
+#omega-game-popup * {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Canvas should be touch-enabled */
+#snake-canvas,
+#circle-canvas,
+#pacman-canvas,
+#brick-canvas {
+    touch-action: none;
+}
+
+/* Game list mobile optimization */
+@media only screen and (max-width: 768px) {
+    .terminal-output .game-item {
+        padding: 12px !important;
+        margin: 8px 0 !important;
+        font-size: 14px !important;
+    }
+}
