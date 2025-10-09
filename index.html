@@ -54,10 +54,10 @@
         console.log('🚀 TIMESTAMP: ' + new Date().toISOString());
         
         // Force cache bust for modern UI update
-        if (!window.location.search.includes('v=modernui') && !window.location.search.includes('appleui2025')) {
+        if (!window.location.search.includes('v=polymarketui2025')) {
             const timestamp = Date.now();
-            const newUrl = window.location.href.split('?')[0] + '?v=modernui' + timestamp;
-            console.log('🚀 OMEGA TERMINAL v2.0.1 - MODERN APPLE UI - CACHE UPDATING');
+            const newUrl = window.location.href.split('?')[0] + '?v=polymarketui2025' + timestamp;
+            console.log('🚀 OMEGA TERMINAL v2.0.1 - POLYMARKET UI UPDATE - CACHE UPDATING');
             window.location.href = newUrl;
         }
         
