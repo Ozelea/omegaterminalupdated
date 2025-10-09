@@ -584,6 +584,43 @@ class OmegaMinerTerminal {
                     await OmegaCommands.Remaining.createToken(this, args);
                     break;
                 
+                // NFT Generator UI command
+                case 'trait':
+                case 'traits':
+                case 'nftgen':
+                case 'nft-generator':
+                case 'nftgenui':
+                    if (window.openNFTUI) {
+                        window.openNFTUI();
+                    } else {
+                        this.log('❌ NFT Generator UI not loaded. Please refresh the page.', 'error');
+                    }
+                    break;
+                
+                // Rome Network commands
+                case 'rome':
+                    console.log('🏛️ Rome command detected in terminal-core.js');
+                    console.log('🏛️ window.OmegaCommands exists:', !!window.OmegaCommands);
+                    console.log('🏛️ window.OmegaCommands.Rome exists:', !!(window.OmegaCommands && window.OmegaCommands.Rome));
+                    if (window.OmegaCommands && window.OmegaCommands.Rome) {
+                        await OmegaCommands.Rome.rome(this, args);
+                    } else {
+                        this.log('❌ Rome Network plugin not loaded. Please refresh the page.', 'error');
+                    }
+                    break;
+                
+                // MegaETH Network commands
+                case 'megaeth':
+                    console.log('⚡ MegaETH command detected in terminal-core.js');
+                    console.log('⚡ window.OmegaCommands exists:', !!window.OmegaCommands);
+                    console.log('⚡ window.OmegaCommands.MegaETH exists:', !!(window.OmegaCommands && window.OmegaCommands.MegaETH));
+                    if (window.OmegaCommands && window.OmegaCommands.MegaETH) {
+                        await OmegaCommands.MegaETH.megaeth(this, args);
+                    } else {
+                        this.log('❌ MegaETH Network plugin not loaded. Please refresh the page.', 'error');
+                    }
+                    break;
+                
                 default:
                     // DEBUG: Log when we hit unknown command
                     console.log(`[DEBUG] Hit default case for command: "${cmd}"`);
