@@ -1536,6 +1536,11 @@
       }
 
       class OmegaMinerTerminal {
+        // For AI/automation: queue of prompt responses
+        aiPromptQueue = [];
+        // Chat history for AI context and error handling
+        chatHistory = [];
+        // Handle the 'shade' command: deploy/check agent, show info
         constructor() {
           // VERSION CHECK - This should be visible in terminal if updated code is loaded
           console.log("🚀 OMEGA TERMINAL CONSTRUCTOR VERSION 2.0.1");
@@ -1900,6 +1905,9 @@
           this.tempDMRecipient = "";
           this.solanaAddress = null;
           this.awaitingWalletChoice = false;
+
+          // Initialize AI mode state
+          this.isAIModeOn = false;
         }
 
         async init() {
@@ -2549,6 +2557,48 @@
         }
 
         async executeCommand(command) {
+          // Debug logging
+          console.log("executeCommand called with:", typeof command, command);
+
+          // Handle array commands first (from AI)
+          if (Array.isArray(command)) {
+            console.log("Processing array command:", command);
+            if (command.length > 0) {
+              const [mainCommand, ...promptResponses] = command;
+              console.log(
+                "Main command extracted:",
+                typeof mainCommand,
+                mainCommand
+              );
+              console.log("Prompt responses:", promptResponses);
+
+              // Ensure mainCommand is a string
+              if (typeof mainCommand !== "string") {
+                console.log("Main command is not a string:", mainCommand);
+                this.log("❌ Invalid main command in array", "error");
+                return;
+              }
+
+              this.aiPromptQueue = promptResponses;
+              console.log("Executing main command:", mainCommand);
+              await this.executeCommand(mainCommand, true);
+              this.aiPromptQueue = [];
+            }
+            return;
+          }
+
+          // Ensure command is a string before proceeding
+          if (typeof command !== "string") {
+            console.log("Invalid command type:", typeof command, command);
+            this.log("❌ Invalid command format", "error");
+            return;
+          }
+
+          // Track user input in chat history (if not from AI)
+          if (!arguments[1] || arguments[1] !== true) {
+            this.chatHistory.push({ type: "user", message: command });
+          }
+
           // Handle custom swap direction first!
           if (this.awaitingCustomSwapDirection) {
             const dir = command.trim();
@@ -2657,6 +2707,8 @@
               infoBox.style.display = "none";
             }
           } catch (e) {}
+
+          // Parse command early so it can be used in AI mode check
           const args = command.trim().split(/\s+/);
           const cmd = args[0].toLowerCase();
 
@@ -3014,6 +3066,163 @@
             const toMint = args[1];
             await this.handleCustomSwapInput(amount, toMint);
             return;
+          }
+
+          // AI Mode: If active and not a known command, call chat API
+          console.log(
+            "Checking AI mode. isAIModeOn:",
+            this.isAIModeOn,
+            "cmd:",
+            cmd
+          );
+          if (this.isAIModeOn) {
+            // List of known commands
+            const knownCommands = [
+              "help",
+              "clear",
+              "connect",
+              "disconnect",
+              "balance",
+              "faucet",
+              "mine",
+              "claim",
+              "status",
+              "stats",
+              "send",
+              "ens",
+              "mixer",
+              "stress",
+              "stopstress",
+              "stressstats",
+              "theme",
+              "rickroll",
+              "fortune",
+              "matrix",
+              "hack",
+              "disco",
+              "stop",
+              "tab",
+              "email",
+              "inbox",
+              "dexscreener",
+              "geckoterminal",
+              "stock",
+              "alphakey",
+              "ds",
+              "cg",
+              "alpha",
+              "airdrop",
+              "solana",
+              "eclipse",
+              "hyperliquid",
+              "polymarket",
+              "magiceden",
+              "import",
+              "ambassador",
+              "profile",
+              "gui",
+              "shade",
+              "near",
+              "nft",
+              "opensea",
+              "defillama",
+              "modern",
+              "messages",
+              "url",
+              "urls",
+              "ai",
+              "perp",
+              "perps",
+              "poly",
+            ];
+
+            // Only log and call chat API for direct user input, not for commands returned by the API
+            console.log(
+              "AI mode check - Known command?",
+              knownCommands.includes(cmd),
+              "Direct user input?",
+              !arguments[1] || arguments[1] !== true
+            );
+            if (
+              !knownCommands.includes(cmd) &&
+              (!arguments[1] || arguments[1] !== true)
+            ) {
+              this.logHtml(
+                `<span style='color:#99ccff'>🤖 AI Processing: "${command}"</span>`,
+                "info"
+              );
+              const url = "https://ai.omeganetwork.co/chat";
+              const evm = this.userAddress || null;
+              const solana = this.solanaAddress || null;
+
+              try {
+                const res = await fetch(url, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    question: command,
+                    evm,
+                    solana,
+                    chatHistory: this.chatHistory, // Send history for context
+                  }),
+                });
+                const data = await res.json();
+                if (data && data.data) {
+                  const d = data.data;
+                  // Track AI reply in chat history
+                  if (d.additionalInfoRequired) {
+                    this.chatHistory.push({
+                      type: "ai",
+                      message: d.additionalInfo,
+                    });
+                  }
+                  if (d.additionalInfoRequired) {
+                    this.log(d.additionalInfo, "info");
+                  }
+                  if (Array.isArray(d.commands) && d.commands.length > 0) {
+                    // Execute each command in the array individually to avoid plugin conflicts
+                    console.log("AI returned commands array:", d.commands);
+                    this.chatHistory.push({
+                      type: "command",
+                      command: d.commands,
+                    });
+
+                    try {
+                      for (let i = 0; i < d.commands.length; i++) {
+                        const cmd = d.commands[i];
+                        console.log(
+                          `Executing AI command ${i + 1}/${
+                            d.commands.length
+                          }: "${cmd}"`
+                        );
+                        if (typeof cmd === "string") {
+                          await this.executeCommand(cmd, true);
+                        } else {
+                          console.warn("Skipping non-string command:", cmd);
+                        }
+                      }
+                      console.log(
+                        "AI command execution completed successfully"
+                      );
+                    } catch (error) {
+                      console.error("Error executing AI commands:", error);
+                      console.error("Error stack:", error.stack);
+                      this.log(
+                        `AI command execution failed: ${error.message}`,
+                        "error"
+                      );
+                    }
+                  } else if (!d.additionalInfoRequired) {
+                    this.log("Can't perform this action", "error");
+                  }
+                } else {
+                  this.log("AI agent error: Invalid response.", "error");
+                }
+              } catch (err) {
+                this.log("AI agent error: " + err.message, "error");
+              }
+              return;
+            }
           }
 
           // --- End awaiting input checks ---
@@ -5499,6 +5708,73 @@
                 "error"
               );
               return;
+            case "polymarket":
+
+            case "pm":
+              if (args[1] === "help") {
+                this.log("=== Polymarket Prediction Markets ===", "info");
+                this.log("polymarket help - Show this help", "output");
+                this.log(
+                  "polymarket markets - Get all prediction markets",
+                  "output"
+                );
+                this.log(
+                  "polymarket active - Get active markets only",
+                  "output"
+                );
+                this.log(
+                  "polymarket search <query> - Search markets",
+                  "output"
+                );
+                this.log(
+                  "polymarket market <id> - Get specific market details",
+                  "output"
+                );
+                this.log("", "output");
+                this.log("Examples:", "output");
+                this.log("polymarket markets", "output");
+                this.log('polymarket search "election"', "output");
+                this.log("polymarket active", "output");
+                return;
+              }
+
+              if (args[1] === "markets") {
+                await this.getPolymarketMarkets();
+                return;
+              }
+
+              if (args[1] === "active") {
+                await this.getPolymarketActiveMarkets();
+                return;
+              }
+
+              if (args[1] === "recent") {
+                await this.getPolymarketRecentMarkets();
+                return;
+              }
+
+              if (args[1] === "live") {
+                await this.getPolymarketLiveMarkets();
+                return;
+              }
+
+              if (args[1] === "search" && args.length >= 3) {
+                const query = args.slice(2).join(" ");
+                await this.searchPolymarketMarkets(query);
+                return;
+              }
+
+              if (args[1] === "market" && args.length >= 3) {
+                const marketId = args[2];
+                await this.getPolymarketMarketDetails(marketId);
+                return;
+              }
+
+              this.log(
+                'Unknown Polymarket command. Type "polymarket help" for available commands.',
+                "error"
+              );
+              return;
             case "magiceden":
             case "me":
               if (args[1] === "help") {
@@ -5593,6 +5869,9 @@
             case "perp":
             case "perps":
               this.handlePerpCommand(args);
+              break;
+            case "ai":
+              this.toggleAIMode();
               break;
             default:
               if (cmd) {
@@ -6954,6 +7233,11 @@
             '<span style="color:#33bbff">Commands: connect | disconnect | balance | faucet | send | network | forceadd | rpccheck</span>',
             "info"
           );
+          this.log("--- AI Assistant ----", "output");
+          this.logHtml(
+            '<span style="color:#33bbff">AI Mode: ai</span> - Toggle AI assistant to answer questions and execute commands naturally',
+            "info"
+          );
           this.log("--- Mining & Rewards ---", "output");
           this.logHtml(
             '<span style="color:#33bbff">Commands: mine | claim | status | stats</span>',
@@ -7426,6 +7710,19 @@
           const tab = this.tabs[this.activeTab];
           if (tab)
             tab.history.push({ type: "output", content: html, logType: type });
+          // Also push to chatHistory for AI context (clean text only)
+          if (this.chatHistory) {
+            // Remove HTML tags for chatHistory output
+            const cleanText = html
+              .replace(/<[^>]*>/g, "")
+              .replace(/\s+/g, " ")
+              .trim();
+            this.chatHistory.push({
+              type: "result",
+              output: cleanText,
+              logType: type,
+            });
+          }
         }
 
         clearTerminal() {
@@ -8519,16 +8816,18 @@
 
         toggleAIMode() {
           const aiToggle = document.querySelector(".ai-toggle");
-          if (aiToggle.textContent.includes("(off)")) {
+          const input = document.getElementById("commandInput");
+          this.isAIModeOn = !this.isAIModeOn;
+          console.log("AI Mode toggled to:", this.isAIModeOn);
+          if (this.isAIModeOn) {
             aiToggle.textContent = "AI Mode (on)";
-            this.log("🤖 AI Mode: Coming in v2!", "info");
-            this.log(
-              "💡 Enhanced assistance, smart suggestions, and contextual help will be available soon.",
-              "info"
-            );
+            this.log("🤖 AI Mode Activated - Ask me anything!", "success");
+            if (input)
+              input.placeholder = "Enter command or ask me anything...";
           } else {
             aiToggle.textContent = "AI Mode (off)";
             this.log("🤖 AI Mode: Disabled", "info");
+            if (input) input.placeholder = "Enter command...";
           }
         }
 
@@ -9110,6 +9409,11 @@
         // Add this method to the OmegaMinerTerminal class
         promptTerminalInput() {
           this.awaitingPromptInput = true;
+          // If there are queued AI prompt responses, use them
+          if (this.aiPromptQueue && this.aiPromptQueue.length > 0) {
+            const response = this.aiPromptQueue.shift();
+            return Promise.resolve(response);
+          }
           return new Promise((resolve) => {
             this.promptResolver = resolve;
             const input = document.getElementById("commandInput");
