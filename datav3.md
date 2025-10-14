@@ -298,61 +298,265 @@ mixer withdraw-direct 0xabc... mysecret 0x123...
 
 ### Understanding Polymarket Context
 
-Polymarket is a prediction market platform where users bet on real-world events. When users ask about predictions or betting markets, use these commands:
+Polymarket is the world's largest prediction market platform where users bet on real-world events using cryptocurrency. Users can create and trade on markets about politics, sports, crypto, technology, and world events. When users mention predictions, betting, odds, or want to speculate on future outcomes, use these commands:
 
-### `polymarket markets`
+### Core Polymarket Operations
 
-**When to Use:**
+#### `polymarket markets`
 
-- User asks "what prediction markets are available?"
-- User wants to see current betting opportunities
-- User mentions "prediction markets" or "betting"
-
-**What Happens:**
-
-- Shows active prediction markets with volume data
-- Displays market cards with questions, outcomes, and betting options
-- Includes categories like politics, crypto, sports, tech
-- Shows market end dates and current odds
-
-### `polymarket trending`
+**Description:** Display comprehensive overview of all active prediction markets across all categories
+**Purpose:** Show current betting opportunities with detailed market information
 
 **When to Use:**
 
-- User asks "what are the most popular prediction markets?"
-- User wants to see high-volume betting markets
-- User mentions "trending" or "popular" predictions
+- User asks "what prediction markets are available?" or "show me betting markets"
+- User wants to "see current betting opportunities" or "browse prediction markets"
+- User mentions "prediction markets," "betting," or "what can I bet on?"
+- User asks "what events can I predict?" or "show active markets"
+- User wants to explore Polymarket without specific category interest
+- User asks "what's happening on Polymarket?" or "current markets"
 
 **What Happens:**
 
-- Shows prediction markets sorted by betting volume
-- Highlights markets with high activity and volume
-- Displays 24h volume changes when available
-- Shows "hot" indicators for rapidly growing markets
+- Shows active prediction markets with comprehensive data
+- Displays market questions, outcomes, and current odds/probabilities
+- Includes betting volume, liquidity, and market cap information
+- Shows market end dates, resolution criteria, and time remaining
+- Organizes markets by categories (politics, crypto, sports, tech, world events)
+- Displays "Yes/No" odds and potential payouts for each outcome
+- Shows market creator, resolution source, and verification status
+- Includes recent trading activity and price movements
 
-### `polymarket events`
+**Market Information Displayed:**
+
+- Market question and description
+- Current odds and implied probabilities
+- 24h volume and total volume traded
+- Market liquidity and bid/ask spreads
+- Resolution date and criteria
+- Number of traders and positions
+- Recent price changes and trends
+
+**AI INSTRUCTION:** Use command `polymarket markets`
+
+**Example User Requests:**
+
+- "Show me all prediction markets"
+- "What can I bet on today?"
+- "Browse current betting opportunities"
+- "What events are people predicting?"
+
+#### `polymarket trending`
+
+**Description:** Display the most popular and high-volume prediction markets ranked by activity
+**Purpose:** Show markets with highest betting activity, volume, and user engagement
 
 **When to Use:**
 
-- User asks for historical prediction market activity
-- User wants to see market events from recent months
+- User asks "what are the most popular prediction markets?" or "trending bets"
+- User wants to "see high-volume betting markets" or "popular predictions"
+- User mentions "trending," "popular," "hot markets," or "most traded"
+- User asks "what's popular on Polymarket?" or "biggest markets"
+- User wants to find markets with high liquidity and active trading
+- User asks "where is most money being bet?" or "volume leaders"
 
 **What Happens:**
 
-- Shows market events from the last 6 months
-- Displays comprehensive market activity and outcomes
+- Shows prediction markets sorted by 24h and 7d trading volume
+- Highlights markets with highest activity and betting engagement
+- Displays volume changes, percentage gains, and momentum indicators
+- Shows "hot" indicators for rapidly growing markets and viral predictions
+- Includes trending score based on volume, users, and growth rate
+- Displays market liquidity depth and bid/ask spreads
+- Shows social engagement metrics (comments, shares, mentions)
 
-### `polymarket recent`
+**Trending Metrics Displayed:**
+
+- 24h/7d trading volume and percentage change
+- Number of unique traders and positions
+- Price volatility and momentum indicators
+- Social sentiment and engagement scores
+- Market cap and total value locked
+- Recent celebrity/influencer activity
+
+**AI INSTRUCTION:** Use command `polymarket trending`
+
+#### `polymarket events`
+
+**Description:** Display comprehensive historical market events and outcomes from recent months
+**Purpose:** Show resolved markets, major events, and historical prediction accuracy
 
 **When to Use:**
 
-- User wants very recent market updates
-- User asks "what's happened recently in prediction markets?"
+- User asks "what happened in prediction markets?" or "recent events"
+- User wants to see "historical prediction market activity" or "past results"
+- User asks "how accurate were predictions?" or "market outcomes"
+- User mentions "resolved markets," "past bets," or "prediction history"
+- User wants to analyze prediction market performance over time
+- User asks "what major events were predicted correctly?"
 
 **What Happens:**
 
-- Shows market activity from the last month
-- Displays latest market updates and fresh trading activity
+- Shows resolved market events from the last 6 months with outcomes
+- Displays comprehensive market activity, final odds, and accuracy metrics
+- Includes major political, economic, and social events that were predicted
+- Shows market resolution details and payout information
+- Displays prediction accuracy statistics and calibration data
+- Includes profit/loss data for major market participants
+
+**Historical Data Includes:**
+
+- Resolved market outcomes vs final odds
+- Major event predictions (elections, earnings, sports championships)
+- Market accuracy and calibration metrics
+- Top trader performance and winnings
+- Market manipulation attempts and resolution disputes
+- Correlation between predictions and actual outcomes
+
+**AI INSTRUCTION:** Use command `polymarket events`
+
+#### `polymarket recent`
+
+**Description:** Show the most recent market activity, new markets, and fresh trading updates
+**Purpose:** Display latest market developments and real-time prediction market activity
+
+**When to Use:**
+
+- User wants "very recent market updates" or "latest predictions"
+- User asks "what's happened recently in prediction markets?" or "new markets"
+- User mentions "latest," "new," "recent activity," or "fresh markets"
+- User wants to see "newest betting opportunities" or "just created markets"
+- User asks "what's new on Polymarket?" or "recent developments"
+- User wants real-time updates on market movements and new predictions
+
+**What Happens:**
+
+- Shows market activity and new markets from the last 7-30 days
+- Displays latest market updates, new predictions, and fresh trading activity
+- Includes recently created markets and newly popular predictions
+- Shows real-time price movements and recent large trades
+- Displays new market categories and emerging prediction topics
+- Includes recent news events that created new prediction opportunities
+
+**Recent Activity Includes:**
+
+- Newly created markets in the last week
+- Recent large trades and significant price movements
+- New market categories and prediction topics
+- Breaking news events generating new markets
+- Recent market resolutions and payouts
+- Fresh social sentiment and trending topics
+
+**AI INSTRUCTION:** Use command `polymarket recent`
+
+#### `polymarket search <query>`
+
+**Description:** Search Polymarket prediction markets using keywords, topics, or specific questions
+**Purpose:** Find specific markets that match user's search intent across all categories and timeframes
+**Usage:** `polymarket search [search terms]`
+
+**When to Use:**
+
+- User asks specific questions about events that might have prediction markets
+- User mentions specific topics, people, companies, or events they want to bet on
+- User wants to find markets related to particular keywords or themes
+- User asks "are there any markets about [topic]?" or "can I bet on [event]?"
+- User mentions specific names, dates, or events they want to search for
+- User asks about niche topics that might not fit standard categories
+
+**What Happens:**
+
+- Searches across ALL Polymarket categories using keyword matching
+- Returns markets that contain the search terms in title, description, or tags
+- Shows relevant markets regardless of category (crypto, politics, sports, tech, etc.)
+- Displays search results with market details, odds, and volume
+- Provides quick access to bet on found markets
+- Shows both active and recently resolved markets related to the search
+
+**Search Capabilities:**
+
+- **Keyword Matching:** Searches market titles, descriptions, and metadata
+- **Multi-Category Search:** Finds relevant markets across all categories simultaneously
+- **Event-Specific Search:** Locates markets about specific people, companies, or events
+- **Date-Aware Search:** Can find markets with specific time periods or deadlines
+- **Trending Integration:** Prioritizes popular markets matching search terms
+
+**Example Use Cases & AI Decision Making:**
+
+**Political Searches:**
+
+- User: "Are there markets about the 2024 election?" → `polymarket search 2024 election`
+- User: "Can I bet on Trump winning?" → `polymarket search Trump election`
+- User: "What about Biden's approval rating?" → `polymarket search Biden approval`
+- User: "Any markets about Congress?" → `polymarket search Congress midterm`
+
+**Crypto Searches:**
+
+- User: "Are there Bitcoin price predictions?" → `polymarket search Bitcoin price`
+- User: "Can I bet on Ethereum ETF approval?" → `polymarket search Ethereum ETF`
+- User: "What about Solana price targets?" → `polymarket search Solana price`
+- User: "Any DeFi regulation markets?" → `polymarket search DeFi regulation`
+
+**Sports Searches:**
+
+- User: "Can I bet on the Super Bowl winner?" → `polymarket search Super Bowl winner`
+- User: "Are there NBA championship markets?" → `polymarket search NBA championship`
+- User: "What about World Cup predictions?" → `polymarket search World Cup`
+- User: "Any MVP award markets?" → `polymarket search MVP award`
+
+**Tech & Business Searches:**
+
+- User: "Can I bet on Apple earnings?" → `polymarket search Apple earnings`
+- User: "Are there Tesla stock markets?" → `polymarket search Tesla stock`
+- User: "What about OpenAI valuation?" → `polymarket search OpenAI valuation`
+- User: "Any IPO prediction markets?" → `polymarket search IPO`
+
+**Event-Specific Searches:**
+
+- User: "Can I bet on the Oscars?" → `polymarket search Oscars awards`
+- User: "Are there climate change markets?" → `polymarket search climate change`
+- User: "What about recession predictions?" → `polymarket search recession economy`
+- User: "Any war or conflict markets?" → `polymarket search war conflict`
+
+**AI Decision Logic for Search vs Category:**
+
+**Use `polymarket search` when:**
+
+- User asks about specific people, companies, or events by name
+- User uses question format: "Can I bet on...?" "Are there markets about...?"
+- User mentions multiple topics that could span categories
+- User asks about niche or specific events that might not be in trending/main categories
+- User provides specific search terms or keywords
+- User asks about recent news events or current affairs
+
+**Use category commands when:**
+
+- User asks for broad category browsing: "show me all political markets" → `polymarket politics`
+- User wants to see trending in specific area: "popular crypto predictions" → `polymarket crypto`
+- User asks for category overview without specific search intent
+
+**Search Query Construction Guidelines:**
+
+**For AI: When constructing search queries, use these patterns:**
+
+- **Person Names:** Use just the last name or most recognizable name part
+  - "Trump election" not "Donald Trump presidential election 2024"
+- **Company/Stock:** Use company name + relevant context
+  - "Apple earnings" not "Apple Inc quarterly financial results"
+- **Sports Events:** Use event name + key terms
+  - "Super Bowl winner" not "National Football League Super Bowl championship"
+- **Crypto:** Use token name + prediction type
+  - "Bitcoin price" not "Bitcoin cryptocurrency price prediction market"
+- **General Topics:** Use 2-3 key descriptive words
+  - "recession economy" not "economic recession prediction markets"
+
+**AI INSTRUCTION:** Use command `polymarket search <query>` where `<query>` is 2-4 key words related to what the user wants to find
+
+**Example AI Responses:**
+
+- User: "Can I bet on who wins the election?" → AI uses: `polymarket search election winner`
+- User: "Are there any markets about Bitcoin hitting $100K?" → AI uses: `polymarket search Bitcoin 100K`
+- User: "What about Tesla stock price predictions?" → AI uses: `polymarket search Tesla stock`
 
 ## Category-Specific Commands
 
@@ -381,86 +585,310 @@ Polymarket organizes prediction markets by topic. Use these category commands wh
 - Startup and IPO outcomes
 - Innovation milestone predictions
 
-### `polymarket crypto`
+#### `polymarket crypto`
 
-**Description:** Show cryptocurrency and DeFi-related prediction markets  
-**Implementation:** Calls `getPolymarketCategoryMarkets('crypto', 'Crypto Markets', '₿')`  
+**Description:** Display cryptocurrency, blockchain, and DeFi-related prediction markets with comprehensive crypto coverage
+**Purpose:** Show crypto-specific predictions including price targets, adoption milestones, regulatory outcomes, and protocol developments
+**Implementation:** Calls `getPolymarketCategoryMarkets('crypto', 'Crypto Markets', '₿')`
+
+**When to Use:**
+
+- User asks about "crypto predictions," "bitcoin price bets," or "blockchain markets"
+- User mentions "cryptocurrency betting," "DeFi predictions," or "crypto markets"
+- User wants to bet on "BTC price," "ETH predictions," or "crypto adoption"
+- User asks about "crypto regulation bets," "exchange predictions," or "blockchain outcomes"
+- User mentions specific crypto projects, tokens, or DeFi protocols
+- User asks "will Bitcoin hit $100K?" or "Ethereum predictions"
+
 **Keyword Matching:** 90+ crypto keywords including:
 
-**Core Crypto:**
+**Core Cryptocurrency Terms:**
 
-- crypto, cryptocurrency, bitcoin, BTC, ethereum, ETH
-- blockchain, DeFi, web3, NFT, token, coin
-- exchange, trading, wallet, mining, staking
+- crypto, cryptocurrency, bitcoin, BTC, ethereum, ETH, altcoin
+- blockchain, DeFi, web3, NFT, token, coin, digital asset
+- exchange, trading, wallet, mining, staking, yield
 
-**Specific Projects:**
+**Major Projects & Ecosystems:**
 
-- Solana, Cardano, Polkadot, Chainlink, Uniswap
-- Coinbase, Binance, FTX, Kraken, OpenSea
-- USDC, USDT, stablecoin, altcoin, memecoin
+- Solana (SOL), Cardano (ADA), Polkadot (DOT), Chainlink (LINK)
+- Uniswap, Aave, Compound, MakerDAO, Curve, SushiSwap
+- Binance Smart Chain, Polygon, Avalanche, Fantom, Cosmos
 
-**Advanced Terms:**
+**Exchanges & Platforms:**
 
-- smart contract, dApp, DAO, governance, yield farming
-- layer 2, rollup, bridge, cross-chain, interoperability
-- regulation, SEC, CBDC, institutional adoption
+- Coinbase, Binance, FTX, Kraken, OpenSea, Magic Eden
+- Celsius, BlockFi, Robinhood, PayPal, Square, Tesla
 
-**Use Cases:**
+**Stablecoins & CBDCs:**
 
-- Track BTC/ETH price predictions (will BTC hit $100K?)
-- Monitor regulatory outcome predictions (ETF approval, SEC decisions)
-- Follow DeFi protocol predictions (TVL milestones, hack risks)
-- Watch adoption milestone predictions (institutional investment, CBDC launch)
+- USDC, USDT, DAI, BUSD, stablecoin, central bank digital currency
+- Federal Reserve, ECB, digital dollar, digital euro
 
-### `polymarket politics`
+**Advanced DeFi & Technology:**
 
-**Description:** Show political prediction markets for elections, policy, and governance  
-**Implementation:** Calls `getPolymarketCategoryMarkets('politics', 'Political Markets', '🗳️')`  
-**Keyword Matching:** 70+ political keywords including:
+- smart contract, dApp, DAO, governance token, yield farming
+- layer 2, rollup, bridge, cross-chain, interoperability, scaling
+- MEV, flash loan, liquidity mining, impermanent loss, TVL
 
-**Elections & Candidates:**
+**Regulation & Adoption:**
 
-- election, candidate, campaign, primary, general election
-- president, presidential, senate, congress, governor
-- Republican, Democrat, GOP, Biden, Trump, Harris
+- SEC, CFTC, regulation, compliance, institutional adoption
+- ETF, Bitcoin ETF, spot ETF, custody, regulatory clarity
+- CBDC, ban, legal tender, tax, AML, KYC
 
-**Government & Policy:**
+**Market Prediction Categories:**
 
-- politics, political, government, federal, state, local
-- policy, legislation, bill, law, regulation
-- vote, voting, ballot, referendum, initiative
+**Price Predictions:**
 
-**Use Cases:**
+- Will Bitcoin reach $100K by [date]?
+- Will Ethereum flip Bitcoin by market cap?
+- Will [altcoin] reach $X price target?
+- Will crypto market cap exceed $X trillion?
 
-- Predict election outcomes (presidential, congressional, gubernatorial)
-- Track policy passage predictions (healthcare, climate, tax reform)
-- Monitor approval rating milestones (presidential approval)
-- Follow political event outcomes (debates, scandals, investigations)
+**Regulatory Outcomes:**
 
-### `polymarket sports`
+- Will Bitcoin ETF be approved by SEC?
+- Will [country] ban cryptocurrency trading?
+- Will staking be classified as securities?
+- Will DeFi face major regulatory crackdowns?
 
-**Description:** Show sports-related prediction markets for games, championships, and records  
-**Implementation:** Calls `getPolymarketCategoryMarkets('sports', 'Sports Markets', '⚽')`  
-**Keyword Matching:** 80+ sports keywords including:
+**Adoption Milestones:**
 
-**Major Sports:**
+- Will [company] add Bitcoin to treasury?
+- Will [country] adopt Bitcoin as legal tender?
+- Will traditional banks offer crypto custody?
+- Will CBDCs launch by [date]?
 
-- football, NFL, Super Bowl, NBA, basketball, playoffs
-- baseball, MLB, World Series, soccer, Premier League
-- Olympics, championship, tournament, finals
+**Protocol & Technical Events:**
 
-**Teams & Players:**
+- Will Ethereum 2.0 complete by [date]?
+- Will [DeFi protocol] suffer major hack?
+- Will layer 2 TVL exceed $X billion?
+- Will [blockchain] process more transactions than Ethereum?
 
-- team, player, athlete, coach, MVP, rookie
-- trade, draft, contract, salary, retirement
-- record, milestone, Hall of Fame, statistics
+**AI INSTRUCTION:** Use command `polymarket crypto`
 
-**Use Cases:**
+**Example User Requests:**
 
-- Predict championship winners (Super Bowl, World Cup, Olympics)
-- Track individual achievements (MVP awards, records, milestones)
-- Monitor trade and draft predictions (player movements)
-- Follow season outcome predictions (team performance, playoffs)
+- "Show me Bitcoin price predictions"
+- "Crypto betting markets"
+- "Will Ethereum reach $5000?"
+- "DeFi regulation predictions"
+- "Blockchain adoption bets"
+
+#### `polymarket politics`
+
+**Description:** Display comprehensive political prediction markets covering elections, policy outcomes, government decisions, and political events
+**Purpose:** Show political betting markets for elections, legislation, approval ratings, scandals, and governmental decisions
+**Implementation:** Calls `getPolymarketCategoryMarkets('politics', 'Political Markets', '🗳️')`
+
+**When to Use:**
+
+- User asks about "political predictions," "election betting," or "political markets"
+- User mentions "politics," "elections," "government," or "policy predictions"
+- User wants to bet on "presidential election," "congress," or "senate races"
+- User asks about "political outcomes," "government decisions," or "policy bets"
+- User mentions specific politicians, parties, or political events
+- User asks "who will win the election?" or "political prediction markets"
+
+**Keyword Matching:** 100+ political keywords including:
+
+**Elections & Electoral Process:**
+
+- election, candidate, campaign, primary, general election, midterm
+- president, presidential, senate, congress, house, governor, mayor
+- Republican, Democrat, GOP, independent, third party, swing state
+- electoral college, popular vote, battleground state, red state, blue state
+
+**Major Political Figures:**
+
+- Biden, Trump, Harris, DeSantis, Newsom, Obama, Clinton
+- Speaker, majority leader, minority leader, chief justice
+- cabinet members, Supreme Court justices, federal judges
+
+**Government Institutions:**
+
+- politics, political, government, federal, state, local, municipal
+- White House, Capitol Hill, Supreme Court, Department of Justice
+- executive branch, legislative branch, judicial branch, bureaucracy
+
+**Policy & Legislation:**
+
+- policy, legislation, bill, law, regulation, executive order
+- healthcare, immigration, climate change, tax reform, infrastructure
+- budget, deficit, debt ceiling, spending, appropriations
+
+**Political Process & Events:**
+
+- vote, voting, ballot, referendum, initiative, recall, impeachment
+- debate, town hall, rally, convention, primary, caucus
+- polling, approval rating, favorability, endorsement, scandal
+
+**International Politics:**
+
+- foreign policy, diplomacy, trade war, sanctions, treaties
+- NATO, UN, G7, China relations, Russia, Ukraine, Middle East
+- immigration policy, border security, refugee crisis
+
+**Market Prediction Categories:**
+
+**Presidential & Federal Elections:**
+
+- Will [candidate] win the 2024 presidential election?
+- Will Republicans/Democrats control the House/Senate?
+- Will [candidate] win their primary?
+- What will be the electoral college margin?
+
+**Policy Outcomes:**
+
+- Will [bill] pass Congress by [date]?
+- Will student loan forgiveness be implemented?
+- Will marijuana be federally legalized?
+- Will climate change legislation pass?
+
+**Approval Ratings & Performance:**
+
+- Will Biden's approval rating exceed 50%?
+- Will [politician] resign by [date]?
+- Will there be a government shutdown?
+- Will the debt ceiling be raised?
+
+**Legal & Judicial:**
+
+- Will Trump face criminal charges?
+- Will Roe v. Wade be overturned? (historical)
+- Will Supreme Court expansion happen?
+- Will [politician] be impeached?
+
+**International Relations:**
+
+- Will there be military action in [region]?
+- Will trade deal with [country] be signed?
+- Will sanctions on [country] be lifted?
+- Will [conflict] end by [date]?
+
+**State & Local Politics:**
+
+- Will [governor] be recalled?
+- Will [state] pass [specific legislation]?
+- Will [city] elect new mayor?
+- Will ballot measure pass in [location]?
+
+**AI INSTRUCTION:** Use command `polymarket politics`
+
+**Example User Requests:**
+
+- "Show me election predictions"
+- "Political betting markets"
+- "Who will win 2024 election?"
+- "Government policy predictions"
+- "Congressional election bets"
+- "Presidential approval rating markets"
+
+#### `polymarket sports`
+
+**Description:** Display comprehensive sports prediction markets covering games, championships, records, trades, and athletic achievements
+**Purpose:** Show sports betting markets for major leagues, tournaments, individual performances, and sports-related events
+**Implementation:** Calls `getPolymarketCategoryMarkets('sports', 'Sports Markets', '⚽')`
+
+**When to Use:**
+
+- User asks about "sports predictions," "sports betting," or "sports markets"
+- User mentions specific sports, teams, players, or athletic events
+- User wants to bet on "championship winners," "game outcomes," or "player performance"
+- User asks about "Olympics," "World Cup," "Super Bowl," or major sporting events
+- User mentions "MVP predictions," "trade bets," or "season outcomes"
+- User asks "who will win [championship]?" or "sports prediction markets"
+
+**Keyword Matching:** 120+ sports keywords including:
+
+**Major Professional Sports:**
+
+- football, NFL, Super Bowl, playoffs, AFC, NFC, quarterback, touchdown
+- basketball, NBA, playoffs, finals, MVP, championship, March Madness, NCAA
+- baseball, MLB, World Series, playoffs, home run, batting average, ERA
+- soccer, football (international), Premier League, World Cup, Champions League, FIFA
+
+**Olympic & International Sports:**
+
+- Olympics, Olympic Games, winter Olympics, summer Olympics, Paralympics
+- World Cup, World Championship, international tournament, medal count
+- swimming, track and field, gymnastics, figure skating, skiing, tennis
+
+**Major Teams & Franchises:**
+
+- Lakers, Warriors, Celtics, Bulls, Heat, Knicks, 76ers, Nets
+- Patriots, Cowboys, Packers, Steelers, 49ers, Chiefs, Rams, Giants
+- Yankees, Red Sox, Dodgers, Giants, Cardinals, Cubs, Astros, Mets
+- Manchester United, Barcelona, Real Madrid, Liverpool, Arsenal, Chelsea
+
+**Athletes & Performance:**
+
+- team, player, athlete, coach, manager, rookie, veteran, superstar
+- MVP, Most Valuable Player, Rookie of the Year, Hall of Fame, All-Star
+- trade, draft, contract, salary, free agency, retirement, comeback
+- record, milestone, statistics, performance, injury, suspension
+
+**Competitions & Events:**
+
+- championship, tournament, finals, playoffs, wildcard, division title
+- game, match, bout, race, meet, competition, series, season
+- draft lottery, combine, training camp, preseason, regular season, postseason
+
+**Betting Markets Categories:**
+
+**Championship & Tournament Winners:**
+
+- Will [team] win the Super Bowl/NBA Finals/World Series?
+- Who will win the World Cup/Olympics/March Madness?
+- Will [team] make the playoffs this season?
+- What will be the championship margin of victory?
+
+**Individual Performance & Awards:**
+
+- Will [player] win MVP this season?
+- Will [player] be Rookie of the Year?
+- Will [player] break [record] this season?
+- Will [player] score X points/goals this season?
+
+**Team Performance & Trades:**
+
+- Will [team] have a winning record this season?
+- Will [player] be traded before [date]?
+- Will [team] make the playoffs?
+- Who will be #1 draft pick?
+
+**Game & Match Outcomes:**
+
+- Will [team] beat [team] in [game]?
+- Will the game go to overtime?
+- Will there be over/under X points scored?
+- Will [player] play in [game]?
+
+**Records & Milestones:**
+
+- Will [record] be broken this season?
+- Will [player] reach [milestone] this year?
+- Will attendance record be broken?
+- Will scoring record be set?
+
+**Scandals & Controversies:**
+
+- Will [player/coach] be suspended/fined?
+- Will team face major scandal?
+- Will league implement new rules?
+- Will strike/lockout occur?
+
+**AI INSTRUCTION:** Use command `polymarket sports`
+
+**Example User Requests:**
+
+- "Show me sports betting markets"
+- "NFL championship predictions"
+- "Who will win the Super Bowl?"
+- "Basketball MVP predictions"
+- "Olympics medal predictions"
+- "World Cup winner bets"
 
 #### `polymarket breaking`
 
@@ -474,10 +902,154 @@ Polymarket organizes prediction markets by topic. Use these category commands wh
 
 #### `polymarket help`
 
-**Description:** Show all Polymarket commands  
-**Purpose:** Display available Polymarket commands and usage
+**Description:** Show all Polymarket commands and comprehensive usage guide
+**Purpose:** Display available Polymarket commands, categories, and detailed usage instructions
+
+**When to Use:**
+
+- User asks "how do I use Polymarket?" or "Polymarket commands"
+- User wants "help with prediction markets" or "Polymarket guide"
+- User asks "what Polymarket commands are available?"
+- User needs guidance on prediction market betting and usage
 
 ---
+
+## 🎯 POLYMARKET AI GUIDANCE
+
+### Understanding User Intent for Polymarket Commands
+
+**For AI: When users mention prediction markets, use this decision tree:**
+
+#### **1. Specific Search Queries (TOP PRIORITY):**
+
+- "Can I bet on [specific person/event/company]?" → `polymarket search [keywords]`
+- "Are there markets about [specific topic]?" → `polymarket search [topic]`
+- "What about [person name] predictions?" → `polymarket search [person name]`
+- "Any [company name] markets?" → `polymarket search [company name]`
+- "Markets about [specific event/news]?" → `polymarket search [event keywords]`
+
+**Examples:**
+
+- "Can I bet on Trump winning?" → `polymarket search Trump election`
+- "Are there Bitcoin price markets?" → `polymarket search Bitcoin price`
+- "What about Tesla stock predictions?" → `polymarket search Tesla stock`
+- "Any Super Bowl winner markets?" → `polymarket search Super Bowl winner`
+
+#### **2. General Market Browsing:**
+
+- "Show me prediction markets" → `polymarket markets`
+- "What can I bet on?" → `polymarket markets`
+- "Browse betting opportunities" → `polymarket markets`
+
+#### **3. Trending & Popular Content:**
+
+- "What's trending?" / "Popular markets" → `polymarket trending`
+- "Hot predictions" / "Most traded" → `polymarket trending`
+- "High volume markets" → `polymarket trending`
+
+#### **4. Time-Sensitive Queries:**
+
+- "Recent markets" / "What's new?" → `polymarket recent`
+- "Latest predictions" / "New betting opportunities" → `polymarket recent`
+- "Historical outcomes" / "Past results" → `polymarket events`
+
+#### **5. Category-Specific Requests:**
+
+**Cryptocurrency & Blockchain:**
+
+- "Bitcoin predictions" / "Crypto bets" → `polymarket crypto`
+- "Will BTC hit $100K?" → `polymarket crypto`
+- "Ethereum price predictions" → `polymarket crypto`
+- "DeFi predictions" / "Blockchain outcomes" → `polymarket crypto`
+
+**Political & Government:**
+
+- "Election predictions" / "Political betting" → `polymarket politics`
+- "Presidential election" / "Congress predictions" → `polymarket politics`
+- "Policy outcomes" / "Government decisions" → `polymarket politics`
+- "Who will win 2024?" → `polymarket politics`
+
+**Sports & Athletics:**
+
+- "Sports betting" / "Championship predictions" → `polymarket sports`
+- "Super Bowl winner" / "NBA finals" → `polymarket sports`
+- "Olympics predictions" / "World Cup" → `polymarket sports`
+- "MVP predictions" / "Trade bets" → `polymarket sports`
+
+**Technology & Innovation:**
+
+- "Tech predictions" / "AI outcomes" → `polymarket tech`
+- "Company earnings" / "IPO predictions" → `polymarket tech`
+- "Innovation milestones" → `polymarket tech`
+
+#### **6. Breaking News & Events:**
+
+- "Breaking news markets" / "Emergency events" → `polymarket breaking`
+- "Crisis predictions" / "Urgent markets" → `polymarket breaking`
+- "Current events betting" → `polymarket breaking`
+
+### Advanced User Phrase Recognition
+
+**AI should recognize these phrases and map them correctly:**
+
+#### **Search-Specific Phrases (Use `polymarket search`):**
+
+- "Can I bet on..." → Extract keywords and search → `polymarket search [keywords]`
+- "Are there markets about..." → Use search terms → `polymarket search [terms]`
+- "What about [specific person/company]..." → Use name → `polymarket search [name]`
+- "Any [specific event] markets?" → Use event keywords → `polymarket search [event]`
+- "Markets for [specific topic]?" → Use topic keywords → `polymarket search [topic]`
+
+**Examples of Search Intent:**
+
+- "Can I bet on Elon Musk stepping down?" → `polymarket search Elon Musk stepping down`
+- "Are there markets about AI regulation?" → `polymarket search AI regulation`
+- "What about Netflix earnings?" → `polymarket search Netflix earnings`
+- "Any World Cup final markets?" → `polymarket search World Cup final`
+
+#### **Category Browsing Phrases (Use category commands):**
+
+- "Will Bitcoin reach $100K?" → General crypto question → `polymarket crypto`
+- "Who will win the election?" → General political question → `polymarket politics`
+- "Super Bowl predictions" → General sports question → `polymarket sports`
+- "Apple earnings predictions" → General tech question → `polymarket tech`
+
+#### **Temporal Indicators:**
+
+- "Latest" / "Recent" / "New" → `polymarket recent`
+- "Trending" / "Popular" / "Hot" → `polymarket trending`
+- "Historical" / "Past" / "Previous" → `polymarket events`
+- "All" / "Browse" / "Show me" → `polymarket markets`
+
+#### **Common Misspellings & Variations:**
+
+- "Poly market" / "Polymarkets" → Still use polymarket commands
+- "Prediction betting" / "Betting markets" → `polymarket markets`
+- "Market predictions" / "Outcome betting" → Category-appropriate command
+
+### Response Optimization Guidelines
+
+**When using Polymarket commands, AI should:**
+
+1. **Preface with Context:** Explain what Polymarket is if user seems unfamiliar
+2. **Set Expectations:** Mention that markets show probabilities, not guarantees
+3. **Highlight Key Markets:** Point out particularly interesting or high-volume markets
+4. **Explain Odds:** Help users understand probability percentages and potential payouts
+5. **Suggest Related Categories:** If they view one category, mention related ones
+6. **Risk Awareness:** Remind users that prediction markets involve financial risk
+
+### Example AI Response Patterns:
+
+**For Crypto Markets:**
+"I'll show you cryptocurrency prediction markets on Polymarket. These include Bitcoin price targets, Ethereum milestones, DeFi protocol outcomes, and regulatory decisions. Let me pull up the current crypto betting opportunities..."
+
+**For Political Markets:**  
+"Here are the political prediction markets, including election outcomes, policy predictions, and government decisions. These markets aggregate crowd wisdom about political events. Let me show you what's currently available for betting..."
+
+**For Sports Markets:**
+"I'll display sports prediction markets covering championships, individual player performance, trades, and major sporting events. These markets let you bet on everything from Super Bowl winners to MVP awards..."
+
+This enhanced documentation provides the AI with much more detailed context and examples for both NFT and Polymarket commands, helping it understand user intent and provide more accurate and helpful responses.
 
 ## 🎭 FARCASTER COMMANDS
 
@@ -540,24 +1112,252 @@ Polymarket organizes prediction markets by topic. Use these category commands wh
 
 ## 🎨 NFT COMMANDS
 
-### NFT Operations
+### Understanding NFT Context
+
+NFTs (Non-Fungible Tokens) are unique digital assets representing ownership of digital or physical items. Omega Terminal provides comprehensive NFT creation, minting, and marketplace integration. When users mention NFTs, art, collectibles, or digital ownership, use these commands:
+
+### Core NFT Operations
 
 #### `nft mint`
 
-**Description:** Mint new NFT  
-**Purpose:** Create and mint a new NFT token
+**Description:** Launch comprehensive NFT minting interface for creating and deploying NFT collections
+**Purpose:** Create, customize, and mint NFT collections with metadata and smart contracts
+
+**When to Use:**
+
+- User wants to "create NFT," "mint NFT," or "make NFT collection"
+- User asks about "generating NFT art" or "NFT creation"
+- User mentions "digital art," "collectibles," or "NFT project"
+- User wants to "deploy NFT contract" or "launch NFT collection"
+- User asks "how do I create NFTs?" or "make my own NFTs"
+
+**What Happens:**
+
+- Opens advanced NFT minting interface with comprehensive tools
+- Provides image upload and AI-powered artwork generation
+- Creates ERC-721/ERC-1155 smart contracts automatically
+- Generates JSON metadata with attributes and properties
+- Supports batch minting for large collections
+- Handles IPFS storage for decentralized hosting
+- Provides collection customization (name, symbol, description)
+- Includes rarity and trait system configuration
+- Supports royalty settings for secondary sales
+
+**Technical Features:**
+
+- Multi-chain deployment (Ethereum, Polygon, Omega Network)
+- Gas optimization for minting transactions
+- Metadata standards compliance (OpenSea, Rarible compatible)
+- Batch operations for efficient collection deployment
+- Custom smart contract templates
 
 **AI INSTRUCTION:** Use command `nft mint`
 
+**Example User Requests:**
+
+- "I want to create my own NFT collection"
+- "How do I mint NFTs of my artwork?"
+- "Create a 10,000 piece generative art collection"
+- "Deploy an NFT contract for my digital art"
+- "Make NFTs with custom traits and rarities"
+
 #### `nft search <query>`
 
-**Description:** Search NFT collections  
-**Usage:** `nft search bored ape`
+**Description:** Search and discover NFT collections across multiple marketplaces and blockchains
+**Usage:** `nft search [collection name or keyword]`
+
+**When to Use:**
+
+- User wants to find specific NFT collections
+- User asks "search for NFTs" or "find NFT collection"
+- User mentions collection names like "bored ape," "cryptopunks," "azuki"
+- User wants to "browse NFT collections" or "discover NFTs"
+- User asks about "popular NFT collections" or "trending NFTs"
+
+**What Happens:**
+
+- Searches across major NFT marketplaces (OpenSea, Magic Eden, Rarible)
+- Returns collection information with floor prices and volume
+- Shows collection statistics (total supply, owners, volume)
+- Displays recent sales and price trends
+- Provides collection metadata and social links
+- Shows verification status and authenticity
+
+**Search Capabilities:**
+
+- Collection name matching (exact and partial)
+- Creator/artist name searches
+- Category and tag filtering
+- Price range filtering
+- Blockchain-specific searches
+- Trending and popular collections
+
+**Example Searches:**
+
+- `nft search bored ape` - Find Bored Ape Yacht Club
+- `nft search pixel art` - Search pixel art collections
+- `nft search under 1 eth` - Find affordable collections
+- `nft search anime` - Search anime-themed NFTs
 
 #### `nft marketplace`
 
-**Description:** Access NFT marketplace  
-**Purpose:** Browse and trade NFTs
+**Description:** Access integrated NFT marketplace for browsing, buying, and selling NFTs
+**Purpose:** Browse collections, view listings, and execute NFT trades
+
+**When to Use:**
+
+- User wants to "browse NFT marketplace" or "buy NFTs"
+- User asks "where can I buy NFTs?" or "NFT trading"
+- User mentions "NFT marketplace," "OpenSea alternative," or "NFT store"
+- User wants to "sell my NFTs" or "list NFTs for sale"
+- User asks about "NFT prices" or "NFT trading volume"
+
+**What Happens:**
+
+- Opens comprehensive marketplace interface
+- Shows featured collections and trending NFTs
+- Provides advanced filtering and sorting options
+- Displays real-time price feeds and market data
+- Enables direct buying/selling without leaving terminal
+- Shows collection analytics and historical data
+- Provides portfolio tracking for owned NFTs
+
+**Marketplace Features:**
+
+- Multi-marketplace aggregation (OpenSea, Magic Eden, Rarible)
+- Real-time price updates and floor price tracking
+- Collection verification and authenticity checks
+- Advanced filtering (price, traits, rarity, blockchain)
+- Portfolio management and P&L tracking
+- Bid/offer system integration
+- Gas optimization for transactions
+
+**AI INSTRUCTION:** Use command `nft marketplace`
+
+### Advanced NFT Commands
+
+#### `nft collection <address>`
+
+**Description:** Analyze specific NFT collection by contract address
+**Usage:** `nft collection 0x...` or `nft collection [collection-slug]`
+
+**When to Use:**
+
+- User provides NFT contract address for analysis
+- User wants detailed collection analytics and insights
+- User asks "analyze this NFT collection" with address/link
+- User wants collection performance metrics and statistics
+
+**What Happens:**
+
+- Fetches comprehensive collection data from contract
+- Shows detailed analytics (volume, floor price, holders)
+- Displays trait distribution and rarity analysis
+- Provides price history and market trends
+- Shows recent sales and transaction data
+
+#### `nft wallet [address]`
+
+**Description:** Display NFT portfolio for connected wallet or specified address
+**Usage:** `nft wallet` or `nft wallet 0x...`
+
+**When to Use:**
+
+- User wants to "see my NFTs" or "check NFT portfolio"
+- User asks "what NFTs do I own?" or "my NFT collection"
+- User wants portfolio valuation and P&L analysis
+- User asks to check someone else's NFT holdings
+
+**What Happens:**
+
+- Lists all owned NFTs with current values
+- Shows portfolio performance and unrealized gains/losses
+- Provides collection breakdowns and diversity metrics
+- Displays recent activity and transaction history
+
+#### `opensea`
+
+**Description:** Direct integration with OpenSea marketplace
+**Usage:** `opensea`
+
+**When to Use:**
+
+- User specifically mentions "OpenSea" marketplace
+- User wants to access OpenSea directly from terminal
+- User asks about "OpenSea collections" or "OpenSea listings"
+- User wants OpenSea-specific features and data
+
+**What Happens:**
+
+- Opens OpenSea integration interface
+- Provides direct access to OpenSea collections and listings
+- Shows OpenSea-verified collections and trending data
+- Enables OpenSea-specific features like offers and auctions
+
+#### `magiceden` / `me`
+
+**Description:** Magic Eden marketplace integration for Solana NFTs
+**Usage:** `magiceden` or `me`
+
+**When to Use:**
+
+- User asks about Solana NFTs or Magic Eden marketplace
+- User wants to trade Solana-based NFT collections
+- User mentions "Magic Eden," "Solana NFTs," or "ME marketplace"
+- User asks about Solana NFT collections and pricing
+
+**What Happens:**
+
+- Opens Magic Eden marketplace integration
+- Shows Solana NFT collections and floor prices
+- Provides Solana-specific NFT analytics and trends
+- Enables Magic Eden trading and collection browsing
+
+### NFT Trading & Analytics
+
+#### `nft trends`
+
+**Description:** Show trending NFT collections and market movements
+**Usage:** `nft trends`
+
+**When to Use:**
+
+- User asks "what NFTs are trending?" or "popular NFT collections"
+- User wants to "see NFT market trends" or "hot NFT collections"
+- User asks about "NFT market activity" or "trending collections"
+
+#### `nft floor <collection>`
+
+**Description:** Get floor price and key metrics for specific NFT collection
+**Usage:** `nft floor [collection-name]`
+
+**When to Use:**
+
+- User asks "what's the floor price of [collection]?"
+- User wants quick price checks for specific NFT collections
+- User mentions "floor price," "cheapest NFT," or "entry price"
+
+### NFT Creation Workflow Understanding
+
+**For AI: When users want to create NFTs, follow this guidance:**
+
+1. **Simple Minting Request:** User says "create NFT" or "mint NFT" → Use `nft mint`
+2. **Collection Analysis:** User provides collection name/address → Use `nft search` or `nft collection`
+3. **Portfolio Check:** User asks "my NFTs" or "what NFTs do I own" → Use `nft wallet`
+4. **Marketplace Browsing:** User wants to "buy NFTs" or "browse marketplace" → Use `nft marketplace`
+5. **Price Discovery:** User asks "floor price" or NFT prices → Use `nft floor` or `nft search`
+6. **Trend Analysis:** User asks about trending or popular NFTs → Use `nft trends`
+
+**Common User Phrases to Recognize:**
+
+- "Create NFT collection" → `nft mint`
+- "Mint my artwork" → `nft mint`
+- "Find Bored Apes" → `nft search bored ape`
+- "Check my NFT portfolio" → `nft wallet`
+- "Browse NFT marketplace" → `nft marketplace`
+- "What's trending in NFTs?" → `nft trends`
+- "OpenSea collections" → `opensea`
+- "Solana NFTs" → `magiceden`
 
 ---
 
