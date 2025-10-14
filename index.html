@@ -1908,6 +1908,7 @@
 
           // Initialize AI mode state
           this.isAIModeOn = false;
+          this.executingAICommands = false;
         }
 
         async init() {
@@ -3068,75 +3069,203 @@
             return;
           }
 
-          // AI Mode: If active and not a known command, call chat API
+          // AI Mode: If active and command is not recognized, send to AI API
           console.log(
             "Checking AI mode. isAIModeOn:",
             this.isAIModeOn,
             "cmd:",
-            cmd
+            cmd,
+            "executingAICommands:",
+            this.executingAICommands
           );
-          if (this.isAIModeOn) {
-            // List of known commands
+          if (this.isAIModeOn && !this.executingAICommands) {
+            // List of known commands - execute these directly even in AI mode
             const knownCommands = [
+              // Core system commands
               "help",
               "clear",
+              "cls",
+              "?",
               "connect",
               "disconnect",
               "balance",
-              "faucet",
-              "mine",
-              "claim",
+              "address",
               "status",
               "stats",
+              "themes",
+              "theme",
+              "tab",
+              "stop",
+              "info",
+              "test",
+
+              // Wallet & connection
+              "faucet",
               "send",
-              "ens",
-              "mixer",
+              "import",
+              "yes",
+              "no",
+              "gen-wallet",
+
+              // Mining & rewards
+              "mine",
+              "claim",
+              "fund",
+              "sudo",
+
+              // Network & development
+              "network",
+              "forceadd",
+              "rpccheck",
               "stress",
               "stopstress",
               "stressstats",
-              "theme",
+
+              // Name services
+              "ens",
+
+              // Privacy & security
+              "mixer",
+
+              // Token & asset creation
+              "create",
+              "mint",
+
+              // Trading systems
+              "solana",
+              "eclipse",
+              "near",
+              "hyperliquid",
+              "perp",
+              "perps",
+
+              // Analytics & data
+              "dexscreener",
+              "ds",
+              "geckoterminal",
+              "cg",
+              "stock",
+              "alphakey",
+              "alpha",
+              "defillama",
+              "llama",
+
+              // Prediction markets
+              "polymarket",
+              "pm",
+              "poly",
+              "kalshi",
+
+              // NFTs & marketplaces
+              "nft",
+              "opensea",
+              "magiceden",
+              "me",
+
+              // Social & communication
+              "farcaster",
+              "email",
+              "dm",
+              "inbox",
+              "messages",
+              "chat",
+
+              // Python integration
+              "python",
+              "pip",
+              "python-help",
+
+              // Gaming & entertainment
+              "games",
+              "arcade",
+              "flappy",
+              "omega-io",
+              "mystery-box",
               "rickroll",
               "fortune",
               "matrix",
               "hack",
               "disco",
-              "stop",
-              "tab",
-              "email",
-              "inbox",
-              "dexscreener",
-              "geckoterminal",
-              "stock",
-              "alphakey",
-              "ds",
-              "cg",
-              "alpha",
-              "airdrop",
-              "solana",
-              "eclipse",
-              "hyperliquid",
-              "polymarket",
-              "magiceden",
-              "import",
+
+              // Profile & social
               "ambassador",
               "profile",
-              "gui",
+              "profile_username",
+              "profile_display_name",
+              "profile_bio",
+              "profile_location",
+              "profile_twitter",
+              "profile_discord",
+              "profile_email",
+              "profile_confirmation",
+
+              // Trading interfaces
+              "pgt",
+              "pgt-demo",
+              "terminal",
+
+              // Rome network
+              "rome",
+
+              // Shade protocol
               "shade",
-              "near",
-              "nft",
-              "opensea",
-              "defillama",
-              "modern",
-              "messages",
+
+              // UI & system
+              "gui",
+              "ai",
+
+              // URLs & navigation
               "url",
               "urls",
-              "ai",
-              "perp",
-              "perps",
-              "poly",
+              "airdrop",
+
+              // Theme management
+              "ios",
+              "chatgpt",
+              "discord",
+              "aol",
+              "windows95",
+              "limewire",
+              "off",
+              "normal",
+              "default",
+              "apple",
+
+              // Configuration
+              "list",
+              "set",
+              "remove",
+              "delete",
+              "show",
+              "set-api-key",
+              "set-key",
+              "set-private-key",
+
+              // Market categories
+              "market",
+              "active",
+              "trending",
+              "recent",
+              "breaking",
+              "new",
+              "earnings",
+              "geopolitics",
+              "culture",
+              "world",
+              "economy",
+              "trump",
+              "elections",
+              "tech",
+              "crypto",
+              "politics",
+              "sports",
+
+              // Legacy/aliases
+              "modern",
+              "token",
             ];
 
-            // Only log and call chat API for direct user input, not for commands returned by the API
+            // Only send to AI if it's NOT a known command and is direct user input
             console.log(
               "AI mode check - Known command?",
               knownCommands.includes(cmd),
@@ -3148,7 +3277,7 @@
               (!arguments[1] || arguments[1] !== true)
             ) {
               this.logHtml(
-                `<span style='color:#99ccff'>🤖 AI Processing: "${command}"</span>`,
+                `<span style='color:#99ccff'>🤖 Processing</span>`,
                 "info"
               );
               const url = "https://ai.omeganetwork.co/chat";
@@ -3188,6 +3317,9 @@
                     });
 
                     try {
+                      // Set flag to prevent recursive AI calls
+                      this.executingAICommands = true;
+
                       for (let i = 0; i < d.commands.length; i++) {
                         const cmd = d.commands[i];
                         console.log(
@@ -3211,6 +3343,9 @@
                         `AI command execution failed: ${error.message}`,
                         "error"
                       );
+                    } finally {
+                      // Always reset the flag when done
+                      this.executingAICommands = false;
                     }
                   } else if (!d.additionalInfoRequired) {
                     this.log("Can't perform this action", "error");
@@ -5875,8 +6010,88 @@
               break;
             default:
               if (cmd) {
-                this.log(`Command not found: ${command}`, "error");
-                this.log('Type "help" for available commands', "info");
+                // If AI mode is on and this is direct user input, send to AI instead of showing error
+                if (
+                  this.isAIModeOn &&
+                  !this.executingAICommands &&
+                  (!arguments[1] || arguments[1] !== true)
+                ) {
+                  console.log(
+                    "Default case: Sending unhandled command to AI:",
+                    cmd
+                  );
+                  this.logHtml(
+                    `<span style='color:#99ccff'>🤖 Processing</span>`,
+                    "info"
+                  );
+                  const url = "http://localhost:3015/chat";
+                  const evm = this.userAddress || null;
+                  const solana = this.solanaAddress || null;
+
+                  try {
+                    const res = await fetch(url, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        question: command,
+                        evm,
+                        solana,
+                        chatHistory: this.chatHistory,
+                      }),
+                    });
+                    const data = await res.json();
+                    if (data && data.data) {
+                      const d = data.data;
+                      if (d.additionalInfoRequired) {
+                        this.chatHistory.push({
+                          type: "ai",
+                          message: d.additionalInfo,
+                        });
+                        this.log(d.additionalInfo, "info");
+                      }
+                      if (Array.isArray(d.commands) && d.commands.length > 0) {
+                        console.log("AI returned commands array:", d.commands);
+                        this.chatHistory.push({
+                          type: "command",
+                          command: d.commands,
+                        });
+
+                        try {
+                          this.executingAICommands = true;
+                          for (let i = 0; i < d.commands.length; i++) {
+                            const cmd = d.commands[i];
+                            console.log(
+                              `Executing AI command ${i + 1}/${
+                                d.commands.length
+                              }: "${cmd}"`
+                            );
+                            if (typeof cmd === "string") {
+                              await this.executeCommand(cmd, true);
+                            }
+                          }
+                        } catch (error) {
+                          console.error("Error executing AI commands:", error);
+                          this.log(
+                            `AI command execution failed: ${error.message}`,
+                            "error"
+                          );
+                        } finally {
+                          this.executingAICommands = false;
+                        }
+                      } else if (!d.additionalInfoRequired) {
+                        this.log("Can't perform this action", "error");
+                      }
+                    } else {
+                      this.log("AI agent error: Invalid response.", "error");
+                    }
+                  } catch (err) {
+                    this.log("AI agent error: " + err.message, "error");
+                  }
+                } else {
+                  // AI mode is off or this is an AI-executed command, show normal error
+                  this.log(`Command not found: ${command}`, "error");
+                  this.log('Type "help" for available commands', "info");
+                }
               }
           }
           // --- End command parsing ---
@@ -20110,7 +20325,7 @@
           );
           try {
             // Use CORS proxy to avoid browser restrictions
-            const proxyUrl = "http://localhost:3002";
+            const proxyUrl = "https://polymarket-proxy.onrender.com";
             const url = `${proxyUrl}/polymarket${endpoint}`;
             this.log(`🔧 DEBUG: Making request to: ${url}`, "info");
 
