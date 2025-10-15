@@ -1457,6 +1457,241 @@ console.log('🚀 Loading DexScreener Analytics Ultimate Plugin v2.0');
             // TODO: Implement auto-discovery algorithms
         };
 
+        // ===================================
+        // NEW GEMS DISCOVERY FUNCTIONS
+        // ===================================
+        
+        window.terminal.findNewGems = async function(data, criteria) {
+            const gems = [];
+            
+            try {
+                // Process each token profile to find potential gems
+                for (const profile of data) {
+                    try {
+                        // Search for detailed pair data
+                        const response = await fetch(`https://api.dexscreener.com/latest/dex/search?q=${profile.tokenAddress}`);
+                        const searchData = await response.json();
+                        
+                        if (searchData.pairs && searchData.pairs.length > 0) {
+                            const pair = searchData.pairs[0];
+                            
+                            // Apply gem criteria filters
+                            if (this.isNewGem(pair, criteria)) {
+                                gems.push({
+                                    ...pair,
+                                    profile: profile,
+                                    gemScore: this.calculateGemScore(pair, criteria)
+                                });
+                            }
+                        }
+                        
+                        // Small delay to avoid rate limiting
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        
+                    } catch (error) {
+                        console.warn('Error processing gem candidate:', error);
+                        continue;
+                    }
+                }
+                
+                // Sort by gem score (highest first)
+                gems.sort((a, b) => b.gemScore - a.gemScore);
+                
+                // Return top 10 gems
+                return gems.slice(0, 10);
+                
+            } catch (error) {
+                console.error('Error in findNewGems:', error);
+                return [];
+            }
+        };
+        
+        window.terminal.isNewGem = function(pair, criteria) {
+            // Check age criteria
+            if (pair.pairCreatedAt && criteria.maxAge) {
+                const ageInDays = Math.floor((Date.now() - (pair.pairCreatedAt * 1000)) / (1000 * 60 * 60 * 24));
+                if (ageInDays > criteria.maxAge) {
+                    return false;
+                }
+            }
+            
+            // Check volume criteria
+            if (criteria.minVolume && (!pair.volume?.h24 || pair.volume.h24 < criteria.minVolume)) {
+                return false;
+            }
+            
+            // Check liquidity criteria
+            if (criteria.minLiquidity && (!pair.liquidity?.usd || pair.liquidity.usd < criteria.minLiquidity)) {
+                return false;
+            }
+            
+            // Check price change criteria
+            if (criteria.minPriceChange && (!pair.priceChange?.h24 || pair.priceChange.h24 < criteria.minPriceChange)) {
+                return false;
+            }
+            
+            return true;
+        };
+        
+        window.terminal.calculateGemScore = function(pair, criteria) {
+            let score = 0;
+            
+            // Volume score (higher is better)
+            if (pair.volume?.h24) {
+                score += Math.min(pair.volume.h24 / 100000, 10); // Max 10 points for volume
+            }
+            
+            // Price change score
+            if (pair.priceChange?.h24) {
+                score += Math.min(pair.priceChange.h24 / 10, 5); // Max 5 points for price change
+            }
+            
+            // Liquidity score
+            if (pair.liquidity?.usd) {
+                score += Math.min(pair.liquidity.usd / 50000, 3); // Max 3 points for liquidity
+            }
+            
+            // Age bonus (newer is better)
+            if (pair.pairCreatedAt) {
+                const ageInDays = Math.floor((Date.now() - (pair.pairCreatedAt * 1000)) / (1000 * 60 * 60 * 24));
+                if (ageInDays <= 1) score += 5;
+                else if (ageInDays <= 3) score += 3;
+                else if (ageInDays <= 7) score += 1;
+            }
+            
+            // Transaction activity bonus
+            if (pair.txns?.h24) {
+                const totalTxns = (pair.txns.h24.buys || 0) + (pair.txns.h24.sells || 0);
+                score += Math.min(totalTxns / 100, 2); // Max 2 points for transactions
+            }
+            
+            return score;
+        };
+        
+        window.terminal.displayGemCard = function(gem, index) {
+            let html = `<div style='background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,105,180,0.1));border:2px solid #ffd700;border-radius:12px;padding:16px;margin:12px 0;box-shadow:0 6px 20px rgba(255,215,0,0.3);'>`;
+            
+            // Header with gem ranking and score
+            html += `<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;'>`;
+            html += `<div style='display:flex;align-items:center;gap:12px;'>`;
+            html += `<div style='background:linear-gradient(135deg,#ffd700,#ffb347);color:#000;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1em;box-shadow:0 2px 8px rgba(255,215,0,0.4);'>${index}</div>`;
+            
+            // Token icon
+            if (gem.info?.imageUrl || gem.profile?.icon) {
+                const iconUrl = gem.info?.imageUrl || gem.profile?.icon;
+                html += `<img src='${iconUrl}' alt='gem' style='width:40px;height:40px;border-radius:50%;border:3px solid #ffd700;box-shadow:0 2px 8px rgba(255,215,0,0.4);'>`;
+            } else {
+                const symbol = gem.baseToken?.symbol || 'G';
+                html += `<div style='width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ffb347);color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.2em;border:3px solid #ffd700;box-shadow:0 2px 8px rgba(255,215,0,0.4);'>${symbol.charAt(0)}</div>`;
+            }
+            
+            html += `<div>`;
+            html += `<div style='font-size:1.4em;font-weight:bold;color:#ffd700;text-shadow:0 2px 4px rgba(255,215,0,0.3);'>${gem.baseToken?.symbol || 'NEW GEM'}</div>`;
+            html += `<div style='color:#ffb347;font-size:0.95em;'>${gem.baseToken?.name || 'Unknown Token'}</div>`;
+            html += `<div style='color:#888;font-size:0.85em;'>${gem.chainId.toUpperCase()} • ${gem.dexId || 'Unknown DEX'}</div>`;
+            html += `</div></div>`;
+            
+            // Gem Score
+            html += `<div style='text-align:right;'>`;
+            html += `<div style='background:linear-gradient(135deg,#ff1493,#ff69b4);color:#fff;padding:4px 10px;border-radius:12px;font-weight:bold;font-size:0.9em;box-shadow:0 2px 6px rgba(255,20,147,0.3);'>`;
+            html += `💎 Score: ${gem.gemScore?.toFixed(1) || 'N/A'}`;
+            html += `</div>`;
+            html += `</div></div>`;
+            
+            // Current price and change
+            if (gem.priceUsd) {
+                html += `<div style='text-align:center;margin-bottom:14px;'>`;
+                html += `<div style='font-size:1.8em;color:#ffffff;font-weight:bold;text-shadow:0 2px 4px rgba(255,255,255,0.3);'>$${gem.priceUsd}</div>`;
+                if (gem.priceChange?.h24 !== undefined) {
+                    const changeColor = gem.priceChange.h24 >= 0 ? '#00ff00' : '#ff3333';
+                    const changePrefix = gem.priceChange.h24 >= 0 ? '+' : '';
+                    html += `<div style='color:${changeColor};font-size:1.2em;font-weight:bold;text-shadow:0 2px 4px rgba(${gem.priceChange.h24 >= 0 ? '0,255,0' : '255,51,51'},0.3);'>${changePrefix}${gem.priceChange.h24.toFixed(2)}% (24h)</div>`;
+                }
+                html += `</div>`;
+            }
+            
+            // Key gem metrics
+            html += `<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;'>`;
+            
+            // Volume
+            if (gem.volume?.h24) {
+                html += `<div style='text-align:center;padding:10px;background:rgba(0,255,128,0.12);border-radius:8px;border:1px solid rgba(0,255,128,0.3);'>`;
+                html += `<div style='color:#00ff80;font-weight:bold;font-size:0.8em;'>📊 Volume</div>`;
+                html += `<div style='color:#fff;font-weight:bold;font-size:0.9em;'>$${this.formatNumber(gem.volume.h24)}</div>`;
+                html += `</div>`;
+            } else {
+                html += `<div style='text-align:center;padding:10px;background:rgba(128,128,128,0.08);border-radius:8px;'>`;
+                html += `<div style='color:#888;font-size:0.8em;'>📊 Volume</div><div style='color:#666;font-size:0.9em;'>N/A</div></div>`;
+            }
+            
+            // Liquidity
+            if (gem.liquidity?.usd) {
+                html += `<div style='text-align:center;padding:10px;background:rgba(0,204,255,0.12);border-radius:8px;border:1px solid rgba(0,204,255,0.3);'>`;
+                html += `<div style='color:#00ccff;font-weight:bold;font-size:0.8em;'>💧 Liquidity</div>`;
+                html += `<div style='color:#fff;font-weight:bold;font-size:0.9em;'>$${this.formatNumber(gem.liquidity.usd)}</div>`;
+                html += `</div>`;
+            } else {
+                html += `<div style='text-align:center;padding:10px;background:rgba(128,128,128,0.08);border-radius:8px;'>`;
+                html += `<div style='color:#888;font-size:0.8em;'>💧 Liquidity</div><div style='color:#666;font-size:0.9em;'>N/A</div></div>`;
+            }
+            
+            // Age
+            if (gem.pairCreatedAt) {
+                const createdDate = new Date(gem.pairCreatedAt * 1000);
+                const ageInDays = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
+                const ageColor = ageInDays <= 1 ? '#00ff00' : ageInDays <= 3 ? '#ffcc00' : '#ff8800';
+                html += `<div style='text-align:center;padding:10px;background:rgba(${ageInDays <= 1 ? '0,255,0' : ageInDays <= 3 ? '255,204,0' : '255,136,0'},0.12);border-radius:8px;border:1px solid ${ageColor};'>`;
+                html += `<div style='color:${ageColor};font-weight:bold;font-size:0.8em;'>📅 Age</div>`;
+                html += `<div style='color:#fff;font-weight:bold;font-size:0.9em;'>${ageInDays}d</div>`;
+                html += `</div>`;
+            } else {
+                html += `<div style='text-align:center;padding:10px;background:rgba(128,128,128,0.08);border-radius:8px;'>`;
+                html += `<div style='color:#888;font-size:0.8em;'>📅 Age</div><div style='color:#666;font-size:0.9em;'>N/A</div></div>`;
+            }
+            
+            html += `</div>`;
+            
+            // Why it's a gem (reasons)
+            html += `<div style='background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:6px;padding:10px;margin-bottom:12px;'>`;
+            html += `<div style='color:#ffd700;font-weight:bold;font-size:0.9em;margin-bottom:6px;'>💎 Gem Indicators:</div>`;
+            html += `<div style='font-size:0.8em;color:#bbb;line-height:1.4;'>`;
+            
+            const reasons = [];
+            if (gem.pairCreatedAt) {
+                const ageInDays = Math.floor((Date.now() - (gem.pairCreatedAt * 1000)) / (1000 * 60 * 60 * 24));
+                if (ageInDays <= 7) reasons.push(`🆕 Very new token (${ageInDays}d old)`);
+            }
+            if (gem.priceChange?.h24 && gem.priceChange.h24 > 10) {
+                reasons.push(`📈 Strong price momentum (+${gem.priceChange.h24.toFixed(1)}%)`);
+            }
+            if (gem.volume?.h24 && gem.volume.h24 > 50000) {
+                reasons.push(`🔥 High trading activity ($${this.formatNumber(gem.volume.h24)} vol)`);
+            }
+            if (gem.liquidity?.usd && gem.liquidity.usd > 25000) {
+                reasons.push(`💧 Good liquidity ($${this.formatNumber(gem.liquidity.usd)})`);
+            }
+            if (reasons.length === 0) {
+                reasons.push('🔍 Meets basic gem criteria');
+            }
+            
+            html += reasons.join(' • ');
+            html += `</div></div>`;
+            
+            // Action buttons
+            html += `<div style='display:flex;gap:8px;flex-wrap:wrap;'>`;
+            html += `<button onclick="window.terminal.showTokenAnalytics('${gem.baseToken.address || gem.pairAddress}', '${gem.baseToken.symbol || 'GEM'}')" style='background:linear-gradient(135deg,#ff1493,#ff69b4);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:bold;box-shadow:0 3px 8px rgba(255,20,147,0.4);'>📊 Deep Analysis</button>`;
+            html += `<button onclick="window.terminal.addToWatchlist('${gem.baseToken.address}')" style='background:#ffd700;color:#000;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:0.8em;font-weight:bold;'>📋 Watch</button>`;
+            html += `<button onclick="window.open('https://dexscreener.com/${gem.chainId}/${gem.pairAddress}', '_blank')" style='background:#0088ff;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:0.8em;font-weight:bold;'>🔗 View</button>`;
+            if (gem.baseToken.address) {
+                html += `<button onclick="navigator.clipboard.writeText('${gem.baseToken.address}').then(() => alert('Address copied!'))" style='background:#8800ff;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:0.8em;font-weight:bold;'>📄 Copy</button>`;
+            }
+            html += `</div>`;
+            
+            html += `</div>`;
+            
+            this.logHtml(html);
+        };
+
         // Add error recovery mechanism
         window.terminal.dexAnalyticsRestore = function() {
             if (window.terminal._originalHandleDexScreenerCommand) {
