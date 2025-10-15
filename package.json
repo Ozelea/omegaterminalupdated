@@ -1,17 +1,20 @@
 {
   "name": "omega-relayer-faucet",
   "version": "1.0.0",
-  "description": "Omega Terminal Relayer and Faucet Backend",
+  "description": "Omega Terminal Relayer, Faucet Backend, and Polymarket Proxy",
   "main": "relayer-faucet.js",
   "scripts": {
-    "start": "node relayer-faucet.js"
+    "start": "node relayer-faucet.js",
+    "start:polymarket": "node polymarket-proxy.js"
   },
   "keywords": [
     "blockchain",
     "game",
     "relayer",
     "omega",
-    "ethereum"
+    "ethereum",
+    "polymarket",
+    "proxy"
   ],
   "author": "Bushido Game Team",
   "license": "MIT",
@@ -20,7 +23,8 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "express": "^4.18.2",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
