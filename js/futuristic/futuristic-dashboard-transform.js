@@ -240,6 +240,10 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/></svg>
                         <span id="sidebar-ai-toggle">Toggle AI</span>
                     </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.toggleViewMode()" id="view-mode-toggle-btn">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/></svg>
+                        <span id="view-mode-label">Basic View</span>
+                    </button>
                     <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('clear')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                         <span>Clear Terminal</span>
@@ -741,35 +745,285 @@
         
         toggleClassicMode: function() {
             const dashboard = document.querySelector('.omega-dashboard');
+            const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
+            
+            if (dashboard) {
+                // Toggle based on current mode
+                if (currentMode === 'basic') {
+                    // Switch to futuristic mode
+                    this.enableFuturisticMode();
+                } else {
+                    // Switch to basic mode
+                    this.enableBasicMode();
+                }
+            }
+        },
+        
+        toggleViewMode: function() {
+            this.toggleClassicMode();
+        },
+        
+        updateViewModeButton: function() {
+            const viewModeLabel = document.getElementById('view-mode-label');
+            const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
+            
+            if (viewModeLabel) {
+                if (currentMode === 'basic') {
+                    viewModeLabel.textContent = 'Dashboard View';
+                } else {
+                    viewModeLabel.textContent = 'Basic View';
+                }
+            }
+        },
+        
+        enableBasicMode: function() {
+            const dashboard = document.querySelector('.omega-dashboard');
             const terminal = document.getElementById('terminal');
+            const terminalWrapper = document.getElementById('terminal-wrapper');
             
             if (dashboard && terminal) {
-                // Toggle visibility
-                if (dashboard.style.display === 'none') {
-                    // Switch to futuristic mode
-                    dashboard.style.display = 'grid';
-                    document.body.classList.add('futuristic-mode');
-                    console.log('🎨 Switched to Futuristic Mode');
-                } else {
-                    // Switch to classic mode
-                    dashboard.style.display = 'none';
-                    terminal.style.display = 'flex';
-                    terminal.style.position = 'relative';
-                    terminal.style.width = '100%';
-                    terminal.style.height = '100vh';
-                    terminal.style.maxWidth = '100%';
-                    document.body.classList.remove('futuristic-mode');
-                    console.log('🎨 Switched to Classic Mode');
+                // Move terminal out of dashboard to body
+                if (terminal.parentElement === terminalWrapper) {
+                    document.body.appendChild(terminal);
                 }
+                
+                // Hide dashboard
+                    dashboard.style.display = 'none';
+                
+                // Style terminal for full-screen basic mode with modern UI
+                    terminal.style.display = 'flex';
+                terminal.style.flexDirection = 'column';
+                terminal.style.position = 'fixed';
+                terminal.style.top = '0';
+                terminal.style.left = '0';
+                terminal.style.width = '100vw';
+                    terminal.style.height = '100vh';
+                terminal.style.maxWidth = '100vw';
+                terminal.style.maxHeight = '100vh';
+                terminal.style.zIndex = '1000';
+                terminal.style.background = 'var(--void-black, #0a0a0f)';
+                terminal.style.padding = '20px';
+                terminal.style.boxSizing = 'border-box';
+                
+                // Apply modern futuristic UI classes
+                    document.body.classList.remove('futuristic-mode');
+                document.body.classList.add('basic-terminal-mode');
+                document.body.classList.add('modern-terminal-ui');
+                
+                // Ensure terminal has modern styling
+                terminal.classList.add('modern-ui');
+                terminal.classList.add('futuristic-theme');
+                
+                // Apply cyber-blue theme to terminal elements
+                const terminalOutput = terminal.querySelector('#terminalOutput');
+                if (terminalOutput) {
+                    terminalOutput.style.color = 'var(--cyber-blue-dim, #0099cc)';
+                }
+                
+                const commandInput = terminal.querySelector('#commandInput');
+                if (commandInput) {
+                    commandInput.style.background = 'transparent';
+                    commandInput.style.color = 'var(--cyber-blue, #00d4ff)';
+                    commandInput.style.borderColor = 'var(--glass-border, rgba(0, 212, 255, 0.15))';
+                    commandInput.style.caretColor = 'var(--cyber-blue, #00d4ff)';
+                }
+                
+                // Style the prompt
+                const prompts = terminal.querySelectorAll('.terminal-prompt, .prompt');
+                prompts.forEach(prompt => {
+                    prompt.style.color = 'var(--matrix-green, #00ff88)';
+                });
+                
+                localStorage.setItem('omega-view-mode', 'basic');
+                
+                // Create floating toggle button for basic mode
+                this.createBasicModeToggle();
+                
+                console.log('📺 Basic terminal mode enabled with modern UI');
+                if (window.terminal) {
+                    window.terminal.log('✅ Basic terminal mode enabled', 'success');
+                }
+                this.updateViewModeButton();
+            }
+        },
+        
+        enableFuturisticMode: function() {
+            const dashboard = document.querySelector('.omega-dashboard');
+            const terminal = document.getElementById('terminal');
+            const terminalWrapper = document.getElementById('terminal-wrapper');
+            
+            if (dashboard) {
+                // Move terminal back into dashboard wrapper
+                if (terminal && terminalWrapper && terminal.parentElement !== terminalWrapper) {
+                    terminalWrapper.appendChild(terminal);
+                }
+                
+                // Reset terminal styles
+                if (terminal) {
+                    terminal.style.display = '';
+                    terminal.style.flexDirection = '';
+                    terminal.style.position = '';
+                    terminal.style.top = '';
+                    terminal.style.left = '';
+                    terminal.style.width = '';
+                    terminal.style.height = '';
+                    terminal.style.maxWidth = '';
+                    terminal.style.maxHeight = '';
+                    terminal.style.zIndex = '';
+                    terminal.style.background = '';
+                    terminal.style.padding = '';
+                    terminal.style.boxSizing = '';
+                    
+                    // Keep modern UI classes
+                    terminal.classList.add('modern-ui');
+                    terminal.classList.add('futuristic-theme');
+                }
+                
+                // Remove floating toggle button
+                this.removeBasicModeToggle();
+                
+                // Show dashboard
+                dashboard.style.display = 'grid';
+                document.body.classList.add('futuristic-mode');
+                document.body.classList.remove('basic-terminal-mode');
+                document.body.classList.add('modern-terminal-ui');
+                localStorage.setItem('omega-view-mode', 'futuristic');
+                console.log('🚀 Futuristic dashboard mode enabled');
+                if (window.terminal) {
+                    window.terminal.log('✅ Futuristic dashboard mode enabled', 'success');
+                }
+                this.updateViewModeButton();
+            } else {
+                // Create dashboard if it doesn't exist
+                transformToDashboard();
+                document.body.classList.add('futuristic-mode');
+                document.body.classList.remove('basic-terminal-mode');
+                document.body.classList.add('modern-terminal-ui');
+                localStorage.setItem('omega-view-mode', 'futuristic');
+                this.removeBasicModeToggle();
+                this.updateViewModeButton();
+            }
+        },
+        
+        createBasicModeToggle: function() {
+            // Don't create toggle if welcome screen is still showing
+            if (!document.body.classList.contains('omega-initialized')) {
+                console.log('⏳ Waiting for welcome screen to finish...');
+                return;
+            }
+            
+            // Remove existing toggle if it exists
+            this.removeBasicModeToggle();
+            
+            // Create floating toggle button
+            const toggleBtn = document.createElement('button');
+            toggleBtn.id = 'basic-mode-toggle';
+            toggleBtn.className = 'basic-mode-toggle';
+            toggleBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
+                </svg>
+                <span>Dashboard</span>
+            `;
+            toggleBtn.title = 'Switch to Dashboard View';
+            toggleBtn.onclick = () => {
+                this.enableFuturisticMode();
+            };
+            
+            // Add styles - matching futuristic theme
+            toggleBtn.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 10000;
+                background: rgba(15, 15, 26, 0.85);
+                border: 1px solid rgba(0, 212, 255, 0.3);
+                border-radius: 8px;
+                padding: 10px 16px;
+                color: #00d4ff;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.25s ease;
+                box-shadow: 0 2px 12px rgba(0, 212, 255, 0.15);
+                backdrop-filter: blur(10px);
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+            `;
+            
+            // Add hover effect
+            toggleBtn.onmouseenter = () => {
+                toggleBtn.style.background = 'rgba(15, 15, 26, 0.95)';
+                toggleBtn.style.borderColor = '#00d4ff';
+                toggleBtn.style.boxShadow = '0 4px 20px rgba(0, 212, 255, 0.25)';
+                toggleBtn.style.transform = 'translateY(-2px)';
+                toggleBtn.style.color = '#00ffff';
+            };
+            
+            toggleBtn.onmouseleave = () => {
+                toggleBtn.style.background = 'rgba(15, 15, 26, 0.85)';
+                toggleBtn.style.borderColor = 'rgba(0, 212, 255, 0.3)';
+                toggleBtn.style.boxShadow = '0 2px 12px rgba(0, 212, 255, 0.15)';
+                toggleBtn.style.transform = 'translateY(0)';
+                toggleBtn.style.color = '#00d4ff';
+            };
+            
+            document.body.appendChild(toggleBtn);
+            
+            // Fade in animation
+            setTimeout(() => {
+                toggleBtn.style.opacity = '0';
+                toggleBtn.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    toggleBtn.style.transition = 'all 0.3s ease';
+                    toggleBtn.style.opacity = '1';
+                    toggleBtn.style.transform = 'translateY(0)';
+                }, 10);
+            }, 10);
+        },
+        
+        removeBasicModeToggle: function() {
+            const existingToggle = document.getElementById('basic-mode-toggle');
+            if (existingToggle) {
+                existingToggle.remove();
             }
         }
     };
     
-    // Auto-transform when DOM is ready
+    // Auto-transform when DOM is ready (unless user prefers basic mode)
+    const savedViewMode = localStorage.getItem('omega-view-mode');
+    
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', transformToDashboard);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Always create the dashboard, but hide it if basic mode is preferred
+            transformToDashboard();
+            if (savedViewMode === 'basic') {
+                setTimeout(() => {
+                    window.FuturisticDashboard.enableBasicMode();
+                }, 100);
+            } else {
+                // Initialize button label for futuristic mode
+                setTimeout(() => {
+                    window.FuturisticDashboard.updateViewModeButton();
+                }, 100);
+            }
+        });
     } else {
         transformToDashboard();
+        if (savedViewMode === 'basic') {
+            setTimeout(() => {
+                window.FuturisticDashboard.enableBasicMode();
+            }, 100);
+        } else {
+            // Initialize button label for futuristic mode
+            setTimeout(() => {
+                window.FuturisticDashboard.updateViewModeButton();
+            }, 100);
+        }
     }
     
 })();

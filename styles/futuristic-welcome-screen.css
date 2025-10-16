@@ -221,9 +221,280 @@
     50% { opacity: 1; }
 }
 
+/* View Mode Selector */
+.welcome-view-selector {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.welcome-selector-title {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cyber-blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.welcome-selector-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.welcome-view-option {
+    background: rgba(15, 15, 26, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 8px;
+    padding: 18px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.welcome-view-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(0, 212, 255, 0.05));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.welcome-view-option:hover {
+    background: rgba(15, 15, 26, 0.8);
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 12px rgba(0, 212, 255, 0.1);
+}
+
+.welcome-view-option:hover::before {
+    opacity: 1;
+}
+
+.welcome-view-option-active {
+    background: rgba(15, 15, 26, 0.9);
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 12px rgba(0, 212, 255, 0.05);
+}
+
+.welcome-view-option-active::after {
+    content: '●';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    color: var(--cyber-blue);
+    font-size: 8px;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.welcome-view-option svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--cyber-blue-dim);
+    opacity: 0.6;
+    transition: all 0.25s ease;
+}
+
+.welcome-view-option:hover svg {
+    color: var(--cyber-blue);
+    opacity: 0.9;
+}
+
+.welcome-view-option-active svg {
+    color: var(--cyber-blue);
+    opacity: 1;
+}
+
+.view-option-content {
+    flex: 1;
+    text-align: left;
+}
+
+.view-option-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cyber-blue-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+}
+
+.welcome-view-option:hover .view-option-title {
+    color: var(--cyber-blue);
+}
+
+.welcome-view-option-active .view-option-title {
+    color: var(--cyber-blue-bright);
+}
+
+.view-option-desc {
+    font-size: 10px;
+    color: rgba(0, 212, 255, 0.5);
+    letter-spacing: 0.3px;
+    font-family: var(--font-mono);
+}
+
+.welcome-view-option:hover .view-option-desc {
+    color: rgba(0, 212, 255, 0.7);
+}
+
+.welcome-view-option-active .view-option-desc {
+    color: rgba(0, 212, 255, 0.8);
+}
+
 /* Hide when initialized */
 body.omega-initialized .omega-welcome-screen {
     display: none !important;
+}
+
+/* Hide floating toggle during welcome screen */
+body:not(.omega-initialized) #basic-mode-toggle {
+    display: none !important;
+}
+
+/* Modern Terminal UI - Basic Mode Styling */
+body.basic-terminal-mode.modern-terminal-ui {
+    background: var(--void-black, #0a0a0f) !important;
+}
+
+body.basic-terminal-mode.modern-terminal-ui #terminal {
+    background: var(--void-black, #0a0a0f) !important;
+    color: var(--cyber-blue-dim, #0099cc) !important;
+}
+
+/* Terminal modern UI classes */
+#terminal.modern-ui,
+#terminal.futuristic-theme {
+    font-family: var(--font-mono, 'Consolas', 'Monaco', 'Courier New', monospace) !important;
+}
+
+/* Terminal output styling */
+body.modern-terminal-ui .terminal-line,
+body.modern-terminal-ui .terminal-output,
+body.modern-terminal-ui .output-line {
+    color: var(--cyber-blue-dim, #0099cc) !important;
+}
+
+/* Prompt styling */
+body.modern-terminal-ui .terminal-prompt,
+body.modern-terminal-ui .prompt {
+    color: var(--matrix-green, #00ff88) !important;
+}
+
+body.modern-terminal-ui .prompt-user {
+    color: var(--matrix-green, #00ff88) !important;
+}
+
+body.modern-terminal-ui .prompt-host {
+    color: var(--cyber-blue, #00d4ff) !important;
+}
+
+body.modern-terminal-ui .prompt-path {
+    color: var(--neon-purple, #9d00ff) !important;
+}
+
+body.modern-terminal-ui .prompt-separator {
+    color: var(--cyber-blue-dim, #0099cc) !important;
+}
+
+/* Status messages */
+body.modern-terminal-ui .text-success,
+body.modern-terminal-ui .log-success {
+    color: var(--matrix-green, #00ff88) !important;
+}
+
+body.modern-terminal-ui .text-error,
+body.modern-terminal-ui .log-error {
+    color: var(--danger-red, #ff3366) !important;
+}
+
+body.modern-terminal-ui .text-warning,
+body.modern-terminal-ui .log-warning {
+    color: var(--warning-amber, #ffaa00) !important;
+}
+
+body.modern-terminal-ui .text-info,
+body.modern-terminal-ui .log-info {
+    color: var(--cyber-blue, #00d4ff) !important;
+}
+
+body.modern-terminal-ui .text-matrix {
+    color: var(--matrix-green, #00ff88) !important;
+}
+
+body.modern-terminal-ui .text-cyan {
+    color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Input field */
+body.modern-terminal-ui #commandInput,
+body.modern-terminal-ui .terminal-input {
+    background: transparent !important;
+    color: var(--cyber-blue, #00d4ff) !important;
+    border: 1px solid var(--glass-border, rgba(0, 212, 255, 0.15)) !important;
+    caret-color: var(--cyber-blue, #00d4ff) !important;
+}
+
+body.modern-terminal-ui #commandInput:focus,
+body.modern-terminal-ui .terminal-input:focus {
+    border-color: var(--cyber-blue, #00d4ff) !important;
+    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1) !important;
+    outline: none !important;
+}
+
+/* Links */
+body.modern-terminal-ui a {
+    color: var(--cyber-blue, #00d4ff) !important;
+}
+
+body.modern-terminal-ui a:hover {
+    color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Selection */
+body.modern-terminal-ui ::selection {
+    background: rgba(0, 212, 255, 0.2) !important;
+    color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Scrollbar for modern UI */
+body.modern-terminal-ui #terminal::-webkit-scrollbar {
+    width: 8px;
+}
+
+body.modern-terminal-ui #terminal::-webkit-scrollbar-track {
+    background: var(--deep-space, #0f0f1a);
+}
+
+body.modern-terminal-ui #terminal::-webkit-scrollbar-thumb {
+    background: var(--steel-grey, #2a2a3a);
+    border-radius: 4px;
+}
+
+body.modern-terminal-ui #terminal::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-blue-dim, #0099cc);
 }
 
 /* Mobile Responsive */
@@ -252,5 +523,27 @@ body.omega-initialized .omega-welcome-screen {
     .welcome-system-status {
         bottom: 20px;
         left: 20px;
+    }
+    
+    .welcome-view-selector {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    .welcome-selector-buttons {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .welcome-view-option {
+        padding: 16px;
+    }
+    
+    .view-option-title {
+        font-size: 12px;
+    }
+    
+    .view-option-desc {
+        font-size: 10px;
     }
 }

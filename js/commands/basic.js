@@ -34,6 +34,7 @@ window.OmegaCommands.Basic = {
         terminal.log('🎨 INTERFACE COMMANDS:', 'info');
         terminal.log('  theme <name>         Set theme (dark, light, matrix, retro, powershell)');
         terminal.log('  gui <style>          Change GUI interface (chatgpt, aol, discord, windows95, terminal)');
+        terminal.log('  view <mode>          Toggle view (basic, futuristic, toggle)');
         terminal.log('  clear                Clear terminal');
         terminal.log('  help                 Show this help message');
         terminal.log('');
@@ -97,7 +98,12 @@ window.OmegaCommands.Basic = {
         terminal.log('👤 PROFILE:', 'info');
         terminal.log('  profile              Open enhanced profile manager');
         terminal.log('');
-        terminal.log('🎮 ENTERTAINMENT:', 'info');
+        terminal.log('🎮 GAMES:', 'info');
+        terminal.log('  game list            Show all available games');
+        terminal.log('  play <game>          Play a game (snake, pacman, clicker, etc.)');
+        terminal.log('  game help            Show game commands');
+        terminal.log('');
+        terminal.log('🎭 ENTERTAINMENT:', 'info');
         terminal.log('  rickroll, matrix, hack, disco, fortune');
         terminal.log('');
         terminal.log('🤖 AI ASSISTANT:', 'info');
@@ -1093,6 +1099,55 @@ window.OmegaCommands.Basic = {
                 break;
             default:
                 terminal.log('Invalid tab command', 'error');
+        }
+    },
+    
+    // View mode command - toggle between basic and futuristic
+    view: function(terminal, args) {
+        if (!args || args.length < 2) {
+            // Show current mode
+            const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
+            terminal.log('📺 Terminal View Modes:', 'info');
+            terminal.log('');
+            terminal.log(`  Current mode: ${currentMode.toUpperCase()}`, currentMode === 'basic' ? 'success' : 'info');
+            terminal.log('');
+            terminal.log('Available commands:', 'info');
+            terminal.log('  view basic       → Modern terminal only (no dashboard)');
+            terminal.log('  view futuristic  → Full dashboard with sidebar & stats');
+            terminal.log('  view toggle      → Switch between modes');
+            terminal.log('');
+            terminal.log('💡 Your preference is saved automatically!', 'info');
+            return;
+        }
+        
+        const mode = args[1].toLowerCase();
+        
+        if (!window.FuturisticDashboard) {
+            terminal.log('❌ Dashboard system not loaded', 'error');
+            return;
+        }
+        
+        switch(mode) {
+            case 'basic':
+            case 'classic':
+            case 'simple':
+                window.FuturisticDashboard.enableBasicMode();
+                break;
+                
+            case 'futuristic':
+            case 'dashboard':
+            case 'advanced':
+                window.FuturisticDashboard.enableFuturisticMode();
+                break;
+                
+            case 'toggle':
+            case 'switch':
+                window.FuturisticDashboard.toggleClassicMode();
+                break;
+                
+            default:
+                terminal.log('❌ Invalid view mode', 'error');
+                terminal.log('Use: view basic, view futuristic, or view toggle', 'info');
         }
     },
 

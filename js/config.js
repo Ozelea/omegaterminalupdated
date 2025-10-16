@@ -327,12 +327,12 @@ window.OmegaConfig = {
     AVAILABLE_COMMANDS: [
         'help', 'clear', 'ai', 'connect', 'disconnect', 'yes', 'import', 'balance', 'faucet', 'faucet status', 'mine', 'claim', 'status', 'stats',
         'send', 'ens register', 'ens resolve', 'ens search', 'mixer', 'stress', 'stopstress', 'stressstats', 
-        'theme', 'gui', 'gui ios', 'gui aol', 'gui limewire', 'gui discord', 'gui windows95', 'gui terminal',
+        'theme', 'gui', 'gui ios', 'gui aol', 'gui limewire', 'gui discord', 'gui windows95', 'gui terminal', 'view', 'view basic', 'view futuristic', 'view toggle',
         'rickroll', 'fortune', 'matrix', 'hack', 'disco', 'stop', 'tab', 'email', 'inbox', 
         'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds search', 'ds trending', 'cg search', 'cg networks', 'alpha', 
         'alpha quote', 'alpha daily', 'alpha overview', 'alpha macro', 'solana connect', 'solana generate', 'solana status', 'solana test', 'solana search', 'solana swap',
         'near generate', 'near connect', 'near swap', 'near tokens', 'eclipse tokens', 'eclipse price', 'eclipse swap', 'eclipse connect', 'eclipse generate', 'eclipse balance',
-        'airdrop', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'create', 'nft', 'ascii', 'rome', 'rome help', 'rome token create', 'profile', 'profile open', 'profile close'
+        'airdrop', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'create', 'nft', 'ascii', 'rome', 'rome help', 'rome token create', 'profile', 'profile open', 'profile close', 'game', 'game list', 'game help', 'play', 'play snake', 'play pacman', 'play clicker', 'play cookies'
     ],
     
     // Theme Options

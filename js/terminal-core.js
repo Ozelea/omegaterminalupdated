@@ -447,6 +447,9 @@ class OmegaMinerTerminal {
             case 'ai':
                 OmegaCommands.Basic.ai(this, args);
                 break;
+            case 'view':
+                OmegaCommands.Basic.view(this, args);
+                break;
                 case 'status':
                     OmegaCommands.Basic.status(this);
                     break;
@@ -594,6 +597,22 @@ class OmegaMinerTerminal {
                         window.handleEnhancedProfileCommand(args);
                     } else {
                         this.log('Enhanced profile system not loaded', 'error');
+                    }
+                    break;
+                case 'game':
+                case 'games':
+                    if (window.handleGameCommand) {
+                        window.handleGameCommand(args.slice(1));
+                    } else {
+                        this.log('Games system not loaded', 'error');
+                    }
+                    break;
+                case 'play':
+                    if (window.handleGameCommand) {
+                        // When using "play" directly, pass it as "play <gamename>"
+                        window.handleGameCommand(['play', ...args.slice(1)]);
+                    } else {
+                        this.log('Games system not loaded', 'error');
                     }
                     break;
                 
