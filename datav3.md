@@ -16,6 +16,8 @@ When a user makes a request, analyze their intent and map it to the correct comm
 
 **WALLET MANAGEMENT** → Use wallet commands (connect, balance, disconnect)  
 **TOKEN TRADING** → Use trading commands (solana, near, eclipse + swap/quote subcommands)  
+**FAIR BLOCKCHAIN** → Use fair commands (generate, connect, balance, faucet, send, create-token, mint-nft)  
+**NAME SERVICES** → Use ens (Omega) or fns (FAIR) commands for name registration and resolution  
 **MARKET ANALYSIS** → Use analytics commands (dexscreener, polymarket, geckoterminal)  
 **PRIVACY OPERATIONS** → Use mixer commands for anonymous transactions  
 **GAMING/ENTERTAINMENT** → Use games, arcade, or entertainment commands  
@@ -25,8 +27,9 @@ When a user makes a request, analyze their intent and map it to the correct comm
 
 ## 🌐 OMEGA TERMINAL CAPABILITIES
 
-**Multi-Chain Wallet System:** Supports EVM (Omega Network), Solana, Eclipse, NEAR, Hyperliquid  
+**Multi-Chain Wallet System:** Supports EVM (Omega Network, FAIR), Solana, Eclipse, NEAR, Hyperliquid  
 **Trading Networks:** Jupiter (Solana), Near Intents (Cross-chain), Solar DEX (Eclipse)  
+**FAIR Blockchain:** Token creation, NFT minting, name service (FNS) on FAIR testnet  
 **Analytics Integration:** DexScreener, CoinGecko, DeFiLlama, Polymarket prediction markets  
 **Privacy Features:** Omega Mixer for anonymous transactions on Omega Network  
 **Gaming Platform:** 9+ integrated games with scoring and leaderboards  
@@ -81,15 +84,42 @@ Commands display results directly in the terminal:
 3. Eclipse (Solar DEX) - SVM tokens on Eclipse network"
 
 **When user says "check balance" → EXPLAIN:**  
-"I'll show balances across all connected networks: Omega (OMEGA tokens), Solana (SOL), Eclipse (SVM), and NEAR"
+"I'll show balances across all connected networks: Omega (OMEGA tokens), FAIR (FAIR tokens), Solana (SOL), Eclipse (SVM), and NEAR"
 
 **When user says "connect wallet" → ASK:**  
 "Which wallet to connect?
 
-1. MetaMask (for Omega Network)
+1. MetaMask (for Omega Network or FAIR Network)
 2. Phantom (for Solana)
 3. NEAR Wallet (for NEAR Protocol)
-4. Or create new Omega Wallet"
+4. Generate new Omega Wallet
+5. Generate new FAIR Wallet"
+
+**When user says "register name" → ASK:**  
+"Which name service?
+
+1. ENS/ONS (Omega Network) - myname.omega
+2. FNS (FAIR Network) - myname.fns"
+
+**When user says "create token" → ASK:**  
+"Which network for token creation?
+
+1. FAIR Network - Interactive token creation with advanced features
+2. Other networks may have different token creation methods"
+
+**When user says "mint NFT" → ASK:**  
+"Which network for NFT minting?
+
+1. FAIR Network - Interactive NFT minting with image upload to IPFS
+2. Other networks may have different NFT minting processes"
+
+**When user says "send tokens" and context is unclear → ASK:**  
+"Which network for token transfer?
+
+1. Omega Network - Use `send` command
+2. FAIR Network - Use `fair send` command
+3. Solana - Use `solana` commands
+4. Other networks have specific command prefixes"
 
 ---
 
@@ -142,13 +172,14 @@ Commands display results directly in the terminal:
 **WHAT HAPPENS:**
 
 1. Shows OMEGA balance (if Omega Network connected)
-2. Shows SOL balance (if Solana connected)
-3. Shows Eclipse balance (if Eclipse wallet exists)
-4. Shows NEAR balance (if NEAR connected)
-5. Displays claimable rewards from mining
+2. Shows FAIR balance (if FAIR Network connected)
+3. Shows SOL balance (if Solana connected)
+4. Shows Eclipse balance (if Eclipse wallet exists)
+5. Shows NEAR balance (if NEAR connected)
+6. Displays claimable rewards from mining
 
 **PREREQUISITE:** At least one wallet must be connected  
-**AI INSTRUCTION:** Use command `balance`
+**AI INSTRUCTION:** Use command `balance` for multi-network overview, or `fair balance` for FAIR-specific balance
 
 ### `address`
 
@@ -241,6 +272,499 @@ faucet status
 
 ---
 
+## 🔗 FAIR BLOCKCHAIN COMMANDS
+
+### Understanding FAIR Context
+
+FAIR is a modern EVM-compatible blockchain network optimized for high-performance applications and DeFi. It features low transaction costs, fast finality, and seamless integration with Ethereum tooling. The FAIR testnet allows developers and users to experiment with advanced blockchain features including custom token creation, NFT minting, and name service registration.
+
+### Core FAIR Operations
+
+#### `fair help`
+
+**Description:** Display comprehensive overview of all FAIR blockchain commands and network information  
+**Purpose:** Show available FAIR operations including wallet management, token operations, NFT functions, and network details
+
+**When to Use:**
+
+- User asks "what can I do on FAIR?" or "show FAIR commands"
+- User wants to "explore FAIR blockchain features" or "see FAIR capabilities"
+- User mentions "FAIR blockchain," "FAIR network," or "FAIR help"
+- User asks "how to use FAIR?" or "FAIR documentation"
+- User wants to learn about FAIR token creation or NFT minting
+- User asks "what's available on FAIR testnet?"
+
+**What Happens:**
+
+- Shows complete list of FAIR commands with descriptions
+- Displays network information (Chain ID: 935, RPC, Explorer)
+- Shows contract addresses for Token Factory, NFT Contract, FNS Contract
+- Provides usage examples and getting started guidance
+- Includes links to FAIR explorer and faucet
+- Shows integration with FNS (FAIR Name Service)
+
+**AI INSTRUCTION:** Use command `fair help`
+
+#### `fair generate`
+
+**Description:** Generate a new FAIR wallet with private key and address  
+**Purpose:** Create a new wallet specifically for FAIR blockchain operations
+
+**When to Use:**
+
+- User wants to "create FAIR wallet" or "generate FAIR keys"
+- User needs "new wallet for FAIR network" or "FAIR address"
+- User asks "how to get started on FAIR?" or "create FAIR account"
+- User wants to "use FAIR blockchain" but doesn't have wallet
+
+**What Happens:**
+
+- Generates new Ethereum-compatible wallet (address + private key)
+- Stores wallet in session for immediate use
+- Displays address and private key with copy functionality
+- Shows security warnings about private key storage
+- Provides download button for wallet information
+- Shows links to FAIR faucet for getting testnet tokens
+
+**Security Notes:**
+
+- Private key is displayed once - user must save it securely
+- Wallet persists in session until browser refresh/close
+- No automatic backup - user responsible for key storage
+
+**AI INSTRUCTION:** Use command `fair generate`
+
+#### `fair connect`
+
+**Description:** Connect MetaMask wallet to FAIR network  
+**Purpose:** Use existing MetaMask wallet with FAIR blockchain
+
+**When to Use:**
+
+- User has MetaMask and wants to "connect to FAIR network"
+- User asks "use MetaMask with FAIR" or "add FAIR to MetaMask"
+- User wants to "switch to FAIR network" in MetaMask
+- User mentions "MetaMask FAIR connection"
+
+**What Happens:**
+
+- Checks if MetaMask is installed
+- Attempts to switch MetaMask to FAIR network (Chain ID: 935)
+- If network not added, prompts to add FAIR network to MetaMask
+- Configures FAIR RPC URL, block explorer, and native currency
+- Connects wallet and shows connected address
+- Enables all FAIR commands with MetaMask integration
+
+**Network Details Added to MetaMask:**
+
+- Chain ID: 935 (0x3A7 in hex)
+- Network Name: FAIR Testnet Beta
+- RPC URL: https://testnet-rpc.fair.cloud
+- Block Explorer: https://testnet-explorer.fair.cloud
+- Native Currency: FAIR
+
+**AI INSTRUCTION:** Use command `fair connect`
+
+#### `fair wallet`
+
+**Description:** Display current FAIR wallet information and details  
+**Purpose:** Show wallet address, private key, and network status
+
+**When to Use:**
+
+- User asks "show my FAIR wallet" or "FAIR wallet info"
+- User wants to "see FAIR address" or "check FAIR wallet"
+- User needs to "copy FAIR address" or "view wallet details"
+
+**What Happens:**
+
+- Shows current wallet address with click-to-copy functionality
+- Displays private key (if generated wallet) or MetaMask status
+- Shows network information (FAIR Testnet Beta, Chain ID: 935)
+- Displays RPC URL for reference
+
+**AI INSTRUCTION:** Use command `fair wallet`
+
+#### `fair balance`
+
+**Description:** Check FAIR token balance for connected wallet  
+**Purpose:** Display current FAIR token balance
+
+**When to Use:**
+
+- User asks "check FAIR balance" or "how many FAIR tokens do I have?"
+- User wants to "see FAIR funds" or "check wallet balance"
+- User asks "FAIR token balance" or "how much FAIR?"
+
+**What Happens:**
+
+- Connects to FAIR network RPC
+- Queries balance for connected wallet address
+- Displays balance in FAIR tokens with full precision
+- Shows wallet address for reference
+
+**Prerequisites:** Must have FAIR wallet generated or MetaMask connected to FAIR
+
+**AI INSTRUCTION:** Use command `fair balance`
+
+#### `fair faucet`
+
+**Description:** Get free FAIR testnet tokens from faucet  
+**Purpose:** Obtain FAIR tokens for testing and transactions
+
+**When to Use:**
+
+- User needs "FAIR tokens for testing" or "get free FAIR"
+- User asks "how to get FAIR tokens?" or "FAIR faucet"
+- User wants to "fund FAIR wallet" or "need FAIR for transactions"
+
+**What Happens:**
+
+- Automatically copies wallet address to clipboard
+- Opens FAIR faucet website in new window
+- Provides step-by-step instructions for claiming tokens
+- Shows 24-hour cooldown information
+- Guides user through faucet claiming process
+
+**Faucet Details:**
+
+- URL: https://testnet-faucet.fair.cloud
+- Cooldown: 24 hours between claims
+- Amount: Varies based on faucet settings
+- Automatic address copying for user convenience
+
+**AI INSTRUCTION:** Use command `fair faucet`
+
+#### `fair send <amount> <address|fns>`
+
+**Description:** Send FAIR tokens to another address or FNS name  
+**Purpose:** Transfer FAIR tokens with FNS name resolution support
+
+**Arguments:**
+
+- `<amount>`: Amount of FAIR tokens to send (e.g., "10", "0.5")
+- `<address|fns>`: Recipient address (0x...) or FNS name (myname.fns)
+
+**When to Use:**
+
+- User wants to "send FAIR tokens" or "transfer FAIR"
+- User asks "how to send to FNS name?" or "pay with FAIR"
+- User mentions "send to myname.fns" or "FAIR payment"
+
+**What Happens:**
+
+- If recipient ends with .fns, resolves FNS name to address
+- Validates recipient address and amount
+- Submits transaction using connected wallet/signer
+- Shows transaction hash and confirmation status
+- Provides explorer link for transaction tracking
+- Displays success message with recipient details
+
+**FNS Integration:**
+
+- Supports both direct addresses and FNS names
+- Automatically resolves name.fns to blockchain address
+- Shows resolved address for confirmation
+- Error handling for unregistered FNS names
+
+**Usage:**
+
+```
+fair send 10 0x123abc...
+fair send 5 alice.fns
+```
+
+**AI INSTRUCTION:** Use command `fair send <amount> <address|fns>`
+
+#### `fair send-token <token> <amount> <address|fns>`
+
+**Description:** Send ERC20 tokens on FAIR network to address or FNS name  
+**Purpose:** Transfer custom tokens with FNS name resolution
+
+**Arguments:**
+
+- `<token>`: Token contract address
+- `<amount>`: Amount of tokens to send
+- `<address|fns>`: Recipient address or FNS name
+
+**When to Use:**
+
+- User wants to "send custom tokens" or "transfer ERC20 on FAIR"
+- User asks "send my token to FNS name" or "transfer token"
+- User mentions specific token transfer on FAIR
+
+**What Happens:**
+
+- Resolves FNS name if provided (name.fns → address)
+- Gets token information (symbol, decimals) from contract
+- Calls token contract transfer function
+- Shows transaction progress and confirmation
+- Displays token symbol and recipient in success message
+
+**Usage:**
+
+```
+fair send-token 0xabc123... 100 alice.fns
+fair send-token 0xdef456... 50 0x123abc...
+```
+
+**AI INSTRUCTION:** Use command `fair send-token <token> <amount> <address|fns>`
+
+#### `fair create-token`
+
+**Description:** Interactive token creation wizard for custom ERC20 tokens  
+**Purpose:** Create custom tokens with advanced features on FAIR network
+
+**When to Use:**
+
+- User wants to "create custom token" or "make my own token"
+- User asks "how to create ERC20?" or "token creation on FAIR"
+- User mentions "launch token," "create cryptocurrency," or "token factory"
+
+**What Happens:**
+
+- Launches interactive token creation wizard
+- Prompts for token name (e.g., "My Fair Token")
+- Asks for token symbol (e.g., "MFT")
+- Requests total supply amount
+- Offers advanced features:
+  - **Burnable:** Allow token holders to burn (destroy) tokens
+  - **Mintable:** Allow owner to create new tokens after deployment
+  - **Pausable:** Allow owner to pause all token transfers
+- Shows configuration summary for confirmation
+- Deploys token through FAIR Token Factory contract
+- Provides token contract address and explorer link
+- Shows success message with token details
+
+**Token Factory Address:** 0x30a399891f44c2ee07134e248d0393e53286f5f4
+
+**Features Available:**
+
+- Standard ERC20 functionality
+- Optional burning capability
+- Optional additional minting
+- Optional pause/unpause transfers
+- Automatic owner assignment to deployer
+
+**AI INSTRUCTION:** Use command `fair create-token`
+
+#### `fair my-tokens`
+
+**Description:** List all tokens created by connected wallet  
+**Purpose:** View user's token creation history and details
+
+**When to Use:**
+
+- User asks "show my tokens" or "tokens I created"
+- User wants to "list my token contracts" or "see my token history"
+- User mentions "my token addresses" or "tokens I made"
+
+**What Happens:**
+
+- Queries FAIR Token Factory for user's created tokens
+- Gets token details (name, symbol, supply) for each token
+- Displays formatted list with token information
+- Shows contract addresses with copy functionality
+- Provides explorer links for each token
+- Displays total token count
+
+**Information Shown:**
+
+- Token name and symbol
+- Contract address (clickable to copy)
+- Total supply with proper decimal formatting
+- Direct links to FAIR blockchain explorer
+
+**AI INSTRUCTION:** Use command `fair my-tokens`
+
+#### `fair token-info <address>`
+
+**Description:** Get detailed information about any ERC20 token on FAIR  
+**Purpose:** Display comprehensive token data and statistics
+
+**Arguments:**
+
+- `<address>`: Token contract address to query
+
+**When to Use:**
+
+- User asks "info about this token" or "check token details"
+- User wants to "verify token contract" or "see token info"
+- User provides token address and wants details
+
+**What Happens:**
+
+- Connects to token contract using provided address
+- Retrieves token metadata (name, symbol, decimals, supply)
+- Gets owner address and displays with copy functionality
+- Shows total supply with proper decimal formatting
+- Provides blockchain explorer link
+- Handles errors for invalid addresses
+
+**Information Displayed:**
+
+- Token name and symbol
+- Decimal places
+- Total supply (formatted)
+- Owner/deployer address
+- Contract address
+- Link to FAIR blockchain explorer
+
+**Usage:**
+
+```
+fair token-info 0xabc123def456...
+```
+
+**AI INSTRUCTION:** Use command `fair token-info <address>`
+
+#### `fair mint-nft`
+
+**Description:** Interactive NFT creation wizard with image upload  
+**Purpose:** Mint custom NFTs with metadata and images on FAIR network
+
+**When to Use:**
+
+- User wants to "create NFT" or "mint NFT on FAIR"
+- User asks "how to make NFT?" or "NFT creation"
+- User mentions "upload image NFT" or "mint artwork"
+
+**What Happens:**
+
+- Launches interactive NFT minting wizard
+- Prompts for NFT name and description
+- Opens file picker for image upload (supports image formats)
+- Uploads image to IPFS via Pinata gateway
+- Creates JSON metadata with image URL and attributes
+- Uploads metadata to IPFS
+- Mints NFT through FAIR NFT contract
+- Assigns NFT to user's wallet
+- Provides token ID and transaction details
+- Shows explorer links and success confirmation
+
+**NFT Contract Address:** 0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e
+
+**IPFS Integration:**
+
+- Image storage via Pinata IPFS gateway
+- Metadata JSON stored on IPFS
+- Decentralized storage for NFT data
+- Permanent accessibility via IPFS hash
+
+**Metadata Structure:**
+
+- Name and description
+- IPFS image URL
+- Network attributes (FAIR blockchain)
+- Custom attributes as needed
+
+**AI INSTRUCTION:** Use command `fair mint-nft`
+
+#### `fair my-nfts`
+
+**Description:** Display all NFTs owned by connected wallet  
+**Purpose:** View NFT collection and ownership details
+
+**When to Use:**
+
+- User asks "show my NFTs" or "my NFT collection"
+- User wants to "see owned NFTs" or "NFT gallery"
+- User mentions "my FAIR NFTs" or "check NFT ownership"
+
+**What Happens:**
+
+- Queries FAIR NFT contract for tokens owned by user
+- Retrieves metadata for each NFT (up to 10 displayed)
+- Fetches and displays NFT information:
+  - Token ID numbers
+  - NFT names and descriptions
+  - Image links (clickable to view)
+  - Explorer links for each NFT
+- Shows total NFT count
+- Handles both IPFS and base64 metadata formats
+
+**Display Limit:** Shows first 10 NFTs, indicates if more exist
+
+**AI INSTRUCTION:** Use command `fair my-nfts`
+
+#### `fair nft-info <tokenId>`
+
+**Description:** Get detailed information about specific NFT  
+**Purpose:** Display NFT metadata, ownership, and attributes
+
+**Arguments:**
+
+- `<tokenId>`: The NFT token ID to query
+
+**When to Use:**
+
+- User asks "info about NFT #123" or "check NFT details"
+- User wants to "see NFT metadata" or "NFT information"
+- User provides token ID and wants details
+
+**What Happens:**
+
+- Queries NFT contract for token information
+- Gets current owner address
+- Retrieves and parses metadata (IPFS or base64)
+- Displays comprehensive NFT information:
+  - Token ID and name
+  - Description and attributes
+  - Current owner (with copy functionality)
+  - Image link (clickable to view)
+  - Blockchain explorer link
+- Handles metadata parsing errors gracefully
+
+**Usage:**
+
+```
+fair nft-info 123
+```
+
+**AI INSTRUCTION:** Use command `fair nft-info <tokenId>`
+
+#### `fair transfer-nft <tokenId> <address|fns>`
+
+**Description:** Transfer NFT to another address or FNS name  
+**Purpose:** Send NFT with FNS name resolution support
+
+**Arguments:**
+
+- `<tokenId>`: NFT token ID to transfer
+- `<address|fns>`: Recipient address or FNS name
+
+**When to Use:**
+
+- User wants to "send NFT" or "transfer NFT to someone"
+- User asks "give NFT to FNS name" or "NFT transfer"
+- User mentions "send NFT to alice.fns" or similar
+
+**What Happens:**
+
+- Resolves FNS name to address if .fns provided
+- Validates NFT ownership (must be current owner)
+- Calls NFT contract transferFrom function
+- Shows transaction progress and confirmation
+- Displays success message with recipient details
+- Provides blockchain explorer link
+
+**FNS Integration:**
+
+- Supports direct addresses and FNS names
+- Automatic name resolution for .fns addresses
+- Shows resolved address for confirmation
+
+**Usage:**
+
+```
+fair transfer-nft 123 alice.fns
+fair transfer-nft 456 0x123abc...
+```
+
+**AI INSTRUCTION:** Use command `fair transfer-nft <tokenId> <address|fns>`
+
+---
+
 ## 🏷️ NAME SERVICE COMMANDS
 
 ### Omega Name Service (ONS)
@@ -266,6 +790,210 @@ ens register myname.omega
 ens resolve alice.omega
 ens search omega
 ```
+
+### FAIR Name Service (FNS)
+
+#### `fns help`
+
+**Description:** Display comprehensive overview of all FNS commands and contract information  
+**Purpose:** Show available FNS operations for name registration, resolution, and management on FAIR network
+
+**When to Use:**
+
+- User asks "what is FNS?" or "how to use FNS?"
+- User wants to "learn about FAIR names" or "FNS documentation"
+- User mentions "name service on FAIR" or "FNS help"
+- User asks "how to register names?" or "FNS commands"
+
+**What Happens:**
+
+- Shows complete list of FNS commands with descriptions
+- Displays FNS contract address on FAIR network
+- Explains name registration and resolution process
+- Shows integration with FAIR token transfers
+- Provides usage examples and getting started guidance
+- Explains .fns naming convention
+
+**FNS Contract:** 0x2d06d9568ae99f61f421ea99a46969878986fc2d
+
+**AI INSTRUCTION:** Use command `fns help`
+
+#### `fns register <name>`
+
+**Description:** Register a new FNS name for connected wallet address  
+**Purpose:** Claim a unique name on FAIR network for easier address identification
+
+**Arguments:**
+
+- `<name>`: The name to register (without .fns suffix)
+
+**When to Use:**
+
+- User wants to "register FNS name" or "claim name on FAIR"
+- User asks "how to get .fns name?" or "register myname"
+- User mentions "want custom name" or "register address name"
+
+**What Happens:**
+
+- Checks name availability in FNS contract
+- Validates name format (removes .fns if provided)
+- Registers name to connected wallet address
+- Shows transaction hash and confirmation
+- Displays success message with registered name
+- Explains how others can use the name for transfers
+- Provides blockchain explorer link
+
+**Name Format:**
+
+- Automatically converts to lowercase
+- Removes .fns suffix if provided by user
+- Names are unique and first-come-first-served
+
+**Usage:**
+
+```
+fns register alice
+fns register mycompany
+```
+
+**AI INSTRUCTION:** Use command `fns register <name>`
+
+#### `fns resolve <name>`
+
+**Description:** Resolve FNS name to blockchain address  
+**Purpose:** Look up the address associated with a registered FNS name
+
+**Arguments:**
+
+- `<name>`: The FNS name to resolve (with or without .fns)
+
+**When to Use:**
+
+- User asks "what address is alice.fns?" or "resolve FNS name"
+- User wants to "check name owner" or "lookup FNS address"
+- User mentions "find address for name" or "FNS resolution"
+
+**What Happens:**
+
+- Queries FNS contract for name resolution
+- Returns associated blockchain address
+- Shows formatted result with copy functionality
+- Handles unregistered names gracefully
+- Suggests registration if name not found
+
+**Usage:**
+
+```
+fns resolve alice
+fns resolve mycompany.fns
+```
+
+**AI INSTRUCTION:** Use command `fns resolve <name>`
+
+#### `fns lookup <address>`
+
+**Description:** Reverse lookup to find FNS name for blockchain address  
+**Purpose:** Find the primary FNS name associated with an address
+
+**Arguments:**
+
+- `<address>`: The blockchain address to lookup
+
+**When to Use:**
+
+- User asks "what name does this address have?" or "reverse FNS lookup"
+- User wants to "find name for address" or "check address name"
+- User provides address and wants associated name
+
+**What Happens:**
+
+- Queries FNS contract for reverse resolution
+- Returns primary name if registered
+- Shows formatted result with address confirmation
+- Handles addresses without names gracefully
+- Explains that not all addresses have names
+
+**Usage:**
+
+```
+fns lookup 0x123abc456def...
+```
+
+**AI INSTRUCTION:** Use command `fns lookup <address>`
+
+#### `fns transfer <name> <address>`
+
+**Description:** Transfer FNS name ownership to another address  
+**Purpose:** Change ownership of registered FNS name
+
+**Arguments:**
+
+- `<name>`: The FNS name to transfer (without .fns suffix)
+- `<address>`: New owner's blockchain address
+
+**When to Use:**
+
+- User wants to "transfer name ownership" or "give name to someone"
+- User asks "change FNS owner" or "transfer my name"
+- User mentions "sell name" or "move name ownership"
+
+**What Happens:**
+
+- Validates current ownership (must be owner to transfer)
+- Calls FNS contract transfer function
+- Updates name ownership in contract
+- Shows transaction confirmation
+- Displays success message with new owner
+- Provides blockchain explorer link
+
+**Prerequisites:** Must be current owner of the name
+
+**Usage:**
+
+```
+fns transfer alice 0x456def789abc...
+```
+
+**AI INSTRUCTION:** Use command `fns transfer <name> <address>`
+
+#### `fns search <term>`
+
+**Description:** Search for FNS names containing specified term  
+**Purpose:** Find registered names matching search criteria
+
+**Arguments:**
+
+- `<term>`: Search term to match against registered names
+
+**When to Use:**
+
+- User asks "search for names" or "find names containing X"
+- User wants to "see available names" or "browse FNS names"
+- User mentions "name search" or "find similar names"
+
+**What Happens:**
+
+- Retrieves all registered names from FNS contract
+- Filters names containing search term (case-insensitive)
+- Displays matching names with .fns suffix
+- Shows up to 20 results, indicates if more exist
+- Suggests registration if no matches found
+
+**Search Features:**
+
+- Case-insensitive matching
+- Partial name matching
+- Results limited to first 20 matches
+- Shows total count if more than 20
+
+**Usage:**
+
+```
+fns search alice
+fns search comp
+```
+
+**AI INSTRUCTION:** Use command `fns search <term>`
 
 ---
 
@@ -3118,9 +3846,11 @@ console.log(`Command executed in ${endTime - startTime}ms`);
 **Trading Commands requiring confirmation:**
 
 - `swap` → Available on: Solana, Near, Eclipse
-- `balance` → Shows: OMEGA, SOL, Eclipse, NEAR
-- `connect` → Options: MetaMask, Phantom, NEAR, Eclipse wallets
+- `balance` → Shows: OMEGA, FAIR, SOL, Eclipse, NEAR
+- `connect` → Options: MetaMask (Omega/FAIR), Phantom (Solana), NEAR, Eclipse wallets
 - `quote` → Available on: Solana (Jupiter), Near (Intents), Eclipse (Solar)
+- `register` → Name services: ENS/ONS (Omega), FNS (FAIR)
+- `send` → Networks: Omega (`send`), FAIR (`fair send`), others use network-specific commands
 
 ### Required Confirmation Flow
 
