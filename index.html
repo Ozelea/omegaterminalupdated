@@ -13,7 +13,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;"> -->
-    <title>Omega Terminal v2.0.1 - Modern Apple UI - Polymarket Working</title>
+    <title>Ω Terminal v2.0.1 - Modern Apple UI - Polymarket Working</title>
     <script>
       // Disable redirect loop - let page load normally
       console.log("✅ Page loading without redirect loop");
@@ -26,7 +26,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
     <link rel="stylesheet" href="styles/gui-themes.css" />
     <link rel="stylesheet" href="themes-crypto.css" />
-    <link rel="stylesheet" href="apple-ui-theme.css" />
+    <link rel="stylesheet" href="apple-ui-theme.css?v=omegafont1" />
     <link rel="stylesheet" href="simple-input-fix.css" />
     <link rel="stylesheet" href="mobile-terminal-fix.css" />
     <link rel="stylesheet" href="mobile-games-fix.css" />
@@ -47,11 +47,10 @@
 
     <script src="enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
     <script src="terminal-chatter-mode.js"></script>
-    <script src="python-integration-system.js"></script>
-    <script src="pgt-integration-live.js"></script>
-    <script src="pgt-cors-proxy.js"></script>
-    <script src="pgt-nft-generator.js"></script>
-    <script src="pgt-ui-overlay.js"></script>
+    <script src="pgt-integration-live.js?v=silent1"></script>
+    <script src="pgt-cors-proxy.js?v=silent1"></script>
+    <script src="pgt-nft-generator.js?v=silent1"></script>
+    <script src="pgt-ui-overlay.js?v=silent1"></script>
     <!-- <script src="rome-network-plugin.js"></script> DISABLED: Rome commands integrated directly into index.html -->
     <!-- <script src="megaeth-network-plugin.js"></script> DISABLED: Not needed -->
     <script src="terminal-games-system.js"></script>
@@ -256,7 +255,8 @@
       }
 
       .terminal-header {
-        border-bottom: 1px solid #ffffff;
+        border-bottom: 1px solid #00bcf2;
+        box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
         padding-bottom: 10px;
         margin-bottom: 20px;
         display: flex;
@@ -265,11 +265,11 @@
       }
 
       .terminal-title {
-        font-size: 28px;
-        font-weight: bold;
-        text-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff;
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 500;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
       }
 
       .terminal-status {
@@ -702,7 +702,7 @@
 
       .terminal.light-theme .terminal-title {
         color: #000000;
-        text-shadow: 0 0 15px #000000, 0 0 30px #000000;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       }
 
       .terminal.light-theme .terminal-status {
@@ -1315,6 +1315,131 @@
           padding: 6px 12px;
         }
       }
+
+      /* UI Selection Screen */
+      .ui-selection-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      .ui-selection-container {
+        text-align: center;
+        max-width: 900px;
+        padding: 40px;
+      }
+
+      .ui-selection-title {
+        font-size: 48px;
+        font-weight: bold;
+        color: #00ff88;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      }
+
+      .ui-selection-subtitle {
+        font-size: 18px;
+        color: #aaa;
+        margin-bottom: 50px;
+      }
+
+      .ui-options {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .ui-option {
+        background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+        border: 2px solid #333;
+        border-radius: 20px;
+        padding: 40px 30px;
+        width: 280px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ui-option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(0, 136, 255, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .ui-option:hover {
+        transform: translateY(-5px);
+        border-color: #00ff88;
+        box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+      }
+
+      .ui-option:hover::before {
+        opacity: 1;
+      }
+
+      .ui-option-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+      }
+
+      .ui-option h3 {
+        font-size: 24px;
+        color: #fff;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ui-option p {
+        color: #aaa;
+        font-size: 14px;
+        margin-bottom: 5px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ui-option-details {
+        color: #666;
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .ui-selection-note {
+        color: #666;
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        .ui-options {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .ui-option {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .ui-selection-title {
+          font-size: 32px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1352,9 +1477,35 @@
       </div>
     </div>
 
+    <!-- UI Selection Screen -->
+    <div class="ui-selection-screen" id="uiSelectionScreen" style="display: none;">
+      <div class="ui-selection-container">
+        <h1 class="ui-selection-title">Choose Your Interface</h1>
+        <p class="ui-selection-subtitle">Select your preferred terminal experience</p>
+        
+        <div class="ui-options">
+          <div class="ui-option" id="selectTerminalUI">
+            <div class="ui-option-icon">⌨️</div>
+            <h3>Terminal UI</h3>
+            <p>Classic command-line interface</p>
+            <p class="ui-option-details">Traditional terminal with dark theme</p>
+          </div>
+          
+          <div class="ui-option" id="selectModernUI">
+            <div class="ui-option-icon">✨</div>
+            <h3>Modern UI</h3>
+            <p>Sleek Apple-inspired design</p>
+            <p class="ui-option-details">Beautiful gradients and smooth animations</p>
+          </div>
+        </div>
+        
+        <p class="ui-selection-note">You can change this anytime with the "gui" command</p>
+      </div>
+    </div>
+
     <div class="terminal" id="terminal" style="display: none">
       <div class="terminal-header">
-        <div class="terminal-title">Omega Terminal v2.0.1</div>
+        <div class="terminal-title">Ω Terminal v2.0.1</div>
         <div
           style="
             display: flex;
@@ -1377,7 +1528,8 @@
           display: flex;
           align-items: center;
           background: #111;
-          border-bottom: 1px solid #fff;
+          border-bottom: 1px solid #00bcf2;
+          box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
         "
       >
         <div
@@ -1410,13 +1562,14 @@
       <div
         id="faucetInfoBox"
         style="
-          background: rgba(0, 153, 255, 0.1);
-          border: 1px solid #99ccff;
-          color: #99ccff;
+          background: rgba(0, 188, 242, 0.1);
+          border: 1px solid #00bcf2;
+          color: #00bcf2;
           padding: 10px 16px;
           border-radius: 6px;
           margin: 0 0 12px 0;
           font-size: 15px;
+          box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
         "
       >
         <b>Note:</b> Each wallet can only claim from the faucet once every 24
@@ -1952,23 +2105,13 @@
         }
 
         async init() {
-          this.log("🚀 OMEGA TERMINAL v2.0.1 INITIALIZING", "info");
           // Show boot animation first
           await this.showBootAnimation();
           // Always set up event listeners immediately after boot
           this.setupEventListeners();
           try {
             this.ethers = await loadEthers();
-            const hasMetaMask = await this.isRealMetaMask();
-
-            // Always show connect message - let user decide what to do
-            this.logHtml(
-              '<span style="color:#ffffff; font-size: 16px; font-weight: bold;">Type "connect" to get started</span>',
-              "output"
-            );
           } catch (error) {
-            this.log("DEBUG: Error in init() catch block", "error");
-            console.log("[DEBUG] Error in init() catch block", error);
             console.error("Failed to load ethers:", error);
             this.log(
               "Failed to load ethers library: " + error.message,
@@ -2001,22 +2144,60 @@
             terminal.classList.add("theme-" + theme);
           }
           localStorage.setItem("omega-terminal-theme", theme);
-          this.log(`Theme set to ${theme} mode`, "success");
         }
 
         async showBootAnimation() {
-          this.log("DEBUG: showBootAnimation() called", "info");
-          console.log("[DEBUG] showBootAnimation() called");
           return new Promise((resolve) => {
             setTimeout(() => {
+              // Hide boot animation
               document.getElementById("bootAnimation").style.display = "none";
-              document.getElementById("terminal").style.display = "flex";
-              this.applyTheme();
-              // Clean startup - no debug messages
-              this.log('Type "connect" to get started', "info");
-              resolve();
+              
+              // Check if user has already selected a UI
+              const savedUIPreference = localStorage.getItem('omega-ui-preference');
+              
+              if (savedUIPreference) {
+                // User has already chosen, apply their preference
+                this.applyUIPreference(savedUIPreference);
+                document.getElementById("terminal").style.display = "flex";
+                this.applyTheme();
+                this.log('Welcome to Terminal, type "connect" to get started', "info");
+                resolve();
+              } else {
+                // Show UI selection screen for first-time users
+                document.getElementById("uiSelectionScreen").style.display = "flex";
+                
+                // Setup event listeners for UI selection
+                document.getElementById("selectTerminalUI").onclick = () => {
+                  localStorage.setItem('omega-ui-preference', 'terminal');
+                  document.getElementById("uiSelectionScreen").style.display = "none";
+                  document.getElementById("terminal").style.display = "flex";
+                  this.applyTheme();
+                  this.log('Welcome to Terminal, type "connect" to get started', "info");
+                  resolve();
+                };
+                
+                document.getElementById("selectModernUI").onclick = () => {
+                  localStorage.setItem('omega-ui-preference', 'modern');
+                  document.getElementById("uiSelectionScreen").style.display = "none";
+                  document.getElementById("terminal").style.display = "flex";
+                  // Apply Apple UI theme with dark mode
+                  const terminal = document.getElementById("terminal");
+                  terminal.classList.add("apple-ui", "dark");
+                  this.applyTheme();
+                  this.log('Welcome to Terminal, type "connect" to get started', "info");
+                  resolve();
+                };
+              }
             }, 4000); // Extended boot time to show cool animation
           });
+        }
+
+        applyUIPreference(preference) {
+          const terminal = document.getElementById("terminal");
+          if (preference === 'modern') {
+            terminal.classList.add("apple-ui", "dark");
+          }
+          // Terminal UI is default, no class needed
         }
 
         showGettingStartedModal() {
@@ -2113,8 +2294,6 @@
               "kalshi",
               "bot",
               "bots",
-              "py",
-              "python",
               "pgt",
               "pgt-demo",
               "game",
@@ -3282,11 +3461,6 @@
               "inbox",
               "messages",
               "chat",
-
-              // Python integration
-              "python",
-              "pip",
-              "python-help",
 
               // Gaming & entertainment
               "games",
@@ -5322,49 +5496,6 @@
               }
               return;
 
-            case "python":
-              // Python Integration System
-              console.log("🐍 Python command detected, checking handlers...");
-              console.log("omegaPython exists:", !!window.omegaPython);
-              console.log(
-                "handlePythonCommand exists:",
-                typeof window.handlePythonCommand
-              );
-
-              if (
-                window.omegaPython &&
-                typeof window.handlePythonCommand === "function"
-              ) {
-                this.log("🐍 Executing Python command...", "info");
-                window.handlePythonCommand(args.slice(0));
-              } else {
-                this.log("🐍 Python Integration System", "info");
-                if (!window.omegaPython) {
-                  this.log(
-                    "⏳ Python environment is initializing... Please wait.",
-                    "warning"
-                  );
-                  this.log(
-                    "💡 This may take 10-30 seconds on first load.",
-                    "info"
-                  );
-                } else if (typeof window.handlePythonCommand !== "function") {
-                  this.log(
-                    "❌ Python command handler not ready. Please refresh and try again.",
-                    "error"
-                  );
-                } else {
-                  this.log(
-                    "❌ Python system not ready. Please try again.",
-                    "error"
-                  );
-                }
-                this.log(
-                  "💡 Commands: python help | python upload | python run <script>",
-                  "info"
-                );
-              }
-              return;
 
             case "pgt":
               // PGT Portfolio Tracking Integration
@@ -7662,7 +7793,6 @@
                 this.log("🔗 Omega ENS registration & management", "info");
                 this.log("📇 Address book for contacts", "info");
                 this.log("💬 Terminal Chatter (Telegram-like)", "info");
-                this.log("🐍 Python script management", "info");
                 this.log("🖥️ Fullscreen profile mode", "info");
                 this.log(
                   "💡 Commands: profile open | profile help | profile apikeys",
@@ -9044,7 +9174,7 @@
 
         async showUnifiedHelp() {
           this.logHtml(
-            '<span style="color:#33bbff">=== Omega Terminal v2.0.1 Commands ===</span>',
+            '<span style="color:#33bbff">=== Ω Terminal v2.0.1 Commands ===</span>',
             "info"
           );
 
@@ -9068,9 +9198,9 @@
               '<span style="color:#888888">TVL & price data</span>' +
               "</td>" +
               '<td style="vertical-align:top;width:25%;">' +
-              '<span style="color:#FF9500">🐍 Python Scripts:</span><br>' +
-              '<span style="color:#99ccff">python upload | run | list | exec</span><br>' +
-              '<span style="color:#888888">Trading bots & custom scripts</span>' +
+              '<span style="color:#FF9500">🎮 Games & Fun:</span><br>' +
+              '<span style="color:#99ccff">games | arcade | flappy | mystery-box</span><br>' +
+              '<span style="color:#888888">Entertainment & challenges</span>' +
               "</td>" +
               "</tr></table>",
             "output"
@@ -9236,18 +9366,6 @@
           this.logHtml(
             '<table style="width:100%;border:none;"><tr>' +
               '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
-              '<span style="color:#FF9500">🐍 Python:</span><br>' +
-              '<span style="color:#99ccff">python help | python upload</span>' +
-              "</td>" +
-              '<td style="vertical-align:top;width:75%;">' +
-              '<span style="color:#888888">Upload & run Python trading bots</span>' +
-              "</td>" +
-              "</tr></table>",
-            "output"
-          );
-          this.logHtml(
-            '<table style="width:100%;border:none;"><tr>' +
-              '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
               '<span style="color:#33bbff">Email:</span><br>' +
               '<span style="color:#99ccff">email | inbox</span>' +
               "</td>" +
@@ -9277,10 +9395,6 @@
             "info"
           );
           this.logHtml(
-            '<span style="color:#FFE66D">💡 Try: <span style="color:#FF9500">python help</span> for trading bot integration</span>',
-            "info"
-          );
-          this.logHtml(
             '<span style="color:#FFE66D">💡 Try: <span style="color:#FF6B35">pgt portfolio</span> for multi-chain portfolio tracking</span>',
             "info"
           );
@@ -9298,7 +9412,7 @@
 
           // Footer with version
           this.logHtml(
-            '<span style="color:#888888">Omega Terminal v2.0.1 - Modern Apple UI • Enhanced Analytics • DeFi Integration • NFT Trading</span>',
+            '<span style="color:#888888">Ω Terminal v2.0.1 - Modern Apple UI • Enhanced Analytics • DeFi Integration • NFT Trading</span>',
             "info"
           );
         }
@@ -10717,7 +10831,6 @@
             terminal.classList.add("theme-" + theme);
           }
           localStorage.setItem("omega-terminal-theme", theme);
-          this.log(`Theme set to ${theme} mode`, "success");
         }
 
         toggleAIMode() {
@@ -11285,30 +11398,17 @@
 
         // Add this helper method to the class
         async isRealMetaMask() {
-          this.log("DEBUG: isRealMetaMask() called", "info");
-          console.log("[DEBUG] isRealMetaMask() called");
           if (
             typeof window.ethereum !== "undefined" &&
             window.ethereum.isMetaMask
           ) {
             try {
               await window.ethereum.request({ method: "eth_accounts" });
-              this.log("DEBUG: isRealMetaMask() returns true", "info");
-              console.log("[DEBUG] isRealMetaMask() returns true");
               return true;
             } catch (e) {
-              this.log(
-                "DEBUG: eth_accounts call failed, MetaMask not real",
-                "info"
-              );
-              console.log(
-                "[DEBUG] eth_accounts call failed, MetaMask not real"
-              );
               return false;
             }
           }
-          this.log("DEBUG: isRealMetaMask() returns false", "info");
-          console.log("[DEBUG] isRealMetaMask() returns false");
           return false;
         }
 
@@ -12395,7 +12495,6 @@
             this.log("🔗 Omega ENS registration & management", "info");
             this.log("📇 Address book for contacts", "info");
             this.log("💬 Terminal Chatter (Telegram-like)", "info");
-            this.log("🐍 Python script management", "info");
             this.log("🖥️ Fullscreen profile mode", "info");
             this.log("💡 Commands: profile open | profile help", "info");
           }
@@ -14628,14 +14727,14 @@
           terminal.style.height = "";
           terminal.innerHTML = `
                     <div class="terminal-header">
-                        <div class="terminal-title">Omega Terminal v2.0.1</div>
+                        <div class="terminal-title">Ω Terminal v2.0.1</div>
                         <div style="display: flex; align-items: center; gap: 18px; margin-left: auto;">
                             <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">AI Mode (off)</button>
                             <button class="theme-toggle" title="Toggle Theme"></button>
                             <div class="terminal-status" id="connectionStatus">CONNECTED</div>
                         </div>
                     </div>
-                    <div class="tab-bar" id="tabBar" style="display: flex; align-items: center; background: #111; border-bottom: 1px solid #fff;">
+                    <div class="tab-bar" id="tabBar" style="display: flex; align-items: center; background: #111; border-bottom: 1px solid #00bcf2; box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);">
                         <div class="tab active" data-tab="0" style="padding: 8px 18px; cursor: pointer; border-right: 1px solid #333; color: #fff; font-weight: bold;">Terminal 1</div>
                         <div id="addTabBtn" style="padding: 8px 18px; cursor: pointer; color: #00bcf2; font-size: 1.3em;">+</div>
                     </div>

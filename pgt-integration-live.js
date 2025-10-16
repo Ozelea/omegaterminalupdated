@@ -3,7 +3,7 @@
    Real-time wallet tracking and portfolio data
    =================================== */
 
-console.log('🎯 Loading PGT Integration...');
+// Silent loading
 
 (function() {
     
@@ -17,7 +17,7 @@ console.log('🎯 Loading PGT Integration...');
         }
         
         init() {
-            console.log('🎯 Initializing PGT Integration...');
+            // Silent initialization
             
             // Wait for DOM to be ready
             if (document.readyState === 'loading') {
@@ -35,7 +35,7 @@ console.log('🎯 Loading PGT Integration...');
                 return;
             }
             
-            console.log('🎯 Setting up PGT iframe...');
+            // Silent iframe setup
             
             // Create hidden iframe to load PGT
             const iframe = document.createElement('iframe');
@@ -46,16 +46,16 @@ console.log('🎯 Loading PGT Integration...');
             
             // Wait for PGT to load
             iframe.onload = () => {
-                console.log('🎯 PGT iframe loaded, waiting for API...');
+                // Waiting for API
                 setTimeout(() => {
                     try {
                         this.api = iframe.contentWindow.pgtTerminalApi;
                         if (this.api) {
                             this.ready = true;
-                            console.log('✅ PGT API Connected successfully!');
+                            // API Connected
                             window.dispatchEvent(new Event('pgt-ready'));
                         } else {
-                            console.log('⚠️ PGT API not found, trying HTTP fallback...');
+                            // API not found, trying HTTP fallback
                             this.setupHttpFallback();
                         }
                     } catch (error) {
@@ -68,16 +68,15 @@ console.log('🎯 Loading PGT Integration...');
             // Fallback timeout
             setTimeout(() => {
                 if (!this.ready) {
-                    console.log('⚠️ PGT iframe timeout, using HTTP fallback...');
+                    // Iframe timeout, using HTTP fallback
                     this.setupHttpFallback();
                 }
             }, 10000);
         }
         
         setupHttpFallback() {
-            console.log('🔄 Setting up HTTP API fallback...');
+            // Setting up HTTP API fallback
             this.ready = true; // Mark as ready for HTTP calls
-            console.log('✅ PGT HTTP API fallback ready');
             window.dispatchEvent(new Event('pgt-ready'));
         }
         
@@ -567,7 +566,7 @@ console.log('🎯 Loading PGT Integration...');
     
     function integratePGT() {
         if (window.terminal && window.terminal.executeCommand) {
-            console.log('🎯 Integrating PGT with main terminal...');
+            // Integrating with terminal
             
             const originalExecuteCommand = window.terminal.executeCommand;
             window.terminal.executeCommand = function(command) {
@@ -582,7 +581,7 @@ console.log('🎯 Loading PGT Integration...');
                 return originalExecuteCommand.call(this, command);
             };
             
-            console.log('✅ PGT integration successful!');
+            // Integration successful
             return true;
         }
         return false;
@@ -605,12 +604,7 @@ console.log('🎯 Loading PGT Integration...');
     
     // Listen for PGT ready event
     window.addEventListener('pgt-ready', () => {
-        console.log('🎯 PGT ready - commands available');
-        window.terminal.log('🎯 PGT wallet tracking ready!', 'success');
-        window.terminal.log('💡 Use "pgt help" to see available commands', 'info');
+        // Silently ready - no startup messages
     });
-    
-    console.log('✅ PGT Integration loaded successfully!');
-    console.log('🎯 Use "pgt help" to see available commands');
     
 })();

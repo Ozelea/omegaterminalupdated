@@ -19,7 +19,7 @@
     --apple-background: #F5F5F7;
     --apple-surface: rgba(255, 255, 255, 0.8);
     --apple-glass: rgba(255, 255, 255, 0.1);
-    --apple-border: rgba(0, 0, 0, 0.1);
+    --apple-border: rgba(0, 188, 242, 0.8);
     --apple-shadow: rgba(0, 0, 0, 0.1);
     
     /* Typography */
@@ -68,6 +68,7 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border-bottom: 1px solid var(--apple-border);
+    box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
     border-radius: 24px 24px 0 0; /* Rounded top corners */
     padding: var(--apple-spacing);
     display: flex;
@@ -95,13 +96,13 @@
 }
 
 .terminal.apple-ui .terminal-title {
-    font-family: var(--apple-font);
-    font-size: 22px; /* Bigger and more prominent */
-    font-weight: 700;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-size: 20px; /* Larger, more prominent */
+    font-weight: 600; /* Semi-bold for impact */
     color: #1565C0; /* Dark blue for better visibility */
     text-align: center;
-    letter-spacing: -0.5px;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    letter-spacing: -0.3px; /* Tighter for modern look */
+    text-shadow: none;
     margin: 0 auto;
     flex: 1;
     /* Override any uppercase text transform */
@@ -237,6 +238,7 @@
     ) !important;
     backdrop-filter: blur(20px) !important;
     border-bottom: 1px solid var(--apple-border) !important;
+    box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3) !important;
     padding: 8px !important;
     display: flex !important;
     align-items: center !important;
@@ -832,7 +834,7 @@
     --apple-background: #000000;
     --apple-surface: rgba(28, 28, 30, 0.9);
     --apple-glass: rgba(28, 28, 30, 0.4);
-    --apple-border: rgba(255, 255, 255, 0.15);
+    --apple-border: rgba(0, 188, 242, 0.8);
     --apple-shadow: rgba(0, 0, 0, 0.5);
     
     background: linear-gradient(135deg, #000000 0%, #1C1C1E 100%) !important;
@@ -843,12 +845,18 @@
         rgba(28, 28, 30, 0.95) 0%, 
         rgba(0, 0, 0, 0.9) 100%
     ) !important;
+    border-bottom: 1px solid var(--apple-border) !important;
+    box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3) !important;
     border-radius: 24px 24px 0 0 !important; /* Rounded top corners in dark mode */
 }
 
 .terminal.apple-ui.dark .terminal-title {
     color: #F2F2F7 !important; /* Light text for dark mode */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif !important;
+    font-size: 20px !important; /* Larger, more prominent */
+    font-weight: 600 !important; /* Semi-bold for impact */
+    text-shadow: none !important; /* Clean look, no shadow */
+    letter-spacing: -0.3px !important; /* Tighter for modern look */
     /* Override any uppercase text transform in dark mode too */
     text-transform: none !important;
 }
@@ -916,12 +924,13 @@
         rgba(28, 28, 30, 0.95) 0%, 
         rgba(0, 0, 0, 0.9) 100%
     ) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 1px solid var(--apple-border) !important;
+    box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3) !important;
 }
 
 .terminal.apple-ui.dark .tab {
     background: rgba(44, 44, 46, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid var(--apple-border) !important;
     color: #8E8E93 !important;
     border-radius: 16px !important; /* Consistent rounded corners */
     padding: 12px 20px !important;
