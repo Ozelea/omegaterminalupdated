@@ -287,7 +287,8 @@
       }
 
       .terminal-header {
-        border-bottom: 1px solid #ffffff;
+        border-bottom: 1px solid #00bcf2;
+        box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
         padding-bottom: 10px;
         margin-bottom: 20px;
         display: flex;
@@ -296,11 +297,11 @@
       }
 
       .terminal-title {
-        font-size: 28px;
-        font-weight: bold;
-        text-shadow: 0 0 15px #ffffff, 0 0 30px #ffffff;
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 500;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
       }
 
       .terminal-status {
@@ -355,6 +356,8 @@
         padding: 15px;
         border-radius: 5px;
         border: 1px solid #ffffff;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .terminal-content {
@@ -525,6 +528,9 @@
         display: flex;
         align-items: center;
         background: transparent;
+        width: 100%;
+        gap: 5px;
+        position: relative;
       }
 
       .input-prompt {
@@ -539,10 +545,20 @@
         border: none;
         color: #ffffff;
         font-family: "Courier New", monospace;
-        font-size: 16px;
+        font-size: 18px;
         outline: none;
         flex: 1;
         padding: 5px;
+        caret-color: #ffffff;
+        width: 100%;
+        min-width: 0;
+        opacity: 1 !important;
+        line-height: 1.5;
+      }
+
+      .input-field:focus {
+        caret-color: #ffffff;
+        opacity: 1 !important;
       }
 
       .input-field::placeholder {
@@ -550,7 +566,26 @@
       }
 
       .cursor {
-        display: none !important;
+        display: inline-block !important;
+        color: #00ff00;
+        font-weight: bold;
+        font-size: 18px;
+        margin-left: 2px;
+        animation: cursor-blink 1s infinite;
+        position: absolute;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      @keyframes cursor-blink {
+        0%,
+        49% {
+          opacity: 1;
+        }
+        50%,
+        100% {
+          opacity: 0;
+        }
       }
 
       /* Input field cursor indicator */
@@ -735,7 +770,7 @@
 
       .terminal.light-theme .terminal-title {
         color: #000000;
-        text-shadow: 0 0 15px #000000, 0 0 30px #000000;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       }
 
       .terminal.light-theme .terminal-status {
@@ -792,6 +827,11 @@
 
       .terminal.light-theme .input-field {
         color: #000000;
+        caret-color: #000000;
+      }
+
+      .terminal.light-theme .input-field:focus {
+        caret-color: #000000;
       }
 
       .terminal.light-theme .input-field::placeholder {
@@ -799,7 +839,8 @@
       }
 
       .terminal.light-theme .cursor {
-        display: none !important;
+        display: inline-block !important;
+        color: #0066cc;
       }
 
       .terminal.light-theme .mining-status {
@@ -1342,6 +1383,131 @@
           padding: 6px 12px;
         }
       }
+
+      /* UI Selection Screen */
+      .ui-selection-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      .ui-selection-container {
+        text-align: center;
+        max-width: 900px;
+        padding: 40px;
+      }
+
+      .ui-selection-title {
+        font-size: 48px;
+        font-weight: bold;
+        color: #00ff88;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      }
+
+      .ui-selection-subtitle {
+        font-size: 18px;
+        color: #aaa;
+        margin-bottom: 50px;
+      }
+
+      .ui-options {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .ui-option {
+        background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+        border: 2px solid #333;
+        border-radius: 20px;
+        padding: 40px 30px;
+        width: 280px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ui-option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(0, 136, 255, 0.1));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .ui-option:hover {
+        transform: translateY(-5px);
+        border-color: #00ff88;
+        box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+      }
+
+      .ui-option:hover::before {
+        opacity: 1;
+      }
+
+      .ui-option-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+      }
+
+      .ui-option h3 {
+        font-size: 24px;
+        color: #fff;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ui-option p {
+        color: #aaa;
+        font-size: 14px;
+        margin-bottom: 5px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ui-option-details {
+        color: #666;
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .ui-selection-note {
+        color: #666;
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        .ui-options {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .ui-option {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .ui-selection-title {
+          font-size: 32px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1370,9 +1536,35 @@
       </div>
     </div>
 
+    <!-- UI Selection Screen -->
+    <div class="ui-selection-screen" id="uiSelectionScreen" style="display: none;">
+      <div class="ui-selection-container">
+        <h1 class="ui-selection-title">Choose Your Interface</h1>
+        <p class="ui-selection-subtitle">Select your preferred terminal experience</p>
+        
+        <div class="ui-options">
+          <div class="ui-option" id="selectTerminalUI">
+            <div class="ui-option-icon">⌨️</div>
+            <h3>Terminal UI</h3>
+            <p>Classic command-line interface</p>
+            <p class="ui-option-details">Traditional terminal with dark theme</p>
+          </div>
+          
+          <div class="ui-option" id="selectModernUI">
+            <div class="ui-option-icon">✨</div>
+            <h3>Modern UI</h3>
+            <p>Sleek Apple-inspired design</p>
+            <p class="ui-option-details">Beautiful gradients and smooth animations</p>
+          </div>
+        </div>
+        
+        <p class="ui-selection-note">You can change this anytime with the "gui" command</p>
+      </div>
+    </div>
+
     <div class="terminal" id="terminal" style="display: none">
       <div class="terminal-header">
-        <div class="terminal-title">Omega Terminal v2.0.1</div>
+        <div class="terminal-title">Ω Terminal v2.0.1</div>
         <div
           style="
             display: flex;
@@ -1395,7 +1587,8 @@
           display: flex;
           align-items: center;
           background: #111;
-          border-bottom: 1px solid #fff;
+          border-bottom: 1px solid #00bcf2;
+          box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
         "
       >
         <div
@@ -1428,13 +1621,14 @@
       <div
         id="faucetInfoBox"
         style="
-          background: rgba(0, 153, 255, 0.1);
-          border: 1px solid #99ccff;
-          color: #99ccff;
+          background: rgba(0, 188, 242, 0.1);
+          border: 1px solid #00bcf2;
+          color: #00bcf2;
           padding: 10px 16px;
           border-radius: 6px;
           margin: 0 0 12px 0;
           font-size: 15px;
+          box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
         "
       >
         <b>Note:</b> Each wallet can only claim from the faucet once every 24
@@ -1970,23 +2164,13 @@
         }
 
         async init() {
-          this.log("🚀 OMEGA TERMINAL v2.0.1 INITIALIZING", "info");
           // Show boot animation first
           await this.showBootAnimation();
           // Always set up event listeners immediately after boot
           this.setupEventListeners();
           try {
             this.ethers = await loadEthers();
-            const hasMetaMask = await this.isRealMetaMask();
-
-            // Always show connect message - let user decide what to do
-            this.logHtml(
-              '<span style="color:#ffffff; font-size: 16px; font-weight: bold;">Type "connect" to get started</span>',
-              "output"
-            );
           } catch (error) {
-            this.log("DEBUG: Error in init() catch block", "error");
-            console.log("[DEBUG] Error in init() catch block", error);
             console.error("Failed to load ethers:", error);
             this.log(
               "Failed to load ethers library: " + error.message,
@@ -2019,22 +2203,60 @@
             terminal.classList.add("theme-" + theme);
           }
           localStorage.setItem("omega-terminal-theme", theme);
-          this.log(`Theme set to ${theme} mode`, "success");
         }
 
         async showBootAnimation() {
-          this.log("DEBUG: showBootAnimation() called", "info");
-          console.log("[DEBUG] showBootAnimation() called");
           return new Promise((resolve) => {
             setTimeout(() => {
+              // Hide boot animation
               document.getElementById("bootAnimation").style.display = "none";
-              document.getElementById("terminal").style.display = "flex";
-              this.applyTheme();
-              // Clean startup - no debug messages
-              this.log('Type "connect" to get started', "info");
-              resolve();
+              
+              // Check if user has already selected a UI
+              const savedUIPreference = localStorage.getItem('omega-ui-preference');
+              
+              if (savedUIPreference) {
+                // User has already chosen, apply their preference
+                this.applyUIPreference(savedUIPreference);
+                document.getElementById("terminal").style.display = "flex";
+                this.applyTheme();
+                this.log('Welcome to Terminal, type "connect" to get started', "info");
+                resolve();
+              } else {
+                // Show UI selection screen for first-time users
+                document.getElementById("uiSelectionScreen").style.display = "flex";
+                
+                // Setup event listeners for UI selection
+                document.getElementById("selectTerminalUI").onclick = () => {
+                  localStorage.setItem('omega-ui-preference', 'terminal');
+                  document.getElementById("uiSelectionScreen").style.display = "none";
+                  document.getElementById("terminal").style.display = "flex";
+                  this.applyTheme();
+                  this.log('Welcome to Terminal, type "connect" to get started', "info");
+                  resolve();
+                };
+                
+                document.getElementById("selectModernUI").onclick = () => {
+                  localStorage.setItem('omega-ui-preference', 'modern');
+                  document.getElementById("uiSelectionScreen").style.display = "none";
+                  document.getElementById("terminal").style.display = "flex";
+                  // Apply Apple UI theme with dark mode
+                  const terminal = document.getElementById("terminal");
+                  terminal.classList.add("apple-ui", "dark");
+                  this.applyTheme();
+                  this.log('Welcome to Terminal, type "connect" to get started', "info");
+                  resolve();
+                };
+              }
             }, 4000); // Extended boot time to show cool animation
           });
+        }
+
+        applyUIPreference(preference) {
+          const terminal = document.getElementById("terminal");
+          if (preference === 'modern') {
+            terminal.classList.add("apple-ui", "dark");
+          }
+          // Terminal UI is default, no class needed
         }
 
         showGettingStartedModal() {
@@ -2129,6 +2351,8 @@
               "airdrop",
               "solana",
               "eclipse",
+              "fair",
+              "fns",
               "hyperliquid",
               "polymarket",
               "poly",
@@ -2143,8 +2367,6 @@
               "kalshi",
               "bot",
               "bots",
-              "py",
-              "python",
               "pgt",
               "pgt-demo",
               "game",
@@ -2231,10 +2453,74 @@
                 }
               }
             });
+            // Position cursor dynamically after text
+            const cursorElement = document.querySelector(".cursor");
+            const promptElement = document.querySelector(".input-prompt");
+            let animationFrameId = null;
+
+            const updateCursorPosition = () => {
+              if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+              }
+
+              animationFrameId = requestAnimationFrame(() => {
+                if (cursorElement && input && promptElement) {
+                  // Get the actual computed font from the input element
+                  const computedStyle = window.getComputedStyle(input);
+                  const fontSize = computedStyle.fontSize;
+                  const fontFamily = computedStyle.fontFamily;
+                  const fontWeight = computedStyle.fontWeight;
+                  const font = `${fontWeight} ${fontSize} ${fontFamily}`;
+
+                  // Get actual text width
+                  const textWidth = this.getTextWidth(input.value, font);
+
+                  // Get input field's actual position relative to parent
+                  const inputRect = input.getBoundingClientRect();
+                  const inputLineRect =
+                    input.parentElement.getBoundingClientRect();
+                  const promptRect = promptElement.getBoundingClientRect();
+
+                  // Calculate position relative to input-line container
+                  const relativeInputLeft = inputRect.left - inputLineRect.left;
+
+                  cursorElement.style.position = "absolute";
+                  cursorElement.style.left = `${
+                    relativeInputLeft + textWidth
+                  }px`;
+                  cursorElement.style.top = "50%";
+                  cursorElement.style.transform = "translateY(-50%)";
+                }
+              });
+            };
+
+            // Update on every input event immediately
+            input.addEventListener("input", () => {
+              updateCursorPosition();
+            });
+
+            input.addEventListener("keydown", () => {
+              updateCursorPosition();
+            });
+
+            input.addEventListener("keyup", () => {
+              updateCursorPosition();
+            });
+
+            // Continuous update for smooth cursor following
+            setInterval(() => {
+              if (document.activeElement === input) {
+                updateCursorPosition();
+              }
+            }, 50); // Update every 50ms when input is focused
+
+            setTimeout(updateCursorPosition, 100); // Initial position with delay
+
             input.addEventListener("keypress", async (e) => {
               if (e.key === "Enter") {
                 const val = input.value;
                 input.value = "";
+                updateCursorPosition(); // Reset cursor position after clearing input
                 if (this.awaitingPromptInput && this.promptResolver) {
                   const value = val.trim();
                   this.awaitingPromptInput = false;
@@ -2307,6 +2593,11 @@
             this.awaitingPromptInput = true;
             this.promptResolver = resolve;
           });
+        }
+
+        // Alias for promptTerminalInput
+        async promptUser() {
+          return this.promptTerminalInput();
         }
 
         async checkWalletConnection() {
@@ -3161,7 +3452,6 @@
               "connect",
               "disconnect",
               "balance",
-              "address",
               "status",
               "stats",
               "themes",
@@ -3174,7 +3464,6 @@
               // Wallet & connection
               "faucet",
               "send",
-              "import",
               "yes",
               "no",
               "gen-wallet",
@@ -3195,6 +3484,10 @@
 
               // Name services
               "ens",
+              "fns",
+
+              // FAIR blockchain
+              "fair",
 
               // Privacy & security
               "mixer",
@@ -3241,11 +3534,6 @@
               "inbox",
               "messages",
               "chat",
-
-              // Python integration
-              "python",
-              "pip",
-              "python-help",
 
               // Gaming & entertainment
               "games",
@@ -3451,6 +3739,7 @@
               await this.showBalance();
               break;
             case "theme":
+            case "themes":
               this.setTheme(args[1]);
               break;
             case "mine":
@@ -3473,9 +3762,11 @@
               this.sendOmega(command);
               break;
             case "clear":
+            case "cls":
               this.clearTerminal();
               break;
             case "help":
+            case "?":
               this.showHelp();
               break;
             case "pgt":
@@ -5321,49 +5612,6 @@
               }
               return;
 
-            case "python":
-              // Python Integration System
-              console.log("🐍 Python command detected, checking handlers...");
-              console.log("omegaPython exists:", !!window.omegaPython);
-              console.log(
-                "handlePythonCommand exists:",
-                typeof window.handlePythonCommand
-              );
-
-              if (
-                window.omegaPython &&
-                typeof window.handlePythonCommand === "function"
-              ) {
-                this.log("🐍 Executing Python command...", "info");
-                window.handlePythonCommand(args.slice(0));
-              } else {
-                this.log("🐍 Python Integration System", "info");
-                if (!window.omegaPython) {
-                  this.log(
-                    "⏳ Python environment is initializing... Please wait.",
-                    "warning"
-                  );
-                  this.log(
-                    "💡 This may take 10-30 seconds on first load.",
-                    "info"
-                  );
-                } else if (typeof window.handlePythonCommand !== "function") {
-                  this.log(
-                    "❌ Python command handler not ready. Please refresh and try again.",
-                    "error"
-                  );
-                } else {
-                  this.log(
-                    "❌ Python system not ready. Please try again.",
-                    "error"
-                  );
-                }
-                this.log(
-                  "💡 Commands: python help | python upload | python run <script>",
-                  "info"
-                );
-              }
-              return;
 
             case "pgt":
               // PGT Portfolio Tracking Integration
@@ -6004,6 +6252,1639 @@
                 "error"
               );
               return;
+
+            case "fns":
+              // FNS (FAIR Name Service) Commands
+              const fnsContract = "0x2d06d9568ae99f61f421ea99a46969878986fc2d";
+
+              if (!args[1] || args[1] === "help") {
+                let html = `<b>📛 FNS (FAIR Name Service) Commands:</b><br>`;
+                html += `<ul style='margin-left:1em;'>`;
+                html += `<li><b>fns register &lt;name&gt;</b> — Register a FNS name to your address</li>`;
+                html += `<li><b>fns resolve &lt;name&gt;</b> — Get address for a FNS name</li>`;
+                html += `<li><b>fns lookup &lt;address&gt;</b> — Get FNS name for an address</li>`;
+                html += `<li><b>fns transfer &lt;name&gt; &lt;address&gt;</b> — Transfer name ownership</li>`;
+                html += `<li><b>fns search &lt;term&gt;</b> — Search for FNS names</li>`;
+                html += `<li><b>fns help</b> — Show this help</li>`;
+                html += `</ul>`;
+                html += `<br><b>FNS Contract:</b> ${fnsContract}<br>`;
+                html += `<br>💡 Use FNS names anywhere! Send tokens with: <b>fair send 100 myname.fns</b><br>`;
+                this.logHtml(html, "output");
+                return;
+              }
+
+              // fns register
+              if (args[1] === "register" && args[2]) {
+                try {
+                  const name = args[2].toLowerCase().replace(/\.fns$/, "");
+
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  let signer;
+                  if (window.fairWallet) {
+                    const provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                  }
+
+                  this.log(`📝 Registering FNS name: ${name}...`, "info");
+
+                  const fnsABI = [
+                    "function register(string memory name) public",
+                    "function resolve(string memory name) public view returns (address)",
+                    "function getNameByAddress(address owner) public view returns (string memory)",
+                    "function transfer(string memory name, address newOwner) public",
+                    "function isAvailable(string memory name) public view returns (bool)",
+                    "function getAllNames() public view returns (string[] memory)",
+                  ];
+
+                  const fns = new this.ethers.Contract(
+                    fnsContract,
+                    fnsABI,
+                    signer
+                  );
+
+                  // Check if available
+                  const available = await fns.isAvailable(name);
+                  if (!available) {
+                    this.log(
+                      `❌ Name "${name}" is already registered`,
+                      "error"
+                    );
+                    this.log(
+                      "💡 Try a different name or use: fns search " + name,
+                      "info"
+                    );
+                    return;
+                  }
+
+                  const tx = await fns.register(name);
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  await tx.wait();
+
+                  this.log("", "info");
+                  this.log(`✅ FNS name registered: ${name}.fns`, "success");
+                  const address = await signer.getAddress();
+                  this.log(`📍 Resolves to: ${address}`, "output");
+                  this.log("", "info");
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+                  this.log(
+                    "💡 Anyone can now send tokens to: " + name + ".fns",
+                    "info"
+                  );
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Registration failed: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fns resolve
+              if (args[1] === "resolve" && args[2]) {
+                try {
+                  const name = args[2].toLowerCase().replace(/\.fns$/, "");
+                  const provider = new this.ethers.providers.JsonRpcProvider(
+                    "https://testnet-rpc.fair.cloud"
+                  );
+
+                  const fnsABI = [
+                    "function resolve(string memory name) public view returns (address)",
+                  ];
+                  const fns = new this.ethers.Contract(
+                    fnsContract,
+                    fnsABI,
+                    provider
+                  );
+
+                  this.log(`🔍 Resolving ${name}.fns...`, "info");
+                  const address = await fns.resolve(name);
+
+                  if (
+                    address === "0x0000000000000000000000000000000000000000"
+                  ) {
+                    this.log(`❌ Name "${name}.fns" not found`, "error");
+                    this.log(
+                      "💡 Register it with: fns register " + name,
+                      "info"
+                    );
+                  } else {
+                    this.log("", "info");
+                    this.log(`✅ ${name}.fns resolves to:`, "success");
+                    this.log(`📍 ${address}`, "output");
+                    this.log("", "info");
+                  }
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to resolve: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fns lookup (reverse lookup)
+              if (args[1] === "lookup" && args[2]) {
+                try {
+                  const address = args[2];
+                  const provider = new this.ethers.providers.JsonRpcProvider(
+                    "https://testnet-rpc.fair.cloud"
+                  );
+
+                  const fnsABI = [
+                    "function getNameByAddress(address owner) public view returns (string memory)",
+                  ];
+                  const fns = new this.ethers.Contract(
+                    fnsContract,
+                    fnsABI,
+                    provider
+                  );
+
+                  this.log(`🔍 Looking up address...`, "info");
+                  const name = await fns.getNameByAddress(address);
+
+                  if (!name || name === "") {
+                    this.log(`❌ No FNS name found for ${address}`, "info");
+                  } else {
+                    this.log("", "info");
+                    this.log(`✅ Primary name: ${name}.fns`, "success");
+                    this.log(`📍 Address: ${address}`, "output");
+                    this.log("", "info");
+                  }
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to lookup: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fns transfer
+              if (args[1] === "transfer" && args[2] && args[3]) {
+                try {
+                  const name = args[2].toLowerCase().replace(/\.fns$/, "");
+                  const newOwner = args[3];
+
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  let signer;
+                  if (window.fairWallet) {
+                    const provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                  }
+
+                  this.log(
+                    `📤 Transferring ${name}.fns to ${newOwner}...`,
+                    "info"
+                  );
+
+                  const fnsABI = [
+                    "function transfer(string memory name, address newOwner) public",
+                  ];
+                  const fns = new this.ethers.Contract(
+                    fnsContract,
+                    fnsABI,
+                    signer
+                  );
+
+                  const tx = await fns.transfer(name, newOwner);
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  await tx.wait();
+
+                  this.log("", "info");
+                  this.log(
+                    `✅ ${name}.fns transferred to ${newOwner}`,
+                    "success"
+                  );
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Transfer failed: " + e.message, "error");
+                  if (e.message.includes("Not the owner")) {
+                    this.log(
+                      "💡 You must own this name to transfer it",
+                      "info"
+                    );
+                  }
+                  return;
+                }
+              }
+
+              // fns search
+              if (args[1] === "search" && args[2]) {
+                try {
+                  const searchTerm = args[2]
+                    .toLowerCase()
+                    .replace(/\.fns$/, "");
+                  const provider = new this.ethers.providers.JsonRpcProvider(
+                    "https://testnet-rpc.fair.cloud"
+                  );
+
+                  const fnsABI = [
+                    "function getAllNames() public view returns (string[] memory)",
+                  ];
+                  const fns = new this.ethers.Contract(
+                    fnsContract,
+                    fnsABI,
+                    provider
+                  );
+
+                  this.log(
+                    `🔍 Searching for names containing "${searchTerm}"...`,
+                    "info"
+                  );
+                  const allNames = await fns.getAllNames();
+
+                  const matches = allNames.filter((name) =>
+                    name.toLowerCase().includes(searchTerm)
+                  );
+
+                  if (matches.length === 0) {
+                    this.log(
+                      `❌ No names found containing "${searchTerm}"`,
+                      "info"
+                    );
+                    this.log(
+                      "💡 Register it with: fns register " + searchTerm,
+                      "info"
+                    );
+                  } else {
+                    this.log("", "info");
+                    this.log(`✅ Found ${matches.length} name(s):`, "success");
+                    this.log("", "info");
+                    matches.slice(0, 20).forEach((name, i) => {
+                      this.log(`  ${i + 1}. ${name}.fns`, "output");
+                    });
+                    if (matches.length > 20) {
+                      this.log(`  ... and ${matches.length - 20} more`, "info");
+                    }
+                    this.log("", "info");
+                  }
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Search failed: " + e.message, "error");
+                  return;
+                }
+              }
+
+              this.log(
+                '❌ Unknown FNS command. Type "fns help" for available commands.',
+                "error"
+              );
+              return;
+
+            case "fair":
+              if (args[1] === "help" || args[1] === "-help" || !args[1]) {
+                let html = `<b>🔗 FAIR Blockchain Commands:</b><br>`;
+                html += `<ul style='margin-left:1em;'>`;
+                html += `<li><b>fair generate</b> — Generate a new FAIR wallet</li>`;
+                html += `<li><b>fair connect</b> — Connect MetaMask to FAIR network</li>`;
+                html += `<li><b>fair wallet</b> — Show current FAIR wallet details</li>`;
+                html += `<li><b>fair balance</b> — Check FAIR balance</li>`;
+                html += `<li><b>fair faucet</b> — Get testnet FAIR tokens (auto-copies address)</li>`;
+                html += `<li><b>fair send &lt;amount&gt; &lt;address|fns&gt;</b> — Send FAIR tokens</li>`;
+                html += `<li><b>fair send-token &lt;token&gt; &lt;amount&gt; &lt;address|fns&gt;</b> — Send ERC20 tokens</li>`;
+                html += `<li><b>fair create-token</b> — Create a custom ERC20 token (interactive)</li>`;
+                html += `<li><b>fair my-tokens</b> — List your created tokens</li>`;
+                html += `<li><b>fair token-info &lt;address&gt;</b> — Get token details</li>`;
+                html += `<li><b>fair mint-nft</b> — Mint a FAIR NFT (interactive)</li>`;
+                html += `<li><b>fair my-nfts</b> — View your NFTs</li>`;
+                html += `<li><b>fair nft-info &lt;tokenId&gt;</b> — Get NFT details</li>`;
+                html += `<li><b>fair transfer-nft &lt;tokenId&gt; &lt;address|fns&gt;</b> — Transfer NFT</li>`;
+                html += `<li><b>fair help</b> — Show this help</li>`;
+                html += `</ul>`;
+                html += `<br><b>Network Info:</b><br>`;
+                html += `Chain ID: 935<br>`;
+                html += `RPC: https://testnet-rpc.fair.cloud<br>`;
+                html += `Explorer: https://testnet-explorer.fair.cloud<br>`;
+                html += `Token Factory: 0x30a399891f44c2ee07134e248d0393e53286f5f4<br>`;
+                html += `NFT Contract: 0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e<br>`;
+                html += `FNS Contract: 0x2d06d9568ae99f61f421ea99a46969878986fc2d<br>`;
+                html += `<br>💡 Use <b>fair generate</b> to create a new wallet or <b>fair connect</b> to use MetaMask<br>`;
+                html += `💡 Get testnet tokens with <b>fair faucet</b> (copies your address automatically!)<br>`;
+                html += `💡 Register FNS names with <b>fns register myname</b> - then use <b>fair send 10 myname.fns</b>!<br>`;
+                html += `💡 Create your own token with <b>fair create-token</b> or mint NFTs with <b>fair mint-nft</b>!<br>`;
+                this.logHtml(html, "output");
+                return;
+              }
+
+              // fair generate
+              if (args[1] === "generate" || args[1] === "gen") {
+                try {
+                  const wallet = this.ethers.Wallet.createRandom();
+
+                  // Store in session
+                  window.fairWallet = {
+                    address: wallet.address,
+                    privateKey: wallet.privateKey,
+                    wallet: wallet,
+                    network: "FAIR Testnet",
+                    chainId: 935,
+                    rpcUrl: "https://testnet-rpc.fair.cloud",
+                  };
+
+                  let html = `<b>✅ New FAIR Wallet Generated!</b><br>`;
+                  html += `<span style='color:#ff3333'>⚠️ SECURITY WARNING: Save your private key securely. Anyone with this key can access your funds!</span><br><br>`;
+                  html += `<b>Address:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${wallet.address}').then(() => window.terminal.log('✅ Address copied!', 'success'))">${wallet.address}</span><br>`;
+                  html += `<b>Private Key:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${wallet.privateKey}').then(() => window.terminal.log('✅ Private key copied!', 'success'))">${wallet.privateKey}</span><br>`;
+                  html += `<b>Network:</b> FAIR Testnet Beta<br>`;
+                  html += `<b>Chain ID:</b> 935<br>`;
+                  html += `<b>RPC URL:</b> https://testnet-rpc.fair.cloud<br>`;
+                  html += `<b>Explorer:</b> <a href="https://testnet-explorer.fair.cloud" target="_blank" style="color:#00ff80;">testnet-explorer.fair.cloud</a><br>`;
+                  html += `<br><button onclick="(() => { const blob = new Blob(['Address: ${wallet.address}\\nPrivate Key: ${wallet.privateKey}\\nNetwork: FAIR Testnet Beta\\nChain ID: 935\\nRPC URL: https://testnet-rpc.fair.cloud'], {type: 'text/plain'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'fair-wallet.txt'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); window.terminal.log('✅ Wallet info downloaded!', 'success'); })()">💾 Download Wallet Info</button><br>`;
+                  html += `<br>💡 Get testnet FAIR from the <a href="https://testnet-faucet.fair.cloud" target="_blank" style="color:#00ff80;">FAIR Faucet</a><br>`;
+                  html += `💡 Use <b>fair balance</b> to check your balance<br>`;
+                  this.logHtml(html, "output");
+                  this.log("", "info");
+                  return;
+                } catch (e) {
+                  this.log(
+                    "❌ Failed to generate FAIR wallet: " + e.message,
+                    "error"
+                  );
+                  return;
+                }
+              }
+
+              // fair wallet
+              if (args[1] === "wallet" || args[1] === "info") {
+                if (window.fairWallet) {
+                  let html = `<b>Current FAIR Wallet:</b><br>`;
+                  html += `<b>Address:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${window.fairWallet.address}')">${window.fairWallet.address}</span><br>`;
+                  html += `<b>Private Key:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${window.fairWallet.privateKey}')">${window.fairWallet.privateKey}</span><br>`;
+                  html += `<b>Network:</b> ${window.fairWallet.network}<br>`;
+                  html += `<b>Chain ID:</b> ${window.fairWallet.chainId}<br>`;
+                  html += `<b>RPC URL:</b> ${window.fairWallet.rpcUrl}<br>`;
+                  this.logHtml(html, "output");
+                } else if (this.signer) {
+                  const address = await this.signer.getAddress();
+                  this.log("Connected with MetaMask:", "info");
+                  this.log(`Address: ${address}`, "output");
+                  this.log("Network: FAIR Testnet Beta", "output");
+                } else {
+                  this.log(
+                    "No FAIR wallet generated or connected. Use: fair generate",
+                    "warning"
+                  );
+                }
+                return;
+              }
+
+              // fair balance
+              if (args[1] === "balance" || args[1] === "bal") {
+                try {
+                  let address;
+                  let provider;
+
+                  if (window.fairWallet) {
+                    address = window.fairWallet.address;
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                  } else if (this.signer) {
+                    address = await this.signer.getAddress();
+                    provider = this.provider;
+                  } else {
+                    this.log(
+                      "No FAIR wallet found. Use: fair generate",
+                      "warning"
+                    );
+                    return;
+                  }
+
+                  this.log("🔍 Checking FAIR balance...", "info");
+                  const balance = await provider.getBalance(address);
+                  const fairBalance = this.ethers.utils.formatEther(balance);
+
+                  this.log("", "info");
+                  this.log(`💰 FAIR Balance: ${fairBalance} FAIR`, "success");
+                  this.log(`📍 Address: ${address}`, "output");
+                  this.log("", "info");
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to check balance: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fair create-token (Interactive Flow)
+              if (args[1] === "create-token" || args[1] === "create") {
+                try {
+                  // Check wallet first
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet found. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  this.log("🏭 FAIR Token Creator", "success");
+                  this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+                  this.log("", "info");
+
+                  // Prompt for token name
+                  this.log('Enter token name (e.g., "My Fair Token"):', "info");
+                  const name = await this.promptUser();
+                  if (!name || !name.trim()) {
+                    this.log("❌ Token name is required", "error");
+                    return;
+                  }
+
+                  // Prompt for symbol
+                  this.log('Enter token symbol (e.g., "MFT"):', "info");
+                  const symbol = await this.promptUser();
+                  if (!symbol || !symbol.trim()) {
+                    this.log("❌ Token symbol is required", "error");
+                    return;
+                  }
+
+                  // Prompt for supply
+                  this.log("Enter total supply (e.g., 1000000):", "info");
+                  const supply = await this.promptUser();
+                  if (!supply || isNaN(supply)) {
+                    this.log("❌ Invalid supply. Must be a number", "error");
+                    return;
+                  }
+
+                  // Prompt for burnable
+                  this.log(
+                    "Enable burning? (yes/no) - Allows holders to burn tokens:",
+                    "info"
+                  );
+                  const burnableInput = (await this.promptUser()).toLowerCase();
+                  const burnable =
+                    burnableInput === "yes" || burnableInput === "y";
+
+                  // Prompt for mintable
+                  this.log(
+                    "Enable minting? (yes/no) - Allows owner to mint new tokens:",
+                    "info"
+                  );
+                  const mintableInput = (await this.promptUser()).toLowerCase();
+                  const mintable =
+                    mintableInput === "yes" || mintableInput === "y";
+
+                  // Prompt for pausable
+                  this.log(
+                    "Enable pausing? (yes/no) - Allows owner to pause transfers:",
+                    "info"
+                  );
+                  const pausableInput = (await this.promptUser()).toLowerCase();
+                  const pausable =
+                    pausableInput === "yes" || pausableInput === "y";
+
+                  this.log("", "info");
+                  this.log("📋 Token Configuration:", "success");
+                  this.log(`  Name: ${name}`, "output");
+                  this.log(`  Symbol: ${symbol}`, "output");
+                  this.log(`  Supply: ${supply}`, "output");
+                  this.log(`  Burnable: ${burnable ? "✅" : "❌"}`, "output");
+                  this.log(`  Mintable: ${mintable ? "✅" : "❌"}`, "output");
+                  this.log(`  Pausable: ${pausable ? "✅" : "❌"}`, "output");
+                  this.log("", "info");
+
+                  // Get signer (MetaMask or generated wallet)
+                  let signer;
+                  let provider;
+                  if (window.fairWallet) {
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else if (this.signer) {
+                    signer = this.signer;
+                  }
+
+                  this.log(
+                    `🏭 Creating token "${name}" (${symbol})...`,
+                    "info"
+                  );
+
+                  // Advanced FAIR Token Factory ABI
+                  const factoryABI = [
+                    "function createToken(string memory _name, string memory _symbol, uint256 _supply, bool _burnable, bool _mintable, bool _pausable) public returns (address)",
+                    "function getUserTokens(address _user) public view returns (address[] memory)",
+                    "function getTotalTokens() public view returns (uint256)",
+                    "event TokenCreated(address indexed tokenAddress, address indexed owner, string name, string symbol, uint256 totalSupply, bool burnable, bool mintable, bool pausable)",
+                  ];
+
+                  const factoryAddress =
+                    "0x30a399891f44c2ee07134e248d0393e53286f5f4";
+                  const factory = new this.ethers.Contract(
+                    factoryAddress,
+                    factoryABI,
+                    signer
+                  );
+
+                  const tx = await factory.createToken(
+                    name.trim(),
+                    symbol.trim(),
+                    supply,
+                    burnable,
+                    mintable,
+                    pausable
+                  );
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  const receipt = await tx.wait();
+
+                  // Find TokenCreated event in logs
+                  const tokenCreatedEvent = receipt.logs.find((log) => {
+                    try {
+                      const parsed = factory.interface.parseLog(log);
+                      return parsed.name === "TokenCreated";
+                    } catch (e) {
+                      return false;
+                    }
+                  });
+
+                  if (tokenCreatedEvent) {
+                    const parsed =
+                      factory.interface.parseLog(tokenCreatedEvent);
+                    const tokenAddress = parsed.args.tokenAddress;
+
+                    let html = `<b>✅ Token Created Successfully!</b><br><br>`;
+                    html += `<b>Token Name:</b> ${name}<br>`;
+                    html += `<b>Symbol:</b> ${symbol}<br>`;
+                    html += `<b>Total Supply:</b> ${supply}<br>`;
+                    html += `<b>Features:</b> ${
+                      burnable ? "🔥 Burnable " : ""
+                    }${mintable ? "⚡ Mintable " : ""}${
+                      pausable ? "⏸️ Pausable" : ""
+                    }${
+                      !burnable && !mintable && !pausable
+                        ? "Standard ERC20"
+                        : ""
+                    }<br>`;
+                    html += `<b>Token Address:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${tokenAddress}').then(() => window.terminal.log('✅ Address copied!', 'success'))">${tokenAddress}</span><br>`;
+                    html += `<b>Transaction:</b> <a href="https://testnet-explorer.fair.cloud/tx/${
+                      tx.hash
+                    }" target="_blank" style="color:#00ff80;">${tx.hash.substring(
+                      0,
+                      20
+                    )}...</a><br>`;
+                    html += `<br>💡 Use <b>fair my-tokens</b> to see all your tokens<br>`;
+                    html += `💡 View on explorer: <a href="https://testnet-explorer.fair.cloud/address/${tokenAddress}" target="_blank" style="color:#00ff80;">View Token</a><br>`;
+                    this.logHtml(html, "output");
+                  } else {
+                    this.log("✅ Token created successfully!", "success");
+                    this.log(`Transaction: ${tx.hash}`, "output");
+                  }
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to create token: " + e.message, "error");
+                  if (e.reason) this.log(`Reason: ${e.reason}`, "error");
+                  return;
+                }
+              }
+
+              // fair my-tokens
+              if (args[1] === "my-tokens" || args[1] === "tokens") {
+                try {
+                  let address;
+                  let provider;
+
+                  if (window.fairWallet) {
+                    address = window.fairWallet.address;
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                  } else if (this.signer) {
+                    address = await this.signer.getAddress();
+                    provider = this.provider;
+                  } else {
+                    this.log(
+                      "❌ No wallet found. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  this.log("🔍 Fetching your tokens...", "info");
+
+                  const factoryABI = [
+                    "function getUserTokens(address _user) public view returns (address[] memory)",
+                  ];
+
+                  const tokenABI = [
+                    "function name() public view returns (string memory)",
+                    "function symbol() public view returns (string memory)",
+                    "function totalSupply() public view returns (uint256)",
+                    "function decimals() public view returns (uint8)",
+                  ];
+
+                  const factoryAddress =
+                    "0x30a399891f44c2ee07134e248d0393e53286f5f4";
+                  const factory = new this.ethers.Contract(
+                    factoryAddress,
+                    factoryABI,
+                    provider
+                  );
+
+                  const tokens = await factory.getUserTokens(address);
+
+                  if (tokens.length === 0) {
+                    this.log("📋 You haven't created any tokens yet.", "info");
+                    this.log(
+                      '💡 Create one with: fair create-token "My Token" MTK 1000000',
+                      "info"
+                    );
+                    return;
+                  }
+
+                  this.log("", "info");
+                  this.log(`📋 Your Tokens (${tokens.length}):`, "success");
+                  this.log("", "info");
+
+                  for (let i = 0; i < tokens.length; i++) {
+                    const tokenContract = new this.ethers.Contract(
+                      tokens[i],
+                      tokenABI,
+                      provider
+                    );
+                    try {
+                      const name = await tokenContract.name();
+                      const symbol = await tokenContract.symbol();
+                      const totalSupply = await tokenContract.totalSupply();
+                      const decimals = await tokenContract.decimals();
+                      const formattedSupply = this.ethers.utils.formatUnits(
+                        totalSupply,
+                        decimals
+                      );
+
+                      let html = `<b>${i + 1}. ${name} (${symbol})</b><br>`;
+                      html += `Address: <span class='copyable' onclick="navigator.clipboard.writeText('${tokens[i]}')">${tokens[i]}</span><br>`;
+                      html += `Supply: ${formattedSupply}<br>`;
+                      html += `Explorer: <a href="https://testnet-explorer.fair.cloud/address/${tokens[i]}" target="_blank" style="color:#00ff80;">View</a><br>`;
+                      this.logHtml(html, "output");
+                    } catch (e) {
+                      this.log(`${i + 1}. ${tokens[i]}`, "output");
+                    }
+                  }
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to fetch tokens: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fair token-info
+              if (args[1] === "token-info" || args[1] === "info-token") {
+                if (!args[2]) {
+                  this.log("Usage: fair token-info <token-address>", "info");
+                  return;
+                }
+
+                try {
+                  const tokenAddress = args[2];
+                  const provider = new this.ethers.providers.JsonRpcProvider(
+                    "https://testnet-rpc.fair.cloud"
+                  );
+
+                  this.log(
+                    `🔍 Getting token info for ${tokenAddress}...`,
+                    "info"
+                  );
+
+                  const tokenABI = [
+                    "function name() public view returns (string memory)",
+                    "function symbol() public view returns (string memory)",
+                    "function totalSupply() public view returns (uint256)",
+                    "function decimals() public view returns (uint8)",
+                    "function owner() public view returns (address)",
+                    "function balanceOf(address) public view returns (uint256)",
+                  ];
+
+                  const token = new this.ethers.Contract(
+                    tokenAddress,
+                    tokenABI,
+                    provider
+                  );
+
+                  const name = await token.name();
+                  const symbol = await token.symbol();
+                  const totalSupply = await token.totalSupply();
+                  const decimals = await token.decimals();
+                  const owner = await token.owner();
+                  const formattedSupply = this.ethers.utils.formatUnits(
+                    totalSupply,
+                    decimals
+                  );
+
+                  this.log("", "info");
+                  let html = `<b>📊 Token Information:</b><br><br>`;
+                  html += `<b>Name:</b> ${name}<br>`;
+                  html += `<b>Symbol:</b> ${symbol}<br>`;
+                  html += `<b>Decimals:</b> ${decimals}<br>`;
+                  html += `<b>Total Supply:</b> ${formattedSupply}<br>`;
+                  html += `<b>Owner:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${owner}')">${owner}</span><br>`;
+                  html += `<b>Address:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${tokenAddress}')">${tokenAddress}</span><br>`;
+                  html += `<br><b>Explorer:</b> <a href="https://testnet-explorer.fair.cloud/address/${tokenAddress}" target="_blank" style="color:#00ff80;">View on FAIR Explorer</a><br>`;
+                  this.logHtml(html, "output");
+
+                  return;
+                } catch (e) {
+                  this.log(
+                    "❌ Failed to get token info: " + e.message,
+                    "error"
+                  );
+                  return;
+                }
+              }
+
+              // fair send (send FAIR tokens)
+              if (args[1] === "send" && args[2] && args[3]) {
+                try {
+                  const amount = args[2];
+                  let recipientInput = args[3];
+
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  let signer;
+                  let provider;
+                  if (window.fairWallet) {
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                    provider = this.provider;
+                  }
+
+                  // Check if recipient is FNS name
+                  let recipient = recipientInput;
+                  let fnsName = null;
+                  if (
+                    recipientInput.endsWith(".fns") ||
+                    !recipientInput.startsWith("0x")
+                  ) {
+                    fnsName = recipientInput.replace(/\.fns$/, "");
+                    this.log(
+                      `🔍 Resolving FNS name: ${fnsName}.fns...`,
+                      "info"
+                    );
+
+                    const fnsABI = [
+                      "function resolve(string memory name) public view returns (address)",
+                    ];
+                    const fns = new this.ethers.Contract(
+                      "0x2d06d9568ae99f61f421ea99a46969878986fc2d",
+                      fnsABI,
+                      provider
+                    );
+                    recipient = await fns.resolve(fnsName);
+
+                    if (
+                      recipient === "0x0000000000000000000000000000000000000000"
+                    ) {
+                      this.log(
+                        `❌ FNS name "${fnsName}.fns" not found`,
+                        "error"
+                      );
+                      this.log("💡 Use: fns search " + fnsName, "info");
+                      return;
+                    }
+                    this.log(`✅ Resolved to: ${recipient}`, "success");
+                  }
+
+                  this.log(
+                    `💸 Sending ${amount} FAIR to ${
+                      fnsName ? fnsName + ".fns" : recipient
+                    }...`,
+                    "info"
+                  );
+
+                  const tx = await signer.sendTransaction({
+                    to: recipient,
+                    value: this.ethers.utils.parseEther(amount),
+                  });
+
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  await tx.wait();
+
+                  this.log("", "info");
+                  this.log(`✅ Sent ${amount} FAIR!`, "success");
+                  this.log(
+                    `📍 To: ${
+                      fnsName ? fnsName + ".fns (" + recipient + ")" : recipient
+                    }`,
+                    "output"
+                  );
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to send: " + e.message, "error");
+                  if (e.message.includes("insufficient funds")) {
+                    this.log("💡 Get tokens with: fair faucet", "info");
+                  }
+                  return;
+                }
+              }
+
+              // fair send-token (send ERC20 tokens)
+              if (args[1] === "send-token" && args[2] && args[3] && args[4]) {
+                try {
+                  const tokenAddress = args[2];
+                  const amount = args[3];
+                  let recipientInput = args[4];
+
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  let signer;
+                  let provider;
+                  if (window.fairWallet) {
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                    provider = this.provider;
+                  }
+
+                  // Check if recipient is FNS name
+                  let recipient = recipientInput;
+                  let fnsName = null;
+                  if (
+                    recipientInput.endsWith(".fns") ||
+                    !recipientInput.startsWith("0x")
+                  ) {
+                    fnsName = recipientInput.replace(/\.fns$/, "");
+                    this.log(
+                      `🔍 Resolving FNS name: ${fnsName}.fns...`,
+                      "info"
+                    );
+
+                    const fnsABI = [
+                      "function resolve(string memory name) public view returns (address)",
+                    ];
+                    const fns = new this.ethers.Contract(
+                      "0x2d06d9568ae99f61f421ea99a46969878986fc2d",
+                      fnsABI,
+                      provider
+                    );
+                    recipient = await fns.resolve(fnsName);
+
+                    if (
+                      recipient === "0x0000000000000000000000000000000000000000"
+                    ) {
+                      this.log(
+                        `❌ FNS name "${fnsName}.fns" not found`,
+                        "error"
+                      );
+                      return;
+                    }
+                    this.log(`✅ Resolved to: ${recipient}`, "success");
+                  }
+
+                  // Get token info
+                  const tokenABI = [
+                    "function name() public view returns (string memory)",
+                    "function symbol() public view returns (string memory)",
+                    "function decimals() public view returns (uint8)",
+                    "function transfer(address to, uint256 amount) public returns (bool)",
+                  ];
+
+                  const token = new this.ethers.Contract(
+                    tokenAddress,
+                    tokenABI,
+                    signer
+                  );
+                  const symbol = await token.symbol();
+                  const decimals = await token.decimals();
+
+                  this.log(
+                    `💸 Sending ${amount} ${symbol} to ${
+                      fnsName ? fnsName + ".fns" : recipient
+                    }...`,
+                    "info"
+                  );
+
+                  const tx = await token.transfer(
+                    recipient,
+                    this.ethers.utils.parseUnits(amount, decimals)
+                  );
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  await tx.wait();
+
+                  this.log("", "info");
+                  this.log(`✅ Sent ${amount} ${symbol}!`, "success");
+                  this.log(
+                    `📍 To: ${
+                      fnsName ? fnsName + ".fns (" + recipient + ")" : recipient
+                    }`,
+                    "output"
+                  );
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to send token: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fair faucet
+              if (args[1] === "faucet") {
+                try {
+                  let address;
+                  if (window.fairWallet) {
+                    address = window.fairWallet.address;
+                  } else if (this.signer) {
+                    address = await this.signer.getAddress();
+                  } else {
+                    this.log(
+                      "❌ No wallet found. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    this.log(
+                      "💡 Or you can visit the faucet manually: https://testnet-faucet.fair.cloud",
+                      "info"
+                    );
+                    return;
+                  }
+
+                  // Copy address to clipboard
+                  await navigator.clipboard.writeText(address);
+
+                  // Open faucet in new window
+                  window.open(
+                    "https://testnet-faucet.fair.cloud",
+                    "_blank",
+                    "width=800,height=900"
+                  );
+
+                  this.log("", "info");
+                  this.log("🚰 Opening FAIR Faucet...", "success");
+                  this.log("", "info");
+                  this.log(
+                    "✅ Your address has been copied to clipboard!",
+                    "success"
+                  );
+                  this.log(`📍 Address: ${address}`, "output");
+                  this.log("", "info");
+                  this.log("📋 Instructions:", "info");
+                  this.log(
+                    "  1. Paste your address (Ctrl+V) in the faucet",
+                    "output"
+                  );
+                  this.log('  2. Click "Claim"', "output");
+                  this.log("  3. Wait 24 hours between claims", "output");
+                  this.log(
+                    '  4. Use "fair balance" to check your balance',
+                    "output"
+                  );
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to open faucet: " + e.message, "error");
+                  this.log(
+                    "💡 Visit manually: https://testnet-faucet.fair.cloud",
+                    "info"
+                  );
+                  return;
+                }
+              }
+
+              // fair connect
+              if (args[1] === "connect") {
+                try {
+                  if (!window.ethereum) {
+                    this.log(
+                      "❌ MetaMask not detected. Please install MetaMask.",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  this.log("🔗 Connecting to FAIR network...", "info");
+
+                  // Try to switch to FAIR network
+                  try {
+                    await window.ethereum.request({
+                      method: "wallet_switchEthereumChain",
+                      params: [{ chainId: "0x3A7" }], // 935 in hex
+                    });
+                  } catch (switchError) {
+                    // If network doesn't exist, add it
+                    if (switchError.code === 4902) {
+                      await window.ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [
+                          {
+                            chainId: "0x3A7",
+                            chainName: "FAIR Testnet Beta",
+                            nativeCurrency: {
+                              name: "FAIR",
+                              symbol: "FAIR",
+                              decimals: 18,
+                            },
+                            rpcUrls: ["https://testnet-rpc.fair.cloud"],
+                            blockExplorerUrls: [
+                              "https://testnet-explorer.fair.cloud",
+                            ],
+                          },
+                        ],
+                      });
+                    } else {
+                      throw switchError;
+                    }
+                  }
+
+                  // Connect wallet
+                  const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                  });
+                  this.provider = new this.ethers.providers.Web3Provider(
+                    window.ethereum
+                  );
+                  this.signer = this.provider.getSigner();
+                  const address = accounts[0];
+
+                  this.log("", "info");
+                  this.log(
+                    "✅ Successfully connected to FAIR network!",
+                    "success"
+                  );
+                  this.log(`📍 Address: ${address}`, "output");
+                  this.log(
+                    "⛓️ Network: FAIR Testnet Beta (Chain ID: 935)",
+                    "output"
+                  );
+                  this.log("", "info");
+                  return;
+                } catch (e) {
+                  this.log(
+                    "❌ Failed to connect to FAIR: " + e.message,
+                    "error"
+                  );
+                  return;
+                }
+              }
+
+              // fair mint-nft (Interactive NFT Minting with Image Upload)
+              if (args[1] === "mint-nft" || args[1] === "mint") {
+                try {
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  this.log("🎨 FAIR NFT Minter", "success");
+                  this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "info");
+                  this.log("", "info");
+
+                  // Prompt for NFT name
+                  this.log("Enter NFT name:", "info");
+                  const nftName = await this.promptUser();
+                  if (!nftName || !nftName.trim()) {
+                    this.log("❌ NFT name is required", "error");
+                    return;
+                  }
+
+                  // Prompt for description
+                  this.log("Enter NFT description:", "info");
+                  const description = await this.promptUser();
+
+                  // Create file input for image upload
+                  this.log("📸 Click to select an image to upload...", "info");
+                  const file = await new Promise((resolve) => {
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = "image/*";
+                    input.onchange = (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        resolve(file);
+                      } else {
+                        resolve(null);
+                      }
+                    };
+                    input.click();
+                  });
+
+                  if (!file) {
+                    this.log("❌ No image selected", "error");
+                    return;
+                  }
+
+                  this.log(
+                    `✅ Selected: ${file.name} (${(
+                      file.size /
+                      1024 /
+                      1024
+                    ).toFixed(2)} MB)`,
+                    "success"
+                  );
+                  this.log("☁️ Uploading image to IPFS via Pinata...", "info");
+
+                  // Upload image to Pinata
+                  const formData = new FormData();
+                  formData.append("file", file);
+
+                  const imageResponse = await fetch(
+                    "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                    {
+                      method: "POST",
+                      headers: {
+                        pinata_api_key: "c717314daa6072cf4111",
+                        pinata_secret_api_key:
+                          "2d78c057627d207a25d57f0b625d3c8f6388e911101788cbe5b0b3d2cf763f59",
+                      },
+                      body: formData,
+                    }
+                  );
+
+                  if (!imageResponse.ok) {
+                    throw new Error("Failed to upload image to IPFS");
+                  }
+
+                  const imageResult = await imageResponse.json();
+                  const imageUrl = `https://gateway.pinata.cloud/ipfs/${imageResult.IpfsHash}`;
+
+                  this.log(
+                    `✅ Image uploaded to IPFS: ${imageResult.IpfsHash}`,
+                    "success"
+                  );
+
+                  // Create metadata
+                  const metadata = {
+                    name: nftName.trim(),
+                    description: description.trim() || "A FAIR NFT",
+                    image: imageUrl,
+                    attributes: [
+                      { trait_type: "Network", value: "FAIR" },
+                      { trait_type: "Blockchain", value: "FAIR Testnet" },
+                    ],
+                  };
+
+                  this.log("☁️ Uploading metadata to IPFS...", "info");
+
+                  // Upload metadata to Pinata
+                  const metadataResponse = await fetch(
+                    "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        pinata_api_key: "c717314daa6072cf4111",
+                        pinata_secret_api_key:
+                          "2d78c057627d207a25d57f0b625d3c8f6388e911101788cbe5b0b3d2cf763f59",
+                      },
+                      body: JSON.stringify({
+                        pinataContent: metadata,
+                        pinataMetadata: {
+                          name: `fair-nft-${nftName
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}.json`,
+                        },
+                      }),
+                    }
+                  );
+
+                  if (!metadataResponse.ok) {
+                    throw new Error("Failed to upload metadata to IPFS");
+                  }
+
+                  const metadataResult = await metadataResponse.json();
+                  const metadataUri = `https://gateway.pinata.cloud/ipfs/${metadataResult.IpfsHash}`;
+
+                  this.log(
+                    `✅ Metadata uploaded to IPFS: ${metadataResult.IpfsHash}`,
+                    "success"
+                  );
+
+                  this.log("", "info");
+                  this.log("📋 NFT Details:", "success");
+                  this.log(`  Name: ${nftName}`, "output");
+                  this.log(
+                    `  Description: ${description || "A FAIR NFT"}`,
+                    "output"
+                  );
+                  this.log(`  Image: ${imageUrl}`, "output");
+                  this.log(`  Metadata: ${metadataUri}`, "output");
+                  this.log("", "info");
+
+                  let signer;
+                  if (window.fairWallet) {
+                    const provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                  }
+
+                  this.log("🎨 Minting NFT...", "info");
+
+                  const nftABI = [
+                    "function mint(address to, string memory uri) public returns (uint256)",
+                    "function totalSupply() public view returns (uint256)",
+                  ];
+
+                  const nftContract = new this.ethers.Contract(
+                    "0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e",
+                    nftABI,
+                    signer
+                  );
+                  const address = await signer.getAddress();
+
+                  const tx = await nftContract.mint(address, metadataUri);
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  const receipt = await tx.wait();
+
+                  // Get token ID from current supply
+                  const totalSupply = await nftContract.totalSupply();
+                  const tokenId = totalSupply.sub(1).toString();
+
+                  this.log("", "info");
+                  this.log(`✅ NFT Minted Successfully!`, "success");
+                  this.log(`🎨 Token ID: #${tokenId}`, "output");
+                  this.log(`📍 Owner: ${address}`, "output");
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+                  this.log("💡 Use: fair my-nfts to see all your NFTs", "info");
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to mint NFT: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fair my-nfts
+              if (args[1] === "my-nfts" || args[1] === "nfts") {
+                try {
+                  let address;
+                  let provider;
+
+                  if (window.fairWallet) {
+                    address = window.fairWallet.address;
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                  } else if (this.signer) {
+                    address = await this.signer.getAddress();
+                    provider = this.provider;
+                  } else {
+                    this.log(
+                      "❌ No wallet found. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  this.log("🔍 Fetching your NFTs...", "info");
+
+                  const nftABI = [
+                    "function tokensOfOwner(address owner) public view returns (uint256[] memory)",
+                    "function tokenURI(uint256 tokenId) public view returns (string memory)",
+                  ];
+
+                  const nftContract = new this.ethers.Contract(
+                    "0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e",
+                    nftABI,
+                    provider
+                  );
+                  const tokens = await nftContract.tokensOfOwner(address);
+
+                  if (tokens.length === 0) {
+                    this.log("📋 You don't own any FAIR NFTs yet.", "info");
+                    this.log("💡 Mint one with: fair mint-nft", "info");
+                    return;
+                  }
+
+                  this.log("", "info");
+                  this.log(`🎨 Your FAIR NFTs (${tokens.length}):`, "success");
+                  this.log("", "info");
+
+                  for (let i = 0; i < Math.min(tokens.length, 10); i++) {
+                    const tokenId = tokens[i].toString();
+                    try {
+                      const uri = await nftContract.tokenURI(tokens[i]);
+
+                      // Parse metadata - handle both base64 and IPFS URLs
+                      let metadata = {};
+                      if (uri.startsWith("data:application/json;base64,")) {
+                        const base64Data = uri.split(",")[1];
+                        const jsonStr = atob(base64Data);
+                        metadata = JSON.parse(jsonStr);
+                      } else if (
+                        uri.startsWith("http://") ||
+                        uri.startsWith("https://")
+                      ) {
+                        // Fetch metadata from IPFS
+                        try {
+                          const metadataResponse = await fetch(uri);
+                          metadata = await metadataResponse.json();
+                        } catch (e) {
+                          console.error("Failed to fetch metadata:", e);
+                        }
+                      }
+
+                      let html = `<b>🎨 Token #${tokenId}</b>`;
+                      if (metadata.name) html += ` - ${metadata.name}`;
+                      html += `<br>`;
+                      if (metadata.description)
+                        html += `Description: ${metadata.description}<br>`;
+                      if (metadata.image)
+                        html += `Image: <a href="${metadata.image}" target="_blank" style="color:#00ff80;">View</a><br>`;
+                      html += `Explorer: <a href="https://testnet-explorer.fair.cloud/token/0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e?a=${tokenId}" target="_blank" style="color:#00ff80;">View NFT</a><br>`;
+                      this.logHtml(html, "output");
+                    } catch (e) {
+                      this.log(`🎨 Token #${tokenId}`, "output");
+                    }
+                  }
+
+                  if (tokens.length > 10) {
+                    this.log(`... and ${tokens.length - 10} more`, "info");
+                  }
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to fetch NFTs: " + e.message, "error");
+                  return;
+                }
+              }
+
+              // fair nft-info
+              if (args[1] === "nft-info" && args[2]) {
+                try {
+                  const tokenId = args[2];
+                  const provider = new this.ethers.providers.JsonRpcProvider(
+                    "https://testnet-rpc.fair.cloud"
+                  );
+
+                  this.log(`🔍 Getting info for NFT #${tokenId}...`, "info");
+
+                  const nftABI = [
+                    "function ownerOf(uint256 tokenId) public view returns (address)",
+                    "function tokenURI(uint256 tokenId) public view returns (string memory)",
+                  ];
+
+                  const nftContract = new this.ethers.Contract(
+                    "0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e",
+                    nftABI,
+                    provider
+                  );
+
+                  const owner = await nftContract.ownerOf(tokenId);
+                  const uri = await nftContract.tokenURI(tokenId);
+
+                  // Parse metadata - handle both base64 and IPFS URLs
+                  let metadata = {};
+                  if (uri.startsWith("data:application/json;base64,")) {
+                    const base64Data = uri.split(",")[1];
+                    const jsonStr = atob(base64Data);
+                    metadata = JSON.parse(jsonStr);
+                  } else if (
+                    uri.startsWith("http://") ||
+                    uri.startsWith("https://")
+                  ) {
+                    // Fetch metadata from IPFS
+                    try {
+                      const metadataResponse = await fetch(uri);
+                      metadata = await metadataResponse.json();
+                    } catch (e) {
+                      console.error("Failed to fetch metadata:", e);
+                    }
+                  }
+
+                  this.log("", "info");
+                  let html = `<b>🎨 FAIR NFT #${tokenId}</b><br><br>`;
+                  if (metadata.name)
+                    html += `<b>Name:</b> ${metadata.name}<br>`;
+                  if (metadata.description)
+                    html += `<b>Description:</b> ${metadata.description}<br>`;
+                  html += `<b>Owner:</b> <span class='copyable' onclick="navigator.clipboard.writeText('${owner}')">${owner}</span><br>`;
+                  if (metadata.image)
+                    html += `<b>Image:</b> <a href="${metadata.image}" target="_blank" style="color:#00ff80;">View Image</a><br>`;
+                  if (metadata.attributes && metadata.attributes.length > 0) {
+                    html += `<br><b>Attributes:</b><br>`;
+                    metadata.attributes.forEach((attr) => {
+                      html += `  • ${attr.trait_type}: ${attr.value}<br>`;
+                    });
+                  }
+                  html += `<br><b>Explorer:</b> <a href="https://testnet-explorer.fair.cloud/token/0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e?a=${tokenId}" target="_blank" style="color:#00ff80;">View on FAIR Explorer</a><br>`;
+                  this.logHtml(html, "output");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to get NFT info: " + e.message, "error");
+                  if (e.message.includes("owner query")) {
+                    this.log("💡 This token may not exist yet", "info");
+                  }
+                  return;
+                }
+              }
+
+              // fair transfer-nft (with FNS support!)
+              if (args[1] === "transfer-nft" && args[2] && args[3]) {
+                try {
+                  const tokenId = args[2];
+                  let recipientInput = args[3];
+
+                  if (!window.fairWallet && !this.signer) {
+                    this.log(
+                      "❌ No wallet connected. Use: fair generate or fair connect",
+                      "error"
+                    );
+                    return;
+                  }
+
+                  let signer;
+                  let provider;
+                  if (window.fairWallet) {
+                    provider = new this.ethers.providers.JsonRpcProvider(
+                      "https://testnet-rpc.fair.cloud"
+                    );
+                    signer = new this.ethers.Wallet(
+                      window.fairWallet.privateKey,
+                      provider
+                    );
+                  } else {
+                    signer = this.signer;
+                    provider = this.provider;
+                  }
+
+                  // Check if recipient is FNS name
+                  let recipient = recipientInput;
+                  let fnsName = null;
+                  if (
+                    recipientInput.endsWith(".fns") ||
+                    !recipientInput.startsWith("0x")
+                  ) {
+                    fnsName = recipientInput.replace(/\.fns$/, "");
+                    this.log(
+                      `🔍 Resolving FNS name: ${fnsName}.fns...`,
+                      "info"
+                    );
+
+                    const fnsABI = [
+                      "function resolve(string memory name) public view returns (address)",
+                    ];
+                    const fns = new this.ethers.Contract(
+                      "0x2d06d9568ae99f61f421ea99a46969878986fc2d",
+                      fnsABI,
+                      provider
+                    );
+                    recipient = await fns.resolve(fnsName);
+
+                    if (
+                      recipient === "0x0000000000000000000000000000000000000000"
+                    ) {
+                      this.log(
+                        `❌ FNS name "${fnsName}.fns" not found`,
+                        "error"
+                      );
+                      return;
+                    }
+                    this.log(`✅ Resolved to: ${recipient}`, "success");
+                  }
+
+                  this.log(
+                    `🎨 Transferring NFT #${tokenId} to ${
+                      fnsName ? fnsName + ".fns" : recipient
+                    }...`,
+                    "info"
+                  );
+
+                  const nftABI = [
+                    "function transferFrom(address from, address to, uint256 tokenId) public",
+                  ];
+                  const nftContract = new this.ethers.Contract(
+                    "0xe133cb4df4834c7e0b4aea5181ab40477c9fa30e",
+                    nftABI,
+                    signer
+                  );
+                  const from = await signer.getAddress();
+
+                  const tx = await nftContract.transferFrom(
+                    from,
+                    recipient,
+                    tokenId
+                  );
+                  this.log(`⏳ Transaction submitted: ${tx.hash}`, "info");
+                  this.log("⏳ Waiting for confirmation...", "info");
+
+                  await tx.wait();
+
+                  this.log("", "info");
+                  this.log(`✅ NFT #${tokenId} transferred!`, "success");
+                  this.log(
+                    `📍 To: ${
+                      fnsName ? fnsName + ".fns (" + recipient + ")" : recipient
+                    }`,
+                    "output"
+                  );
+                  this.log(
+                    `🔍 View on explorer: https://testnet-explorer.fair.cloud/tx/${tx.hash}`,
+                    "info"
+                  );
+                  this.log("", "info");
+
+                  return;
+                } catch (e) {
+                  this.log("❌ Failed to transfer NFT: " + e.message, "error");
+                  if (e.message.includes("Not authorized")) {
+                    this.log("💡 You must own this NFT to transfer it", "info");
+                  }
+                  return;
+                }
+              }
+
+              this.log(
+                'Unknown FAIR command. Type "fair help" for available commands.',
+                "error"
+              );
+              return;
+
             case "ambassador":
               await this.handleAmbassadorCommand(args);
               break;
@@ -6028,7 +7909,6 @@
                 this.log("🔗 Omega ENS registration & management", "info");
                 this.log("📇 Address book for contacts", "info");
                 this.log("💬 Terminal Chatter (Telegram-like)", "info");
-                this.log("🐍 Python script management", "info");
                 this.log("🖥️ Fullscreen profile mode", "info");
                 this.log(
                   "💡 Commands: profile open | profile help | profile apikeys",
@@ -6072,7 +7952,7 @@
                     `<span style='color:#99ccff'>🤖 Processing</span>`,
                     "info"
                   );
-                  const url = "http://localhost:3015/chat";
+                  const url = "https://ai.omeganetwork.co/chat";
                   const evm = this.userAddress || null;
                   const solana = this.solanaAddress || null;
 
@@ -7410,7 +9290,7 @@
 
         async showUnifiedHelp() {
           this.logHtml(
-            '<span style="color:#33bbff">=== Omega Terminal v2.0.1 Commands ===</span>',
+            '<span style="color:#33bbff">=== Ω Terminal v2.0.1 Commands ===</span>',
             "info"
           );
 
@@ -7434,9 +9314,9 @@
               '<span style="color:#888888">TVL & price data</span>' +
               "</td>" +
               '<td style="vertical-align:top;width:25%;">' +
-              '<span style="color:#FF9500">🐍 Python Scripts:</span><br>' +
-              '<span style="color:#99ccff">python upload | run | list | exec</span><br>' +
-              '<span style="color:#888888">Trading bots & custom scripts</span>' +
+              '<span style="color:#FF9500">🎮 Games & Fun:</span><br>' +
+              '<span style="color:#99ccff">games | arcade | flappy | mystery-box</span><br>' +
+              '<span style="color:#888888">Entertainment & challenges</span>' +
               "</td>" +
               "</tr></table>",
             "output"
@@ -7602,18 +9482,6 @@
           this.logHtml(
             '<table style="width:100%;border:none;"><tr>' +
               '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
-              '<span style="color:#FF9500">🐍 Python:</span><br>' +
-              '<span style="color:#99ccff">python help | python upload</span>' +
-              "</td>" +
-              '<td style="vertical-align:top;width:75%;">' +
-              '<span style="color:#888888">Upload & run Python trading bots</span>' +
-              "</td>" +
-              "</tr></table>",
-            "output"
-          );
-          this.logHtml(
-            '<table style="width:100%;border:none;"><tr>' +
-              '<td style="vertical-align:top;width:25%;padding-right:16px;">' +
               '<span style="color:#33bbff">Email:</span><br>' +
               '<span style="color:#99ccff">email | inbox</span>' +
               "</td>" +
@@ -7643,10 +9511,6 @@
             "info"
           );
           this.logHtml(
-            '<span style="color:#FFE66D">💡 Try: <span style="color:#FF9500">python help</span> for trading bot integration</span>',
-            "info"
-          );
-          this.logHtml(
             '<span style="color:#FFE66D">💡 Try: <span style="color:#FF6B35">pgt portfolio</span> for multi-chain portfolio tracking</span>',
             "info"
           );
@@ -7664,7 +9528,7 @@
 
           // Footer with version
           this.logHtml(
-            '<span style="color:#888888">Omega Terminal v2.0.1 - Modern Apple UI • Enhanced Analytics • DeFi Integration • NFT Trading</span>',
+            '<span style="color:#888888">Ω Terminal v2.0.1 - Modern Apple UI • Enhanced Analytics • DeFi Integration • NFT Trading</span>',
             "info"
           );
         }
@@ -7986,6 +9850,15 @@
               logType: type,
             });
           }
+        }
+
+        getTextWidth(text, font) {
+          const canvas =
+            this.canvas || (this.canvas = document.createElement("canvas"));
+          const context = canvas.getContext("2d");
+          context.font = font;
+          const metrics = context.measureText(text);
+          return metrics.width;
         }
 
         clearTerminal() {
@@ -9367,7 +11240,6 @@
             terminal.classList.add("theme-" + theme);
           }
           localStorage.setItem("omega-terminal-theme", theme);
-          this.log(`Theme set to ${theme} mode`, "success");
         }
 
         toggleAIMode() {
@@ -9940,30 +11812,17 @@
 
         // Add this helper method to the class
         async isRealMetaMask() {
-          this.log("DEBUG: isRealMetaMask() called", "info");
-          console.log("[DEBUG] isRealMetaMask() called");
           if (
             typeof window.ethereum !== "undefined" &&
             window.ethereum.isMetaMask
           ) {
             try {
               await window.ethereum.request({ method: "eth_accounts" });
-              this.log("DEBUG: isRealMetaMask() returns true", "info");
-              console.log("[DEBUG] isRealMetaMask() returns true");
               return true;
             } catch (e) {
-              this.log(
-                "DEBUG: eth_accounts call failed, MetaMask not real",
-                "info"
-              );
-              console.log(
-                "[DEBUG] eth_accounts call failed, MetaMask not real"
-              );
               return false;
             }
           }
-          this.log("DEBUG: isRealMetaMask() returns false", "info");
-          console.log("[DEBUG] isRealMetaMask() returns false");
           return false;
         }
 
@@ -11050,7 +12909,6 @@
             this.log("🔗 Omega ENS registration & management", "info");
             this.log("📇 Address book for contacts", "info");
             this.log("💬 Terminal Chatter (Telegram-like)", "info");
-            this.log("🐍 Python script management", "info");
             this.log("🖥️ Fullscreen profile mode", "info");
             this.log("💡 Commands: profile open | profile help", "info");
           }
@@ -13283,14 +15141,14 @@
           terminal.style.height = "";
           terminal.innerHTML = `
                     <div class="terminal-header">
-                        <div class="terminal-title">Omega Terminal v2.0.1</div>
+                        <div class="terminal-title">Ω Terminal v2.0.1</div>
                         <div style="display: flex; align-items: center; gap: 18px; margin-left: auto;">
                             <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">AI Mode (off)</button>
                             <button class="theme-toggle" title="Toggle Theme"></button>
                             <div class="terminal-status" id="connectionStatus">CONNECTED</div>
                         </div>
                     </div>
-                    <div class="tab-bar" id="tabBar" style="display: flex; align-items: center; background: #111; border-bottom: 1px solid #fff;">
+                    <div class="tab-bar" id="tabBar" style="display: flex; align-items: center; background: #111; border-bottom: 1px solid #00bcf2; box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);">
                         <div class="tab active" data-tab="0" style="padding: 8px 18px; cursor: pointer; border-right: 1px solid #333; color: #fff; font-weight: bold;">Terminal 1</div>
                         <div id="addTabBtn" style="padding: 8px 18px; cursor: pointer; color: #00bcf2; font-size: 1.3em;">+</div>
                     </div>
