@@ -68,6 +68,7 @@ test-solana-program/
 omega-referral-clean/
 omega-referral-standalone/
 public/
+docs/
 
 # Office documents
 *.ppt

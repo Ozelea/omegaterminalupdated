@@ -1,40 +1,28 @@
 // Wallet Commands Module
-// CACHE BUST: v2.0.1 - FUNDING RE-ENABLED - 2025-01-14 17:05 - WORKING ENDPOINT CONFIRMED
+// CACHE BUST: v3.0.0 - MULTI-NETWORK SUPPORT - 2025-01-16 - NETWORK SELECTOR ENABLED
 window.OmegaCommands = window.OmegaCommands || {};
 
+console.log('🌐 WALLET COMMANDS v3.0.0 - Multi-Network Support Loaded');
+
 window.OmegaCommands.Wallet = {
-    // Connect wallet command
+    // Connect wallet command - Now uses Multi-Network Connector
     connect: async function(terminal) {
-        console.log('[DEBUG] Connect command detected - calling connectWallet()');
+        console.log('[DEBUG] Connect command detected - showing network selector');
         
-        const hasMetaMask = await OmegaWallet.isRealMetaMask();
-        
-        if (hasMetaMask) {
-            const connected = await OmegaWallet.connectMetaMask(terminal);
-            if (connected) {
-                terminal.updateConnectionStatus('CONNECTED');
-                
-                // Connect mining contract
-                if (OmegaConfig.CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
-                    terminal.contract = new window.ethers.Contract(
-                        OmegaConfig.CONTRACT_ADDRESS, 
-                        OmegaConfig.CONTRACT_ABI, 
-                        OmegaWallet.getSigner()
-                    );
-                    terminal.log('✅ Mining contract connected', 'success');
-                }
-                
-                // Sync wallet state to terminal
-                terminal.provider = OmegaWallet.getProvider();
-                terminal.signer = OmegaWallet.getSigner();
-                terminal.userAddress = OmegaWallet.getCurrentAddress();
-            }
+        // Show multi-network selector modal
+        if (window.MultiNetworkConnector) {
+            MultiNetworkConnector.showNetworkSelector(terminal);
         } else {
-            terminal.log('Error checking wallet connection: MetaMask not detected', 'error');
-            terminal.logHtml('<span class="omega-test-wallet-prompt">Type "yes" to create an Omega Wallet or "import" to import existing wallet</span>', 'info');
-            
-            // Set up wallet creation flow
-            terminal.awaitingWalletChoice = true;
+            // Fallback to old behavior if multi-network not loaded
+            terminal.log('Loading network selector...', 'info');
+            setTimeout(() => {
+                if (window.MultiNetworkConnector) {
+                    MultiNetworkConnector.showNetworkSelector(terminal);
+                } else {
+                    terminal.log('❌ Network selector not available', 'error');
+                    terminal.log('💡 Please refresh the page', 'info');
+                }
+            }, 1000);
         }
     },
 

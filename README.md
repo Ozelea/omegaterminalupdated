@@ -151,19 +151,87 @@ help                         # View all available commands
 
 ```
 omega-terminal/
-├── index.html                     # Main terminal interface
-├── js/
-│   ├── terminal-core.js          # Core terminal logic
-│   ├── commands/                 # Modular command system
-│   ├── wallet.js                 # Wallet connection
-│   └── themes.js                 # Theme management
-├── styles/
-│   ├── base.css                  # Core styling
-│   ├── themes.css                # Color themes
-│   └── animations.css            # Boot animations
-├── relayer-faucet.js             # Backend API server
-├── polymarket-proxy.js           # CORS proxy for Polymarket
-└── README.md                     # This file
+├── index.html                          # Main terminal interface
+├── README.md                           # This file
+├── package.json                        # NPM dependencies
+│
+├── js/                                 # Core JavaScript
+│   ├── terminal-core.js               # Core terminal logic
+│   ├── config.js                      # Configuration
+│   ├── init.js                        # Initialization
+│   ├── wallet.js                      # Wallet connection
+│   ├── themes.js                      # Theme management
+│   ├── utils.js                       # Utility functions
+│   └── commands/                      # Modular command system
+│       ├── basic.js                   # Basic commands
+│       ├── wallet-commands.js         # Wallet operations
+│       ├── mining.js                  # Mining features
+│       ├── network.js                 # Network commands
+│       ├── solana.js                  # Solana integration
+│       ├── near.js                    # NEAR Protocol
+│       ├── eclipse.js                 # Eclipse chain
+│       ├── api.js                     # API integrations
+│       ├── entertainment.js           # Games & fun
+│       ├── kalshi.js                  # Kalshi integration
+│       ├── mixer.js                   # Mixer features
+│       ├── referral.js                # Referral system
+│       └── remaining.js               # Misc commands
+│
+├── styles/                             # Core CSS
+│   ├── base.css                       # Base styling
+│   ├── themes.css                     # Color themes
+│   ├── animations.css                 # Animations
+│   └── gui-themes.css                 # GUI themes
+│
+├── css/                                # Additional CSS
+│   ├── apple-ui-theme.css             # Apple-style UI
+│   ├── mobile-terminal-fix.css        # Mobile fixes
+│   ├── mobile-games-fix.css           # Mobile game fixes
+│   ├── mobile-fixes.css               # General mobile
+│   └── simple-input-fix.css           # Input fixes
+│
+├── plugins/                            # Feature plugins
+│   ├── apple-ui-plugin.js             # Apple UI
+│   ├── dexscreener-analytics-ultimate.js  # DEX analytics
+│   ├── defillama-api-plugin.js        # DeFi Llama
+│   ├── opensea-enhanced-plugin.js     # NFT marketplace
+│   ├── enhanced-profile-system.js     # User profiles
+│   ├── terminal-games-system.js       # Game system
+│   ├── terminal-chatter-mode.js       # Chat mode
+│   ├── omega-nft-onchain.js           # On-chain NFTs
+│   ├── omega-arcade-sdk.js            # Arcade SDK
+│   ├── omega-referral-system.js       # Referrals
+│   ├── pgt-integration-live.js        # PGT integration
+│   ├── pgt-cors-proxy.js              # PGT proxy
+│   └── python-integration-system.js   # Python bridge
+│
+├── server/                             # Backend services
+│   ├── relayer-faucet.js              # Faucet & relayer
+│   ├── polymarket-proxy.js            # Polymarket proxy
+│   ├── bot_hyperliquid.py             # Trading bot
+│   └── omega-network.db               # Database
+│
+├── pages/                              # Standalone pages
+│   ├── index-modular.html             # Modular version
+│   ├── mystery-box.html               # Mystery box game
+│   └── near-auth.html                 # NEAR auth flow
+│
+├── contracts/                          # Smart contracts
+│   ├── megarometoken-optimized.sol    # Token contract
+│   └── rome-username-registry.sol     # Username registry
+│
+└── docs/                               # Documentation
+    ├── API_DOCUMENTATION.md           # API docs
+    ├── SETUP.md                       # Setup guide
+    ├── EXTENSIONS-README.md           # Extensions
+    ├── OMEGA_ARCADE_README.md         # Arcade docs
+    ├── OMEGA-NFT-README.md            # NFT docs
+    ├── REFERRAL-README.md             # Referral docs
+    ├── README-AI-SETUP.md             # AI setup
+    ├── HELP-SYSTEM-UPDATE.md          # Help system
+    ├── DEXSCREENER-ANALYTICS-ULTIMATE-README.md  # DEX docs
+    ├── OMEGA_TERMINAL_COMPLETE_AI_DOCUMENTATION.txt  # Full AI docs
+    └── datav3.md                      # Data specs
 ```
 
 ---
@@ -205,12 +273,12 @@ python -m http.server 8000
 
 **2. Start Polymarket Proxy (Optional):**
 ```bash
-node polymarket-proxy.js
+node server/polymarket-proxy.js
 ```
 
 **3. Start Relayer Server (Optional):**
 ```bash
-node relayer-faucet.js
+node server/relayer-faucet.js
 ```
 
 **4. Open Browser:**
