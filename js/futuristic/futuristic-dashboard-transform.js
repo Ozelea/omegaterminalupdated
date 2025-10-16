@@ -93,7 +93,7 @@
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.showChart('SOL')">
                             <span>→ Solana Chart</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chart', 'Enter symbol (BTC, ETH, etc):')">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chart', 'Enter symbol (BTC, ETH, SOL, etc.) and press Enter:')">
                             <span>→ Custom Chart</span>
                         </button>
                     </div>
@@ -112,7 +112,7 @@
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommand('dexscreener SOL')">
                             <span>→ SOL Analytics</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('dexscreener', 'Enter token symbol:')">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('dexscreener', 'Enter token symbol and press Enter:')">
                             <span>→ Custom Token</span>
                         </button>
                     </div>
@@ -130,7 +130,7 @@
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="pgt" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('pgt track', 'Enter wallet address:')">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('pgt track', 'Enter wallet address and press Enter:')">
                             <span>→ Track New Wallet</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('pgt portfolio')">
@@ -146,6 +146,53 @@
                 </div>
                 
                 <div class="sidebar-section">
+                    <div class="sidebar-title">OMEGA NETWORK</div>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('mine')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M14,2H10L9,3H5V5H19V3H15L14,2M6,7V19C6,20.1 6.9,21 8,21H16C17.1,21 18,20.1 18,19V7H6M8,9H16V19H8V9Z"/></svg>
+                        <span>Start Mining</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('claim')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"/></svg>
+                        <span>Claim Rewards</span>
+                    </button>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'omega-tools')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z"/></svg>
+                        <span>Build Tools</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="omega-tools" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('create')">
+                            <span>→ Create Token</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft')">
+                            <span>→ Create NFT Collection</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('ens register', 'Enter ENS name and press Enter:')">
+                            <span>→ Register ENS Name</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('mixer')">
+                            <span>→ Privacy Mixer</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">TRANSACTIONS</div>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandWithInput('send', 'Enter amount and address (e.g., 1.5 0x123...) and press Enter:')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/></svg>
+                        <span>Send Tokens</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('email')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/></svg>
+                        <span>Send Email</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('inbox')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"/></svg>
+                        <span>View Inbox</span>
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
                     <div class="sidebar-title">NFT & WEB3</div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'nft')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2L13.09,8.26L22,9L13.09,9.74L12,16L10.91,9.74L2,9L10.91,8.26L12,2Z"/></svg>
@@ -154,10 +201,13 @@
                     </button>
                     <div class="sub-actions" data-parent="nft" style="display: none;">
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft')">
-                            <span>→ NFT Explorer</span>
+                            <span>→ Create NFT Collection</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommand('opensea trending')">
                             <span>→ Trending NFTs</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('near agent deploy', 'Enter agent name and press Enter:')">
+                            <span>→ Deploy Shade Agent</span>
                         </button>
                     </div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'solana')">
@@ -166,11 +216,20 @@
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="solana" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommand('solana wallet')">
-                            <span>→ Wallet Info</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('solana connect')">
+                            <span>→ Connect Phantom</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommand('solana balance')">
-                            <span>→ Check Balance</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('solana generate')">
+                            <span>→ Generate Wallet</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('solana status')">
+                            <span>→ Wallet Status</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('solana swap')">
+                            <span>→ Token Swap</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('solana search', 'Enter token name or symbol and press Enter:')">
+                            <span>→ Search Tokens</span>
                         </button>
                     </div>
                 </div>
@@ -345,10 +404,29 @@
         },
         
         executeCommandWithInput: function(baseCmd, promptText) {
-            const input = prompt(promptText);
-            if (input && input.trim()) {
-                this.executeCommandDirect(baseCmd + ' ' + input.trim());
+            // Use terminal's input instead of popup
+            const terminal = window.terminal;
+            const input = document.getElementById('commandInput');
+            
+            if (!terminal || !input) {
+                console.error('Terminal or input not found');
+                return;
             }
+            
+            // Show prompt in terminal
+            terminal.log('💡 ' + promptText, 'info');
+            terminal.log('', 'output');
+            
+            // Pre-fill the command input with the base command and a space
+            input.value = baseCmd + ' ';
+            
+            // Focus the input so user can type
+            input.focus();
+            
+            // Position cursor at the end
+            setTimeout(() => {
+                input.setSelectionRange(input.value.length, input.value.length);
+            }, 0);
         },
         
         sendCommandToTerminal: function(cmd) {

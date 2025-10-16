@@ -1348,17 +1348,8 @@
     <!-- Boot Animation -->
     <div class="boot-animation" id="bootAnimation">
       <div class="omega-container">
-        <div class="omega-main">Ω</div>
-        <div class="omega-orbit">
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-          <div class="omega-orbit-symbol">Ω</div>
-        </div>
+        <div class="omega-main" style="color: #ffffff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);">Ω</div>
+        <!-- Removed omega-orbit circle for clean logo -->
       </div>
       <div class="welcome-container">
         <div class="welcome-title">OMEGA TERMINAL</div>
@@ -4365,6 +4356,15 @@
                 }
                 return;
               }
+              
+              // Forward unknown Solana subcommands to the modular system
+              if (window.OmegaCommands && window.OmegaCommands.Solana && window.OmegaCommands.Solana.solana) {
+                await window.OmegaCommands.Solana.solana(this, args);
+              } else {
+                this.log('Unknown solana command. Type "solana" for help.', 'error');
+              }
+              return;
+              
             case "near":
               this.log("Near Intents command detected!", "info");
 

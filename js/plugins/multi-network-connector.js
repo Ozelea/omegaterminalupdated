@@ -80,8 +80,9 @@ window.MultiNetworkConnector = {
             rpcUrl: 'https://rpc.omegaminer.net',
             currency: { name: 'Omega', symbol: 'OMEGA', decimals: 18 },
             explorerUrl: 'https://0x4e454228.explorer.aurora-cloud.dev',
-            icon: '⚡',
-            logo: 'https://avatars.githubusercontent.com/u/143421828?s=200&v=4',
+            icon: 'Ω',
+            logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0id2hpdGUiLz4KICA8dGV4dCB4PSI1MCIgeT0iNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzZXJpZixUaW1lcyBOZXcgUm9tYW4iIGZvbnQtc2l6ZT0iNjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMDBmZjg4Ij7OqTwvdGV4dD4KPC9zdmc+',
+            useSVG: true,
             walletType: 'metamask'
         },
         solana: {
@@ -155,6 +156,35 @@ window.MultiNetworkConnector = {
 
     renderNetworkButton: function(networkKey, terminal) {
         const network = this.networks[networkKey];
+        
+        // Special handling for Omega Network - always show Ω symbol
+        if (networkKey === 'omega') {
+            return `
+                <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)">
+                    <div class="network-logo-wrapper">
+                        <div class="network-icon omega-network-icon" style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 48px;
+                            height: 48px;
+                            background: #000000;
+                            border-radius: 50%;
+                            font-size: 32px;
+                            font-weight: bold;
+                            font-family: serif, 'Times New Roman';
+                            color: #ffffff;
+                            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+                            border: 2px solid #ffffff;
+                        ">Ω</div>
+                    </div>
+                    <div class="network-name">${network.name}</div>
+                    <div class="network-symbol">${network.currency.symbol}</div>
+                </button>
+            `;
+        }
+        
+        // Standard rendering for other networks
         return `
             <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)">
                 <div class="network-logo-wrapper">
@@ -263,9 +293,40 @@ window.MultiNetworkConnector = {
             terminal.log(`👛 Address: ${this.formatAddress(accounts[0])}`, 'info');
             terminal.log('', 'info');
             
-            // Update terminal state
-            terminal.currentNetwork = network;
-            terminal.userAddress = accounts[0];
+            // CRITICAL FIX: Sync wallet state with OmegaWallet AND terminal
+            // This ensures all commands (mine, balance, etc.) can access wallet
+            if (window.ethers) {
+                const provider = new window.ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                
+                // Update OmegaWallet global state
+                if (window.OmegaWallet) {
+                    window.OmegaWallet.provider = provider;
+                    window.OmegaWallet.signer = signer;
+                    window.OmegaWallet.userAddress = accounts[0];
+                    console.log('[MultiNetworkConnector] Synced OmegaWallet state:', accounts[0]);
+                }
+                
+                // Update terminal state
+                terminal.provider = provider;
+                terminal.signer = signer;
+                terminal.userAddress = accounts[0];
+                terminal.currentNetwork = network;
+                
+                // Connect mining contract if on Omega network
+                if (network.chainId === '0x4e454228' && window.OmegaConfig) {
+                    try {
+                        terminal.contract = new window.ethers.Contract(
+                            window.OmegaConfig.CONTRACT_ADDRESS,
+                            window.OmegaConfig.CONTRACT_ABI,
+                            signer
+                        );
+                        terminal.log('⛏️  Mining contract connected!', 'success');
+                    } catch (err) {
+                        console.error('Failed to connect mining contract:', err);
+                    }
+                }
+            }
             
             // Update both terminal and futuristic dashboard status
             if (terminal.updateConnectionStatus) {

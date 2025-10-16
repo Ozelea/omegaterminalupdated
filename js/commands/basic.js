@@ -59,8 +59,9 @@ window.OmegaCommands.Basic = {
         terminal.log('  ens resolve <name>   Resolve Omega ENS to address');
         terminal.log('  ens search <name>    Search for Omega ENS name');
         terminal.log('');
-        terminal.log('🏭 TOKEN CREATION:', 'info');
+        terminal.log('🏭 TOKEN & NFT CREATION:', 'info');
         terminal.log('  create               Deploy your own ERC20 token');
+        terminal.log('  nft                  Deploy your own NFT collection (ERC721)');
         terminal.log('');
         terminal.log('📊 MARKET DATA:', 'info');
         terminal.log('  ds search <token>    DexScreener token search');
@@ -92,6 +93,9 @@ window.OmegaCommands.Basic = {
         terminal.log('🏛️ ROME NETWORK:', 'info');
         terminal.log('  rome help            Show Rome Network commands');
         terminal.log('  rome token create    Create a new token on Rome Network');
+        terminal.log('');
+        terminal.log('👤 PROFILE:', 'info');
+        terminal.log('  profile              Open enhanced profile manager');
         terminal.log('');
         terminal.log('🎮 ENTERTAINMENT:', 'info');
         terminal.log('  rickroll, matrix, hack, disco, fortune');

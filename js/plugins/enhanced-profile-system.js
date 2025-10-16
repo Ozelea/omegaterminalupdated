@@ -190,443 +190,800 @@ console.log('🔧 Loading Enhanced Profile System...');
         if (existingSidebar) existingSidebar.remove();
         
             const sidebarHtml = `
+                <style>
+                    @keyframes pulse-glow {
+                        0%, 100% {
+                            opacity: 1;
+                            text-shadow: 0 0 20px var(--matrix-green, #00ff88), 0 2px 4px rgba(0, 0, 0, 0.8);
+                        }
+                        50% {
+                            opacity: 0.7;
+                            text-shadow: 0 0 30px var(--matrix-green, #00ff88), 0 2px 4px rgba(0, 0, 0, 0.8);
+                        }
+                    }
+                    
+                    #enhanced-profile-sidebar::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    
+                    #enhanced-profile-sidebar::-webkit-scrollbar-track {
+                        background: rgba(0, 0, 0, 0.3);
+                    }
+                    
+                    #enhanced-profile-sidebar::-webkit-scrollbar-thumb {
+                        background: var(--matrix-green, #00ff88);
+                        opacity: 0.4;
+                        border-radius: 4px;
+                    }
+                    
+                    #enhanced-profile-sidebar::-webkit-scrollbar-thumb:hover {
+                        opacity: 0.6;
+                    }
+                </style>
                 <div id="enhanced-profile-sidebar" style="
                     position: fixed;
                     right: -450px;
                     top: 0;
                     width: 450px;
                     height: 100vh;
-                    background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(28, 28, 30, 0.95));
+                    background: linear-gradient(135deg, var(--void-black, #0a0a0f), var(--deep-space, #0f0f1a));
                     backdrop-filter: blur(40px);
-                    border-left: 1px solid rgba(255, 255, 255, 0.1);
-                    box-shadow: -4px 0 32px rgba(0, 0, 0, 0.3);
+                    border-left: 2px solid var(--matrix-green, #00ff88);
+                    box-shadow: -8px 0 40px rgba(0, 255, 136, 0.2), -4px 0 32px rgba(0, 0, 0, 0.5);
                     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
                     z-index: 10000;
                     overflow-y: auto;
-                    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+                    font-family: var(--font-mono, 'Courier New', monospace);
                 ">
                     <!-- Header -->
                     <div style="
-                        background: linear-gradient(135deg, #1C1C1E, #2C2C2E);
+                        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(18, 18, 18, 0.95));
                         color: white;
                         padding: 24px;
                         text-align: center;
                         position: relative;
-                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                        border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+                        box-shadow: 0 4px 24px rgba(0, 255, 65, 0.15);
                     ">
                         <div style="
                             font-size: 1.6em;
                             font-weight: 800;
                             margin-bottom: 8px;
-                            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-                        ">👤 Enhanced Profile</div>
+                            color: var(--matrix-green, #00ff88);
+                            text-shadow: 0 0 20px rgba(0, 255, 136, 0.6), 0 2px 4px rgba(0, 0, 0, 0.8);
+                            font-family: var(--font-mono, 'Courier New', monospace);
+                            letter-spacing: 2px;
+                            text-transform: uppercase;
+                        ">
+                            <span style="display: inline-block; animation: pulse-glow 2s ease-in-out infinite;">▶</span> USER PROFILE
+                        </div>
                         <div style="
-                            font-size: 1em;
-                            opacity: 0.8;
+                            font-size: 0.9em;
+                            color: var(--cyber-blue, #00d4ff);
                             font-weight: 500;
-                        ">ENS Registration & Address Book</div>
+                            font-family: var(--font-mono, 'Courier New', monospace);
+                            letter-spacing: 1px;
+                        ">[ SYSTEM ACCESS CONTROL ]</div>
                     
                     <button onclick="closeEnhancedProfile()" style="
                         position: absolute;
                         top: 16px;
                         right: 16px;
-                        background: rgba(255, 255, 255, 0.2);
-                        color: white;
-                        border: none;
-                        padding: 10px;
-                        border-radius: 50%;
+                        background: var(--danger-red, #ff3366);
+                        color: #fff;
+                        border: 1px solid var(--danger-red, #ff3366);
+                        padding: 8px;
+                        border-radius: var(--radius-md, 8px);
                         cursor: pointer;
                         font-size: 1em;
-                        width: 32px;
-                        height: 32px;
+                        width: 36px;
+                        height: 36px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        transition: all 0.2s ease;
-                    " onmouseover="this.style.background='rgba(255, 255, 255, 0.3)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.2)'">✕</button>
+                        transition: all var(--transition-fast, 0.15s);
+                        font-weight: bold;
+                        box-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+                    " onmouseover="this.style.boxShadow='0 0 20px rgba(255, 51, 102, 0.7)'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px rgba(255, 51, 102, 0.4)'; this.style.transform='scale(1)'">✕</button>
                     
                     <button onclick="toggleFullscreen()" style="
                         position: absolute;
                         top: 16px;
-                        right: 60px;
-                        background: rgba(255, 255, 255, 0.2);
-                        color: white;
-                        border: none;
-                        padding: 10px;
-                        border-radius: 50%;
+                        right: 64px;
+                        background: var(--cyber-blue, #00d4ff);
+                        color: #000;
+                        border: 1px solid var(--cyber-blue, #00d4ff);
+                        padding: 8px;
+                        border-radius: var(--radius-md, 8px);
                         cursor: pointer;
                         font-size: 1em;
-                        width: 32px;
-                        height: 32px;
+                        width: 36px;
+                        height: 36px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        transition: all 0.2s ease;
-                    " onmouseover="this.style.background='rgba(255, 255, 255, 0.3)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.2)'" title="Toggle Fullscreen">🖥️</button>
+                        transition: all var(--transition-fast, 0.15s);
+                        font-weight: bold;
+                        box-shadow: 0 0 10px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3));
+                    " onmouseover="this.style.boxShadow='0 0 20px var(--cyber-blue-glow, rgba(0, 212, 255, 0.6))'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3))'; this.style.transform='scale(1)'" title="Toggle Fullscreen">🖥️</button>
                 </div>
                 
                 <div style="padding: 24px;">
                     
-                    <!-- Profile Picture Section -->
-                    <div style="text-align: center; margin-bottom: 24px;">
-                        <div id="enhanced-profile-pic" onclick="document.getElementById('enhanced-img-upload').click()" style="
-                            width: 100px;
-                            height: 100px;
-                            background: linear-gradient(135deg, #F5F5F7, #E5E5EA);
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 2.5em;
-                            cursor: pointer;
-                            margin: 0 auto 12px;
-                            border: 3px solid rgba(0, 0, 0, 0.1);
-                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-                            transition: all 0.3s ease;
-                            overflow: hidden;
-                            color: #8E8E93;
-                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">👤</div>
-                        
-                        <button onclick="document.getElementById('enhanced-img-upload').click()" style="
-                            background: linear-gradient(135deg, #007AFF, #5AC8FA);
-                            color: white;
-                            border: none;
-                            padding: 8px 16px;
-                            border-radius: 12px;
-                            font-size: 0.85em;
-                            font-weight: 600;
-                            cursor: pointer;
-                            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
-                        ">📷 Upload Picture</button>
-                        
-                        <input type="file" id="enhanced-img-upload" accept="image/*" style="display: none;" onchange="uploadEnhancedImage(this)">
-                    </div>
-                    
-                    <!-- Profile Information -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">📝 Profile Information</div>
-                        
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">👤 Username</label>
-                            <input type="text" id="enhanced-username" placeholder="Enter your username" style="
-                                width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
-                                box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateProfileField('username', this.value)">
+                    <!-- Profile Card Section - Redesigned -->
+                    <div style="
+                        background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 212, 255, 0.05));
+                        border: 1px solid rgba(0, 255, 136, 0.3);
+                        border-radius: var(--radius-xl, 16px);
+                        padding: 24px;
+                        margin-bottom: 32px;
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 136, 0.1);
+                    ">
+                        <!-- Profile Picture with Modern Card Design -->
+                        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+                            <!-- Avatar Container -->
+                            <div style="position: relative; flex-shrink: 0;">
+                                <div id="enhanced-profile-pic" onclick="document.getElementById('enhanced-img-upload').click()" style="
+                                    width: 120px;
+                                    height: 120px;
+                                    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 3em;
+                                    cursor: pointer;
+                                    border: 3px solid var(--matrix-green, #00ff88);
+                                    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2);
+                                    transition: all var(--transition-normal, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+                                    overflow: hidden;
+                                    color: var(--matrix-green, #00ff88);
+                                    position: relative;
+                                " onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.2)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 30px rgba(0, 255, 136, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2)'">
+                                    <span style="position: relative; z-index: 2;">👤</span>
+                                    <div style="
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        right: 0;
+                                        bottom: 0;
+                                        background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1), transparent);
+                                        z-index: 1;
+                                    "></div>
+                                </div>
+                                
+                                <!-- Upload Badge -->
+                                <div onclick="document.getElementById('enhanced-img-upload').click()" style="
+                                    position: absolute;
+                                    bottom: 0;
+                                    right: 0;
+                                    background: linear-gradient(135deg, var(--matrix-green, #00ff88), var(--cyber-blue, #00d4ff));
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    cursor: pointer;
+                                    border: 3px solid var(--void-black, #0a0a0f);
+                                    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+                                    transition: all var(--transition-fast, 0.2s);
+                                    font-size: 1.2em;
+                                " onmouseover="this.style.transform='scale(1.1) rotate(15deg)'; this.style.boxShadow='0 6px 16px rgba(0, 255, 136, 0.6)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'; this.style.boxShadow='0 4px 12px rgba(0, 255, 136, 0.4)'">
+                                    📷
+                                </div>
+                                
+                                <input type="file" id="enhanced-img-upload" accept="image/*" style="display: none;" onchange="uploadEnhancedImage(this)">
+                            </div>
+                            
+                            <!-- User Info Card -->
+                            <div style="flex: 1; min-width: 0;">
+                                <div id="profile-username-display" style="
+                                    font-size: 1.5em;
+                                    font-weight: 800;
+                                    color: var(--matrix-green, #00ff88);
+                                    margin-bottom: 6px;
+                                    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                                    letter-spacing: 0.5px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                ">Anonymous User</div>
+                                
+                                <div id="profile-wallet-display" style="
+                                    font-size: 0.85em;
+                                    color: rgba(255, 255, 255, 0.6);
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    margin-bottom: 8px;
+                                    padding: 6px 10px;
+                                    background: rgba(0, 0, 0, 0.3);
+                                    border-radius: var(--radius-md, 8px);
+                                    border: 1px solid rgba(0, 255, 136, 0.2);
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                ">🔐 No wallet connected</div>
+                                
+                                <div id="profile-ens-display" style="
+                                    font-size: 0.85em;
+                                    color: var(--cyber-blue, #00d4ff);
+                                    padding: 4px 10px;
+                                    background: rgba(0, 212, 255, 0.1);
+                                    border-radius: var(--radius-md, 8px);
+                                    border: 1px solid rgba(0, 212, 255, 0.3);
+                                    display: inline-block;
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                ">📛 No ENS name</div>
+                            </div>
                         </div>
                         
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">📧 Email</label>
-                            <input type="email" id="enhanced-email" placeholder="Enter your email" style="
-                                width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
-                                box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateProfileField('email', this.value)">
+                        <!-- Divider -->
+                        <div style="
+                            height: 1px;
+                            background: linear-gradient(to right, transparent, var(--matrix-green, #00ff88), transparent);
+                            opacity: 0.3;
+                            margin: 24px 0;
+                        "></div>
+                        
+                        <!-- Profile Information Fields -->
+                        <div style="margin-bottom: 0;">
+                            <div style="
+                                font-size: 1.1em;
+                                font-weight: 700;
+                                color: var(--matrix-green, #00ff88);
+                                margin-bottom: 16px;
+                                text-transform: uppercase;
+                                letter-spacing: 1.5px;
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                                font-family: var(--font-mono, 'Courier New', monospace);
+                            ">
+                                <span style="font-size: 1.2em;">📝</span>
+                                <span>Profile Information</span>
+                            </div>
+                            
+                            <!-- Username Field -->
+                            <div style="margin-bottom: 16px;">
+                                <label style="
+                                    display: block;
+                                    color: rgba(255, 255, 255, 0.9);
+                                    font-weight: 600;
+                                    margin-bottom: 8px;
+                                    font-size: 0.9em;
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    letter-spacing: 0.5px;
+                                ">
+                                    <span style="color: var(--matrix-green, #00ff88);">▶</span> USERNAME
+                                </label>
+                                <div style="position: relative;">
+                                    <span style="
+                                        position: absolute;
+                                        left: 14px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        font-size: 1.1em;
+                                        z-index: 2;
+                                    ">👤</span>
+                                    <input type="text" id="enhanced-username" placeholder="Enter your username" style="
+                                        width: 100%;
+                                        padding: 14px 16px 14px 44px;
+                                        border: 1px solid rgba(0, 255, 136, 0.3);
+                                        border-radius: var(--radius-md, 8px);
+                                        font-size: 1em;
+                                        background: rgba(0, 0, 0, 0.4);
+                                        color: var(--matrix-green, #00ff88);
+                                        transition: all var(--transition-normal, 0.3s);
+                                        box-sizing: border-box;
+                                        font-family: var(--font-mono, 'Courier New', monospace);
+                                        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+                                    " onfocus="this.style.border='1px solid var(--matrix-green, #00ff88)'; this.style.boxShadow='inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 255, 136, 0.3)'" onblur="this.style.border='1px solid rgba(0, 255, 136, 0.3)'; this.style.boxShadow='inset 0 2px 8px rgba(0, 0, 0, 0.3)'" onchange="updateProfileField('username', this.value)">
+                                </div>
+                            </div>
+                            
+                            <!-- Email Field -->
+                            <div style="margin-bottom: 16px;">
+                                <label style="
+                                    display: block;
+                                    color: rgba(255, 255, 255, 0.9);
+                                    font-weight: 600;
+                                    margin-bottom: 8px;
+                                    font-size: 0.9em;
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    letter-spacing: 0.5px;
+                                ">
+                                    <span style="color: var(--cyber-blue, #00d4ff);">▶</span> EMAIL
+                                </label>
+                                <div style="position: relative;">
+                                    <span style="
+                                        position: absolute;
+                                        left: 14px;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        font-size: 1.1em;
+                                        z-index: 2;
+                                    ">📧</span>
+                                    <input type="email" id="enhanced-email" placeholder="user@omega.network" style="
+                                        width: 100%;
+                                        padding: 14px 16px 14px 44px;
+                                        border: 1px solid rgba(0, 212, 255, 0.3);
+                                        border-radius: var(--radius-md, 8px);
+                                        font-size: 1em;
+                                        background: rgba(0, 0, 0, 0.4);
+                                        color: var(--cyber-blue, #00d4ff);
+                                        transition: all var(--transition-normal, 0.3s);
+                                        box-sizing: border-box;
+                                        font-family: var(--font-mono, 'Courier New', monospace);
+                                        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+                                    " onfocus="this.style.border='1px solid var(--cyber-blue, #00d4ff)'; this.style.boxShadow='inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3))'" onblur="this.style.border='1px solid rgba(0, 212, 255, 0.3)'; this.style.boxShadow='inset 0 2px 8px rgba(0, 0, 0, 0.3)'" onchange="updateProfileField('email', this.value)">
+                                </div>
+                            </div>
+                            
+                            <!-- Connected Wallet Display -->
+                            <div style="margin-top: 16px; padding: 12px; background: rgba(0, 0, 0, 0.5); border-radius: var(--radius-md, 8px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="font-size: 0.85em; color: rgba(255, 255, 255, 0.5); margin-bottom: 6px; font-family: var(--font-mono, 'Courier New', monospace);">WALLET ADDRESS</div>
+                                <div id="profile-wallet-address" style="
+                                    font-size: 0.9em;
+                                    color: var(--matrix-green, #00ff88);
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    word-break: break-all;
+                                    padding: 8px;
+                                    background: rgba(0, 255, 136, 0.05);
+                                    border-radius: var(--radius-sm, 4px);
+                                    border: 1px solid rgba(0, 255, 136, 0.2);
+                                ">Not connected</div>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Omega ENS Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">🔗 Omega ENS</div>
+                    <div style="
+                        margin-bottom: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(0, 191, 255, 0.3);
+                        border-radius: 12px;
+                        padding: 20px;
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="
+                            font-size: 1.1em;
+                            font-weight: 700;
+                            color: #00bfff;
+                            margin-bottom: 16px;
+                            text-transform: uppercase;
+                            letter-spacing: 1.5px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-family: 'Courier New', monospace;
+                        ">
+                            <span style="font-size: 1.3em;">🔗</span>
+                            <span>OMEGA ENS REGISTRY</span>
+                        </div>
                         
                         <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🏷️ ENS Name</label>
+                            <label style="
+                                display: block;
+                                color: rgba(255, 255, 255, 0.8);
+                                font-weight: 600;
+                                margin-bottom: 8px;
+                                font-size: 0.85em;
+                                font-family: 'Courier New', monospace;
+                                letter-spacing: 0.5px;
+                            ">
+                                <span style="color: #00bfff;">▶</span> ENS NAME
+                            </label>
                             <div style="display: flex; gap: 8px;">
-                                <input type="text" id="enhanced-ens-name" placeholder="Enter ENS name" style="
+                                <input type="text" id="enhanced-ens-name" placeholder="yourname.omega" style="
                                     flex: 1;
-                                    padding: 12px 16px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 12px;
-                                    font-size: 1em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                    transition: all 0.2s ease;
+                                    padding: 12px 14px;
+                                    border: 1px solid rgba(0, 191, 255, 0.4);
+                                    border-radius: 8px;
+                                    font-size: 0.95em;
+                                    background: rgba(0, 0, 0, 0.5);
+                                    color: #00bfff;
+                                    transition: all 0.3s ease;
                                     box-sizing: border-box;
-                                " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'">
+                                    font-family: 'Courier New', monospace;
+                                    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                                " onfocus="this.style.border='1px solid rgba(0, 191, 255, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 191, 255, 0.4)'" onblur="this.style.border='1px solid rgba(0, 191, 255, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'">
                                 <button onclick="registerENSFromProfile()" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 12px 20px;
-                                    border-radius: 12px;
+                                    background: linear-gradient(135deg, var(--matrix-green, #00ff88), #00cc66);
+                                    color: #000;
+                                    border: 1px solid var(--matrix-green, #00ff88);
+                                    padding: 12px 24px;
+                                    border-radius: var(--radius-md, 8px);
                                     font-size: 0.9em;
-                                    font-weight: 600;
+                                    font-weight: 700;
                                     cursor: pointer;
-                                    box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+                                    box-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
                                     white-space: nowrap;
-                                ">Register</button>
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    letter-spacing: 1px;
+                                    transition: all var(--transition-fast, 0.2s);
+                                " onmouseover="this.style.boxShadow='0 0 24px rgba(0, 255, 136, 0.6)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 16px rgba(0, 255, 136, 0.4)'; this.style.transform='translateY(0)'">REGISTER</button>
                             </div>
                         </div>
                         
                         <div id="ens-status" style="
-                            padding: 12px;
-                            border-radius: 12px;
-                            background: rgba(255, 255, 255, 0.05);
+                            padding: 14px;
+                            border-radius: 8px;
+                            background: rgba(255, 149, 0, 0.1);
                             font-size: 0.9em;
-                            color: #FF9500;
-                            border: 1px solid rgba(255, 149, 0, 0.2);
+                            color: #ffaa00;
+                            border: 1px solid rgba(255, 149, 0, 0.3);
+                            font-family: 'Courier New', monospace;
+                            text-align: center;
                         ">
-                            ⚠️ No ENS registered
+                            <span style="font-size: 1.2em;">⚠️</span> No ENS registered<br>
+                            <span style="font-size: 0.85em; opacity: 0.8;">Register an ENS name to get started</span>
                         </div>
                     </div>
                     
                     <!-- Address Book Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">📇 Address Book</div>
+                    <div style="
+                        margin-bottom: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(138, 43, 226, 0.3);
+                        border-radius: 12px;
+                        padding: 20px;
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="
+                            font-size: 1.1em;
+                            font-weight: 700;
+                            color: #ba55d3;
+                            margin-bottom: 16px;
+                            text-transform: uppercase;
+                            letter-spacing: 1.5px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-family: 'Courier New', monospace;
+                        ">
+                            <span style="font-size: 1.3em;">📇</span>
+                            <span>ADDRESS BOOK</span>
+                        </div>
                         
                         <div style="margin-bottom: 16px;">
-                            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
                                 <input type="text" id="address-book-name" placeholder="Contact name" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    padding: 12px 14px;
+                                    border: 1px solid rgba(138, 43, 226, 0.4);
                                     border-radius: 8px;
                                     font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                ">
-                                <input type="text" id="address-book-address" placeholder="Address/ENS" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    background: rgba(0, 0, 0, 0.5);
+                                    color: #ba55d3;
+                                    font-family: 'Courier New', monospace;
+                                    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                                    transition: all 0.3s ease;
+                                " onfocus="this.style.border='1px solid rgba(186, 85, 211, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(186, 85, 211, 0.4)'" onblur="this.style.border='1px solid rgba(138, 43, 226, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'">
+                                <input type="text" id="address-book-address" placeholder="0x... or name.omega" style="
+                                    padding: 12px 14px;
+                                    border: 1px solid rgba(138, 43, 226, 0.4);
                                     border-radius: 8px;
                                     font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                ">
+                                    background: rgba(0, 0, 0, 0.5);
+                                    color: #ba55d3;
+                                    font-family: 'Courier New', monospace;
+                                    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                                    transition: all 0.3s ease;
+                                " onfocus="this.style.border='1px solid rgba(186, 85, 211, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(186, 85, 211, 0.4)'" onblur="this.style.border='1px solid rgba(138, 43, 226, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'">
                                 <button onclick="addToAddressBookFromProfile()" style="
-                                    background: linear-gradient(135deg, #007AFF, #5AC8FA);
+                                    width: 100%;
+                                    background: linear-gradient(135deg, var(--neon-purple, #9d00ff), #7700cc);
                                     color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
+                                    border: 1px solid var(--neon-purple, #9d00ff);
+                                    padding: 12px;
+                                    border-radius: var(--radius-md, 8px);
                                     font-size: 0.9em;
-                                    font-weight: 600;
+                                    font-weight: 700;
                                     cursor: pointer;
-                                ">Add</button>
+                                    font-family: var(--font-mono, 'Courier New', monospace);
+                                    letter-spacing: 1px;
+                                    box-shadow: 0 0 12px rgba(157, 0, 255, 0.3);
+                                    transition: all var(--transition-fast, 0.2s);
+                                " onmouseover="this.style.boxShadow='0 0 20px rgba(157, 0, 255, 0.5)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 12px rgba(157, 0, 255, 0.3)'; this.style.transform='translateY(0)'">+ ADD CONTACT</button>
                             </div>
                         </div>
                         
-                        <div id="address-book-list" style="max-height: 200px; overflow-y: auto;">
+                        <div id="address-book-list" style="
+                            max-height: 200px;
+                            overflow-y: auto;
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 8px;
+                            border: 1px solid rgba(138, 43, 226, 0.2);
+                        ">
                             <!-- Address book entries will be populated here -->
                         </div>
                     </div>
                     
                     <!-- Terminal Chatter Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">💬 Terminal Chatter</div>
+                    <div style="
+                        margin-bottom: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(255, 105, 180, 0.3);
+                        border-radius: 12px;
+                        padding: 20px;
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="
+                            font-size: 1.1em;
+                            font-weight: 700;
+                            color: #ff69b4;
+                            margin-bottom: 16px;
+                            text-transform: uppercase;
+                            letter-spacing: 1.5px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-family: 'Courier New', monospace;
+                        ">
+                            <span style="font-size: 1.3em;">💬</span>
+                            <span>TERMINAL CHATTER</span>
+                        </div>
                         
                         <div style="margin-bottom: 16px;">
                             <div style="
                                 padding: 16px;
-                                border-radius: 12px;
-                                background: rgba(0, 122, 255, 0.1);
-                                border: 1px solid rgba(0, 122, 255, 0.2);
+                                border-radius: 8px;
+                                background: rgba(255, 105, 180, 0.1);
+                                border: 1px solid rgba(255, 105, 180, 0.3);
                                 margin-bottom: 12px;
                             ">
-                                <div style="color: #007AFF; font-weight: 600; margin-bottom: 8px;">🚀 Telegram-like Chat</div>
-                                <div style="color: #8E8E93; font-size: 0.9em; line-height: 1.4;">
+                                <div style="color: #ff69b4; font-weight: 700; margin-bottom: 8px; font-family: 'Courier New', monospace;">🚀 TELEGRAM-STYLE CHAT</div>
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.85em; line-height: 1.5; font-family: 'Courier New', monospace;">
                                     Join the Omega Terminal community chat! Real-time messaging with other users.
                                 </div>
                             </div>
                             
                             <button onclick="openChatFromProfile()" style="
                                 width: 100%;
-                                background: linear-gradient(135deg, #007AFF, #5AC8FA);
+                                background: linear-gradient(135deg, var(--neon-pink, #ff0099), #ff33aa);
                                 color: white;
-                                border: none;
+                                border: 1px solid var(--neon-pink, #ff0099);
                                 padding: 16px;
-                                border-radius: 12px;
-                                font-size: 1.1em;
+                                border-radius: var(--radius-md, 8px);
+                                font-size: 1em;
                                 font-weight: 700;
                                 cursor: pointer;
-                                box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
-                                transition: all 0.2s ease;
-                            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                                💬 Open Terminal Chatter
+                                box-shadow: 0 0 16px rgba(255, 0, 153, 0.4);
+                                transition: all var(--transition-fast, 0.2s);
+                                font-family: var(--font-mono, 'Courier New', monospace);
+                                letter-spacing: 1px;
+                            " onmouseover="this.style.boxShadow='0 0 24px rgba(255, 0, 153, 0.6)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 16px rgba(255, 0, 153, 0.4)'; this.style.transform='translateY(0)'">
+                                ▶ OPEN CHATTER
                             </button>
                         </div>
                         
                         <div style="
                             padding: 12px;
-                            border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.05);
-                            font-size: 0.9em;
-                            color: #8E8E93;
+                            border-radius: 6px;
+                            background: rgba(0, 0, 0, 0.4);
+                            font-size: 0.85em;
+                            color: rgba(255, 255, 255, 0.6);
+                            font-family: 'Courier New', monospace;
+                            border: 1px solid rgba(255, 105, 180, 0.2);
                         ">
-                            <div style="margin-bottom: 8px;">💡 Quick Commands:</div>
-                            <div style="margin-left: 12px;">
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">chat</code> - Open chat</div>
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">chat settings</code> - Settings</div>
-                                <div>• <code style="background: rgba(255, 255, 255, 0.1); padding: 2px 6px; border-radius: 4px;">chat help</code> - Help</div>
+                            <div style="margin-bottom: 8px; color: #ff69b4; font-weight: 700;">[ QUICK COMMANDS ]</div>
+                            <div style="margin-left: 12px; line-height: 1.8;">
+                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat</code> - Open chat</div>
+                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat settings</code> - Settings</div>
+                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat help</code> - Help</div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Python Scripts Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">🐍 Python Scripts</div>
+                    <div style="
+                        margin-bottom: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(255, 215, 0, 0.3);
+                        border-radius: 12px;
+                        padding: 20px;
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="
+                            font-size: 1.1em;
+                            font-weight: 700;
+                            color: #ffd700;
+                            margin-bottom: 16px;
+                            text-transform: uppercase;
+                            letter-spacing: 1.5px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-family: 'Courier New', monospace;
+                        ">
+                            <span style="font-size: 1.3em;">🐍</span>
+                            <span>PYTHON SCRIPTS</span>
+                        </div>
                         
                         <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">📁 Upload Python Script</label>
+                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 8px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
+                                <span style="color: #ffd700;">▶</span> UPLOAD SCRIPT (.py)
+                            </label>
                             <input type="file" id="python-script-upload" accept=".py" style="
                                 width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
+                                padding: 12px 14px;
+                                border: 1px solid rgba(255, 215, 0, 0.4);
+                                border-radius: 8px;
+                                font-size: 0.9em;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: #ffd700;
+                                transition: all 0.3s ease;
                                 box-sizing: border-box;
+                                font-family: 'Courier New', monospace;
+                                cursor: pointer;
                             " onchange="uploadPythonScript(this)">
                         </div>
                         
-                        <div style="margin-bottom: 16px;">
-                            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                                <input type="text" id="python-script-name" placeholder="Script name" style="
-                                    flex: 1;
-                                    padding: 10px 12px;
-                                    border: 1px solid rgba(255, 255, 255, 0.2);
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    background: rgba(28, 28, 30, 0.8);
-                                    color: white;
-                                ">
-                                <button onclick="createPythonScript()" style="
-                                    background: linear-gradient(135deg, #34C759, #30D158);
-                                    color: white;
-                                    border: none;
-                                    padding: 10px 16px;
-                                    border-radius: 8px;
-                                    font-size: 0.9em;
-                                    font-weight: 600;
-                                    cursor: pointer;
-                                ">Create</button>
-                            </div>
-                        </div>
-                        
-                        <div id="python-scripts-list" style="max-height: 200px; overflow-y: auto;">
+                        <div id="python-scripts-list" style="
+                            max-height: 200px;
+                            overflow-y: auto;
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 8px;
+                            border: 1px solid rgba(255, 215, 0, 0.2);
+                            margin-bottom: 12px;
+                        ">
                             <!-- Python scripts will be populated here -->
                         </div>
                         
-                        <div style="margin-top: 12px;">
+                        <div style="display: flex; gap: 8px;">
                             <button onclick="runPythonScriptFromProfile()" style="
-                                background: linear-gradient(135deg, #007AFF, #5AC8FA);
-                                color: white;
-                                border: none;
-                                padding: 10px 16px;
-                                border-radius: 8px;
+                                flex: 1;
+                                background: linear-gradient(135deg, var(--matrix-green, #00ff88), #00cc66);
+                                color: #000;
+                                border: 1px solid var(--matrix-green, #00ff88);
+                                padding: 12px;
+                                border-radius: var(--radius-md, 8px);
                                 font-size: 0.9em;
-                                font-weight: 600;
+                                font-weight: 700;
                                 cursor: pointer;
-                                margin-right: 8px;
-                            ">▶️ Run Selected</button>
+                                font-family: var(--font-mono, 'Courier New', monospace);
+                                box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+                                transition: all var(--transition-fast, 0.2s);
+                            " onmouseover="this.style.boxShadow='0 0 20px rgba(0, 255, 136, 0.5)'" onmouseout="this.style.boxShadow='0 0 12px rgba(0, 255, 136, 0.3)'">▶ RUN</button>
                             
                             <button onclick="deletePythonScriptFromProfile()" style="
-                                background: #FF3B30;
+                                flex: 1;
+                                background: linear-gradient(135deg, var(--danger-red, #ff3366), #ff4477);
                                 color: white;
-                                border: none;
-                                padding: 10px 16px;
-                                border-radius: 8px;
+                                border: 1px solid var(--danger-red, #ff3366);
+                                padding: 12px;
+                                border-radius: var(--radius-md, 8px);
                                 font-size: 0.9em;
-                                font-weight: 600;
+                                font-weight: 700;
                                 cursor: pointer;
-                            ">🗑️ Delete Selected</button>
+                                font-family: var(--font-mono, 'Courier New', monospace);
+                                box-shadow: 0 0 12px rgba(255, 51, 102, 0.3);
+                                transition: all var(--transition-fast, 0.2s);
+                            " onmouseover="this.style.boxShadow='0 0 20px rgba(255, 51, 102, 0.5)'" onmouseout="this.style.boxShadow='0 0 12px rgba(255, 51, 102, 0.3)'">🗑️ DELETE</button>
                         </div>
                     </div>
                     
                     <!-- API Keys Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 1.2em; font-weight: 700; color: #FFFFFF; margin-bottom: 16px;">🔑 API Keys</div>
+                    <div style="
+                        margin-bottom: 32px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(255, 140, 0, 0.3);
+                        border-radius: 12px;
+                        padding: 20px;
+                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="
+                            font-size: 1.1em;
+                            font-weight: 700;
+                            color: #ff8c00;
+                            margin-bottom: 16px;
+                            text-transform: uppercase;
+                            letter-spacing: 1.5px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-family: 'Courier New', monospace;
+                        ">
+                            <span style="font-size: 1.3em;">🔑</span>
+                            <span>API KEYS</span>
+                        </div>
                         
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🌊 OpenSea API Key</label>
-                            <input type="password" id="opensea-key" placeholder="Enter OpenSea API key" style="
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
+                                <span style="color: #ff8c00;">▶</span> OPENSEA
+                            </label>
+                            <input type="password" id="opensea-key" placeholder="sk_..." style="
                                 width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
+                                padding: 12px 14px;
+                                border: 1px solid rgba(255, 140, 0, 0.4);
+                                border-radius: 8px;
+                                font-size: 0.9em;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: #ff8c00;
+                                transition: all 0.3s ease;
                                 box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateAPIKey('opensea', this.value)">
+                                font-family: 'Courier New', monospace;
+                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('opensea', this.value)">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
+                                <span style="color: #ff8c00;">▶</span> DEXSCREENER
+                            </label>
+                            <input type="password" id="dexscreener-key" placeholder="ds_..." style="
+                                width: 100%;
+                                padding: 12px 14px;
+                                border: 1px solid rgba(255, 140, 0, 0.4);
+                                border-radius: 8px;
+                                font-size: 0.9em;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: #ff8c00;
+                                transition: all 0.3s ease;
+                                box-sizing: border-box;
+                                font-family: 'Courier New', monospace;
+                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('dexscreener', this.value)">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
+                                <span style="color: #ff8c00;">▶</span> DEFI LLAMA
+                            </label>
+                            <input type="password" id="defillama-key" placeholder="ll_..." style="
+                                width: 100%;
+                                padding: 12px 14px;
+                                border: 1px solid rgba(255, 140, 0, 0.4);
+                                border-radius: 8px;
+                                font-size: 0.9em;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: #ff8c00;
+                                transition: all 0.3s ease;
+                                box-sizing: border-box;
+                                font-family: 'Courier New', monospace;
+                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('defillama', this.value)">
                         </div>
                         
                         <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">📊 DexScreener API Key</label>
-                            <input type="password" id="dexscreener-key" placeholder="Enter DexScreener API key" style="
+                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
+                                <span style="color: #ff8c00;">▶</span> PGT TRACKER
+                            </label>
+                            <input type="password" id="pgt-key" placeholder="pgt_..." style="
                                 width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
+                                padding: 12px 14px;
+                                border: 1px solid rgba(255, 140, 0, 0.4);
+                                border-radius: 8px;
+                                font-size: 0.9em;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: #ff8c00;
+                                transition: all 0.3s ease;
                                 box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateAPIKey('dexscreener', this.value)">
-                        </div>
-                        
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🦙 DeFi Llama API Key</label>
-                            <input type="password" id="defillama-key" placeholder="Enter DeFi Llama API key" style="
-                                width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
-                                box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateAPIKey('defillama', this.value)">
-                        </div>
-                        
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: #FFFFFF; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">🎯 PGT API Key</label>
-                            <input type="password" id="pgt-key" placeholder="Enter PGT API key" style="
-                                width: 100%;
-                                padding: 12px 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                border-radius: 12px;
-                                font-size: 1em;
-                                background: rgba(28, 28, 30, 0.8);
-                                color: white;
-                                transition: all 0.2s ease;
-                                box-sizing: border-box;
-                            " onfocus="this.style.border='1px solid #007AFF'" onblur="this.style.border='1px solid rgba(255, 255, 255, 0.2)'" onchange="updateAPIKey('pgt', this.value)">
+                                font-family: 'Courier New', monospace;
+                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('pgt', this.value)">
                         </div>
                     </div>
                     
                     <!-- Save Button -->
                     <button onclick="saveEnhancedProfile()" style="
                         width: 100%;
-                        background: linear-gradient(135deg, #34C759, #30D158);
-                        color: white;
-                        border: none;
-                        padding: 16px;
-                        border-radius: 12px;
-                        font-size: 1.1em;
-                        font-weight: 700;
+                        background: linear-gradient(135deg, var(--matrix-green, #00ff88), #00cc66);
+                        color: #000;
+                        border: 1px solid var(--matrix-green, #00ff88);
+                        padding: 18px;
+                        border-radius: var(--radius-lg, 12px);
+                        font-size: 1.2em;
+                        font-weight: 800;
                         cursor: pointer;
-                        box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
-                        transition: all 0.2s ease;
-                    " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">💾 Save Profile</button>
+                        box-shadow: 0 0 24px rgba(0, 255, 136, 0.5);
+                        transition: all var(--transition-normal, 0.3s);
+                        font-family: var(--font-mono, 'Courier New', monospace);
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                    " onmouseover="this.style.boxShadow='0 0 32px rgba(0, 255, 136, 0.7)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 0 24px rgba(0, 255, 136, 0.5)'; this.style.transform='translateY(0)'">
+                        💾 SAVE PROFILE
+                    </button>
                     
                 </div>
             </div>
@@ -657,7 +1014,49 @@ console.log('🔧 Loading Enhanced Profile System...');
             profilePic.style.backgroundImage = `url(${profileData.profilePicture})`;
             profilePic.style.backgroundSize = 'cover';
             profilePic.style.backgroundPosition = 'center';
-            profilePic.textContent = '';
+            profilePic.innerHTML = ''; // Clear emoji
+        }
+        
+        // Update username display (new)
+        const usernameDisplay = document.getElementById('profile-username-display');
+        if (usernameDisplay) {
+            usernameDisplay.textContent = profileData.username || 'Anonymous User';
+        }
+        
+        // Update wallet display (new)
+        const walletDisplay = document.getElementById('profile-wallet-display');
+        const walletAddress = document.getElementById('profile-wallet-address');
+        if (walletDisplay && walletAddress) {
+            if (window.OmegaWallet && window.OmegaWallet.userAddress) {
+                const addr = window.OmegaWallet.userAddress;
+                const shortAddr = addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+                walletDisplay.innerHTML = `🔗 ${shortAddr}`;
+                walletAddress.textContent = addr;
+            } else if (window.terminal && window.terminal.userAddress) {
+                const addr = window.terminal.userAddress;
+                const shortAddr = addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+                walletDisplay.innerHTML = `🔗 ${shortAddr}`;
+                walletAddress.textContent = addr;
+            } else {
+                walletDisplay.innerHTML = '🔐 No wallet connected';
+                walletAddress.textContent = 'Not connected';
+            }
+        }
+        
+        // Update ENS display (new)
+        const ensDisplay = document.getElementById('profile-ens-display');
+        if (ensDisplay) {
+            if (profileData.ensName && profileData.ensRegistered) {
+                ensDisplay.innerHTML = `📛 ${profileData.ensName}.omega`;
+                ensDisplay.style.background = 'rgba(0, 255, 65, 0.15)';
+                ensDisplay.style.borderColor = 'rgba(0, 255, 65, 0.4)';
+                ensDisplay.style.color = '#00ff41';
+            } else {
+                ensDisplay.innerHTML = '📛 No ENS name';
+                ensDisplay.style.background = 'rgba(0, 191, 255, 0.1)';
+                ensDisplay.style.borderColor = 'rgba(0, 191, 255, 0.3)';
+                ensDisplay.style.color = 'rgba(0, 191, 255, 0.8)';
+            }
         }
         
         // Update ENS status
@@ -673,32 +1072,101 @@ console.log('🔧 Loading Enhanced Profile System...');
         updateAPIKeysUI();
     }
     
+    // New function to update wallet displays with current connection
+    function updateWalletDisplays() {
+        // Update username display
+        const usernameDisplay = document.getElementById('profile-username-display');
+        if (usernameDisplay && profileData.username) {
+            usernameDisplay.textContent = profileData.username;
+        }
+        
+        // Update wallet display in card
+        const walletDisplay = document.getElementById('profile-wallet-display');
+        const walletAddress = document.getElementById('profile-wallet-address');
+        
+        if (walletDisplay && walletAddress) {
+            // Check multiple sources for wallet address
+            let addr = null;
+            
+            if (window.OmegaWallet && window.OmegaWallet.userAddress) {
+                addr = window.OmegaWallet.userAddress;
+            } else if (window.terminal && window.terminal.userAddress) {
+                addr = window.terminal.userAddress;
+            } else if (window.MultiNetworkConnector && window.MultiNetworkConnector.currentAddress) {
+                addr = window.MultiNetworkConnector.currentAddress;
+            }
+            
+            if (addr) {
+                const shortAddr = addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+                walletDisplay.innerHTML = `🔗 ${shortAddr}`;
+                walletDisplay.style.color = 'var(--matrix-green, #00ff88)';
+                walletDisplay.style.borderColor = 'rgba(0, 255, 136, 0.3)';
+                walletAddress.textContent = addr;
+                walletAddress.style.cursor = 'pointer';
+                walletAddress.title = 'Click to copy';
+                walletAddress.onclick = () => {
+                    navigator.clipboard.writeText(addr).then(() => {
+                        if (window.terminal) {
+                            window.terminal.log('✅ Wallet address copied!', 'success');
+                        }
+                    });
+                };
+            } else {
+                walletDisplay.innerHTML = '🔐 No wallet connected';
+                walletDisplay.style.color = 'rgba(255, 255, 255, 0.6)';
+                walletDisplay.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                walletAddress.textContent = 'Not connected';
+                walletAddress.style.cursor = 'default';
+                walletAddress.onclick = null;
+            }
+        }
+        
+        // Update ENS display
+        const ensDisplay = document.getElementById('profile-ens-display');
+        if (ensDisplay) {
+            if (profileData.ensName && profileData.ensRegistered) {
+                ensDisplay.innerHTML = `📛 ${profileData.ensName}.omega`;
+                ensDisplay.style.background = 'rgba(0, 255, 136, 0.15)';
+                ensDisplay.style.borderColor = 'var(--matrix-green, #00ff88)';
+                ensDisplay.style.color = 'var(--matrix-green, #00ff88)';
+                ensDisplay.style.opacity = '0.6';
+            } else {
+                ensDisplay.innerHTML = '📛 No ENS name';
+                ensDisplay.style.background = 'rgba(0, 212, 255, 0.1)';
+                ensDisplay.style.borderColor = 'rgba(0, 212, 255, 0.3)';
+                ensDisplay.style.color = 'var(--cyber-blue, #00d4ff)';
+            }
+        }
+    }
+    
     function updateENSStatus() {
         const ensStatus = document.getElementById('ens-status');
         if (!ensStatus) return;
         
+        // Update wallet displays first
+        updateWalletDisplays();
+        
         if (profileData.ensRegistered && profileData.ensName) {
             ensStatus.innerHTML = `
-                <div style="color: #34C759; font-weight: 600;">
-                    ✅ Registered: ${profileData.ensName}.omega
+                <div style="color: var(--matrix-green, #00ff88); font-weight: 700; font-family: var(--font-mono, 'Courier New', monospace);">
+                    ✅ REGISTERED: ${profileData.ensName}.omega
                 </div>
-                <div style="font-size: 0.8em; color: #8E8E93; margin-top: 4px;">
+                <div style="font-size: 0.85em; color: rgba(255, 255, 255, 0.6); margin-top: 6px; font-family: var(--font-mono, 'Courier New', monospace);">
                     Connected to your wallet
                 </div>
             `;
-            ensStatus.style.color = '#34C759';
-            ensStatus.style.border = '1px solid rgba(52, 199, 89, 0.2)';
+            ensStatus.style.background = 'rgba(0, 255, 136, 0.15)';
+            ensStatus.style.color = 'var(--matrix-green, #00ff88)';
+            ensStatus.style.border = '1px solid var(--matrix-green, #00ff88)';
+            ensStatus.style.borderOpacity = '0.4';
         } else {
             ensStatus.innerHTML = `
-                <div style="color: #FF9500;">
-                    ⚠️ No ENS registered
-                </div>
-                <div style="font-size: 0.8em; color: #8E8E93; margin-top: 4px;">
-                    Register an ENS name to get started
-                </div>
+                <span style="font-size: 1.2em;">⚠️</span> No ENS registered<br>
+                <span style="font-size: 0.85em; opacity: 0.8;">Register an ENS name to get started</span>
             `;
-            ensStatus.style.color = '#FF9500';
-            ensStatus.style.border = '1px solid rgba(255, 149, 0, 0.2)';
+            ensStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+            ensStatus.style.color = 'var(--warning-amber, #ffaa00)';
+            ensStatus.style.border = '1px solid rgba(255, 170, 0, 0.3)';
         }
     }
     
@@ -807,6 +1275,21 @@ console.log('🔧 Loading Enhanced Profile System...');
         const sidebar = document.getElementById('enhanced-profile-sidebar');
         if (sidebar) {
             sidebar.style.right = '0';
+            
+            // Update wallet displays immediately when opening
+            setTimeout(() => {
+                updateWalletDisplays();
+                
+                // Set up periodic wallet check while profile is open
+                const walletCheckInterval = setInterval(() => {
+                    const profileSidebar = document.getElementById('enhanced-profile-sidebar');
+                    if (!profileSidebar || profileSidebar.style.right === '-450px') {
+                        clearInterval(walletCheckInterval);
+                        return;
+                    }
+                    updateWalletDisplays();
+                }, 1000); // Check every second
+            }, 100);
         }
     };
     

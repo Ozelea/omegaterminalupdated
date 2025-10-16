@@ -583,8 +583,18 @@ class OmegaMinerTerminal {
                 case 'create':
                     await OmegaCommands.Remaining.createToken(this, args);
                     break;
+                case 'nft':
+                    await OmegaCommands.Remaining.createNFT(this, args);
+                    break;
                 case 'rome':
                     OmegaCommands.Remaining.rome(this, args);
+                    break;
+                case 'profile':
+                    if (window.handleEnhancedProfileCommand) {
+                        window.handleEnhancedProfileCommand(args);
+                    } else {
+                        this.log('Enhanced profile system not loaded', 'error');
+                    }
                     break;
                 
                 default:

@@ -45,25 +45,37 @@ window.OmegaCommands.Wallet = {
         let hasAnyWallet = false;
         let totalBalances = [];
         
-        // 1. Check EVM Wallet (Original Omega Wallet)
+        // 1. Check EVM Wallet (Works with ALL EVM networks: ETH, BNB, MATIC, etc.)
         if (OmegaWallet.isConnected()) {
             hasAnyWallet = true;
             try {
                 const balance = await OmegaWallet.getBalance(terminal);
                 if (balance !== null) {
-                    terminal.log(`💰 EVM Wallet Balance: ${OmegaUtils.formatBalance(balance)} OMEGA`, 'success');
-                    totalBalances.push({ type: 'EVM', amount: parseFloat(balance), symbol: 'OMEGA' });
+                    // Determine currency symbol based on current network
+                    let currencySymbol = 'OMEGA';
+                    let networkName = 'EVM';
                     
-                    // Also show mining wallet balance if different
-                    if (terminal.sessionOmegaWallet && terminal.userAddress !== terminal.sessionOmegaWallet.address) {
+                    if (terminal.currentNetwork) {
+                        currencySymbol = terminal.currentNetwork.currency.symbol;
+                        networkName = terminal.currentNetwork.name;
+                    } else if (window.MultiNetworkConnector && window.MultiNetworkConnector.currentNetwork) {
+                        currencySymbol = window.MultiNetworkConnector.currentNetwork.currency.symbol;
+                        networkName = window.MultiNetworkConnector.currentNetwork.name;
+                    }
+                    
+                    terminal.log(`💰 ${networkName} Wallet Balance: ${OmegaUtils.formatBalance(balance)} ${currencySymbol}`, 'success');
+                    totalBalances.push({ type: networkName, amount: parseFloat(balance), symbol: currencySymbol });
+                    
+                    // Also show mining wallet balance if different (Omega network only)
+                    if (currencySymbol === 'OMEGA' && terminal.sessionOmegaWallet && terminal.userAddress !== terminal.sessionOmegaWallet.address) {
                         const miningBalance = await terminal.getMiningWalletBalance();
                         if (miningBalance !== null) {
                             terminal.log(`⛏️  Mining Wallet: ${OmegaUtils.formatBalance(miningBalance)} OMEGA`, 'info');
                         }
                     }
                     
-                    // Show pending rewards if mining contract is connected
-                    if (terminal.contract) {
+                    // Show pending rewards if mining contract is connected (Omega network only)
+                    if (currencySymbol === 'OMEGA' && terminal.contract) {
                         try {
                             const minerInfo = await terminal.contract.getMinerInfo(OmegaWallet.getCurrentAddress());
                             const pendingRewards = window.ethers.utils.formatEther(minerInfo._pendingRewards);

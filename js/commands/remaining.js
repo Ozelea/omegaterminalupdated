@@ -483,5 +483,132 @@ window.OmegaCommands.Remaining = {
                 terminal.log('Unknown rome command. Type "rome help" for available commands.', 'error');
                 break;
         }
+    },
+
+    // Create NFT Collection functionality
+    createNFT: async function(terminal, args) {
+        if (!OmegaWallet.isConnected()) {
+            terminal.log('❌ Please connect your wallet first using: connect', 'error');
+            return;
+        }
+
+        try {
+            terminal.log('🎨 Omega NFT Collection Creator', 'info');
+            terminal.log('This will deploy a new ERC721 NFT collection on the Omega Network', 'info');
+            terminal.log('', '');
+
+            // Get NFT parameters interactively
+            terminal.log('Enter collection name (e.g., "Cool NFT Collection"):', 'info');
+            const name = await terminal.promptTerminalInput();
+            if (!name || !name.trim()) {
+                terminal.log('NFT creation cancelled.', 'warning');
+                return;
+            }
+
+            terminal.log('Enter collection symbol (e.g., "COOL"):', 'info');
+            const symbol = await terminal.promptTerminalInput();
+            if (!symbol || !symbol.trim()) {
+                terminal.log('NFT creation cancelled.', 'warning');
+                return;
+            }
+
+            terminal.log('Enter base URI for metadata (e.g., "ipfs://QmXxx/"):', 'info');
+            const baseURI = await terminal.promptTerminalInput();
+            if (!baseURI || !baseURI.trim()) {
+                terminal.log('NFT creation cancelled.', 'warning');
+                return;
+            }
+
+            terminal.log('Enter max supply (0 for unlimited):', 'info');
+            const maxSupplyInput = await terminal.promptTerminalInput();
+            let maxSupply = 0;
+            if (maxSupplyInput && maxSupplyInput.trim()) {
+                const parsed = parseInt(maxSupplyInput.trim());
+                if (!isNaN(parsed) && parsed >= 0) {
+                    maxSupply = parsed;
+                }
+            }
+
+            terminal.log('Initial mint amount (how many to mint now):', 'info');
+            const mintAmountInput = await terminal.promptTerminalInput();
+            let mintAmount = 0;
+            if (mintAmountInput && mintAmountInput.trim()) {
+                const parsed = parseInt(mintAmountInput.trim());
+                if (!isNaN(parsed) && parsed >= 0) {
+                    mintAmount = parsed;
+                }
+            }
+
+            // Show summary
+            terminal.log('', '');
+            terminal.log('📋 NFT Collection Details:', 'info');
+            terminal.log(`Name: ${name.trim()}`, 'output');
+            terminal.log(`Symbol: ${symbol.trim()}`, 'output');
+            terminal.log(`Base URI: ${baseURI.trim()}`, 'output');
+            terminal.log(`Max Supply: ${maxSupply === 0 ? 'Unlimited' : maxSupply}`, 'output');
+            terminal.log(`Initial Mint: ${mintAmount} NFTs`, 'output');
+            terminal.log('', '');
+
+            terminal.log('Deploy NFT collection? (yes/no):', 'info');
+            const confirm = await terminal.promptTerminalInput();
+            if (!confirm || confirm.trim().toLowerCase() !== 'yes') {
+                terminal.log('NFT creation cancelled.', 'warning');
+                return;
+            }
+
+            // Deploy NFT using factory contract
+            const NFT_FACTORY_ADDRESS = '0x9a8e3d3c7b1f2e4a5c6d8f9e0a1b2c3d4e5f6a7b'; // TODO: Replace with actual NFT factory
+            const NFT_FACTORY_ABI = [
+                {
+                    "inputs": [
+                        { "internalType": "string", "name": "name_", "type": "string" },
+                        { "internalType": "string", "name": "symbol_", "type": "string" },
+                        { "internalType": "string", "name": "baseURI_", "type": "string" },
+                        { "internalType": "uint256", "name": "maxSupply_", "type": "uint256" },
+                        { "internalType": "uint256", "name": "mintAmount_", "type": "uint256" }
+                    ],
+                    "name": "createNFTCollection",
+                    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ];
+
+            const factory = new window.ethers.Contract(NFT_FACTORY_ADDRESS, NFT_FACTORY_ABI, OmegaWallet.getSigner());
+
+            terminal.log('🚀 Deploying NFT collection contract...', 'info');
+            const tx = await factory.createNFTCollection(
+                name.trim(), 
+                symbol.trim(), 
+                baseURI.trim(), 
+                maxSupply, 
+                mintAmount
+            );
+            
+            terminal.log(`✅ NFT collection deployment submitted! Hash: ${tx.hash}`, 'success');
+            terminal.log('⏳ Waiting for confirmation...', 'info');
+
+            const receipt = await tx.wait();
+            terminal.log(`✅ NFT collection deployed successfully! Block: ${receipt.blockNumber}`, 'success');
+            
+            // Try to extract NFT contract address from events
+            if (receipt.events) {
+                const nftCreatedEvent = receipt.events.find(e => e.event === 'NFTCollectionCreated');
+                if (nftCreatedEvent && nftCreatedEvent.args) {
+                    const nftAddress = nftCreatedEvent.args.collection;
+                    terminal.log(`🎉 Your new NFT collection address: ${nftAddress}`, 'success');
+                    terminal.logHtml(`<span class="copyable" onclick="navigator.clipboard.writeText('${nftAddress}')">${nftAddress}</span>`, 'output');
+                    if (mintAmount > 0) {
+                        terminal.log(`🎨 Minted ${mintAmount} NFTs to your wallet!`, 'success');
+                    }
+                }
+            }
+
+            terminal.logHtml(`🔍 <a href="https://0x4e454228.explorer.aurora-cloud.dev/tx/${tx.hash}" target="_blank">View on Explorer</a>`, 'info');
+
+        } catch (error) {
+            terminal.log(`❌ NFT collection creation failed: ${error.message}`, 'error');
+            terminal.log('💡 Note: NFT factory contract must be deployed first', 'info');
+        }
     }
 }; 

@@ -9,7 +9,7 @@ window.OmegaSymbolLogo = {
             color = 'currentColor',
             glowColor = '#00D4FF',
             className = 'omega-symbol-logo',
-            showOuterRing = true,
+            showOuterRing = false,
             showGlow = true
         } = options;
 
@@ -89,14 +89,7 @@ window.OmegaSymbolLogo = {
         // Remove the path version (we're using text for better clarity)
         svg.removeChild(omegaPath);
 
-        // Inner accent circle
-        const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        innerCircle.setAttribute('cx', '50');
-        innerCircle.setAttribute('cy', '50');
-        innerCircle.setAttribute('r', '6');
-        innerCircle.setAttribute('fill', color);
-        innerCircle.setAttribute('opacity', '0.15');
-        svg.appendChild(innerCircle);
+        // Inner circle removed for cleaner logo
 
         return svg;
     },
@@ -105,10 +98,10 @@ window.OmegaSymbolLogo = {
     createHeaderLogo: function() {
         return this.createOmegaSVG({
             size: 32,
-            color: 'var(--cyber-blue)',
-            glowColor: 'var(--cyber-blue-glow)',
+            color: '#ffffff',
+            glowColor: 'rgba(255, 255, 255, 0.6)',
             className: 'header-omega-svg',
-            showOuterRing: true,
+            showOuterRing: false,
             showGlow: true
         });
     },
@@ -117,10 +110,22 @@ window.OmegaSymbolLogo = {
     createWelcomeLogo: function() {
         return this.createOmegaSVG({
             size: 120,
-            color: 'var(--cyber-blue)',
-            glowColor: 'var(--cyber-blue-glow)',
+            color: '#ffffff',
+            glowColor: 'rgba(255, 255, 255, 0.8)',
             className: 'welcome-omega-svg',
-            showOuterRing: true,
+            showOuterRing: false,
+            showGlow: true
+        });
+    },
+    
+    // Create network selector logo (for Omega Network)
+    createNetworkLogo: function() {
+        return this.createOmegaSVG({
+            size: 48,
+            color: 'var(--matrix-green, #00ff88)',
+            glowColor: 'rgba(0, 255, 136, 0.5)',
+            className: 'network-omega-svg',
+            showOuterRing: false,
             showGlow: true
         });
     },
