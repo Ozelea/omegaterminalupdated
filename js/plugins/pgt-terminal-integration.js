@@ -69,8 +69,10 @@
         updateConnectionStatus(connected) {
             if (window.terminal && window.terminal.log) {
                 if (connected) {
-                    window.terminal.log('✅ PGT Portfolio Tracker ready', 'success');
-                    window.terminal.log('📊 Use "pgt help" to see available commands', 'info');
+                    // Silent initialization - users can discover with "pgt help"
+                    console.log('✅ PGT Portfolio Tracker ready');
+                    // window.terminal.log('✅ PGT Portfolio Tracker ready', 'success');
+                    // window.terminal.log('📊 Use "pgt help" to see available commands', 'info');
                 }
             }
         }

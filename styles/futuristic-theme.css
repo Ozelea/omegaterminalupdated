@@ -54,6 +54,121 @@
 }
 
 /* ============================================
+   LIGHT MODE THEME VARIABLES
+   ============================================ */
+
+body.light-mode {
+    /* Light backgrounds */
+    --void-black: #ffffff;
+    --deep-space: #f5f5f7;
+    --dark-matter: #ebebf0;
+    --shadow-grey: #d1d1d6;
+    --steel-grey: #636366;
+    
+    /* Adjusted accent colors for light mode - darker for visibility */
+    --cyber-blue: #0051d5;
+    --cyber-blue-dim: #1d1d1f;
+    --cyber-blue-glow: rgba(0, 81, 213, 0.3);
+    --cyber-blue-bright: #0040dd;
+    
+    /* Light mode accents - darker for better contrast */
+    --neon-purple: #5e5ce6;
+    --neon-pink: #d70015;
+    --matrix-green: #007a3d;
+    --warning-amber: #c93400;
+    --danger-red: #d70015;
+    
+    /* Light glass morphism */
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.15);
+    --glass-blur: blur(20px);
+}
+
+body.light-mode {
+    background: #f5f5f7 !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode #terminal,
+body.light-mode .omega-terminal {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .terminal-output,
+body.light-mode .terminal-line,
+body.light-mode .output-line {
+    color: #1d1d1f !important;
+}
+
+body.light-mode .terminal-prompt,
+body.light-mode .prompt,
+body.light-mode .prompt-user,
+body.light-mode .prompt-host {
+    color: var(--matrix-green, #007a3d) !important;
+    font-weight: 600;
+}
+
+body.light-mode .prompt-path {
+    color: var(--neon-purple, #5e5ce6) !important;
+}
+
+body.light-mode .prompt-separator {
+    color: var(--steel-grey, #636366) !important;
+}
+
+body.light-mode #commandInput,
+body.light-mode .input-field {
+    color: #1d1d1f !important;
+    caret-color: transparent !important;
+    font-weight: 500;
+}
+
+body.light-mode .text-info,
+body.light-mode .log-info {
+    color: var(--cyber-blue, #0051d5) !important;
+    font-weight: 500;
+}
+
+body.light-mode .text-success,
+body.light-mode .log-success {
+    color: var(--matrix-green, #007a3d) !important;
+    font-weight: 600;
+}
+
+body.light-mode .text-error,
+body.light-mode .log-error {
+    color: var(--danger-red, #d70015) !important;
+    font-weight: 600;
+}
+
+body.light-mode .text-warning,
+body.light-mode .log-warning {
+    color: var(--warning-amber, #c93400) !important;
+    font-weight: 600;
+}
+
+body.light-mode .text-matrix {
+    color: var(--matrix-green, #007a3d) !important;
+}
+
+body.light-mode .text-cyan {
+    color: var(--cyber-blue, #0051d5) !important;
+}
+
+body.light-mode .text-purple {
+    color: var(--neon-purple, #5e5ce6) !important;
+}
+
+body.light-mode a {
+    color: var(--cyber-blue, #0051d5) !important;
+}
+
+body.light-mode a:hover {
+    color: var(--cyber-blue-bright, #0040dd) !important;
+}
+
+/* ============================================
    GLOBAL RESETS & BASE STYLES
    ============================================ */
 
@@ -98,7 +213,18 @@ body::before {
     100% { transform: translate(50px, 50px); }
 }
 
-/* Scanline Effect */
+/* Scanline Effect - PERMANENTLY DISABLED per user request */
+body::after,
+body.futuristic-mode::after,
+body.modern-terminal-ui::after,
+body.basic-terminal-mode::after,
+body.no-scanline::after {
+    display: none !important; /* Force hide all scanline effects */
+    content: none !important;
+    animation: none !important;
+}
+
+/*
 body::after {
     content: '';
     position: fixed;
@@ -122,6 +248,7 @@ body::after {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(100%); }
 }
+*/
 
 /* ============================================
    MAIN DASHBOARD CONTAINER
@@ -426,6 +553,9 @@ body::after {
     align-items: center;
     justify-content: space-between;
     background: rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
 }
 
 .terminal-title {
@@ -439,19 +569,17 @@ body::after {
 
 .terminal-controls {
     display: flex;
-    gap: var(--gap-sm);
+    gap: var(--gap-md);
+    align-items: center;
+}
+
+.terminal-control-dots {
+    display: none !important;
 }
 
 .terminal-control-btn {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all var(--transition-fast);
+    display: none !important;
 }
-
-.terminal-control-btn.close { background: var(--danger-red); }
-.terminal-control-btn.minimize { background: var(--warning-amber); }
 .terminal-control-btn.maximize { background: var(--matrix-green); }
 
 .terminal-control-btn:hover {
@@ -459,8 +587,130 @@ body::after {
     transform: scale(1.2);
 }
 
+/* Terminal header action buttons */
+.terminal-action-btn {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    color: var(--cyber-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.terminal-action-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.terminal-action-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.terminal-action-btn.active {
+    background: rgba(0, 212, 255, 0.25);
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Terminal icon buttons (social links) */
+.terminal-icon-btn {
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--cyber-blue);
+    text-decoration: none;
+}
+
+.terminal-icon-btn:hover {
+    background: rgba(0, 212, 255, 0.15);
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.terminal-icon-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.terminal-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--glass-border);
+    margin: 0 4px;
+}
+
+/* Light mode terminal action buttons */
+body.light-mode .terminal-action-btn {
+    background: rgba(0, 81, 213, 0.08);
+    border-color: rgba(0, 81, 213, 0.2);
+    color: var(--cyber-blue, #0051d5);
+}
+
+body.light-mode .terminal-action-btn:hover {
+    background: rgba(0, 81, 213, 0.15);
+    border-color: var(--cyber-blue, #0051d5);
+    box-shadow: 0 0 10px rgba(0, 81, 213, 0.2);
+}
+
+/* Light mode icon buttons */
+body.light-mode .terminal-icon-btn {
+    background: rgba(0, 81, 213, 0.08);
+    border-color: rgba(0, 81, 213, 0.2);
+    color: var(--cyber-blue, #0051d5);
+}
+
+body.light-mode .terminal-icon-btn:hover {
+    background: rgba(0, 81, 213, 0.15);
+    border-color: var(--cyber-blue, #0051d5);
+    box-shadow: 0 0 10px rgba(0, 81, 213, 0.2);
+}
+
+body.light-mode .terminal-divider {
+    background: rgba(0, 81, 213, 0.2);
+}
+
+/* Light mode stats panel scrollbar */
+body.light-mode .omega-stats::-webkit-scrollbar-track {
+    background: #ebebf0;
+}
+
+body.light-mode .omega-stats::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue, #0051d5);
+}
+
+body.light-mode .omega-stats::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-blue-bright, #0040dd);
+}
+
+/* Light mode cursor indicator */
+body.light-mode .omega-cursor-indicator {
+    color: var(--cyber-blue, #0051d5);
+}
+
 .terminal-output {
-    flex: 1;
+    flex: 1 1 auto;
     padding: var(--gap-lg);
     overflow-y: auto;
     overflow-x: hidden;
@@ -468,9 +718,38 @@ body::after {
     font-size: 13px;
     line-height: 1.8;
     min-height: 0;
-    max-height: calc(100% - 120px);
+    max-height: 100%;
     word-wrap: break-word;
+    scrollbar-width: thin;
+    scrollbar-color: var(--cyber-blue) rgba(0, 0, 0, 0.2);
     word-break: break-word;
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-blue-bright);
+}
+
+body.light-mode .terminal-output::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue, #0051d5);
+}
+
+body.light-mode .terminal-output::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-blue-bright, #0040dd);
 }
 
 .terminal-line {
@@ -480,34 +759,66 @@ body::after {
 
 /* Terminal Input Section - Always Visible */
 .terminal-input-section {
-    padding: var(--gap-md) var(--gap-lg);
-    background: rgba(0, 0, 0, 0.4);
+    padding: 16px 24px;
+    background: transparent;
     border-top: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
-    gap: var(--gap-sm);
+    gap: 0;
     flex-shrink: 0;
-    min-height: 60px;
-    max-height: 60px;
+    min-height: 70px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
 }
 
 .input-line {
     display: flex;
     align-items: center;
-    gap: var(--gap-sm);
+    gap: 12px;
     width: 100%;
+    background: rgba(0, 188, 242, 0.05);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 188, 242, 0.2);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.input-line:focus-within {
+    border-color: var(--cyber-blue);
+    box-shadow: 0 0 0 3px rgba(0, 188, 242, 0.15);
+    background: rgba(0, 188, 242, 0.08);
+    transform: translateY(-1px);
+}
+
+body.light-mode .input-line {
+    background: rgba(0, 81, 213, 0.05);
+    border-color: rgba(0, 81, 213, 0.2);
+}
+
+body.light-mode .input-line:focus-within {
+    background: rgba(0, 81, 213, 0.08);
+    border-color: var(--cyber-blue, #0051d5);
+    box-shadow: 0 0 0 3px rgba(0, 81, 213, 0.15);
+    transform: translateY(-1px);
 }
 
 .input-prompt {
-    color: var(--cyber-blue-bright);
+    color: var(--cyber-blue);
     font-weight: 600;
     font-family: var(--font-mono);
     letter-spacing: 0.5px;
     white-space: nowrap;
+    font-size: 15px;
+    flex-shrink: 0;
 }
 
 .input-field {
     flex: 1;
+    width: 100%;
+    min-width: 0;
     background: transparent;
     border: none;
     color: var(--cyber-blue);
@@ -516,6 +827,21 @@ body::after {
     outline: none;
     padding: var(--gap-xs) 0;
     letter-spacing: 0.3px;
+    /* Hide native caret (we use custom indicator) */
+    caret-color: transparent !important;
+    caret-shape: block;
+    cursor: text;
+    /* Proper text alignment */
+    text-align: left;
+    direction: ltr;
+    /* Ensure visibility */
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+}
+
+#commandInput {
+    caret-color: transparent !important;
 }
 
 .input-field::placeholder {
@@ -523,43 +849,23 @@ body::after {
     opacity: 0.7;
 }
 
-/* Terminal Cursor - Positioned behind text */
+.input-field:focus {
+    /* Enhanced caret visibility when focused */
+    caret-color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Hide all custom cursor elements - use native browser caret only */
 .cursor,
-#terminalCursor {
-    color: var(--cyber-blue-bright, #00ffff);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.2;
-    display: inline-block;
-    animation: cursorBlink 0.8s step-end infinite;
-    pointer-events: none;
-    user-select: none;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: left 0.05s ease-out;
-    text-shadow: 0 0 8px currentColor;
-    z-index: 5;
+.custom-cursor,
+.fake-cursor,
+span.cursor {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
-@keyframes cursorBlink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-}
-
-/* Input line needs relative positioning for absolute cursor */
-.input-line {
-    position: relative;
-}
-
-/* Hide native caret */
-.input-field {
-    caret-color: transparent !important;
-}
-
-/* Ensure command input is always visible */
+/* Ensure command input is always visible with proper cursor */
 #commandInput {
     background: transparent !important;
     border: none !important;
@@ -572,6 +878,15 @@ body::after {
     width: 100% !important;
     flex: 1 !important;
     min-width: 0 !important;
+    /* Native caret styling - bright cyan, visible */
+    caret-color: var(--cyber-blue-bright, #00ffff) !important;
+    caret-shape: block !important;
+    cursor: text !important;
+    /* Force proper text alignment */
+    text-align: left !important;
+    direction: ltr !important;
+    /* Ensure caret is visible */
+    opacity: 1 !important;
 }
 
 @keyframes fadeIn {
@@ -619,6 +934,30 @@ body::after {
     flex-direction: column;
     gap: var(--gap-md);
     overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100vh;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--cyber-blue) rgba(0, 0, 0, 0.2);
+}
+
+.omega-stats::-webkit-scrollbar {
+    width: 8px;
+}
+
+.omega-stats::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.omega-stats::-webkit-scrollbar-thumb {
+    background: var(--cyber-blue);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.omega-stats::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-blue-bright);
 }
 
 .stats-panel {
@@ -627,6 +966,7 @@ body::after {
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
     padding: var(--gap-lg);
+    flex-shrink: 0;
 }
 
 .stats-title {
@@ -781,17 +1121,450 @@ body::after {
             "sidebar"
             "stats";
         grid-template-columns: 1fr;
-        grid-template-rows: 60px 1fr auto auto;
+        grid-template-rows: 60px minmax(400px, 1fr) auto auto;
         gap: var(--gap-sm);
         padding: var(--gap-sm);
+        overflow-y: auto;
     }
     
     .omega-header {
         padding: 0 var(--gap-md);
+        height: 60px;
+    }
+    
+    .header-brand {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .brand-text {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+    
+    .version-badge {
+        display: none; /* Hide on mobile to save space */
     }
     
     .header-status {
         gap: var(--gap-sm);
+        flex-wrap: wrap;
+    }
+    
+    .status-indicator {
+        font-size: 10px;
+    }
+    
+    /* Sidebar adjustments for mobile */
+    .omega-sidebar {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .sidebar-section {
+        margin-bottom: var(--gap-md);
+    }
+    
+    .sidebar-button {
+        padding: 12px;
+        font-size: 12px;
+        min-height: 44px; /* Touch-friendly target */
+    }
+    
+    .sidebar-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    /* Stats panel mobile */
+    .omega-stats {
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
+    .stats-panel {
+        padding: var(--gap-md);
+    }
+    
+    .stat-item {
+        font-size: 11px;
+    }
+    
+    /* Terminal adjustments */
+    .omega-terminal {
+        min-height: 400px;
+        max-height: 50vh;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden;
+    }
+    
+    .terminal-title {
+        font-size: 11px;
+    }
+    
+    .terminal-title span:first-child {
+        display: none; /* Hide arrow on mobile */
+    }
+    
+    /* Terminal action buttons on mobile */
+    .terminal-action-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        gap: 4px;
+    }
+    
+    .terminal-action-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .terminal-action-btn span {
+        display: none; /* Hide text, show icons only */
+    }
+    
+    .terminal-output {
+        padding: 12px !important;
+        font-size: 13px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        white-space: pre-wrap !important;
+        flex: 1 !important;
+        display: block !important;
+    }
+    
+    /* Ensure terminal lines display horizontally */
+    .terminal-line,
+    .output-line,
+    .log-line {
+        display: block !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
+        white-space: pre-wrap !important;
+        margin-bottom: 8px !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+    }
+    
+    /* Terminal input section */
+    .terminal-input-section,
+    .input-line {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: 100% !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    /* Command input */
+    #commandInput {
+        font-size: 16px !important;
+        padding: 10px !important;
+        width: 100% !important;
+        flex: 1 !important;
+        display: inline-block !important;
+        white-space: pre !important;
+        writing-mode: horizontal-tb !important;
+    }
+    
+    /* Prompt styling */
+    .terminal-prompt,
+    .prompt,
+    .input-prompt {
+        display: inline-block !important;
+        white-space: nowrap !important;
+        margin-right: 8px !important;
+        flex-shrink: 0 !important;
+        writing-mode: horizontal-tb !important;
+    }
+    
+    /* Force horizontal text for all terminal content */
+    .omega-terminal *,
+    #terminal * {
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        direction: ltr !important;
+    }
+    
+    /* Floating toggle button mobile positioning */
+    #basic-mode-toggle {
+        top: 10px !important;
+        right: 10px !important;
+        padding: 8px 12px !important;
+        font-size: 11px !important;
+        letter-spacing: 1px !important;
+    }
+    
+    #basic-mode-toggle svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+    .omega-dashboard {
+        padding: 4px;
+        gap: 4px;
+        grid-template-rows: 50px minmax(300px, 1fr) auto auto;
+    }
+    
+    .omega-header {
+        padding: 0 8px;
+        height: 50px;
+    }
+    
+    .header-logo-container {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .brand-text {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    
+    .header-status {
+        font-size: 9px;
+    }
+    
+    .sidebar-button, .header-ai-toggle {
+        padding: 10px;
+        font-size: 11px;
+        min-height: 40px;
+    }
+    
+    .sidebar-title, .stats-title {
+        font-size: 10px;
+    }
+    
+    .omega-terminal {
+        min-height: 300px;
+        max-height: 60vh;
+    }
+    
+    .terminal-output {
+        padding: 8px !important;
+        font-size: 12px !important;
+    }
+    
+    .terminal-line,
+    .output-line {
+        display: block !important;
+        width: 100% !important;
+        writing-mode: horizontal-tb !important;
+    }
+    
+    /* Make floating toggle smaller on very small screens */
+    #basic-mode-toggle {
+        top: 8px !important;
+        right: 8px !important;
+        padding: 6px 10px !important;
+        font-size: 10px !important;
+        gap: 6px !important;
+    }
+    
+    #basic-mode-toggle svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    
+    #basic-mode-toggle span {
+        display: none; /* Hide text, show icon only on very small screens */
+    }
+}
+
+/* Basic terminal mode styling */
+body.basic-terminal-mode #terminal-wrapper {
+    background: var(--void-black) !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Only show terminal-wrapper's header in basic mode, not the old terminal's header */
+body.basic-terminal-mode #terminal-wrapper > .terminal-header {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    padding: var(--gap-md) var(--gap-lg);
+    flex-shrink: 0;
+}
+
+body.basic-terminal-mode #terminal-wrapper > .terminal-header * {
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Explicitly hide the original terminal's header in basic mode */
+body.basic-terminal-mode #terminal > .terminal-header {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+body.basic-terminal-mode #terminal > .tab-bar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+body.basic-terminal-mode .terminal-action-btn {
+    display: flex !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+body.light-mode.basic-terminal-mode #terminal-wrapper {
+    background: var(--deep-space) !important;
+}
+
+/* Basic terminal mode - Mobile optimizations */
+@media (max-width: 768px) {
+    body.basic-terminal-mode #terminal {
+        padding: 12px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+    
+    body.basic-terminal-mode #terminal-wrapper {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+    
+    /* Hide action button labels on mobile in basic mode */
+    body.basic-terminal-mode .terminal-action-btn span {
+        display: none;
+    }
+    
+    body.basic-terminal-mode .terminal-action-btn {
+        padding: 8px;
+        min-width: 36px;
+        justify-content: center;
+    }
+    
+    body.basic-terminal-mode .terminal-prompt,
+    body.basic-terminal-mode .prompt {
+        font-size: 12px;
+        display: inline-block !important;
+        white-space: nowrap !important;
+    }
+    
+    body.basic-terminal-mode #commandInput {
+        font-size: 16px !important;
+        padding: 10px;
+        display: inline-block !important;
+        width: auto !important;
+        flex: 1 !important;
+    }
+    
+    body.basic-terminal-mode .terminal-output,
+    body.basic-terminal-mode #terminalOutput {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        word-wrap: break-word !important;
+        white-space: pre-wrap !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    body.basic-terminal-mode .terminal-line,
+    body.basic-terminal-mode .output-line {
+        display: block !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
+        white-space: pre-wrap !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body.basic-terminal-mode #terminal {
+        padding: 8px !important;
+    }
+    
+    body.basic-terminal-mode .terminal-prompt,
+    body.basic-terminal-mode .prompt {
+        font-size: 11px;
+    }
+    
+    body.basic-terminal-mode #commandInput {
+        font-size: 16px !important;
+        padding: 8px;
+    }
+    
+    body.basic-terminal-mode .terminal-output {
+        font-size: 12px !important;
+        padding: 8px !important;
+    }
+}
+
+/* Landscape orientation optimizations */
+@media (max-height: 600px) and (orientation: landscape) {
+    .omega-dashboard {
+        grid-template-rows: 50px 1fr;
+        grid-template-areas:
+            "header header header"
+            "sidebar terminal stats";
+        grid-template-columns: 200px 1fr 200px;
+    }
+    
+    .omega-sidebar,
+    .omega-stats {
+        max-height: calc(100vh - 60px);
+    }
+    
+    .omega-terminal {
+        max-height: calc(100vh - 60px);
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .sidebar-button,
+    .sub-action-button {
+        min-height: 48px !important;
+        padding: 14px !important;
+    }
+    
+    /* Remove hover effects that don't work on touch */
+    .sidebar-button:hover {
+        transform: none;
+    }
+    
+    /* Active state for touch feedback */
+    .sidebar-button:active {
+        background: rgba(0, 212, 255, 0.2) !important;
+        transform: scale(0.98);
+    }
+    
+    /* Better scrolling on touch devices */
+    .omega-sidebar,
+    .omega-stats,
+    .omega-terminal {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+}
+
+/* Prevent zoom on input focus (iOS Safari) */
+@media screen and (max-width: 768px) {
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    #commandInput {
+        font-size: 16px !important;
     }
 }
 

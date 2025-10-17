@@ -511,6 +511,10 @@ class OmegaMinerTerminal {
                 case 'ascii':
                     OmegaCommands.Entertainment.ascii(this, args);
                     break;
+                case 'spotify':
+                case 'music':
+                    await OmegaCommands.Entertainment.spotify(this, args);
+                    break;
                 
                 // Network/Stress Testing commands
                 case 'stress':
@@ -660,7 +664,7 @@ class OmegaMinerTerminal {
     }
     
     logCommand(command) {
-        this.logHtml(`<span class="prompt">root@omega-miner:~$</span> <span class="command">${OmegaUtils.escapeHtml(command)}</span>`, 'output');
+        this.logHtml(`<span class="prompt">root@omega-Terminal:~$</span> <span class="command">${OmegaUtils.escapeHtml(command)}</span>`, 'output');
     }
     
     clearTerminal() {

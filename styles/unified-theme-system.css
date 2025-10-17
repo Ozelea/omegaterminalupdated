@@ -1,0 +1,852 @@
+/**
+ * Unified Theme System - Complete Light/Dark Mode Support
+ * Ensures ALL UI modes update correctly across both themes
+ */
+
+/* ============================================
+   GLOBAL LIGHT MODE OVERRIDES
+   ============================================ */
+
+/* Base body and terminal */
+body.light-mode {
+    background: #f5f5f7 !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode #terminal,
+body.light-mode .terminal,
+body.light-mode .omega-terminal,
+body.light-mode .terminal-content {
+    background: #ffffff !important;
+    color: #1d1d1f !important;
+}
+
+/* Terminal output text */
+body.light-mode .terminal-output,
+body.light-mode .terminal-line,
+body.light-mode .output-line,
+body.light-mode .terminal-content > div,
+body.light-mode pre {
+    color: #1d1d1f !important;
+}
+
+/* Prompts */
+body.light-mode .terminal-prompt,
+body.light-mode .input-prompt,
+body.light-mode .prompt,
+body.light-mode .prompt-user,
+body.light-mode .prompt-host,
+body.light-mode .prompt-symbol {
+    color: #007a3d !important;
+    font-weight: 600;
+}
+
+/* Command input */
+body.light-mode #commandInput,
+body.light-mode .input-field,
+body.light-mode .terminal-input {
+    color: #1d1d1f !important;
+    background: transparent !important;
+}
+
+/* ============================================
+   GUI CHATGPT MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.gui-chatgpt {
+    background: #ffffff !important;
+}
+
+body.light-mode.gui-chatgpt .chatgpt-container {
+    background: #f5f5f7;
+}
+
+body.light-mode.gui-chatgpt .chatgpt-sidebar {
+    background: #ffffff;
+    border-right-color: #d1d1d6;
+}
+
+body.light-mode.gui-chatgpt .chatgpt-conversation {
+    background: #ffffff;
+}
+
+body.light-mode.gui-chatgpt .chat-message {
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-chatgpt .message-avatar {
+    background: #e0e0e0;
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-chatgpt .message-content {
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-chatgpt .chatgpt-input-container {
+    background: #ffffff;
+    border-top-color: #d1d1d6;
+}
+
+body.light-mode.gui-chatgpt .chatgpt-input {
+    background: #f5f5f7;
+    border-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+/* ============================================
+   GUI DISCORD MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.gui-discord {
+    background: #ffffff !important;
+}
+
+body.light-mode.gui-discord .discord-sidebar {
+    background: #f2f3f5;
+}
+
+body.light-mode.gui-discord .discord-main {
+    background: #ffffff;
+}
+
+body.light-mode.gui-discord .discord-header {
+    background: #ffffff;
+    border-bottom-color: #e3e5e8;
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-discord .discord-chat {
+    background: #ffffff;
+}
+
+body.light-mode.gui-discord .discord-message {
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-discord .discord-input-container {
+    background: #ffffff;
+}
+
+body.light-mode.gui-discord .discord-input {
+    background: #ebedef;
+    color: #1d1d1f;
+}
+
+/* ============================================
+   GUI WINDOWS 95 MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.gui-windows95 {
+    background: #008080 !important;
+}
+
+body.light-mode.gui-windows95 .win95-window {
+    background: #c0c0c0;
+}
+
+body.light-mode.gui-windows95 .win95-title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+}
+
+body.light-mode.gui-windows95 .win95-content {
+    background: #ffffff;
+    color: #000000;
+}
+
+body.light-mode.gui-windows95 .terminal-output,
+body.light-mode.gui-windows95 .terminal-line {
+    color: #000000 !important;
+}
+
+/* ============================================
+   GUI AOL MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.gui-aol {
+    background: #ffffff !important;
+}
+
+body.light-mode.gui-aol .aol-container {
+    background: #f5f5f7;
+}
+
+body.light-mode.gui-aol .aol-sidebar {
+    background: #ffffff;
+    border-right-color: #d1d1d6;
+}
+
+body.light-mode.gui-aol .aol-main {
+    background: #ffffff;
+}
+
+body.light-mode.gui-aol .aol-chat-area {
+    background: #ffffff;
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-aol .terminal-output,
+body.light-mode.gui-aol .terminal-line {
+    color: #1d1d1f !important;
+}
+
+body.light-mode.gui-aol .aol-input {
+    background: #f5f5f7;
+    border-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+/* ============================================
+   GUI LIMEWIRE MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.gui-limewire {
+    background: #ffffff !important;
+}
+
+body.light-mode.gui-limewire .limewire-app {
+    background: #f5f5f7;
+}
+
+body.light-mode.gui-limewire .limewire-header {
+    background: #ffffff;
+    border-bottom-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-limewire .limewire-tabs {
+    background: #ebebf0;
+}
+
+body.light-mode.gui-limewire .tab {
+    color: #636366;
+}
+
+body.light-mode.gui-limewire .tab.active {
+    background: #ffffff;
+    color: #0051d5;
+    border-bottom-color: #0051d5;
+}
+
+body.light-mode.gui-limewire .limewire-search input {
+    background: #ffffff;
+    border-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+body.light-mode.gui-limewire .limewire-results {
+    background: #ffffff;
+}
+
+body.light-mode.gui-limewire .result-item {
+    background: #f5f5f7;
+    color: #1d1d1f;
+    border-bottom-color: #d1d1d6;
+}
+
+body.light-mode.gui-limewire .limewire-status {
+    background: #ffffff;
+    border-top-color: #d1d1d6;
+    color: #636366;
+}
+
+/* ============================================
+   MODERN TERMINAL UI - LIGHT THEME
+   ============================================ */
+
+body.light-mode.modern-terminal-ui {
+    background: #f5f5f7 !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal,
+body.light-mode.modern-terminal-ui #terminal {
+    background: #ffffff !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal-output,
+body.light-mode.modern-terminal-ui .terminal-line,
+body.light-mode.modern-terminal-ui .output-line {
+    color: #1d1d1f !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal-prompt,
+body.light-mode.modern-terminal-ui .input-prompt {
+    color: #007a3d !important;
+}
+
+body.light-mode.modern-terminal-ui #commandInput,
+body.light-mode.modern-terminal-ui .input-field {
+    color: #1d1d1f !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal-header {
+    background: #ffffff;
+    border-bottom-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+body.light-mode.modern-terminal-ui .terminal-title {
+    color: #1d1d1f;
+}
+
+body.light-mode.modern-terminal-ui .tab-bar {
+    background: #f5f5f7;
+    border-bottom-color: #d1d1d6;
+}
+
+body.light-mode.modern-terminal-ui .tab {
+    color: #636366;
+}
+
+body.light-mode.modern-terminal-ui .tab.active {
+    color: #0051d5;
+    border-bottom-color: #0051d5;
+}
+
+/* ============================================
+   FUTURISTIC DASHBOARD - LIGHT THEME
+   ============================================ */
+
+body.light-mode .omega-dashboard {
+    background: #f5f5f7 !important;
+}
+
+body.light-mode .omega-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 100%);
+    border-bottom-color: #d1d1d6;
+}
+
+body.light-mode .omega-logo {
+    color: #1d1d1f;
+}
+
+body.light-mode .omega-sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    border-right-color: rgba(0, 81, 213, 0.15);
+}
+
+body.light-mode .sidebar-title {
+    color: #0051d5;
+}
+
+body.light-mode .sidebar-button {
+    color: #1d1d1f;
+    background: rgba(0, 81, 213, 0.05);
+}
+
+body.light-mode .sidebar-button:hover {
+    background: rgba(0, 81, 213, 0.12);
+    border-color: rgba(0, 81, 213, 0.3);
+}
+
+body.light-mode .omega-stats {
+    background: rgba(255, 255, 255, 0.95);
+    border-left-color: rgba(0, 81, 213, 0.15);
+}
+
+body.light-mode .stats-title {
+    color: #0051d5;
+}
+
+body.light-mode .stat-label {
+    color: #636366;
+}
+
+body.light-mode .stat-value {
+    color: #1d1d1f;
+}
+
+body.light-mode .terminal-header {
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom-color: rgba(0, 81, 213, 0.15);
+}
+
+body.light-mode .terminal-title {
+    color: #1d1d1f;
+}
+
+/* ============================================
+   APPLE UI / MODERN UI - LIGHT/DARK MODE
+   ============================================ */
+
+/* Light Mode for Apple UI (Modern UI) */
+body.light-mode .terminal.apple-ui {
+    /* Force light mode colors even if dark class exists */
+    --apple-primary: #007AFF !important;
+    --apple-secondary: #5AC8FA !important;
+    --apple-success: #34C759 !important;
+    --apple-warning: #FF9500 !important;
+    --apple-error: #FF3B30 !important;
+    --apple-text: #1D1D1F !important;
+    --apple-text-secondary: #86868B !important;
+    --apple-background: #F5F5F7 !important;
+    --apple-surface: rgba(255, 255, 255, 0.8) !important;
+    --apple-glass: rgba(255, 255, 255, 0.1) !important;
+    --apple-border: rgba(0, 188, 242, 0.8) !important;
+    --apple-shadow: rgba(0, 0, 0, 0.1) !important;
+    
+    background: linear-gradient(135deg, #F5F5F7 0%, #E5E5EA 100%) !important;
+}
+
+body.light-mode .terminal.apple-ui .terminal-header {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    ) !important;
+    border-bottom: 1px solid var(--apple-border) !important;
+}
+
+body.light-mode .terminal.apple-ui .terminal-title {
+    color: #1565C0 !important;
+}
+
+body.light-mode .terminal.apple-ui .terminal-content {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(248, 248, 250, 0.9) 100%
+    ) !important;
+    color: #2E3440 !important;
+}
+
+body.light-mode .terminal.apple-ui .terminal-content *,
+body.light-mode .terminal.apple-ui .terminal-content div,
+body.light-mode .terminal.apple-ui .terminal-content span,
+body.light-mode .terminal.apple-ui .terminal-content p {
+    color: #2E3440 !important;
+}
+
+body.light-mode .terminal.apple-ui .input-line {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid var(--apple-border) !important;
+}
+
+body.light-mode .terminal.apple-ui .input-prompt {
+    color: #1565C0 !important;
+}
+
+body.light-mode .terminal.apple-ui .input-field {
+    color: #1D1D1F !important;
+}
+
+body.light-mode .terminal.apple-ui .terminal-input-section {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    ) !important;
+}
+
+body.light-mode .terminal.apple-ui .tab-bar {
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(245, 245, 247, 0.9) 100%
+    ) !important;
+    color: var(--apple-text) !important;
+}
+
+body.light-mode .terminal.apple-ui .tab {
+    background: rgba(255, 255, 255, 0.7) !important;
+    color: var(--apple-text-secondary) !important;
+}
+
+body.light-mode .terminal.apple-ui .log-entry.log-info {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #2E3440 !important;
+}
+
+body.light-mode .terminal.apple-ui .log-entry.log-output {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #1565C0 !important;
+}
+
+/* Dark Mode for Apple UI (Modern UI) */
+body:not(.light-mode) .terminal.apple-ui,
+body.dark-mode .terminal.apple-ui {
+    /* Force dark mode colors */
+    --apple-primary: #0A84FF !important;
+    --apple-secondary: #64D2FF !important;
+    --apple-success: #32D74B !important;
+    --apple-warning: #FF9F0A !important;
+    --apple-error: #FF453A !important;
+    --apple-text: #F2F2F7 !important;
+    --apple-text-secondary: #8E8E93 !important;
+    --apple-background: #000000 !important;
+    --apple-surface: rgba(28, 28, 30, 0.9) !important;
+    --apple-glass: rgba(28, 28, 30, 0.4) !important;
+    --apple-border: rgba(0, 188, 242, 0.8) !important;
+    --apple-shadow: rgba(0, 0, 0, 0.5) !important;
+    
+    background: linear-gradient(135deg, #000000 0%, #1C1C1E 100%) !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .terminal-header,
+body.dark-mode .terminal.apple-ui .terminal-header {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .terminal-title,
+body.dark-mode .terminal.apple-ui .terminal-title {
+    color: #F2F2F7 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .terminal-content,
+body.dark-mode .terminal.apple-ui .terminal-content {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+    color: #F2F2F7 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .terminal-content *,
+body:not(.light-mode) .terminal.apple-ui .terminal-content div,
+body:not(.light-mode) .terminal.apple-ui .terminal-content span,
+body:not(.light-mode) .terminal.apple-ui .terminal-content p,
+body.dark-mode .terminal.apple-ui .terminal-content *,
+body.dark-mode .terminal.apple-ui .terminal-content div,
+body.dark-mode .terminal.apple-ui .terminal-content span,
+body.dark-mode .terminal.apple-ui .terminal-content p {
+    color: #F2F2F7 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .input-line,
+body.dark-mode .terminal.apple-ui .input-line {
+    background: rgba(28, 28, 30, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .input-prompt,
+body.dark-mode .terminal.apple-ui .input-prompt {
+    color: #0A84FF !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .input-field,
+body.dark-mode .terminal.apple-ui .input-field {
+    color: #F2F2F7 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .terminal-input-section,
+body.dark-mode .terminal.apple-ui .terminal-input-section {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .tab-bar,
+body.dark-mode .terminal.apple-ui .tab-bar {
+    background: linear-gradient(180deg, 
+        rgba(28, 28, 30, 0.95) 0%, 
+        rgba(0, 0, 0, 0.9) 100%
+    ) !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .tab,
+body.dark-mode .terminal.apple-ui .tab {
+    background: rgba(44, 44, 46, 0.7) !important;
+    color: #8E8E93 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .tab.active,
+body.dark-mode .terminal.apple-ui .tab.active {
+    background: linear-gradient(135deg, #0A84FF, #64D2FF) !important;
+    color: white !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .log-entry.log-info,
+body.dark-mode .terminal.apple-ui .log-entry.log-info {
+    background: rgba(28, 28, 30, 0.8) !important;
+    color: #F2F2F7 !important;
+}
+
+body:not(.light-mode) .terminal.apple-ui .log-entry.log-output,
+body.dark-mode .terminal.apple-ui .log-entry.log-output {
+    background: rgba(28, 28, 30, 0.8) !important;
+    color: #64D2FF !important;
+}
+
+/* ============================================
+   BASIC TERMINAL MODE - LIGHT THEME
+   ============================================ */
+
+body.light-mode.basic-terminal-mode {
+    background: #f5f5f7 !important;
+}
+
+body.light-mode.basic-terminal-mode #terminal-wrapper {
+    background: #ffffff !important;
+}
+
+body.light-mode.basic-terminal-mode .terminal-header {
+    background: #f5f5f7;
+    border-bottom-color: #d1d1d6;
+}
+
+body.light-mode.basic-terminal-mode .terminal-output {
+    color: #1d1d1f !important;
+}
+
+/* ============================================
+   STATUS MESSAGES - ALL MODES
+   ============================================ */
+
+body.light-mode .text-success,
+body.light-mode .success,
+body.light-mode .log-success {
+    color: #007a3d !important;
+}
+
+body.light-mode .text-error,
+body.light-mode .error,
+body.light-mode .log-error {
+    color: #d70015 !important;
+}
+
+body.light-mode .text-warning,
+body.light-mode .warning,
+body.light-mode .log-warning {
+    color: #c93400 !important;
+}
+
+body.light-mode .text-info,
+body.light-mode .info,
+body.light-mode .log-info {
+    color: #0051d5 !important;
+}
+
+body.light-mode .text-matrix {
+    color: #007a3d !important;
+}
+
+body.light-mode .text-cyan {
+    color: #0051d5 !important;
+}
+
+body.light-mode .text-purple {
+    color: #5e5ce6 !important;
+}
+
+/* ============================================
+   LINKS - ALL MODES
+   ============================================ */
+
+body.light-mode a {
+    color: #0051d5 !important;
+}
+
+body.light-mode a:hover {
+    color: #0040dd !important;
+}
+
+/* ============================================
+   INPUT ELEMENTS - ALL MODES
+   ============================================ */
+
+body.light-mode input[type="text"],
+body.light-mode textarea,
+body.light-mode select {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode input[type="text"]:focus,
+body.light-mode textarea:focus,
+body.light-mode select:focus {
+    background: rgba(0, 0, 0, 0.08) !important;
+    border-color: #0051d5 !important;
+    box-shadow: 0 0 0 2px rgba(0, 81, 213, 0.15) !important;
+}
+
+/* ============================================
+   BUTTONS - ALL MODES
+   ============================================ */
+
+body.light-mode button {
+    color: #1d1d1f;
+}
+
+body.light-mode .terminal-action-btn,
+body.light-mode .header-control-btn {
+    background: rgba(0, 81, 213, 0.08) !important;
+    border-color: rgba(0, 81, 213, 0.2) !important;
+    color: #0051d5 !important;
+}
+
+body.light-mode .terminal-action-btn:hover,
+body.light-mode .header-control-btn:hover {
+    background: rgba(0, 81, 213, 0.15) !important;
+    border-color: #0051d5 !important;
+    box-shadow: 0 0 10px rgba(0, 81, 213, 0.2) !important;
+}
+
+/* ============================================
+   MODALS & PANELS - ALL MODES
+   ============================================ */
+
+body.light-mode .modal,
+body.light-mode .panel,
+body.light-mode .popup {
+    background: #ffffff !important;
+    color: #1d1d1f !important;
+    border-color: rgba(0, 81, 213, 0.2) !important;
+}
+
+body.light-mode .modal-header,
+body.light-mode .panel-header {
+    background: #f5f5f7;
+    border-bottom-color: #d1d1d6;
+    color: #1d1d1f;
+}
+
+/* ============================================
+   SCROLLBARS - ALL MODES
+   ============================================ */
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: #ebebf0;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: #c7c7cc;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background: #aeaeb2;
+}
+
+/* ============================================
+   TAB BAR - ALL MODES
+   ============================================ */
+
+body.light-mode .tab-bar {
+    background: #f5f5f7 !important;
+    border-bottom-color: #d1d1d6 !important;
+}
+
+body.light-mode .tab {
+    color: #636366 !important;
+}
+
+body.light-mode .tab.active {
+    color: #0051d5 !important;
+    border-bottom-color: #0051d5 !important;
+    font-weight: 600;
+}
+
+/* ============================================
+   HEADERS - ALL MODES
+   ============================================ */
+
+body.light-mode .terminal-header,
+body.light-mode .header {
+    background: #f5f5f7 !important;
+    border-bottom-color: #d1d1d6 !important;
+}
+
+body.light-mode .terminal-title,
+body.light-mode .header-title {
+    color: #1d1d1f !important;
+}
+
+body.light-mode .terminal-status,
+body.light-mode .connection-status {
+    background: rgba(0, 81, 213, 0.08);
+    border-color: rgba(0, 81, 213, 0.2);
+    color: #0051d5;
+}
+
+/* ============================================
+   INPUT LINE/SECTION - ALL MODES
+   ============================================ */
+
+body.light-mode .input-line,
+body.light-mode .terminal-input-section {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-mode .input-line:focus-within {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: #0051d5 !important;
+    box-shadow: 0 0 0 2px rgba(0, 81, 213, 0.15) !important;
+}
+
+/* ============================================
+   CODE BLOCKS & PRE - ALL MODES
+   ============================================ */
+
+body.light-mode code,
+body.light-mode pre {
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .code-block {
+    background: #f5f5f7 !important;
+    border-color: #d1d1d6 !important;
+    color: #1d1d1f !important;
+}
+
+/* ============================================
+   TABLES - ALL MODES
+   ============================================ */
+
+body.light-mode table {
+    border-color: #d1d1d6 !important;
+}
+
+body.light-mode th {
+    background: #f5f5f7 !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode td {
+    border-color: #ebebf0 !important;
+    color: #1d1d1f !important;
+}
+
+/* ============================================
+   BADGES & LABELS - ALL MODES
+   ============================================ */
+
+body.light-mode .badge,
+body.light-mode .label,
+body.light-mode .tag {
+    background: rgba(0, 81, 213, 0.08);
+    border-color: rgba(0, 81, 213, 0.2);
+    color: #0051d5;
+}
+
+/* ============================================
+   ICONS - ALL MODES
+   ============================================ */
+
+body.light-mode svg {
+    color: inherit;
+}
+
+body.light-mode .icon {
+    color: #636366;
+}
+
+body.light-mode .icon-primary {
+    color: #0051d5;
+}
+
+body.light-mode .icon-success {
+    color: #007a3d;
+}
+
+body.light-mode .icon-error {
+    color: #d70015;
+}
+
+body.light-mode .icon-warning {
+    color: #c93400;
+}
+
+

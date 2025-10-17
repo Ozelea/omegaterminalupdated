@@ -3,6 +3,8 @@
 /* Chart panel styling */
 #chart-panel {
     position: relative;
+    flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 #chart-panel .stats-title {

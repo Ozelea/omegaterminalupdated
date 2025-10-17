@@ -332,7 +332,8 @@ window.OmegaConfig = {
         'dexscreener', 'geckoterminal', 'stock', 'alphakey', 'ds search', 'ds trending', 'cg search', 'cg networks', 'alpha', 
         'alpha quote', 'alpha daily', 'alpha overview', 'alpha macro', 'solana connect', 'solana generate', 'solana status', 'solana test', 'solana search', 'solana swap',
         'near generate', 'near connect', 'near swap', 'near tokens', 'eclipse tokens', 'eclipse price', 'eclipse swap', 'eclipse connect', 'eclipse generate', 'eclipse balance',
-        'airdrop', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'create', 'nft', 'ascii', 'rome', 'rome help', 'rome token create', 'profile', 'profile open', 'profile close', 'game', 'game list', 'game help', 'play', 'play snake', 'play pacman', 'play clicker', 'play cookies'
+        'airdrop', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'create', 'nft', 'ascii', 'rome', 'rome help', 'rome token create', 'profile', 'profile open', 'profile close', 'game', 'game list', 'game help', 'play', 'play snake', 'play pacman', 'play clicker', 'play cookies',
+        'spotify', 'spotify open', 'spotify connect', 'spotify disconnect', 'spotify play', 'spotify pause', 'spotify next', 'spotify prev', 'spotify search', 'spotify close', 'spotify help', 'music'
     ],
     
     // Theme Options

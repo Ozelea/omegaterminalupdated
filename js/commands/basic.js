@@ -32,9 +32,9 @@ window.OmegaCommands.Basic = {
         terminal.log('  stressstats          Show stress test statistics');
         terminal.log('');
         terminal.log('🎨 INTERFACE COMMANDS:', 'info');
-        terminal.log('  theme <name>         Set theme (dark, light, matrix, retro, powershell)');
-        terminal.log('  gui <style>          Change GUI interface (chatgpt, aol, discord, windows95, terminal)');
-        terminal.log('  view <mode>          Toggle view (basic, futuristic, toggle)');
+        terminal.log('  theme [light|dark]   Toggle light/dark mode (or type "theme" for info)');
+        terminal.log('  gui <style>          Transform UI (chatgpt, discord, aol, windows95, limewire)');
+        terminal.log('  view [basic|futuristic] Toggle view mode');
         terminal.log('  clear                Clear terminal');
         terminal.log('  help                 Show this help message');
         terminal.log('');
@@ -130,41 +130,162 @@ window.OmegaCommands.Basic = {
 
     // Theme command
     theme: function(terminal, args) {
-        if (!args[1]) {
-            const currentTheme = OmegaThemes.getCurrentTheme();
-            const availableThemes = OmegaThemes.getAvailableThemes();
-            terminal.log(`Current theme: ${currentTheme}`, 'info');
-            terminal.log(`Available themes: ${availableThemes.join(', ')}`, 'info');
-            terminal.log('Usage: theme <name>', 'info');
+        if (!args[1] || args[1] === 'help' || args[1] === 'list') {
+            terminal.log('🎨 Omega Terminal Theme System', 'info');
+            terminal.log('═══════════════════════════════════════', 'output');
+            terminal.log('');
+            
+            terminal.log('🌓 APPEARANCE MODES:', 'success');
+            terminal.log('  theme light        - Switch to light mode', 'output');
+            terminal.log('  theme dark         - Switch to dark mode', 'output');
+            terminal.log('  theme toggle       - Toggle light/dark mode', 'output');
+            terminal.log('');
+            
+            terminal.log('🎮 GUI INTERFACE STYLES:', 'success');
+            terminal.log('  gui chatgpt        - ChatGPT-style interface', 'output');
+            terminal.log('  gui discord        - Discord-style interface', 'output');
+            terminal.log('  gui aol            - AOL Instant Messenger style', 'output');
+            terminal.log('  gui windows95      - Windows 95 retro style', 'output');
+            terminal.log('  gui limewire       - LimeWire P2P style', 'output');
+            terminal.log('  gui terminal       - Return to normal terminal', 'output');
+            terminal.log('');
+            
+            terminal.log('📊 VIEW MODES:', 'success');
+            terminal.log('  view basic         - Minimal terminal view', 'output');
+            terminal.log('  view futuristic    - Full dashboard view', 'output');
+            terminal.log('  view toggle        - Toggle between views', 'output');
+            terminal.log('');
+            
+            terminal.log('💡 QUICK TIPS:', 'info');
+            terminal.log('  • Light/Dark mode works in ALL GUI styles', 'output');
+            terminal.log('  • Use header buttons for quick toggles', 'output');
+            terminal.log('  • All themes preserve terminal functionality', 'output');
+            terminal.log('  • Your preferences are saved automatically', 'output');
+            terminal.log('');
+            
+            const currentMode = localStorage.getItem('omega-theme-mode') || 'dark';
+            const currentView = localStorage.getItem('omega-view-mode') || 'futuristic';
+            const currentGUI = localStorage.getItem('omega-gui-style') || 'terminal';
+            
+            terminal.log('🎯 CURRENT SETTINGS:', 'info');
+            terminal.log(`  Appearance: ${currentMode === 'light' ? '🌞 Light Mode' : '🌙 Dark Mode'}`, 'output');
+            terminal.log(`  View: ${currentView === 'basic' ? '⌨️  Basic Terminal' : '📊 Futuristic Dashboard'}`, 'output');
+            terminal.log(`  GUI Style: ${currentGUI}`, 'output');
             return;
         }
 
         const themeName = args[1].toLowerCase();
-        if (!OmegaConfig.THEMES.includes(themeName)) {
-            terminal.log(`❌ Invalid theme: ${themeName}`, 'error');
-            terminal.log(`Available themes: ${OmegaConfig.THEMES.join(', ')}`, 'info');
+        
+        // Handle light/dark mode
+        if (themeName === 'light') {
+            if (window.toggleOldTerminalTheme || window.FuturisticDashboard) {
+                const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+                if (currentTheme !== 'light') {
+                    if (window.FuturisticDashboard && window.FuturisticDashboard.toggleThemeMode) {
+                        window.FuturisticDashboard.toggleThemeMode();
+                    } else if (window.toggleOldTerminalTheme) {
+                        window.toggleOldTerminalTheme();
+                    }
+                }
+                terminal.log('✅ Switched to light mode', 'success');
+            }
             return;
         }
-
-        OmegaThemes.setTheme(themeName);
+        
+        if (themeName === 'dark') {
+            if (window.toggleOldTerminalTheme || window.FuturisticDashboard) {
+                const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+                if (currentTheme !== 'dark') {
+                    if (window.FuturisticDashboard && window.FuturisticDashboard.toggleThemeMode) {
+                        window.FuturisticDashboard.toggleThemeMode();
+                    } else if (window.toggleOldTerminalTheme) {
+                        window.toggleOldTerminalTheme();
+                    }
+                }
+                terminal.log('✅ Switched to dark mode', 'success');
+            }
+            return;
+        }
+        
+        if (themeName === 'toggle') {
+            if (window.FuturisticDashboard && window.FuturisticDashboard.toggleThemeMode) {
+                window.FuturisticDashboard.toggleThemeMode();
+            } else if (window.toggleOldTerminalTheme) {
+                window.toggleOldTerminalTheme();
+            }
+            terminal.log('✅ Theme toggled', 'success');
+            return;
+        }
+        
+        // Legacy theme system fallback
+        if (OmegaConfig.THEMES && OmegaConfig.THEMES.includes(themeName)) {
+            if (window.OmegaThemes && window.OmegaThemes.setTheme) {
+                OmegaThemes.setTheme(themeName);
+            } else {
+                terminal.log('⚠️ Legacy theme system not available. Use "theme light" or "theme dark"', 'warning');
+            }
+            return;
+        }
+        
+        terminal.log(`❌ Unknown theme: ${themeName}`, 'error');
+        terminal.log('💡 Type "theme" or "theme help" for available options', 'info');
     },
 
     // GUI command for interface transformations
     gui: function(terminal, args) {
         const availableStyles = ['chatgpt', 'aol', 'discord', 'windows95', 'limewire', 'terminal'];
         
-        if (!args[1]) {
+        if (!args[1] || args[1] === 'help' || args[1] === 'list') {
             const currentStyle = localStorage.getItem('omega-gui-style') || 'terminal';
-            terminal.log(`Current GUI style: ${currentStyle}`, 'info');
-            terminal.log(`Available styles: ${availableStyles.join(', ')}`, 'info');
-            terminal.log('Usage: gui <style>', 'info');
+            const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+            
+            terminal.log('🎮 GUI Interface Styles', 'info');
+            terminal.log('═══════════════════════════════════════', 'output');
+            terminal.log('');
+            
+            terminal.log('💬 gui chatgpt      - ChatGPT conversation interface', 'output');
+            terminal.log('   Modern chat UI with sidebar and message bubbles', 'info');
+            terminal.log('');
+            
+            terminal.log('👾 gui discord      - Discord server interface', 'output');
+            terminal.log('   Channel-based chat with Discord aesthetics', 'info');
+            terminal.log('');
+            
+            terminal.log('📧 gui aol          - AOL Instant Messenger', 'output');
+            terminal.log('   Classic AOL chat with "You\'ve got mail" vibes', 'info');
+            terminal.log('');
+            
+            terminal.log('🪟 gui windows95    - Windows 95 retro', 'output');
+            terminal.log('   Classic Windows 95 window chrome and style', 'info');
+            terminal.log('');
+            
+            terminal.log('🔥 gui limewire     - LimeWire P2P interface', 'output');
+            terminal.log('   Y2K-era file sharing aesthetic', 'info');
+            terminal.log('');
+            
+            terminal.log('⌨️  gui terminal     - Default terminal UI', 'output');
+            terminal.log('   Return to standard terminal interface', 'info');
+            terminal.log('');
+            
+            terminal.log('💡 ALL GUI STYLES:', 'success');
+            terminal.log('  ✅ Work in both Light & Dark mode', 'output');
+            terminal.log('  ✅ Preserve all terminal commands', 'output');
+            terminal.log('  ✅ Support futuristic dashboard features', 'output');
+            terminal.log('  ✅ Auto-save your preference', 'output');
+            terminal.log('');
+            
+            terminal.log('🎯 CURRENT:', 'info');
+            terminal.log(`  GUI Style: ${currentStyle}`, 'output');
+            terminal.log(`  Theme: ${currentTheme === 'light' ? '🌞 Light' : '🌙 Dark'}`, 'output');
+            terminal.log('');
+            terminal.log('💡 Try: gui chatgpt', 'success');
             return;
         }
 
         const style = args[1].toLowerCase();
         if (!availableStyles.includes(style)) {
             terminal.log(`❌ Invalid GUI style: ${style}`, 'error');
-            terminal.log(`Available styles: ${availableStyles.join(', ')}`, 'info');
+            terminal.log('💡 Available: chatgpt, discord, aol, windows95, limewire, terminal', 'info');
             return;
         }
 
@@ -175,6 +296,7 @@ window.OmegaCommands.Basic = {
         localStorage.setItem('omega-gui-style', style);
         
         terminal.log(`✅ Interface transformed to: ${style}`, 'success');
+        terminal.log(`💡 All commands still work! Type "gui terminal" to restore.`, 'info');
     },
 
     // Transform the entire interface structure
@@ -501,13 +623,14 @@ window.OmegaCommands.Basic = {
                 <div id="addTabBtn" style="padding: 8px 18px; cursor: pointer; color: #00bcf2; font-size: 1.3em;">+</div>
             </div>
             <div id="faucetInfoBox" style="background: rgba(0, 153, 255, 0.10); border: 1px solid #99ccff; color: #99ccff; padding: 10px 16px; border-radius: 6px; margin: 0 0 12px 0; font-size: 15px;">
-                <b>Note:</b> Each wallet can only claim from the faucet once every 24 hours.<br>
-                If you try to claim again before the cooldown is over, the transaction will fail.
+                <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24 hours.<br>
+                If you try to claim again before the cooldown is over, the transaction will fail.<br><br>
+                <b>📱 Platform Notice:</b> Mobile experience is currently being optimized. For the best terminal experience with full features and optimal performance, we recommend using a desktop browser. Mobile support coming soon! 🚀
             </div>
             <div class="terminal-content" id="terminalContent"></div>
             <div class="terminal-input-section">
                 <div class="input-line">
-                    <span class="input-prompt">root@omega-miner:~$</span>
+                    <span class="input-prompt">root@omega-Terminal:~$</span>
                     <input type="text" class="input-field" id="commandInput" placeholder="Enter command..." autocomplete="off">
                     <span class="cursor">|</span>
                 </div>
@@ -988,7 +1111,7 @@ window.OmegaCommands.Basic = {
                             newInputSection.style.cssText = 'display: flex !important; width: calc(100vw - 40px) !important; max-width: calc(100vw - 40px) !important; box-sizing: border-box !important; background: rgba(255,255,255,0.05) !important; border: 1px solid #ffffff !important; border-radius: 5px !important; padding: 15px !important; margin: 0 !important; overflow: hidden !important;';
             newInputSection.innerHTML = `
                                   <div class="input-line" style="display: flex !important; width: 100% !important; align-items: center;">
-                      <span class="input-prompt">root@omega-miner:~$</span>
+                      <span class="input-prompt">root@omega-Terminal:~$</span>
                       <input type="text" class="input-field" id="commandInput" placeholder="" autocomplete="off" style="flex: 1 !important; width: 100% !important; min-width: 0 !important; background: none !important; border: none !important; color: #ffffff !important; font-family: 'Courier New', monospace !important; outline: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; overflow: visible !important;">
                   </div>
             `;

@@ -452,10 +452,11 @@ body.modern-terminal-ui .text-cyan {
 body.modern-terminal-ui #commandInput,
 body.modern-terminal-ui .terminal-input {
     background: transparent !important;
-    color: var(--cyber-blue, #00d4ff) !important;
+    color: var(--cyber-blue-dim, #0099cc) !important;
     border: 1px solid var(--glass-border, rgba(0, 212, 255, 0.15)) !important;
     caret-color: var(--cyber-blue-bright, #00ffff) !important;
     cursor: text !important;
+    font-weight: 500;
 }
 
 body.modern-terminal-ui #commandInput:focus,
@@ -464,6 +465,25 @@ body.modern-terminal-ui .terminal-input:focus {
     box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1) !important;
     outline: none !important;
     caret-color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Light mode specific overrides */
+body.light-mode.modern-terminal-ui #commandInput,
+body.light-mode.modern-terminal-ui .terminal-input {
+    color: #1d1d1f !important;
+    caret-color: var(--cyber-blue, #0051d5) !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal-output,
+body.light-mode.modern-terminal-ui .terminal-line,
+body.light-mode.modern-terminal-ui .output-line {
+    color: #1d1d1f !important;
+}
+
+body.light-mode.modern-terminal-ui .terminal-prompt,
+body.light-mode.modern-terminal-ui .prompt {
+    color: var(--matrix-green, #007a3d) !important;
+    font-weight: 600;
 }
 
 /* Hide all custom cursors */

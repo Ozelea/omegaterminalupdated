@@ -113,7 +113,28 @@ window.OmegaCommands.Wallet = {
             // NEAR not available or not connected
         }
         
-        // 3. Check for Shade Agents
+        // 3. Check Fair Blockchain Wallet
+        try {
+            if (window.fairWallet && window.fairWallet.address) {
+                hasAnyWallet = true;
+                
+                try {
+                    const fairProvider = new window.ethers.providers.JsonRpcProvider('https://testnet-rpc.fair.cloud');
+                    const fairBalance = await fairProvider.getBalance(window.fairWallet.address);
+                    const fairBalanceFormatted = window.ethers.utils.formatEther(fairBalance);
+                    
+                    terminal.log(`🟦 Fair Blockchain Balance: ${OmegaUtils.formatBalance(fairBalanceFormatted)} FAIR`, 'success');
+                    totalBalances.push({ type: 'Fair', amount: parseFloat(fairBalanceFormatted), symbol: 'FAIR' });
+                } catch (fairError) {
+                    terminal.log(`⚠️  Fair wallet found but couldn't fetch balance`, 'warning');
+                    terminal.log(`   Wallet: ${window.fairWallet.address.substring(0, 10)}...`, 'info');
+                }
+            }
+        } catch (error) {
+            // Fair wallet not available
+        }
+        
+        // 4. Check for Shade Agents
         try {
             const storedAgents = JSON.parse(localStorage.getItem('shade-agents') || '[]');
             if (storedAgents.length > 0) {
@@ -131,18 +152,21 @@ window.OmegaCommands.Wallet = {
             // Shade agents not available
         }
         
-        // 4. Show summary or no wallet message
+        // 5. Show summary or no wallet message
         if (!hasAnyWallet) {
             terminal.log('❌ No wallets connected.', 'error');
             terminal.log('💡 Available wallet types:', 'info');
             terminal.log('  • EVM Wallet: Use "connect" command', 'info');
-            terminal.log('  • NEAR Wallet: Use "shade" when connecting', 'info');
+            terminal.log('  • Fair Wallet: Use "fair generate" or "fair connect"', 'info');
+            terminal.log('  • Solana Wallet: Use "solana connect" or "solana generate"', 'info');
+            terminal.log('  • NEAR Wallet: Use "near connect"', 'info');
             terminal.log('  • Shade Agents: Use "near agent deploy <name>"', 'info');
         } else {
+            terminal.log('', 'info');
             terminal.log('✅ Multi-wallet balance check complete!', 'success');
             if (totalBalances.length > 0) {
                 const totalValue = totalBalances.reduce((sum, bal) => sum + bal.amount, 0);
-                terminal.log(`📊 Total OMEGA: ${OmegaUtils.formatBalance(totalValue.toString())}`, 'success');
+                terminal.log(`📊 Total Portfolio Value: ${totalBalances.length} wallet(s) active`, 'success');
             }
         }
     },

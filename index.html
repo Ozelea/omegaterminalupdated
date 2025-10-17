@@ -55,8 +55,11 @@
     <link rel="stylesheet" href="styles/pgt-tracker-styles.css?v=layout-fix-2" />
     <link rel="stylesheet" href="styles/multi-network-connector.css" />
     <link rel="stylesheet" href="styles/chart-viewer.css" />
+    <link rel="stylesheet" href="styles/spotify-player.css" />
+    <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
     <script src="js/plugins/dexscreener-analytics-ultimate.js"></script>
+    <script src="js/plugins/omega-spotify-player.js"></script>
     <!-- <script src="near-wallet-plugin.js"></script> DISABLED: Was breaking existing NEAR commands -->
     <!-- <script src="input-visibility-hotfix.js"></script> DISABLED: Causing issues -->
     <!-- <script src="apple-ui-input-override.js"></script> DISABLED: Causing duplicate text -->
@@ -67,7 +70,8 @@
 
     <script src="js/plugins/enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
     <script src="js/plugins/terminal-chatter-mode.js"></script>
-    <script src="js/plugins/python-integration-system.js"></script>
+    <!-- Python integration disabled - causes initialization issues -->
+    <!-- <script src="js/plugins/python-integration-system.js"></script> -->
     <!-- <script src="js/plugins/pgt-integration-live.js"></script> DISABLED: Replaced with pgt-terminal-integration.js -->
     <!-- <script src="js/plugins/pgt-cors-proxy.js"></script> DISABLED: Not needed with new multi-network system -->
     <!-- <script src="rome-network-plugin.js"></script> DISABLED: Rome commands integrated directly into index.html -->
@@ -264,68 +268,257 @@
         animation: none !important;
       }
       
-      /* Ensure native browser caret is visible and positioned correctly */
+      /* Hide native browser caret (we use custom indicator) */
       input[type="text"],
       #commandInput,
       .input-field,
       .terminal-input {
-        caret-color: #00ffff !important; /* Bright cyan caret - highly visible */
+        caret-color: transparent !important; /* Hide native caret */
         text-align: left !important;
         direction: ltr !important;
         unicode-bidi: normal !important;
       }
       
-      /* Enhanced caret animation for better visibility */
-      @keyframes caretBlink {
-        0%, 49% { caret-color: #00ffff; }
-        50%, 99% { caret-color: transparent; }
-      }
-      
-      /* Auto-focus input on page load */
-      #commandInput:not(:focus) {
-        animation: caretBlink 1s step-end infinite;
-      }
-      
-      /* Input container for positioning block cursor behind text */
-      .input-container {
-        position: relative;
-        flex: 1;
-        display: flex;
-        align-items: center;
-      }
-      
-      /* Block cursor that appears behind/after text */
-      .block-cursor {
+      /* Enhanced cursor indicator */
+      .omega-cursor-indicator {
         position: absolute;
-        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
         color: #00ffff;
-        font-family: "Courier New", monospace;
-        font-size: 18px;
         pointer-events: none;
+        z-index: 100;
+        animation: omegaCursorBlink 1s step-end infinite;
         user-select: none;
-        z-index: 0; /* Behind the text */
-        animation: blockCursorBlink 1s step-end infinite;
-        line-height: 1.5;
+        line-height: 1;
       }
       
-      @keyframes blockCursorBlink {
-        0%, 50% {
-          opacity: 1;
-        }
-        51%, 100% {
-          opacity: 0;
-        }
+      @keyframes omegaCursorBlink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
       }
       
-      /* Hide old custom cursor elements */
+      body.light-mode .omega-cursor-indicator {
+        color: #0051d5;
+      }
+      
+      /* Ensure input line is positioned */
+      .input-line {
+        position: relative;
+      }
+      
+      /* Remove any custom cursor elements */
       .cursor,
-      .terminal-cursor,
       span.cursor,
       .custom-cursor,
-      .fake-cursor,
-      .input-wrapper {
+      .fake-cursor {
         display: none !important;
         visibility: hidden !important;
+      }
+      
+      /* Old Terminal Light Mode Styles */
+      body.light-mode .terminal {
+        background: #ffffff !important;
+        color: #1d1d1f !important;
+      }
+      
+      body.light-mode .terminal-header {
+        background: #f5f5f7 !important;
+        border-bottom-color: #d1d1d6 !important;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
+      }
+      
+      body.light-mode .terminal-title {
+        color: #1d1d1f !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .terminal-status {
+        color: #0051d5 !important;
+        background: rgba(0, 81, 213, 0.08) !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .tab-bar {
+        background: #f5f5f7 !important;
+        border-bottom-color: #d1d1d6 !important;
+      }
+      
+      body.light-mode .tab {
+        color: #636366 !important;
+        font-weight: 500;
+      }
+      
+      body.light-mode .tab.active {
+        color: #0051d5 !important;
+        border-bottom-color: #0051d5 !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .terminal-content {
+        background: #ffffff !important;
+        color: #1d1d1f !important;
+      }
+      
+      body.light-mode .terminal-output {
+        color: #1d1d1f !important;
+      }
+      
+      body.light-mode .terminal-line,
+      body.light-mode .output-line {
+        color: #1d1d1f !important;
+      }
+      
+      body.light-mode .input-prompt,
+      body.light-mode .prompt-symbol,
+      body.light-mode .prompt-text {
+        color: #007a3d !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .input-field,
+      body.light-mode #commandInput {
+        color: #1d1d1f !important;
+        caret-color: #0051d5 !important;
+        font-weight: 500;
+      }
+      
+      /* Light mode status message colors */
+      body.light-mode .text-success,
+      body.light-mode .success {
+        color: #007a3d !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .text-error,
+      body.light-mode .error {
+        color: #d70015 !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .text-warning,
+      body.light-mode .warning {
+        color: #c93400 !important;
+        font-weight: 600;
+      }
+      
+      body.light-mode .text-info,
+      body.light-mode .info {
+        color: #0051d5 !important;
+        font-weight: 500;
+      }
+      
+      body.light-mode .text-matrix,
+      body.light-mode .matrix {
+        color: #007a3d !important;
+      }
+      
+      body.light-mode .text-cyan,
+      body.light-mode .cyan {
+        color: #0051d5 !important;
+      }
+      
+      body.light-mode .text-purple,
+      body.light-mode .purple {
+        color: #5e5ce6 !important;
+      }
+      
+      /* Light mode links */
+      body.light-mode a {
+        color: #0051d5 !important;
+      }
+      
+      body.light-mode a:hover {
+        color: #0040dd !important;
+        text-decoration: underline;
+      }
+      
+      /* Light mode header buttons */
+      body.light-mode .header-control-btn {
+        background: rgba(0, 81, 213, 0.08) !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+        color: #0051d5 !important;
+      }
+      
+      body.light-mode .header-control-btn:hover {
+        background: rgba(0, 81, 213, 0.15) !important;
+        border-color: #0051d5 !important;
+        box-shadow: 0 0 10px rgba(0, 81, 213, 0.2) !important;
+      }
+      
+      body.light-mode .ai-toggle {
+        background: rgba(0, 81, 213, 0.08) !important;
+        color: #0051d5 !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+      }
+      
+      body.light-mode .theme-toggle {
+        background: rgba(0, 81, 213, 0.08) !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+      }
+      
+      /* Light mode input section */
+      body.light-mode .terminal-input-section {
+        background: transparent !important;
+        border-top-color: rgba(0, 81, 213, 0.15) !important;
+      }
+      
+      body.light-mode .input-line {
+        background: rgba(0, 81, 213, 0.05) !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+      }
+      
+      body.light-mode .input-line:focus-within {
+        background: rgba(0, 81, 213, 0.08) !important;
+        border-color: #0051d5 !important;
+        box-shadow: 0 0 0 2px rgba(0, 81, 213, 0.15) !important;
+      }
+      
+      /* Light mode basic terminal mode */
+      body.light-mode.basic-terminal-mode {
+        background: #f5f5f7 !important;
+      }
+      
+      body.light-mode.basic-terminal-mode #terminal-wrapper {
+        background: #ffffff !important;
+      }
+      
+      body.light-mode.basic-terminal-mode .terminal-header {
+        background: #f5f5f7 !important;
+      }
+      
+      /* Header control button hover effects */
+      .header-control-btn:hover {
+        background: rgba(0, 188, 242, 0.2) !important;
+        border-color: #00bcf2 !important;
+        box-shadow: 0 0 10px rgba(0, 188, 242, 0.2) !important;
+        transform: translateY(-1px);
+      }
+      
+      .header-control-btn:active {
+        transform: translateY(0);
+      }
+      
+      /* Header icon buttons (social links) */
+      .header-icon-btn:hover {
+        background: rgba(0, 188, 242, 0.2) !important;
+        border-color: #00bcf2 !important;
+        box-shadow: 0 0 10px rgba(0, 188, 242, 0.2) !important;
+        transform: translateY(-2px);
+      }
+      
+      body.light-mode .header-icon-btn {
+        background: rgba(0, 81, 213, 0.08) !important;
+        border-color: rgba(0, 81, 213, 0.2) !important;
+        color: #0051d5 !important;
+      }
+      
+      body.light-mode .header-icon-btn:hover {
+        background: rgba(0, 81, 213, 0.15) !important;
+        border-color: #0051d5 !important;
+        box-shadow: 0 0 10px rgba(0, 81, 213, 0.2) !important;
       }
 
       /* Polymarket UI Variables */
@@ -352,12 +545,15 @@
 
       .terminal {
         width: 100vw;
-        height: 100dvh;
+        height: 100vh;
+        max-height: 100vh;
         padding: 20px;
         background: linear-gradient(135deg, #000 0%, #111111 100%);
         position: relative;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
+        box-sizing: border-box;
       }
 
       .terminal-header {
@@ -368,6 +564,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 10;
       }
 
       .terminal-title {
@@ -423,26 +622,61 @@
       }
 
       .terminal-input-section {
-        border-top: 1px solid #ffffff;
-        padding-top: 10px;
-        margin-top: auto;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid #ffffff;
+        border-top: 1px solid rgba(0, 188, 242, 0.2);
+        padding: 12px 20px;
+        margin-top: 0;
+        background: transparent;
         width: 100%;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 5;
       }
 
       .terminal-content {
-        flex: 1;
+        flex: 1 1 auto;
         overflow-y: auto;
+        overflow-x: hidden;
         padding-right: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         user-select: text !important;
         -webkit-user-select: text !important;
         -moz-user-select: text !important;
         -ms-user-select: text !important;
+        min-height: 0;
+        max-height: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 188, 242, 0.5) rgba(0, 0, 0, 0.2);
+      }
+      
+      .terminal-content::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      .terminal-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+      }
+      
+      .terminal-content::-webkit-scrollbar-thumb {
+        background: rgba(0, 188, 242, 0.5);
+        border-radius: 4px;
+        transition: background 0.2s ease;
+      }
+      
+      .terminal-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 188, 242, 0.7);
+      }
+      
+      body.light-mode .terminal-content::-webkit-scrollbar-thumb {
+        background: rgba(0, 81, 213, 0.5);
+      }
+      
+      body.light-mode .terminal-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 81, 213, 0.7);
       }
 
       /* Modal popup styles */
@@ -601,17 +835,29 @@
       .input-line {
         display: flex;
         align-items: center;
-        background: transparent;
+        background: rgba(0, 188, 242, 0.05);
         width: 100%;
-        gap: 5px;
+        gap: 8px;
         position: relative;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 188, 242, 0.2);
+        transition: all 0.2s ease;
+      }
+      
+      .input-line:focus-within {
+        background: rgba(0, 188, 242, 0.08);
+        border-color: rgba(0, 188, 242, 0.4);
+        box-shadow: 0 0 0 2px rgba(0, 188, 242, 0.1);
       }
 
       .input-prompt {
-        color: #ffffff;
-        font-weight: bold;
-        margin-right: 10px;
-        font-size: 16px;
+        color: #00bcf2;
+        font-weight: 600;
+        margin-right: 0;
+        font-size: 15px;
+        white-space: nowrap;
+        letter-spacing: 0.5px;
       }
 
       .input-field {
@@ -623,17 +869,15 @@
         outline: none;
         flex: 1;
         padding: 5px;
-        caret-color: transparent; /* Hide native caret - using custom block cursor */
+        caret-color: #ffffff;
         width: 100%;
         min-width: 0;
         opacity: 1 !important;
         line-height: 1.5;
-        position: relative;
-        z-index: 1; /* Text appears above block cursor */
       }
 
       .input-field:focus {
-        caret-color: transparent;
+        caret-color: #ffffff;
         opacity: 1 !important;
       }
 
@@ -656,8 +900,6 @@
           opacity: 0;
         }
       }
-      
-      /* Custom cursor animations disabled - using native browser caret */
 
       /* Input field cursor indicator */
       .input-field {
@@ -903,8 +1145,9 @@
         color: #666666;
       }
 
-      .terminal.light-theme .block-cursor {
-        color: #007aff; /* Apple blue block cursor for light mode */
+      .terminal.light-theme .cursor {
+        display: inline-block !important;
+        color: #0066cc;
       }
 
       .terminal.light-theme .mining-status {
@@ -1450,8 +1693,7 @@
         }
       }
 
-      /* UI Selection Screen */
-      /* UI Selection Screen CSS removed - Interface selection now handled by welcome screen */
+      /* UI Selection Screen removed - terminal loads directly */
     </style>
   </head>
   <body>
@@ -1480,7 +1722,7 @@
       </div>
     </div>
 
-    <!-- UI Selection Screen REMOVED - Users select interface on welcome screen -->
+    <!-- UI Selection Screen removed - terminal loads directly -->
 
     <div class="terminal" id="terminal" style="display: none">
       <div class="terminal-header">
@@ -1489,14 +1731,160 @@
           style="
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
             margin-left: auto;
           "
         >
+          <a 
+            href="https://omeganetwork.co/landing" 
+            target="_blank" 
+            class="header-icon-btn" 
+            title="Omega Network Website"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px;
+              color: #00bcf2;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              transition: all 0.2s ease;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+            </svg>
+          </a>
+          <a 
+            href="https://discord.com/invite/omeganetwork" 
+            target="_blank" 
+            class="header-icon-btn" 
+            title="Discord Community"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px;
+              color: #00bcf2;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              transition: all 0.2s ease;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8Z"/>
+            </svg>
+          </a>
+          <a 
+            href="https://x.com/omega_netw0rk" 
+            target="_blank" 
+            class="header-icon-btn" 
+            title="X (Twitter)"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px;
+              color: #00bcf2;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              transition: all 0.2s ease;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a 
+            href="https://omega-6.gitbook.io/omega/" 
+            target="_blank" 
+            class="header-icon-btn" 
+            title="Documentation"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px;
+              color: #00bcf2;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              transition: all 0.2s ease;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5Z"/>
+            </svg>
+          </a>
+          <div style="width: 1px; height: 20px; background: rgba(0, 188, 242, 0.3); margin: 0 4px;"></div>
+          <button 
+            class="header-control-btn" 
+            title="Toggle Dark/Light Mode" 
+            id="oldTerminalThemeToggle"
+            onclick="window.toggleOldTerminalTheme()"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/>
+            </svg>
+            <span id="oldTerminalThemeLabel">LIGHT</span>
+          </button>
+          <button 
+            class="header-control-btn" 
+            title="Switch to Dashboard View" 
+            id="oldTerminalDashboardToggle"
+            onclick="window.switchToFuturisticUI()"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
+            </svg>
+            <span>DASHBOARD</span>
+          </button>
           <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">
             AI Mode (off)
           </button>
-          <button class="theme-toggle" title="Toggle Theme"></button>
           <div class="terminal-status" id="connectionStatus">DISCONNECTED</div>
         </div>
       </div>
@@ -1551,26 +1939,22 @@
           box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
         "
       >
-        <b>Note:</b> Each wallet can only claim from the faucet once every 24
-        hours.<br />
-        If you try to claim again before the cooldown is over, the transaction
-        will fail.
+        <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24 hours.<br />
+        If you try to claim again before the cooldown is over, the transaction will fail.<br /><br />
+        <b>📱 Platform Notice:</b> Mobile experience is currently being optimized. For the best terminal experience with full features and optimal performance, we recommend using a desktop browser. Mobile support coming soon! 🚀
       </div>
       <div class="terminal-content" id="terminalContent"></div>
       <div class="terminal-input-section">
         <div class="input-line">
-          <span class="input-prompt">root@omega-miner:~$</span>
-          <div class="input-container">
-            <span class="block-cursor" id="blockCursor">█</span>
-            <input
-              type="text"
-              class="input-field"
-              id="commandInput"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder=""
-            />
-          </div>
+          <span class="input-prompt">root@omega-Terminal:~$</span>
+          <input
+            type="text"
+            class="input-field"
+            id="commandInput"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Enter command..."
+          />
         </div>
       </div>
     </div>
@@ -1709,6 +2093,243 @@
         };
         console.log("Ethers fallback loaded successfully");
       }
+      
+      // Old Terminal UI Theme Toggle Function
+      window.toggleOldTerminalTheme = function() {
+        const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        localStorage.setItem('omega-theme-mode', newTheme);
+        
+        const terminal = document.getElementById('terminal');
+        const terminalContent = document.querySelector('.terminal-content');
+        const terminalOutput = document.querySelector('.terminal-output');
+        const body = document.body;
+        
+        // Check if terminal is in Apple UI (Modern UI) mode
+        const isAppleUI = terminal && terminal.classList.contains('apple-ui');
+        
+        if (newTheme === 'light') {
+          // Apply light mode
+          body.classList.add('light-mode');
+          body.classList.remove('dark-mode');
+          
+          // Handle Apple UI theme specifically
+          if (isAppleUI && terminal) {
+            terminal.classList.remove('dark');
+            console.log('✅ Apple UI: Switched to light mode');
+          }
+          
+          // Update terminal styles
+          if (terminal) {
+            terminal.style.background = '#ffffff';
+            terminal.style.color = '#1d1d1f';
+          }
+          if (terminalContent) {
+            terminalContent.style.background = '#ffffff';
+            terminalContent.style.color = '#1d1d1f';
+          }
+          if (terminalOutput) {
+            terminalOutput.style.color = '#1d1d1f';
+          }
+          
+          // Update all output lines
+          document.querySelectorAll('.terminal-line, .output-line').forEach(line => {
+            line.style.color = '#1d1d1f';
+          });
+          
+          // Update prompts
+          document.querySelectorAll('.input-prompt, .prompt-symbol, .prompt-text').forEach(prompt => {
+            prompt.style.color = '#007a3d';
+          });
+          
+          // Update command input
+          const commandInput = document.getElementById('commandInput');
+          if (commandInput) {
+            commandInput.style.color = '#1d1d1f';
+          }
+          
+          // Update button label
+          const label = document.getElementById('oldTerminalThemeLabel');
+          if (label) label.textContent = 'DARK';
+          
+          console.log('✅ Switched to light mode - all text updated');
+          
+          // Log to terminal if available
+          if (window.terminal && window.terminal.log) {
+            window.terminal.log('🌞 Light mode enabled', 'success');
+          }
+        } else {
+          // Apply dark mode
+          body.classList.add('dark-mode');
+          body.classList.remove('light-mode');
+          
+          // Handle Apple UI theme specifically
+          if (isAppleUI && terminal) {
+            terminal.classList.add('dark');
+            console.log('✅ Apple UI: Switched to dark mode');
+          }
+          
+          // Update terminal styles
+          if (terminal) {
+            terminal.style.background = '#000';
+            terminal.style.color = '#ffffff';
+          }
+          if (terminalContent) {
+            terminalContent.style.background = '#000';
+            terminalContent.style.color = '#ffffff';
+          }
+          if (terminalOutput) {
+            terminalOutput.style.color = '#ffffff';
+          }
+          
+          // Update all output lines
+          document.querySelectorAll('.terminal-line, .output-line').forEach(line => {
+            line.style.color = '';
+          });
+          
+          // Update prompts
+          document.querySelectorAll('.input-prompt, .prompt-symbol, .prompt-text').forEach(prompt => {
+            prompt.style.color = '';
+          });
+          
+          // Update command input
+          const commandInput = document.getElementById('commandInput');
+          if (commandInput) {
+            commandInput.style.color = '';
+          }
+          
+          // Update button label
+          const label = document.getElementById('oldTerminalThemeLabel');
+          if (label) label.textContent = 'LIGHT';
+          
+          console.log('✅ Switched to dark mode');
+          
+          // Log to terminal if available
+          if (window.terminal && window.terminal.log) {
+            window.terminal.log('🌙 Dark mode enabled', 'success');
+          }
+        }
+        
+        // If futuristic dashboard exists, sync with it
+        if (window.FuturisticDashboard && window.FuturisticDashboard.updateThemeModeButton) {
+          window.FuturisticDashboard.updateThemeModeButton();
+        }
+      };
+      
+      // Switch from Old Terminal to Futuristic Dashboard UI
+      window.switchToFuturisticUI = function() {
+        console.log('🚀 Switching to Futuristic Dashboard UI...');
+        
+        // Save preference
+        localStorage.setItem('omega-view-mode', 'futuristic');
+        
+        // If dashboard already exists, just enable it
+        if (window.FuturisticDashboard && window.FuturisticDashboard.enableFuturisticMode) {
+          window.FuturisticDashboard.enableFuturisticMode();
+          
+          if (window.terminal) {
+            window.terminal.log('✅ Switched to Futuristic Dashboard', 'success');
+          }
+        } else {
+          // Dashboard doesn't exist yet, reload page (it will auto-load dashboard)
+          console.log('🔄 Reloading to initialize dashboard...');
+          location.reload();
+        }
+      };
+      
+      // Initialize theme on page load for old terminal
+        (function() {
+          const savedTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+          if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            document.body.classList.remove('dark-mode');
+          } else {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('light-mode');
+          }
+        })();
+        
+        // Enhanced cursor indicator system
+        window.initCursorIndicator = function() {
+          const input = document.getElementById('commandInput');
+          if (!input) {
+            // Retry if input not ready
+            setTimeout(window.initCursorIndicator, 100);
+            return;
+          }
+          
+          // Check if already initialized
+          if (input.dataset.cursorInit === 'true') return;
+          input.dataset.cursorInit = 'true';
+          
+          // Create cursor indicator element
+          let indicator = document.getElementById('omegaCursorIndicator');
+          if (!indicator) {
+            indicator = document.createElement('span');
+            indicator.id = 'omegaCursorIndicator';
+            indicator.className = 'omega-cursor-indicator';
+            indicator.textContent = '█';
+            
+            // Insert after the input
+            const inputLine = input.closest('.input-line');
+            if (inputLine) {
+              inputLine.appendChild(indicator);
+            }
+          }
+          
+          // Position updater function
+          function updateCursorPosition() {
+            if (!indicator || !input) return;
+            
+            // Create measurement element
+            const measure = document.createElement('span');
+            measure.style.cssText = `
+              font-family: ${window.getComputedStyle(input).fontFamily};
+              font-size: ${window.getComputedStyle(input).fontSize};
+              font-weight: ${window.getComputedStyle(input).fontWeight};
+              letter-spacing: ${window.getComputedStyle(input).letterSpacing};
+              position: absolute;
+              visibility: hidden;
+              white-space: pre;
+              left: -9999px;
+            `;
+            measure.textContent = input.value || '';
+            document.body.appendChild(measure);
+            
+            const textWidth = measure.offsetWidth;
+            document.body.removeChild(measure);
+            
+            // Get input's offset relative to parent
+            const inputRect = input.getBoundingClientRect();
+            const lineRect = input.closest('.input-line')?.getBoundingClientRect();
+            
+            if (lineRect) {
+              const offset = inputRect.left - lineRect.left;
+              indicator.style.left = (offset + textWidth + 2) + 'px';
+            }
+          }
+          
+          // Attach event listeners
+          input.addEventListener('input', updateCursorPosition);
+          input.addEventListener('keyup', updateCursorPosition);
+          input.addEventListener('keydown', updateCursorPosition);
+          input.addEventListener('click', updateCursorPosition);
+          input.addEventListener('focus', updateCursorPosition);
+          
+          // Initial position
+          setTimeout(updateCursorPosition, 50);
+          
+          console.log('✅ Cursor indicator initialized');
+        };
+        
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', window.initCursorIndicator);
+        
+        // Also retry after a delay to catch dynamically created inputs
+        setTimeout(window.initCursorIndicator, 500);
+        setTimeout(window.initCursorIndicator, 1000);
+        setTimeout(window.initCursorIndicator, 2000);
 
       class OmegaMinerTerminal {
         // For AI/automation: queue of prompt responses
@@ -2134,16 +2755,28 @@
               // Hide boot animation
               document.getElementById("bootAnimation").style.display = "none";
               
-              // UI selection now happens on welcome screen, skip secondary selection
-              // Check view mode preference set by welcome screen
-              const viewMode = localStorage.getItem('omega-view-mode') || 'futuristic';
-              const savedUIPreference = localStorage.getItem('omega-ui-preference') || 'terminal';
-              
-              // Apply UI preference and show terminal
-              this.applyUIPreference(savedUIPreference);
+              // Always go directly to terminal (no UI selection screen)
               document.getElementById("terminal").style.display = "flex";
               this.applyTheme();
-              this.log('Welcome to Terminal, type "connect" to get started', "info");
+              // Enhanced welcome sequence
+              this.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', "output");
+              this.log('', "output");
+              this.log('    01001111 01101101 01100101 01100111 01100001', "info");
+              this.log('', "output");
+              this.log('    ⚡ WELCOME TO Ω OMEGA TERMINAL v2.0.1', "success");
+              this.log('', "output");
+              this.log('    🚀 Your Gateway to Web3, DeFi, NFTs & Advanced Trading', "info");
+              this.log('', "output");
+              this.log('    💡 Quick Start:', "output");
+              this.log('       • Type "connect" to connect your wallet', "output");
+              this.log('       • Type "help" to see all available commands', "output");
+              this.log('       • Type "chart BTC" for live crypto charts', "output");
+              this.log('       • Type "spotify" for music player integration', "output");
+              this.log('', "output");
+              this.log('    🌐 Access: Omega Network • Multi-Chain • DeFi Analytics', "info");
+              this.log('', "output");
+              this.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', "output");
+              this.log('', "output");
               resolve();
             }, 4000); // Extended boot time to show cool animation
           });
@@ -2623,17 +3256,25 @@
                 }
               }
             } else {
-              this.log("No EVM wallet found.", "error");
+              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
               this.log("", "info");
-              this.log(
-                "Would you like to create an Omega Wallet instead?",
-                "info"
-              );
-              this.log(
-                'Type "yes" to generate an Omega Wallet and receive 0.1 OMEGA tokens',
-                "info"
-              );
-              this.log('Type "no" to cancel', "info");
+              this.log("    ⚠️  NO EVM WALLET DETECTED", "error");
+              this.log("", "info");
+              this.log("    🎁 EXCLUSIVE OFFER: Create Your Ω OMEGA Wallet!", "success");
+              this.log("", "info");
+              this.log("    💎 What You Get:", "info");
+              this.log("       • 🆓 Free Omega Network wallet (browser-based)", "output");
+              this.log("       • 💰 Instant 0.1 OMEGA token airdrop", "output");
+              this.log("       • ⛏️  Ready for mining & claiming rewards", "output");
+              this.log("       • 🔐 Secure, encrypted private key storage", "output");
+              this.log("       • 🚀 Start trading & earning immediately", "output");
+              this.log("", "info");
+              this.log("    ⌨️  Your Choice:", "info");
+              this.log('       • Type "yes" → Generate Ω OMEGA Wallet + FREE 0.1 OMEGA', "success");
+              this.log('       • Type "no" → Cancel (install MetaMask instead)', "output");
+              this.log("", "info");
+              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("", "info");
               this.awaitingWalletChoice = true;
               return;
             }
@@ -2992,12 +3633,18 @@
           if (this.awaitingWalletChoice) {
             this.awaitingWalletChoice = false;
             if (cmd === "yes") {
-              this.log("🔑 Generating Omega Wallet...", "info");
+              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("", "info");
+              this.log("    🎉 GENERATING YOUR Ω OMEGA WALLET...", "info");
+              this.log("", "info");
               const wallet = this.ethers.Wallet.createRandom();
               this.storedPrivateKey = wallet.privateKey;
-              this.log("✅ Omega Wallet generated successfully!", "success");
+              this.log("    ✅ WALLET SUCCESSFULLY CREATED!", "success");
               this.log("", "info");
-              this.log("📋 WALLET DETAILS:", "info");
+              this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("    📋 YOUR WALLET CREDENTIALS", "info");
+              this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("", "info");
               this.logHtml(
                 `🏛️ Address: <span class="copyable" onclick="navigator.clipboard.writeText('${wallet.address}').then(() => window.terminal.log('✅ Address copied!', 'success'))">${wallet.address}</span>`,
                 "output"
@@ -3007,12 +3654,29 @@
                 "output"
               );
               this.log("", "info");
+              this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("", "info");
               this.log(
-                "⚠️  SECURITY WARNING: Save these details securely!",
+                "    ⚠️  CRITICAL: SAVE THESE DETAILS NOW!",
                 "error"
               );
               this.log(
-                "💰 Requesting 0.1 OMEGA tokens from relayer...",
+                "    🔒 Store your private key in a secure password manager",
+                "error"
+              );
+              this.log(
+                "    ⛔ Never share your private key with anyone",
+                "error"
+              );
+              this.log("", "info");
+              this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log("", "info");
+              this.log(
+                "    💰 ACTIVATING WELCOME BONUS...",
+                "info"
+              );
+              this.log(
+                "    🎁 Requesting 0.1 OMEGA tokens from faucet...",
                 "info"
               );
 
@@ -3028,19 +3692,36 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                  this.log(
-                    `✅ Your wallet has been funded! Tx: ${data.txHash}`,
-                    "success"
-                  );
-                  this.log("✨ You can now use the terminal!", "info");
+                  this.log("", "info");
+                  this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+                  this.log("    🎉 WELCOME BONUS ACTIVATED!", "success");
+                  this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
                   this.log("", "info");
                   this.log(
-                    "💡 To use your Omega Wallet, type commands like:",
+                    `    ✅ 0.1 OMEGA tokens deposited to your wallet!`,
+                    "success"
+                  );
+                  this.log(
+                    `    📜 Transaction Hash: ${data.txHash}`,
                     "info"
                   );
-                  this.log('   - "balance" to check your balance', "info");
-                  this.log('   - "mine" to start mining', "info");
-                  this.log('   - "faucet" to claim more tokens', "info");
+                  this.log("", "info");
+                  this.log("    🚀 YOUR OMEGA TERMINAL IS NOW READY!", "success");
+                  this.log("", "info");
+                  this.log(
+                    "    ⚡ Try These Commands:",
+                    "info"
+                  );
+                  this.log('       • "balance" → Check your 0.1 OMEGA balance', "output");
+                  this.log('       • "mine" → Start mining more OMEGA tokens', "output");
+                  this.log('       • "faucet" → Claim additional tokens (24h cooldown)', "output");
+                  this.log('       • "chart BTC" → View live crypto charts', "output");
+                  this.log('       • "help" → Explore all features', "output");
+                  this.log("", "info");
+                  this.log("    🎯 Happy trading & earning!", "success");
+                  this.log("", "info");
+                  this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+                  this.log("", "info");
 
                   // Set up the wallet for use
                   const OMEGA_RPC_URL =
@@ -9703,7 +10384,7 @@
           const terminalContent = document.getElementById("terminalContent");
           const line = document.createElement("div");
           line.className = "terminal-line";
-          line.innerHTML = `<span class="prompt">root@omega-miner:~$</span><span class="command"> ${command}</span>`;
+          line.innerHTML = `<span class="prompt">root@omega-Terminal:~$</span><span class="command"> ${command}</span>`;
           terminalContent.appendChild(line);
           terminalContent.scrollTop = terminalContent.scrollHeight;
           // Store in tab history
@@ -14436,7 +15117,6 @@
                                 <span style="color: white; font-weight: 600;">Omega Network</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 6px; font-size: 14px;">
-                                <span>●●●</span>
                                 <span style="background: #34C759; width: 18px; height: 10px; border-radius: 2px;"></span>
                                 <span>100%</span>
                             </div>
@@ -15057,7 +15737,7 @@
                     <div class="terminal-content" id="terminalContent"></div>
                     <div class="terminal-input-section">
                         <div class="input-line">
-                            <span class="input-prompt">root@omega-miner:~$</span>
+                            <span class="input-prompt">root@omega-Terminal:~$</span>
                             <input type="text" class="input-field" id="commandInput" placeholder="Enter command..." autocomplete="off">
                             <span class="cursor">|</span>
                         </div>
@@ -27346,59 +28026,8 @@
         console.log("DOMContentLoaded - creating new terminal instance");
         window.terminal = new OmegaMinerTerminal();
         // init() is already called in the constructor, so we don't need to call it again
-        
-        // Initialize block cursor positioning
-        initBlockCursor();
       });
-      
-      // Block cursor positioning - follows text as you type
-      function initBlockCursor() {
-        const commandInput = document.getElementById('commandInput');
-        const blockCursor = document.getElementById('blockCursor');
-        
-        if (!commandInput || !blockCursor) {
-          console.log('Block cursor elements not found');
-          return;
-        }
-        
-        console.log('✅ Block cursor initialized');
-        
-        function updateCursorPosition() {
-          const text = commandInput.value;
-          
-          // Create canvas to measure text width
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          const style = window.getComputedStyle(commandInput);
-          context.font = style.font;
-          
-          // Measure text width
-          const textWidth = context.measureText(text).width;
-          
-          // Position cursor after text
-          const padding = parseFloat(style.paddingLeft) || 5;
-          blockCursor.style.left = (padding + textWidth) + 'px';
-        }
-        
-        // Update on all input events
-        commandInput.addEventListener('input', updateCursorPosition);
-        commandInput.addEventListener('keydown', updateCursorPosition);
-        commandInput.addEventListener('keyup', updateCursorPosition);
-        
-        // Also update on focus and click
-        commandInput.addEventListener('focus', updateCursorPosition);
-        commandInput.addEventListener('click', updateCursorPosition);
-        
-        // Update continuously while typing (every 50ms)
-        setInterval(() => {
-          if (document.activeElement === commandInput) {
-            updateCursorPosition();
-          }
-        }, 50);
-        
-        // Initial position
-        updateCursorPosition();
-      }
     </script>
   </body>
 </html>
+

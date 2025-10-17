@@ -234,5 +234,112 @@ window.OmegaCommands.Entertainment = {
 
         terminal.log('🎨 Displaying ASCII art:', 'info');
         terminal.logHtml(`<pre style="color:#00ffff;font-family:monospace">${art}</pre>`, 'output');
+    },
+    
+    // Spotify music player
+    spotify: async function(terminal, args) {
+        const subcommand = args[0]?.toLowerCase();
+
+        if (!subcommand || subcommand === 'open' || subcommand === 'player') {
+            if (window.OmegaSpotify) {
+                terminal.log('🎵 Opening Spotify player...', 'info');
+                await window.OmegaSpotify.openPanel();
+            } else {
+                terminal.log('❌ Spotify player not loaded', 'error');
+            }
+            return;
+        }
+
+        if (subcommand === 'connect' || subcommand === 'login') {
+            terminal.log('🎵 Opening Spotify authentication...', 'info');
+            if (window.OmegaSpotify) {
+                window.OmegaSpotify.authenticate();
+            }
+            return;
+        }
+
+        if (subcommand === 'disconnect' || subcommand === 'logout') {
+            if (window.OmegaSpotify) {
+                window.OmegaSpotify.logout();
+                terminal.log('✅ Disconnected from Spotify', 'success');
+            }
+            return;
+        }
+
+        if (subcommand === 'close') {
+            if (window.OmegaSpotify) {
+                window.OmegaSpotify.closePanel();
+                terminal.log('✅ Spotify player closed', 'success');
+            }
+            return;
+        }
+
+        if (subcommand === 'play') {
+            if (window.OmegaSpotify) {
+                await window.OmegaSpotify.togglePlay();
+                terminal.log('▶️  Playback toggled', 'success');
+            }
+            return;
+        }
+
+        if (subcommand === 'next') {
+            if (window.OmegaSpotify) {
+                await window.OmegaSpotify.nextTrack();
+                terminal.log('⏭️  Next track', 'success');
+            }
+            return;
+        }
+
+        if (subcommand === 'prev' || subcommand === 'previous') {
+            if (window.OmegaSpotify) {
+                await window.OmegaSpotify.previousTrack();
+                terminal.log('⏮️  Previous track', 'success');
+            }
+            return;
+        }
+
+        if (subcommand === 'search') {
+            const query = args.slice(1).join(' ');
+            if (!query) {
+                terminal.log('❌ Usage: spotify search <query>', 'error');
+                return;
+            }
+            
+            terminal.log(`🔍 Searching for: ${query}`, 'info');
+            if (window.OmegaSpotify) {
+                await window.OmegaSpotify.openPanel();
+                setTimeout(() => {
+                    window.OmegaSpotify.performSearch(query);
+                }, 500);
+            }
+            return;
+        }
+
+        if (subcommand === 'help') {
+            terminal.log('🎵 Spotify Player Commands', 'info');
+            terminal.log('');
+            terminal.log('spotify [open]         - Open Spotify player');
+            terminal.log('spotify connect        - Connect to Spotify');
+            terminal.log('spotify disconnect     - Disconnect');
+            terminal.log('spotify play          - Toggle play/pause');
+            terminal.log('spotify next          - Next track');
+            terminal.log('spotify prev          - Previous track');
+            terminal.log('spotify search <query> - Search music');
+            terminal.log('spotify close         - Close player');
+            terminal.log('');
+            terminal.log('📝 Setup Instructions:', 'warning');
+            terminal.log('1. Go to https://developer.spotify.com/dashboard', 'output');
+            terminal.log('2. Create a new app (name: "Omega Terminal")', 'output');
+            terminal.log('3. Add redirect URI: ' + window.location.origin + '/pages/spotify-callback.html', 'output');
+            terminal.log('4. Copy your Client ID', 'output');
+            terminal.log('5. Edit js/plugins/omega-spotify-player.js (line 12)', 'output');
+            terminal.log('6. Replace YOUR_SPOTIFY_CLIENT_ID with your actual ID', 'output');
+            terminal.log('7. Reload page and run: spotify connect', 'output');
+            terminal.log('');
+            terminal.log('🎧 Listen to music while coding!', 'success');
+            return;
+        }
+
+        terminal.log('❌ Unknown command. Type "spotify help"', 'error');
     }
 }; 

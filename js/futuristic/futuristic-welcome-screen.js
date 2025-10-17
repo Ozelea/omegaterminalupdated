@@ -163,6 +163,14 @@ window.OmegaWelcomeScreen = {
     hideWelcomeScreen: function() {
         const welcomeScreen = document.getElementById('omegaWelcomeScreen');
         if (welcomeScreen) {
+            // IMPORTANT: Hide the old terminal first to prevent flash
+            const terminal = document.getElementById('terminal');
+            if (terminal) {
+                terminal.style.display = 'none';
+                terminal.style.opacity = '0';
+                terminal.style.visibility = 'hidden';
+            }
+            
             welcomeScreen.style.opacity = '0';
             welcomeScreen.style.transform = 'scale(0.95)';
             welcomeScreen.style.transition = 'all 0.5s ease';
@@ -182,18 +190,31 @@ window.OmegaWelcomeScreen = {
                     window.FuturisticDashboard.init();
                 }
                 
-                // Apply selected view mode after a short delay to ensure dashboard is ready
+                // Apply selected view mode after dashboard is ready
                 setTimeout(() => {
                     if (this.selectedViewMode === 'basic') {
+                        // Basic mode - show terminal with smooth fade-in
                         if (window.FuturisticDashboard && window.FuturisticDashboard.enableBasicMode) {
                             window.FuturisticDashboard.enableBasicMode();
+                            
+                            // Fade in terminal
+                            if (terminal) {
+                                terminal.style.display = 'block';
+                                terminal.style.visibility = 'visible';
+                                setTimeout(() => {
+                                    terminal.style.transition = 'opacity 0.5s ease-in';
+                                    terminal.style.opacity = '1';
+                                }, 50);
+                            }
                         }
                     } else {
+                        // Futuristic mode - terminal is inside dashboard, no need to show old one
                         if (window.FuturisticDashboard && window.FuturisticDashboard.enableFuturisticMode) {
                             window.FuturisticDashboard.enableFuturisticMode();
                         }
+                        console.log('✅ Futuristic dashboard active - old terminal remains hidden');
                     }
-                }, 100);
+                }, 150);
             }, 500);
         }
     },

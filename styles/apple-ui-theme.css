@@ -78,21 +78,9 @@
     text-align: center;
 }
 
-/* macOS Traffic Light Buttons */
+/* macOS Traffic Light Buttons - REMOVED FOR CLEANER UI */
 .terminal.apple-ui .terminal-header::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #FF5F56;
-    box-shadow: 
-        20px 0 0 #FFBD2E,
-        40px 0 0 #27CA3F,
-        0 1px 3px rgba(0, 0, 0, 0.2);
+    display: none !important;
 }
 
 .terminal.apple-ui .terminal-title {
@@ -327,57 +315,56 @@
    =================================== */
 
 .terminal.apple-ui .terminal-input-section {
-    background: linear-gradient(180deg, 
-        rgba(255, 255, 255, 0.95) 0%, 
-        rgba(245, 245, 247, 0.9) 100%
-    ) !important;
-    backdrop-filter: blur(30px) !important;
-    -webkit-backdrop-filter: blur(30px) !important;
+    background: transparent !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     border-top: 1px solid var(--apple-border) !important;
-    border-radius: 0 0 24px 24px !important; /* Rounded bottom corners */
-    padding: 24px 40px !important; /* Wider padding for larger input */
+    padding: 16px 24px !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 5 !important;
 }
 
 .terminal.apple-ui .input-line {
     display: flex !important;
     align-items: center !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    border: 2px solid var(--apple-border) !important;
-    border-radius: 24px !important; /* Even more rounded */
-    padding: 20px 28px !important;
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-    transition: var(--apple-transition) !important;
-    min-height: 64px !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid var(--apple-border) !important;
+    border-radius: 12px !important;
+    padding: 12px 18px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.2s ease !important;
+    min-height: 48px !important;
     width: 100% !important;
-    max-width: none !important; /* Allow full width */
-    margin: 0 auto !important;
+    max-width: none !important;
+    margin: 0 !important;
     position: relative !important;
     box-sizing: border-box !important;
+    gap: 12px !important;
 }
 
 .terminal.apple-ui .input-line:focus-within {
     border-color: var(--apple-primary) !important;
     box-shadow: 
-        0 8px 24px rgba(0, 122, 255, 0.2),
-        0 0 0 4px rgba(0, 122, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-    transform: translateY(-2px) !important;
+        0 4px 12px rgba(0, 122, 255, 0.15),
+        0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+    transform: translateY(-1px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
 }
 
 .terminal.apple-ui .input-prompt {
-    font-family: var(--apple-font) !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    color: #1565C0 !important; /* Dark blue for better contrast */
-    margin-right: 20px !important;
+    font-family: 'SF Mono', 'Monaco', 'Courier New', monospace !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #1565C0 !important;
+    margin-right: 0 !important;
     white-space: nowrap !important;
     min-width: fit-content !important;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
-    flex-shrink: 0 !important; /* Don't let prompt shrink */
+    text-shadow: none !important;
+    flex-shrink: 0 !important;
+    letter-spacing: 0.3px !important;
 }
 
 .terminal.apple-ui .input-field {
@@ -385,16 +372,17 @@
     background: transparent !important;
     border: none !important;
     outline: none !important;
-    font-family: 'SF Mono', 'Monaco', monospace !important;
-    font-size: 17px !important;
+    font-family: 'SF Mono', 'Monaco', 'Courier New', monospace !important;
+    font-size: 15px !important;
     width: 100% !important;
     min-width: 0 !important;
-    min-height: 28px !important;
+    min-height: 24px !important;
     line-height: 1.5 !important;
     pointer-events: auto !important;
     z-index: 1000 !important;
     position: relative !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
+    color: var(--apple-text) !important;
 }
 
 .terminal.apple-ui .input-field:focus {
@@ -780,18 +768,13 @@
 /* Wider input field on larger screens */
 @media (min-width: 769px) {
     .terminal.apple-ui .terminal-input-section {
-        padding: 24px 60px !important; /* Optimized width for desktop */
-    }
-    
-    .terminal.apple-ui .input-line {
-        max-width: 1400px !important; /* Even wider input container */
-        margin: 0 auto !important;
+        padding: 16px 32px !important;
     }
 }
 
 @media (min-width: 1200px) {
     .terminal.apple-ui .terminal-input-section {
-        padding: 24px 40px !important; /* Let input field expand more on large screens */
+        padding: 16px 40px !important;
     }
 }
 
@@ -806,7 +789,12 @@
     }
     
     .terminal.apple-ui .terminal-input-section {
-        padding: 20px !important;
+        padding: 12px 16px !important;
+    }
+    
+    .terminal.apple-ui .input-line {
+        padding: 10px 14px !important;
+        min-height: 44px !important;
     }
 }
 
@@ -869,27 +857,34 @@
 }
 
 .terminal.apple-ui.dark .input-line {
-    background: rgba(28, 28, 30, 0.9) !important;
-    border: 2px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 24px !important; /* Smooth rounded corners in dark mode */
+    background: rgba(28, 28, 30, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 12px !important;
     position: relative !important;
     width: 100% !important;
     box-sizing: border-box !important;
 }
 
-/* Dark mode input styling moved to simple-input-fix.css */
+.terminal.apple-ui.dark .input-line:focus-within {
+    background: rgba(28, 28, 30, 0.95) !important;
+    border-color: var(--apple-primary) !important;
+    box-shadow: 
+        0 4px 12px rgba(10, 132, 255, 0.2),
+        0 0 0 3px rgba(10, 132, 255, 0.15) !important;
+}
 
 .terminal.apple-ui.dark .input-prompt {
     color: #0A84FF !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    text-shadow: none !important;
+    font-family: 'SF Mono', 'Monaco', 'Courier New', monospace !important;
+}
+
+.terminal.apple-ui.dark .input-field {
+    color: var(--apple-text) !important;
 }
 
 .terminal.apple-ui.dark .terminal-input-section {
-    background: linear-gradient(180deg, 
-        rgba(28, 28, 30, 0.95) 0%, 
-        rgba(0, 0, 0, 0.9) 100%
-    ) !important;
-    border-radius: 0 0 24px 24px !important; /* Rounded bottom corners in dark mode */
+    background: transparent !important;
     width: 100% !important;
     box-sizing: border-box !important;
 }

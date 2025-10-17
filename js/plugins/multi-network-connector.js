@@ -230,8 +230,31 @@ window.MultiNetworkConnector = {
     // Connect to EVM network (MetaMask)
     connectEVM: async function(network, terminal) {
         if (!window.ethereum) {
-            terminal.log('❌ MetaMask not detected', 'error');
-            terminal.log('💡 Please install MetaMask: https://metamask.io', 'info');
+            // Show enhanced wallet generation offer
+            terminal.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+            terminal.log("", "info");
+            terminal.log("    ⚠️  NO EVM WALLET DETECTED", "error");
+            terminal.log("", "info");
+            terminal.log("    🎁 EXCLUSIVE OFFER: Create Your Ω OMEGA Wallet!", "success");
+            terminal.log("", "info");
+            terminal.log("    💎 What You Get:", "info");
+            terminal.log("       • 🆓 Free Omega Network wallet (browser-based)", "output");
+            terminal.log("       • 💰 Instant 0.1 OMEGA token airdrop", "output");
+            terminal.log("       • ⛏️  Ready for mining & claiming rewards", "output");
+            terminal.log("       • 🔐 Secure, encrypted private key storage", "output");
+            terminal.log("       • 🚀 Start trading & earning immediately", "output");
+            terminal.log("", "info");
+            terminal.log("    ⌨️  Your Choice:", "info");
+            terminal.log('       • Type "yes" → Generate Ω OMEGA Wallet + FREE 0.1 OMEGA', "success");
+            terminal.log('       • Type "no" → Cancel (install MetaMask instead)', "output");
+            terminal.log("", "info");
+            terminal.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+            terminal.log("", "info");
+            
+            // Set awaiting wallet choice flag
+            if (terminal) {
+                terminal.awaitingWalletChoice = true;
+            }
             return false;
         }
 
