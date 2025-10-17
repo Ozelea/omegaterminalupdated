@@ -253,6 +253,80 @@
         line-height: 1.4;
         overflow: hidden;
       }
+      
+      /* CRITICAL: Disable ALL animated overlays and scanlines */
+      body::after,
+      body::before,
+      html::after,
+      html::before {
+        display: none !important;
+        content: none !important;
+        animation: none !important;
+      }
+      
+      /* Ensure native browser caret is visible and positioned correctly */
+      input[type="text"],
+      #commandInput,
+      .input-field,
+      .terminal-input {
+        caret-color: #00ffff !important; /* Bright cyan caret - highly visible */
+        text-align: left !important;
+        direction: ltr !important;
+        unicode-bidi: normal !important;
+      }
+      
+      /* Enhanced caret animation for better visibility */
+      @keyframes caretBlink {
+        0%, 49% { caret-color: #00ffff; }
+        50%, 99% { caret-color: transparent; }
+      }
+      
+      /* Auto-focus input on page load */
+      #commandInput:not(:focus) {
+        animation: caretBlink 1s step-end infinite;
+      }
+      
+      /* Input container for positioning block cursor behind text */
+      .input-container {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+      
+      /* Block cursor that appears behind/after text */
+      .block-cursor {
+        position: absolute;
+        left: 5px;
+        color: #00ffff;
+        font-family: "Courier New", monospace;
+        font-size: 18px;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0; /* Behind the text */
+        animation: blockCursorBlink 1s step-end infinite;
+        line-height: 1.5;
+      }
+      
+      @keyframes blockCursorBlink {
+        0%, 50% {
+          opacity: 1;
+        }
+        51%, 100% {
+          opacity: 0;
+        }
+      }
+      
+      /* Hide old custom cursor elements */
+      .cursor,
+      .terminal-cursor,
+      span.cursor,
+      .custom-cursor,
+      .fake-cursor,
+      .input-wrapper {
+        display: none !important;
+        visibility: hidden !important;
+      }
 
       /* Polymarket UI Variables */
       :root {
@@ -549,15 +623,17 @@
         outline: none;
         flex: 1;
         padding: 5px;
-        caret-color: #ffffff;
+        caret-color: transparent; /* Hide native caret - using custom block cursor */
         width: 100%;
         min-width: 0;
         opacity: 1 !important;
         line-height: 1.5;
+        position: relative;
+        z-index: 1; /* Text appears above block cursor */
       }
 
       .input-field:focus {
-        caret-color: #ffffff;
+        caret-color: transparent;
         opacity: 1 !important;
       }
 
@@ -565,16 +641,9 @@
         color: #666666;
       }
 
+      /* Custom cursor - DISABLED, using native browser caret */
       .cursor {
-        display: inline-block !important;
-        color: #00ff00;
-        font-weight: bold;
-        font-size: 18px;
-        margin-left: 2px;
-        animation: cursor-blink 1s infinite;
-        position: absolute;
-        pointer-events: none;
-        z-index: 10;
+        display: none !important; /* Hide custom cursor */
       }
 
       @keyframes cursor-blink {
@@ -587,6 +656,8 @@
           opacity: 0;
         }
       }
+      
+      /* Custom cursor animations disabled - using native browser caret */
 
       /* Input field cursor indicator */
       .input-field {
@@ -598,19 +669,13 @@
         border-radius: 2px;
       }
 
-      /* Animated cursor after input field when focused */
-      .input-line::after {
-        content: '█';
-        color: #00d4ff;
-        font-size: 16px;
-        margin-left: 2px;
-        opacity: 0;
-        animation: none;
-      }
-
+      /* Animated cursor after input field - DISABLED, using native caret */
+      .input-line::after,
       .input-line.active::after {
-        opacity: 1;
-        animation: cursorBlink 1s step-end infinite;
+        display: none !important;
+        content: none !important;
+        opacity: 0 !important;
+        animation: none !important;
       }
 
       @keyframes cursorBlink {
@@ -838,9 +903,8 @@
         color: #666666;
       }
 
-      .terminal.light-theme .cursor {
-        display: inline-block !important;
-        color: #0066cc;
+      .terminal.light-theme .block-cursor {
+        color: #007aff; /* Apple blue block cursor for light mode */
       }
 
       .terminal.light-theme .mining-status {
@@ -1076,18 +1140,11 @@
         overflow: hidden;
       }
 
+      /* Boot animation background - DISABLED */
       .boot-animation::before {
-        content: "";
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.03) 1px,
-          transparent 1px
-        );
-        background-size: 50px 50px;
-        animation: gridMove 20s linear infinite;
+        display: none !important;
+        content: none !important;
+        animation: none !important;
       }
 
       @keyframes gridMove {
@@ -1097,6 +1154,15 @@
         100% {
           transform: translate(50px, 50px);
         }
+      }
+      
+      /* Ensure boot animation is hidden after initialization */
+      body.omega-initialized .boot-animation,
+      body.omega-initialized #bootAnimation {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
       }
 
       .omega-container {
@@ -1385,129 +1451,7 @@
       }
 
       /* UI Selection Screen */
-      .ui-selection-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-        animation: fadeIn 0.5s ease-in;
-      }
-
-      .ui-selection-container {
-        text-align: center;
-        max-width: 900px;
-        padding: 40px;
-      }
-
-      .ui-selection-title {
-        font-size: 48px;
-        font-weight: bold;
-        color: #00ff88;
-        margin-bottom: 10px;
-        text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-      }
-
-      .ui-selection-subtitle {
-        font-size: 18px;
-        color: #aaa;
-        margin-bottom: 50px;
-      }
-
-      .ui-options {
-        display: flex;
-        gap: 30px;
-        justify-content: center;
-        margin-bottom: 30px;
-      }
-
-      .ui-option {
-        background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
-        border: 2px solid #333;
-        border-radius: 20px;
-        padding: 40px 30px;
-        width: 280px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .ui-option::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(0, 136, 255, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .ui-option:hover {
-        transform: translateY(-5px);
-        border-color: #00ff88;
-        box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-      }
-
-      .ui-option:hover::before {
-        opacity: 1;
-      }
-
-      .ui-option-icon {
-        font-size: 64px;
-        margin-bottom: 20px;
-      }
-
-      .ui-option h3 {
-        font-size: 24px;
-        color: #fff;
-        margin-bottom: 10px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .ui-option p {
-        color: #aaa;
-        font-size: 14px;
-        margin-bottom: 5px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .ui-option-details {
-        color: #666;
-        font-size: 12px;
-        font-style: italic;
-      }
-
-      .ui-selection-note {
-        color: #666;
-        font-size: 12px;
-        font-style: italic;
-      }
-
-      @media (max-width: 768px) {
-        .ui-options {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .ui-option {
-          width: 100%;
-          max-width: 300px;
-        }
-
-        .ui-selection-title {
-          font-size: 32px;
-        }
-      }
+      /* UI Selection Screen CSS removed - Interface selection now handled by welcome screen */
     </style>
   </head>
   <body>
@@ -1536,31 +1480,7 @@
       </div>
     </div>
 
-    <!-- UI Selection Screen -->
-    <div class="ui-selection-screen" id="uiSelectionScreen" style="display: none;">
-      <div class="ui-selection-container">
-        <h1 class="ui-selection-title">Choose Your Interface</h1>
-        <p class="ui-selection-subtitle">Select your preferred terminal experience</p>
-        
-        <div class="ui-options">
-          <div class="ui-option" id="selectTerminalUI">
-            <div class="ui-option-icon">⌨️</div>
-            <h3>Terminal UI</h3>
-            <p>Classic command-line interface</p>
-            <p class="ui-option-details">Traditional terminal with dark theme</p>
-          </div>
-          
-          <div class="ui-option" id="selectModernUI">
-            <div class="ui-option-icon">✨</div>
-            <h3>Modern UI</h3>
-            <p>Sleek Apple-inspired design</p>
-            <p class="ui-option-details">Beautiful gradients and smooth animations</p>
-          </div>
-        </div>
-        
-        <p class="ui-selection-note">You can change this anytime with the "gui" command</p>
-      </div>
-    </div>
+    <!-- UI Selection Screen REMOVED - Users select interface on welcome screen -->
 
     <div class="terminal" id="terminal" style="display: none">
       <div class="terminal-header">
@@ -1640,14 +1560,17 @@
       <div class="terminal-input-section">
         <div class="input-line">
           <span class="input-prompt">root@omega-miner:~$</span>
-          <input
-            type="text"
-            class="input-field"
-            id="commandInput"
-            placeholder="Enter command..."
-            autocomplete="off"
-          />
-          <span class="cursor">|</span>
+          <div class="input-container">
+            <span class="block-cursor" id="blockCursor">█</span>
+            <input
+              type="text"
+              class="input-field"
+              id="commandInput"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder=""
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -2211,42 +2134,17 @@
               // Hide boot animation
               document.getElementById("bootAnimation").style.display = "none";
               
-              // Check if user has already selected a UI
-              const savedUIPreference = localStorage.getItem('omega-ui-preference');
+              // UI selection now happens on welcome screen, skip secondary selection
+              // Check view mode preference set by welcome screen
+              const viewMode = localStorage.getItem('omega-view-mode') || 'futuristic';
+              const savedUIPreference = localStorage.getItem('omega-ui-preference') || 'terminal';
               
-              if (savedUIPreference) {
-                // User has already chosen, apply their preference
-                this.applyUIPreference(savedUIPreference);
-                document.getElementById("terminal").style.display = "flex";
-                this.applyTheme();
-                this.log('Welcome to Terminal, type "connect" to get started', "info");
-                resolve();
-              } else {
-                // Show UI selection screen for first-time users
-                document.getElementById("uiSelectionScreen").style.display = "flex";
-                
-                // Setup event listeners for UI selection
-                document.getElementById("selectTerminalUI").onclick = () => {
-                  localStorage.setItem('omega-ui-preference', 'terminal');
-                  document.getElementById("uiSelectionScreen").style.display = "none";
-                  document.getElementById("terminal").style.display = "flex";
-                  this.applyTheme();
-                  this.log('Welcome to Terminal, type "connect" to get started', "info");
-                  resolve();
-                };
-                
-                document.getElementById("selectModernUI").onclick = () => {
-                  localStorage.setItem('omega-ui-preference', 'modern');
-                  document.getElementById("uiSelectionScreen").style.display = "none";
-                  document.getElementById("terminal").style.display = "flex";
-                  // Apply Apple UI theme with dark mode
-                  const terminal = document.getElementById("terminal");
-                  terminal.classList.add("apple-ui", "dark");
-                  this.applyTheme();
-                  this.log('Welcome to Terminal, type "connect" to get started', "info");
-                  resolve();
-                };
-              }
+              // Apply UI preference and show terminal
+              this.applyUIPreference(savedUIPreference);
+              document.getElementById("terminal").style.display = "flex";
+              this.applyTheme();
+              this.log('Welcome to Terminal, type "connect" to get started', "info");
+              resolve();
             }, 4000); // Extended boot time to show cool animation
           });
         }
@@ -2453,12 +2351,15 @@
                 }
               }
             });
-            // Position cursor dynamically after text
+            // Position cursor dynamically after text - DISABLED, using native browser caret
             const cursorElement = document.querySelector(".cursor");
             const promptElement = document.querySelector(".input-prompt");
             let animationFrameId = null;
 
             const updateCursorPosition = () => {
+              // DISABLED: Using native browser caret instead of custom cursor
+              return;
+              
               if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
               }
@@ -2494,27 +2395,28 @@
               });
             };
 
-            // Update on every input event immediately
-            input.addEventListener("input", () => {
-              updateCursorPosition();
-            });
+            // Update on every input event immediately - DISABLED
+            // input.addEventListener("input", () => {
+            //   updateCursorPosition();
+            // });
 
-            input.addEventListener("keydown", () => {
-              updateCursorPosition();
-            });
+            // input.addEventListener("keydown", () => {
+            //   updateCursorPosition();
+            // });
 
-            input.addEventListener("keyup", () => {
-              updateCursorPosition();
-            });
+            // DISABLED: Using native browser caret
+            // input.addEventListener("keyup", () => {
+            //   updateCursorPosition();
+            // });
 
-            // Continuous update for smooth cursor following
-            setInterval(() => {
-              if (document.activeElement === input) {
-                updateCursorPosition();
-              }
-            }, 50); // Update every 50ms when input is focused
+            // Continuous update for smooth cursor following - DISABLED
+            // setInterval(() => {
+            //   if (document.activeElement === input) {
+            //     updateCursorPosition();
+            //   }
+            // }, 50); // Update every 50ms when input is focused
 
-            setTimeout(updateCursorPosition, 100); // Initial position with delay
+            // setTimeout(updateCursorPosition, 100); // Initial position with delay - DISABLED
 
             input.addEventListener("keypress", async (e) => {
               if (e.key === "Enter") {
@@ -27444,7 +27346,59 @@
         console.log("DOMContentLoaded - creating new terminal instance");
         window.terminal = new OmegaMinerTerminal();
         // init() is already called in the constructor, so we don't need to call it again
+        
+        // Initialize block cursor positioning
+        initBlockCursor();
       });
+      
+      // Block cursor positioning - follows text as you type
+      function initBlockCursor() {
+        const commandInput = document.getElementById('commandInput');
+        const blockCursor = document.getElementById('blockCursor');
+        
+        if (!commandInput || !blockCursor) {
+          console.log('Block cursor elements not found');
+          return;
+        }
+        
+        console.log('✅ Block cursor initialized');
+        
+        function updateCursorPosition() {
+          const text = commandInput.value;
+          
+          // Create canvas to measure text width
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          const style = window.getComputedStyle(commandInput);
+          context.font = style.font;
+          
+          // Measure text width
+          const textWidth = context.measureText(text).width;
+          
+          // Position cursor after text
+          const padding = parseFloat(style.paddingLeft) || 5;
+          blockCursor.style.left = (padding + textWidth) + 'px';
+        }
+        
+        // Update on all input events
+        commandInput.addEventListener('input', updateCursorPosition);
+        commandInput.addEventListener('keydown', updateCursorPosition);
+        commandInput.addEventListener('keyup', updateCursorPosition);
+        
+        // Also update on focus and click
+        commandInput.addEventListener('focus', updateCursorPosition);
+        commandInput.addEventListener('click', updateCursorPosition);
+        
+        // Update continuously while typing (every 50ms)
+        setInterval(() => {
+          if (document.activeElement === commandInput) {
+            updateCursorPosition();
+          }
+        }, 50);
+        
+        // Initial position
+        updateCursorPosition();
+      }
     </script>
   </body>
 </html>

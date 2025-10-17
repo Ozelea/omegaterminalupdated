@@ -49,7 +49,7 @@ body.futuristic-mode::before {
     100% { transform: translate(50px, 50px); }
 }
 
-/* Scanline effect */
+/* Scanline effect - DISABLED per user request
 body.futuristic-mode::after {
     content: '';
     position: fixed;
@@ -73,6 +73,7 @@ body.futuristic-mode::after {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(100%); }
 }
+*/
 
 /* Ensure terminal is positioned above background */
 body.futuristic-mode .terminal {

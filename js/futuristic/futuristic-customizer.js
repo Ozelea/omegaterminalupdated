@@ -195,7 +195,7 @@ window.OmegaCustomizer = {
     // Animation settings
     animationSettings: {
         grid: true,
-        scanline: true,
+        scanline: false,  // DISABLED per user request - no animated box
         glow: true,
         fadeIn: true
     },
@@ -215,9 +215,8 @@ window.OmegaCustomizer = {
                 }
                 break;
             case 'scanline':
-                const scanline = document.querySelector('body::after');
-                // Note: Can't directly access ::after, would need to add/remove class
-                body.classList.toggle('no-scanline', !this.animationSettings.scanline);
+                // Scanline permanently disabled - force no-scanline class
+                body.classList.add('no-scanline');
                 break;
             case 'glow':
                 body.classList.toggle('no-glow', !this.animationSettings.glow);
@@ -330,7 +329,7 @@ window.OmegaCustomizer = {
         
         this.applyColorScheme('cyberBlue');
         this.panelSettings = { sidebar: true, stats: true, header: true };
-        this.animationSettings = { grid: true, scanline: true, glow: true, fadeIn: true };
+        this.animationSettings = { grid: true, scanline: false, glow: true, fadeIn: true };  // scanline disabled
         
         location.reload();
     },
@@ -387,6 +386,10 @@ window.OmegaCustomizer = {
     // Initialize
     init: function() {
         console.log('🎨 Omega Customizer v' + this.version + ' initialized');
+        
+        // Force disable scanline on init
+        document.body.classList.add('no-scanline');
+        
         this.loadSettings();
     }
 };

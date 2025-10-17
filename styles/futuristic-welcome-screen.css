@@ -454,7 +454,8 @@ body.modern-terminal-ui .terminal-input {
     background: transparent !important;
     color: var(--cyber-blue, #00d4ff) !important;
     border: 1px solid var(--glass-border, rgba(0, 212, 255, 0.15)) !important;
-    caret-color: var(--cyber-blue, #00d4ff) !important;
+    caret-color: var(--cyber-blue-bright, #00ffff) !important;
+    cursor: text !important;
 }
 
 body.modern-terminal-ui #commandInput:focus,
@@ -462,6 +463,14 @@ body.modern-terminal-ui .terminal-input:focus {
     border-color: var(--cyber-blue, #00d4ff) !important;
     box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1) !important;
     outline: none !important;
+    caret-color: var(--cyber-blue-bright, #00ffff) !important;
+}
+
+/* Hide all custom cursors */
+body.modern-terminal-ui .cursor,
+body.modern-terminal-ui .custom-cursor,
+body.modern-terminal-ui .fake-cursor {
+    display: none !important;
 }
 
 /* Links */

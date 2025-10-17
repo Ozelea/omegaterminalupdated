@@ -7,6 +7,12 @@ window.OmegaWelcomeScreen = {
     selectedViewMode: localStorage.getItem('omega-view-mode') || 'futuristic',
     
     init: function() {
+        // Prevent multiple initializations
+        if (this.initialized) {
+            console.log('⚠️  Welcome screen already initialized, skipping');
+            return;
+        }
+        
         console.log('🚀 OMEGA WELCOME SCREEN INITIALIZING...');
         
         // Create welcome screen HTML
@@ -22,6 +28,12 @@ window.OmegaWelcomeScreen = {
     },
     
     createWelcomeScreen: function() {
+        // Check if welcome screen already exists - prevent duplicates
+        if (document.getElementById('omegaWelcomeScreen')) {
+            console.log('⚠️  Welcome screen already exists, skipping creation');
+            return;
+        }
+        
         const welcomeHTML = `
             <div class="omega-welcome-screen" id="omegaWelcomeScreen">
                 <!-- Security Badge -->

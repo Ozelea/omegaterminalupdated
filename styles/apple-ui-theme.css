@@ -410,17 +410,9 @@
     font-weight: 400 !important;
 }
 
-/* Blinking Cursor for Apple UI */
+/* Blinking Cursor for Apple UI - DISABLED, using native browser caret */
 .terminal.apple-ui .cursor {
-    display: inline-block !important;
-    color: #007AFF !important; /* Apple blue */
-    font-weight: bold !important;
-    font-size: 18px !important;
-    margin-left: 2px !important;
-    animation: cursor-blink 1s infinite !important;
-    position: absolute !important;
-    pointer-events: none !important;
-    z-index: 1001 !important;
+    display: none !important; /* Hide custom cursor, use native caret */
 }
 
 /* Removed complex fixes - using simple-input-fix.css instead */
