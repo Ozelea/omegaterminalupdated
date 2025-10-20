@@ -58,6 +58,7 @@
     <link rel="stylesheet" href="styles/spotify-player.css" />
     <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
+    <link rel="stylesheet" href="styles/command-input-unified.css" />
     <script src="js/plugins/dexscreener-analytics-ultimate.js"></script>
     <script src="js/plugins/omega-spotify-player.js"></script>
     <!-- <script src="near-wallet-plugin.js"></script> DISABLED: Was breaking existing NEAR commands -->
@@ -69,7 +70,8 @@
     <script src="js/plugins/opensea-enhanced-plugin.js"></script>
 
     <script src="js/plugins/enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
-    <script src="js/plugins/terminal-chatter-mode.js"></script>
+    <script src="js/commands/chaingpt-chat.js?v=1.0.3"></script>
+    <script src="js/plugins/terminal-chatter-mode.js?v=1.0.1"></script>
     <!-- Python integration disabled - causes initialization issues -->
     <!-- <script src="js/plugins/python-integration-system.js"></script> -->
     <!-- <script src="js/plugins/pgt-integration-live.js"></script> DISABLED: Replaced with pgt-terminal-integration.js -->
@@ -81,7 +83,22 @@
     <script src="js/plugins/omega-nft-onchain.js"></script>
     <script src="js/plugins/pgt-terminal-integration.js"></script>
     <script src="js/plugins/multi-network-connector.js"></script>
+    <!-- Command Modules -->
+    <script src="js/commands/basic.js"></script>
+    <script src="js/commands/api.js"></script>
+    <script src="js/commands/mining.js"></script>
+    <script src="js/commands/entertainment.js"></script>
+    <script src="js/commands/network.js"></script>
+    <script src="js/commands/mixer.js"></script>
+    <script src="js/commands/solana.js"></script>
+    <script src="js/commands/near.js"></script>
+    <script src="js/commands/eclipse.js"></script>
+    <script src="js/commands/kalshi.js"></script>
+    <script src="js/commands/referral.js"></script>
+    <script src="js/commands/remaining.js?v=1.0.1"></script>
     <script src="js/commands/wallet-commands.js?v=multi-network-3.0"></script>
+    <script src="js/commands/chaingpt-nft.js?v=1.0.5"></script>
+    <script src="js/commands/crypto-news.js?v=1.0.0"></script>
     
     <!-- Solana Web3.js for Solana support -->
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
@@ -547,7 +564,7 @@
         width: 100vw;
         height: 100vh;
         max-height: 100vh;
-        padding: 20px;
+        padding: 0;
         background: linear-gradient(135deg, #000 0%, #111111 100%);
         position: relative;
         display: flex;
@@ -555,18 +572,28 @@
         overflow: hidden;
         box-sizing: border-box;
       }
+      
+      /* Ensure old terminal has proper flex layout */
+      .terminal:not(.basic-terminal-mode) {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100vh !important;
+        width: 100vw !important;
+      }
 
       .terminal-header {
         border-bottom: 1px solid #00bcf2;
         box-shadow: 0 1px 10px rgba(0, 188, 242, 0.3);
-        padding-bottom: 10px;
-        margin-bottom: 20px;
+        padding: 16px 24px;
+        margin-bottom: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-shrink: 0;
         position: relative;
         z-index: 10;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
       }
 
       .terminal-title {
@@ -624,7 +651,7 @@
       .terminal-input-section {
         border-top: 1px solid rgba(0, 188, 242, 0.2);
         padding: 12px 20px;
-        margin-top: 0;
+        margin-top: auto;
         background: transparent;
         width: 100%;
         box-sizing: border-box;
@@ -635,13 +662,54 @@
         position: relative;
         z-index: 5;
       }
+      
+      /* Basic terminal mode input section override */
+      body.basic-terminal-mode .terminal-input-section {
+        padding: 12px 20px !important;
+        margin-top: auto !important;
+        background: transparent !important;
+        border-top: 1px solid rgba(0, 188, 242, 0.2) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0 !important;
+        flex-shrink: 0 !important;
+        position: relative !important;
+        z-index: 5 !important;
+        order: 999 !important;
+      }
+      
+      /* Basic terminal mode - Terminal container */
+      body.basic-terminal-mode #terminal {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        flex: 1 !important;
+      }
+      
+      /* Basic terminal mode - Content area */
+      body.basic-terminal-mode .terminal-content {
+        flex: 1 1 auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding: 20px 24px !important;
+        margin: 0 !important;
+        min-height: 0 !important;
+        max-height: 100% !important;
+        order: 1 !important;
+      }
 
       .terminal-content {
         flex: 1 1 auto;
         overflow-y: auto;
         overflow-x: hidden;
-        padding-right: 10px;
-        margin-bottom: 10px;
+        padding: 20px 24px;
+        margin-bottom: 0;
         user-select: text !important;
         -webkit-user-select: text !important;
         -moz-user-select: text !important;
@@ -650,6 +718,21 @@
         max-height: 100%;
         scrollbar-width: thin;
         scrollbar-color: rgba(0, 188, 242, 0.5) rgba(0, 0, 0, 0.2);
+      }
+      
+      /* Ensure old terminal content is properly positioned */
+      .terminal:not(.basic-terminal-mode) .terminal-content {
+        flex: 1 1 auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        min-height: 0 !important;
+        max-height: 100% !important;
+      }
+      
+      /* Ensure old terminal input section is at bottom */
+      .terminal:not(.basic-terminal-mode) .terminal-input-section {
+        margin-top: auto !important;
+        flex-shrink: 0 !important;
       }
       
       .terminal-content::-webkit-scrollbar {
@@ -677,6 +760,38 @@
       
       body.light-mode .terminal-content::-webkit-scrollbar-thumb:hover {
         background: rgba(0, 81, 213, 0.7);
+      }
+
+      /* Mobile responsive improvements for old terminal */
+      @media (max-width: 768px) {
+        .terminal-header {
+          padding: 12px 16px;
+        }
+        
+        .terminal-content {
+          padding: 16px 20px;
+        }
+        
+        .terminal-input-section {
+          padding: 10px 16px;
+        }
+        
+        .input-line {
+          padding: 10px 14px;
+          gap: 8px;
+        }
+        
+        .input-prompt {
+          font-size: 14px;
+        }
+        
+        .input-field {
+          font-size: 14px;
+        }
+        
+        .terminal-title {
+          font-size: 16px;
+        }
       }
 
       /* Modal popup styles */
@@ -837,18 +952,20 @@
         align-items: center;
         background: rgba(0, 188, 242, 0.05);
         width: 100%;
-        gap: 8px;
+        gap: 12px;
         position: relative;
-        padding: 10px 15px;
+        padding: 12px 18px;
         border-radius: 8px;
         border: 1px solid rgba(0, 188, 242, 0.2);
         transition: all 0.2s ease;
+        box-sizing: border-box;
       }
       
       .input-line:focus-within {
         background: rgba(0, 188, 242, 0.08);
         border-color: rgba(0, 188, 242, 0.4);
         box-shadow: 0 0 0 2px rgba(0, 188, 242, 0.1);
+        transform: translateY(-1px);
       }
 
       .input-prompt {
@@ -858,6 +975,7 @@
         font-size: 15px;
         white-space: nowrap;
         letter-spacing: 0.5px;
+        flex-shrink: 0;
       }
 
       .input-field {
@@ -865,10 +983,10 @@
         border: none;
         color: #ffffff;
         font-family: "Courier New", monospace;
-        font-size: 18px;
+        font-size: 15px;
         outline: none;
         flex: 1;
-        padding: 5px;
+        padding: 0;
         caret-color: #ffffff;
         width: 100%;
         min-width: 0;
@@ -2725,6 +2843,67 @@
               "error"
             );
           }
+        }
+
+        /**
+         * Check if a command looks like a question
+         */
+        isQuestionLike(command) {
+            const questionWords = [
+                'what', 'how', 'why', 'when', 'where', 'who', 'which', 'can', 'could', 'would', 'should',
+                'is', 'are', 'was', 'were', 'do', 'does', 'did', 'will', 'shall', 'may', 'might',
+                'explain', 'tell', 'describe', 'define', 'show', 'help', 'guide', 'tutorial'
+            ];
+            
+            const questionMarks = ['?'];
+            const commandLower = command.toLowerCase().trim();
+            
+            // Check for question marks
+            if (questionMarks.some(mark => commandLower.includes(mark))) {
+                return true;
+            }
+            
+            // Check if it starts with a question word
+            if (questionWords.some(word => commandLower.startsWith(word + ' '))) {
+                return true;
+            }
+            
+            // Check if it contains multiple words and looks like a question
+            const words = commandLower.split(/\s+/);
+            if (words.length >= 2) {
+                // Check if it contains question words anywhere
+                if (questionWords.some(word => words.includes(word))) {
+                    return true;
+                }
+                
+                // Check for common question patterns
+                const questionPatterns = [
+                    /^what is/,
+                    /^how to/,
+                    /^how do/,
+                    /^how can/,
+                    /^why is/,
+                    /^when is/,
+                    /^where is/,
+                    /^who is/,
+                    /^can you/,
+                    /^could you/,
+                    /^would you/,
+                    /^should i/,
+                    /^explain/,
+                    /^tell me/,
+                    /^describe/,
+                    /^define/,
+                    /^show me/,
+                    /^help me/
+                ];
+                
+                if (questionPatterns.some(pattern => pattern.test(commandLower))) {
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         loadTheme() {
@@ -6141,47 +6320,97 @@
               );
               return;
 
-            case "nft":
-            case "opensea":
-              // Check if it's a minting command
-              const nftSubcommand = args[1]?.toLowerCase();
-              if (
-                nftSubcommand === "mint" ||
-                nftSubcommand === "collection" ||
-                nftSubcommand === "view" ||
-                nftSubcommand === "list"
-              ) {
-                // NFT Minting commands
-                if (window.handleNFTMintCommand) {
-                  window.handleNFTMintCommand(args.slice(1));
-                } else {
-                  this.log(
-                    "❌ NFT Minter not loaded. Please refresh.",
-                    "error"
-                  );
-                }
-              } else {
-                // OpenSea trading commands
-                if (typeof this.handleNFTCommand === "function") {
-                  await this.handleNFTCommand(args);
-                } else {
-                  this.log(
-                    "❌ Enhanced NFT functionality not loaded. Please refresh the page.",
-                    "error"
-                  );
-                  this.log(
-                    "💡 Trading: nft setup | nft search | nft assets | nft buy | nft bid",
-                    "info"
-                  );
-                  this.log(
-                    "💡 Minting: nft mint | nft collection | nft view <#>",
-                    "info"
-                  );
-                }
-              }
-              return;
+      case "chat":
+        // ChainGPT Web3 AI Chatbot commands
+        console.log('[DEBUG] Chat command detected:', args[1]);
+        console.log('[DEBUG] ChainGPTChatCommands available:', !!window.ChainGPTChatCommands);
+        console.log('[DEBUG] ChainGPT chat function available:', !!(window.ChainGPTChatCommands && window.ChainGPTChatCommands.chat));
+        
+        if (window.ChainGPTChatCommands && window.ChainGPTChatCommands.chat) {
+          console.log('[DEBUG] Routing to ChainGPT Chat commands');
+          await window.ChainGPTChatCommands.chat(this, args.slice(1));
+          return;
+        } else {
+          this.log(
+            "❌ ChainGPT Chat not loaded. Please refresh.",
+            "error"
+          );
+        }
+        return;
 
-            case "chat":
+      case "news":
+        // Crypto News commands
+        console.log('[DEBUG] News command detected:', args[1]);
+        console.log('[DEBUG] CryptoNewsCommands available:', !!window.CryptoNewsCommands);
+        
+        if (window.CryptoNewsCommands && window.CryptoNewsCommands.news) {
+          console.log('[DEBUG] Routing to Crypto News commands');
+          await window.CryptoNewsCommands.news(this, args.slice(1));
+          return;
+        } else {
+          this.log(
+            "❌ Crypto News not loaded. Please refresh.",
+            "error"
+          );
+        }
+        return;
+
+      case "nft":
+      case "opensea":
+        // Check if it's a ChainGPT AI NFT command
+        const nftSubcommand = args[1]?.toLowerCase();
+        const chainGptCommands = ["init", "generate", "enhance", "models", "styles", "chains", "status", "test", "gallery", "help"];
+        console.log('[DEBUG] NFT command detected:', nftSubcommand);
+        console.log('[DEBUG] ChainGPTCommands available:', !!window.ChainGPTCommands);
+        console.log('[DEBUG] ChainGPT nft function available:', !!(window.ChainGPTCommands && window.ChainGPTCommands.nft));
+        
+        if (chainGptCommands.includes(nftSubcommand) && window.ChainGPTCommands && window.ChainGPTCommands.nft) {
+          // ChainGPT AI NFT Generator commands
+          console.log('[DEBUG] Routing to ChainGPT NFT commands:', nftSubcommand);
+          // Pass args without the 'nft' prefix since ChainGPT module expects subcommand as args[0]
+          await window.ChainGPTCommands.nft(this, args.slice(1));
+          return;
+        } else if (
+          nftSubcommand === "mint" ||
+          nftSubcommand === "collection" ||
+          nftSubcommand === "view" ||
+          nftSubcommand === "list"
+        ) {
+          // NFT Minting commands
+          if (window.handleNFTMintCommand) {
+            window.handleNFTMintCommand(args.slice(1));
+          } else {
+            this.log(
+              "❌ NFT Minter not loaded. Please refresh.",
+              "error"
+            );
+          }
+        } else {
+          // OpenSea trading commands
+          if (typeof this.handleNFTCommand === "function") {
+            await this.handleNFTCommand(args);
+          } else {
+            this.log(
+              "❌ Enhanced NFT functionality not loaded. Please refresh the page.",
+              "error"
+            );
+            this.log(
+              "💡 AI NFT: nft init | nft generate | nft enhance",
+              "info"
+            );
+            this.log(
+              "💡 Trading: nft setup | nft search | nft assets | nft buy | nft bid",
+              "info"
+            );
+            this.log(
+              "💡 Minting: nft mint | nft collection | nft view <#>",
+              "info"
+            );
+          }
+        }
+        return;
+
+            case "chatter":
               // Terminal Chatter Mode (Telegram-like chat)
               if (window.handleChatCommand) {
                 window.handleChatCommand(args.slice(1));
@@ -8599,6 +8828,14 @@
                     this.log("AI agent error: " + err.message, "error");
                   }
                 } else {
+                  // Check if this looks like a question and ChainGPT is initialized
+                  if (this.isQuestionLike(command) && window.ChainGPTChatCommands && window.ChainGPTChat.isInitialized()) {
+                    console.log('[DEBUG] Detected question-like input, routing to ChainGPT chat');
+                    this.log('🤖 Detected a question! Routing to ChainGPT AI...', 'info');
+                    await window.ChainGPTChatCommands.chat(this, ['ask', command]);
+                    return;
+                  }
+                  
                   // AI mode is off or this is an AI-executed command, show normal error
                   this.log(`Command not found: ${command}`, "error");
                   this.log('Type "help" for available commands', "info");
@@ -11148,6 +11385,48 @@
             );
             this.logHtml(
               "  To generate a wallet, type: <b>hyperliquid gen-wallet</b>",
+              "output"
+            );
+          }
+
+          this.logHtml("&nbsp;", "output");
+
+          // Fair Wallet
+          this.logHtml("<b>Fair Wallet:</b>", "output");
+          if (window.fairWallet && window.fairWallet.address) {
+            try {
+              const fairProvider = new this.ethers.providers.JsonRpcProvider('https://testnet-rpc.fair.cloud');
+              const fairBalance = await fairProvider.getBalance(window.fairWallet.address);
+              const fairBalanceFormatted = this.ethers.utils.formatEther(fairBalance);
+              this.logHtml(
+                `  Balance: <b>${fairBalanceFormatted} FAIR</b>`,
+                "output"
+              );
+              this.logHtml(
+                `  Address: <span style="color:#99ccff">${window.fairWallet.address}</span>`,
+                "output"
+              );
+            } catch (err) {
+              this.logHtml("  Balance: <b>N/A FAIR</b>", "output");
+              this.logHtml(
+                `  Address: <span style="color:#99ccff">${window.fairWallet.address}</span>`,
+                "output"
+              );
+              this.logHtml(
+                "  [Error fetching FAIR balance: " +
+                  (err && err.message ? err.message : err) +
+                  "]",
+                "error"
+              );
+            }
+          } else {
+            this.logHtml("  Balance: <b>N/A FAIR</b>", "output");
+            this.logHtml(
+              '  Address: <span style="color:#ff3333">Not connected</span>',
+              "output"
+            );
+            this.logHtml(
+              "  To generate a wallet, type: <b>fair generate</b>",
               "output"
             );
           }
@@ -23107,7 +23386,7 @@
           );
           try {
             // Use CORS proxy to avoid browser restrictions
-            const proxyUrl = "https://polymarket-proxy.onrender.com";
+            const proxyUrl = "http://localhost:3002";
             const url = `${proxyUrl}/polymarket${endpoint}`;
             this.log(`🔧 DEBUG: Making request to: ${url}`, "info");
 

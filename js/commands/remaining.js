@@ -144,12 +144,404 @@ window.OmegaCommands.Remaining = {
         terminal.log('🔜 Coming soon in next update!', 'info');
     },
 
-    polymarket: function(terminal, args) {
-        terminal.log('=== POLYMARKET INTEGRATION ===', 'info');
-        terminal.log('📊 Polymarket prediction market integration', 'info');
-        terminal.log('🚧 Polymarket commands are being refactored for modular version', 'warning');
-        terminal.log('💡 This will support Polymarket betting and analytics', 'info');
-        terminal.log('🔜 Coming soon in next update!', 'info');
+    polymarket: async function(terminal, args) {
+        console.log('🔧 DEBUG: handlePolymarketCommand called with args:', args);
+        
+        if (args.length === 0) {
+            this.showPolymarketHelp(terminal);
+            return;
+        }
+
+        const subcommand = args[0].toLowerCase();
+        console.log('🔧 DEBUG: Processing subcommand:', subcommand);
+
+        switch (subcommand) {
+            case 'help':
+                this.showPolymarketHelp(terminal);
+                break;
+            case 'markets':
+                await this.getPolymarketMarkets(terminal);
+                break;
+            case 'trending':
+                await this.getPolymarketTrending(terminal);
+                break;
+            case 'events':
+                await this.getPolymarketEvents(terminal);
+                break;
+            case 'recent':
+                await this.getPolymarketRecent(terminal);
+                break;
+            case 'new':
+                await this.getPolymarketNew(terminal);
+                break;
+            case 'breaking':
+                await this.getPolymarketBreaking(terminal);
+                break;
+            case 'politics':
+                await this.getPolymarketPolitics(terminal);
+                break;
+            case 'sports':
+                await this.getPolymarketSports(terminal);
+                break;
+            case 'crypto':
+                await this.getPolymarketCrypto(terminal);
+                break;
+            case 'earnings':
+                await this.getPolymarketEarnings(terminal);
+                break;
+            case 'geopolitics':
+                await this.getPolymarketGeopolitics(terminal);
+                break;
+            case 'tech':
+                await this.getPolymarketTech(terminal);
+                break;
+            case 'culture':
+                await this.getPolymarketCulture(terminal);
+                break;
+            case 'world':
+                await this.getPolymarketWorld(terminal);
+                break;
+            case 'economy':
+                await this.getPolymarketEconomy(terminal);
+                break;
+            case 'trump':
+                await this.getPolymarketTrump(terminal);
+                break;
+            case 'elections':
+                await this.getPolymarketElections(terminal);
+                break;
+            case 'search':
+                if (args.length < 2) {
+                    terminal.log('❌ Usage: polymarket search <query>', 'error');
+                    return;
+                }
+                await this.searchPolymarket(terminal, args.slice(1).join(' '));
+                break;
+            default:
+                terminal.log(`❌ Unknown subcommand: ${subcommand}`, 'error');
+                this.showPolymarketHelp(terminal);
+        }
+    },
+
+    showPolymarketHelp: function(terminal) {
+        terminal.log('🎯 POLYMARKET PREDICTION MARKETS', 'info');
+        terminal.log('════════════════════════════════════', 'output');
+        terminal.log('📋 MAIN COMMANDS:', 'info');
+        terminal.log('polymarket help        Show this help', 'output');
+        terminal.log('polymarket markets     Get current active markets', 'output');
+        terminal.log('polymarket trending    Get top volume markets', 'output');
+        terminal.log('polymarket events      Get recent events (last 6 months)', 'output');
+        terminal.log('polymarket recent      Get very recent events (last month)', 'output');
+        terminal.log('polymarket search <q>  Search markets', 'output');
+        terminal.log('', 'output');
+        terminal.log('🔥 CATEGORY COMMANDS:', 'info');
+        terminal.log('polymarket breaking    Breaking news markets', 'output');
+        terminal.log('polymarket new         Newest markets', 'output');
+        terminal.log('polymarket politics    Political markets', 'output');
+        terminal.log('polymarket sports      Sports markets', 'output');
+        terminal.log('polymarket crypto      Crypto markets', 'output');
+        terminal.log('polymarket earnings    Earnings markets', 'output');
+        terminal.log('polymarket geopolitics Geopolitical markets', 'output');
+        terminal.log('polymarket tech        Technology markets', 'output');
+        terminal.log('polymarket culture     Culture markets', 'output');
+        terminal.log('polymarket world       World events', 'output');
+        terminal.log('polymarket economy     Economic markets', 'output');
+        terminal.log('polymarket trump       Trump-related markets', 'output');
+        terminal.log('polymarket elections   Election markets', 'output');
+        terminal.log('', 'output');
+        terminal.log('🎯 EXAMPLES:', 'info');
+        terminal.log('polymarket markets     # Current active markets', 'output');
+        terminal.log('polymarket trending    # Highest volume markets', 'output');
+        terminal.log('polymarket politics    # Political predictions', 'output');
+        terminal.log('polymarket crypto      # Crypto predictions', 'output');
+        terminal.log('polymarket breaking    # Breaking news markets', 'output');
+        terminal.log('polymarket search "AI" # Search for AI markets', 'output');
+    },
+
+    makePolymarketRequest: async function(endpoint) {
+        console.log('🔧 DEBUG: makePolymarketRequest called with endpoint:', endpoint);
+        
+        const baseUrl = 'http://localhost:3002';
+        const fullUrl = `${baseUrl}/polymarket${endpoint}`;
+        console.log('🔧 DEBUG: Making request to:', fullUrl);
+        
+        try {
+            const response = await fetch(fullUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log('🔧 DEBUG: API response received:', data);
+            return data;
+        } catch (error) {
+            console.log('🔧 DEBUG: API request failed:', error);
+            throw new Error(`Polymarket API Error: ${error.message}`);
+        }
+    },
+
+    getPolymarketMarkets: async function(terminal) {
+        terminal.log('📊 Fetching comprehensive Polymarket markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=100');
+            this.displayPolymarketMarkets(terminal, data, 'Current Active Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketTrending: async function(terminal) {
+        terminal.log('🔥 Fetching trending Polymarket markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=volume&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Trending Markets (Highest Volume)');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketEvents: async function(terminal) {
+        terminal.log('📅 Fetching recent Polymarket events...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=100');
+            this.displayPolymarketMarkets(terminal, data, 'Recent Events (Last 6 Months)');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketRecent: async function(terminal) {
+        terminal.log('🆕 Fetching very recent Polymarket events...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Very Recent Events (Last Month)');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketNew: async function(terminal) {
+        terminal.log('🆕 Fetching newest markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=100');
+            this.displayPolymarketMarkets(terminal, data, 'Newest Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketBreaking: async function(terminal) {
+        terminal.log('🚨 Fetching breaking news markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Breaking News Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketPolitics: async function(terminal) {
+        terminal.log('🏛️ Fetching political markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Political Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketSports: async function(terminal) {
+        terminal.log('⚽ Fetching sports markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Sports Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketCrypto: async function(terminal) {
+        terminal.log('₿ Fetching crypto markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Crypto Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketEarnings: async function(terminal) {
+        terminal.log('💰 Fetching earnings markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Earnings Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketGeopolitics: async function(terminal) {
+        terminal.log('🌍 Fetching geopolitical markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Geopolitical Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketTech: async function(terminal) {
+        terminal.log('💻 Fetching technology markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Technology Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketCulture: async function(terminal) {
+        terminal.log('🎭 Fetching culture markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Culture Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketWorld: async function(terminal) {
+        terminal.log('🌎 Fetching world events markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'World Events Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketEconomy: async function(terminal) {
+        terminal.log('📈 Fetching economic markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Economic Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketTrump: async function(terminal) {
+        terminal.log('🗽 Fetching Trump-related markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Trump-Related Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    getPolymarketElections: async function(terminal) {
+        terminal.log('🗳️ Fetching election markets...', 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest('/events?order=id&ascending=false&closed=false&limit=50');
+            this.displayPolymarketMarkets(terminal, data, 'Election Markets');
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    searchPolymarket: async function(terminal, query) {
+        terminal.log(`🔍 Searching Polymarket for: "${query}"`, 'info');
+        
+        try {
+            const data = await this.makePolymarketRequest(`/events?order=id&ascending=false&closed=false&limit=50`);
+            // Filter results by query (client-side filtering since API doesn't support search)
+            const filteredData = data.filter(event => 
+                event.question && event.question.toLowerCase().includes(query.toLowerCase())
+            );
+            this.displayPolymarketMarkets(terminal, filteredData, `Search Results for "${query}"`);
+        } catch (error) {
+            terminal.log(`❌ ${error.message}`, 'error');
+            terminal.log('💡 Make sure the Polymarket proxy is running: npm run start:polymarket', 'info');
+        }
+    },
+
+    displayPolymarketMarkets: function(terminal, data, title) {
+        if (!data || data.length === 0) {
+            terminal.log('❌ No markets found', 'error');
+            return;
+        }
+
+        terminal.log(`📊 ${title}`, 'info');
+        terminal.log('════════════════════════════════════════════════════════════════════════════════', 'output');
+        terminal.log('');
+
+        data.slice(0, 20).forEach((market, index) => {
+            const num = (index + 1).toString().padStart(2, ' ');
+            const question = market.question || 'No question available';
+            const volume = market.volume ? `$${parseFloat(market.volume).toLocaleString()}` : 'N/A';
+            const endDate = market.end_date_iso ? new Date(market.end_date_iso).toLocaleDateString() : 'N/A';
+            const status = market.closed ? '🔒 Closed' : '🟢 Active';
+            
+            terminal.log(`${num}. ${question}`, 'output');
+            terminal.log(`    💰 Volume: ${volume} | 📅 End: ${endDate} | ${status}`, 'info');
+            
+            if (market.outcomes && market.outcomes.length > 0) {
+                market.outcomes.forEach(outcome => {
+                    const price = outcome.price ? `$${parseFloat(outcome.price).toFixed(2)}` : 'N/A';
+                    terminal.log(`    📊 ${outcome.name}: ${price}`, 'output');
+                });
+            }
+            
+            terminal.log('', 'output');
+        });
+
+        if (data.length > 20) {
+            terminal.log(`... and ${data.length - 20} more markets`, 'info');
+        }
+
+        terminal.log('💡 Use "polymarket help" for more commands', 'info');
     },
 
     magiceden: function(terminal, args) {

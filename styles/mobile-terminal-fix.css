@@ -27,6 +27,69 @@
         overflow-x: hidden !important;
         word-wrap: break-word !important;
         word-break: break-word !important;
+        width: 100% !important;
+        display: block !important;
+    }
+    
+    /* Terminal content container */
+    .terminal-content,
+    #terminalContent {
+        width: 100% !important;
+        display: block !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Terminal lines - ensure horizontal display */
+    .terminal-line,
+    .output-line,
+    .log-line {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        white-space: pre-wrap !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        direction: ltr !important;
+        margin-bottom: 8px !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Output log types - ensure full width display */
+    .output,
+    .output.info,
+    .output.error,
+    .output.success,
+    .output.warning,
+    .terminal-line.output,
+    .terminal-line.info,
+    .terminal-line.error,
+    .terminal-line.success,
+    .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        white-space: pre-wrap !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        direction: ltr !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* All children of output elements */
+    .output *,
+    .terminal-line.output *,
+    .terminal-line.info *,
+    .terminal-line.error *,
+    .terminal-line.success *,
+    .terminal-line.warning * {
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
     }
     
     /* Input container */
@@ -166,6 +229,18 @@
         min-height: 40px !important;
         min-width: 40px !important;
     }
+    
+    /* Hide view mode toggle buttons on mobile - force basic mode only */
+    #view-mode-toggle-btn,
+    #view-toggle-btn,
+    #basic-mode-toggle,
+    .view-mode-toggle,
+    button[onclick*="toggleViewMode"],
+    .sidebar-button[onclick*="toggleViewMode"] {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
 }
 
 /* Portrait mode specific */
@@ -176,6 +251,42 @@
         font-size: 13px !important;
         padding: 8px !important;
         max-height: calc(100vh - 100px) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .terminal-content,
+    #terminalContent {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .terminal-line,
+    .output-line,
+    .log-line {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Output log types for portrait */
+    .output,
+    .output.info,
+    .output.error,
+    .output.success,
+    .output.warning,
+    .terminal-line.output,
+    .terminal-line.info,
+    .terminal-line.error,
+    .terminal-line.success,
+    .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
     }
     
     #user-input,
@@ -199,6 +310,14 @@
     table {
         font-size: 11px !important;
     }
+    
+    /* Hide view mode toggle on portrait mobile */
+    #view-mode-toggle-btn,
+    #view-toggle-btn,
+    #basic-mode-toggle,
+    .view-mode-toggle {
+        display: none !important;
+    }
 }
 
 /* Landscape mode specific */
@@ -208,6 +327,42 @@
     #output {
         max-height: calc(100vh - 80px) !important;
         font-size: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .terminal-content,
+    #terminalContent {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .terminal-line,
+    .output-line,
+    .log-line {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Output log types for landscape */
+    .output,
+    .output.info,
+    .output.error,
+    .output.success,
+    .output.warning,
+    .terminal-line.output,
+    .terminal-line.info,
+    .terminal-line.error,
+    .terminal-line.success,
+    .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
     }
     
     .input-container,
@@ -230,6 +385,14 @@
     .btn {
         padding: 6px 10px !important;
         min-height: 36px !important;
+    }
+    
+    /* Hide view mode toggle on landscape mobile */
+    #view-mode-toggle-btn,
+    #view-toggle-btn,
+    #basic-mode-toggle,
+    .view-mode-toggle {
+        display: none !important;
     }
 }
 

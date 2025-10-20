@@ -182,7 +182,7 @@ window.OmegaCommands.API = {
                         terminal.logHtml(`<b>${dex.name}</b> (<span style='color:#99ccff'>${id}</span>)`, 'output');
                     });
                 } else {
-                    terminal.logHtml(`<span style="color:#ff3333">No dexes found for network: ${network}.</span>', 'error');
+                    terminal.logHtml(`<span style="color:#ff3333">No dexes found for network: ${network}.</span>`, 'error');
                 }
             } catch (e) {
                 terminal.log('GeckoTerminal dexes fetch failed: ' + e.message, 'error');

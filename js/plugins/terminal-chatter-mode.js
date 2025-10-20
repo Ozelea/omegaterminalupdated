@@ -803,14 +803,24 @@ console.log('💬 Loading Terminal Chatter Mode...');
     
     function showChatHelp() {
         window.terminal.log('💬 Terminal Chatter Commands:', 'info');
+        window.terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
         window.terminal.log('', 'output');
+        window.terminal.log('📱 TERMINAL CHATTER (Real-time messaging):', 'info');
         window.terminal.log('  chat open      - Open chat interface', 'output');
         window.terminal.log('  chat close     - Close chat', 'output');
         window.terminal.log('  chat clear     - Clear all messages', 'output');
         window.terminal.log('  chat settings  - Open chat settings', 'output');
         window.terminal.log('  chat help      - Show this help', 'output');
         window.terminal.log('', 'output');
-        window.terminal.log('Features:', 'info');
+        window.terminal.log('🤖 CHANGPT AI CHAT (Web3 AI Assistant):', 'info');
+        window.terminal.log('  chat init      - Initialize ChainGPT API', 'output');
+        window.terminal.log('  chat ask       - Ask ChainGPT AI', 'output');
+        window.terminal.log('  chat stream    - Real-time AI streaming', 'output');
+        window.terminal.log('  chat context   - AI with custom context', 'output');
+        window.terminal.log('  chat history   - AI with conversation memory', 'output');
+        window.terminal.log('  chat test      - Test ChainGPT API', 'output');
+        window.terminal.log('', 'output');
+        window.terminal.log('📱 Terminal Chatter Features:', 'info');
         window.terminal.log('  💬 Real-time messaging across tabs', 'output');
         window.terminal.log('  👤 ENS username integration', 'output');
         window.terminal.log('  🔊 Sound effects', 'output');
@@ -826,14 +836,48 @@ console.log('💬 Loading Terminal Chatter Mode...');
         if (window.terminal && window.terminal.executeCommand) {
             console.log('💬 Integrating Terminal Chatter with main terminal...');
             
+            // Check if ChainGPT chat commands are available
+            if (window.ChainGPTChatCommands) {
+                console.log('✅ ChainGPT Chat commands detected and available');
+            } else {
+                console.log('⚠️ ChainGPT Chat commands not yet loaded, integration will work when they load');
+            }
+            
             const originalExecuteCommand = window.terminal.executeCommand;
             window.terminal.executeCommand = function(command) {
                 const args = command.trim().split(/\s+/);
                 const cmd = args[0].toLowerCase();
                 
+                // Only handle terminal chatter commands, let ChainGPT chat commands pass through
                 if (cmd === 'chat') {
-                    handleChatCommand(args.slice(1));
-                    return;
+                    const subcommand = args[1]?.toLowerCase();
+                    const chatterCommands = ['open', 'close', 'clear', 'settings'];
+                    const chainGptCommands = ['init', 'ask', 'stream', 'context', 'history', 'test'];
+                    
+                    console.log(`[Terminal Chatter] Chat command detected: ${subcommand}`);
+                    
+                    // If it's a terminal chatter command, handle it
+                    if (chatterCommands.includes(subcommand)) {
+                        console.log(`[Terminal Chatter] Handling chatter command: ${subcommand}`);
+                        handleChatCommand(args.slice(1));
+                        return;
+                    }
+                    
+                    // If it's a ChainGPT chat command, let it pass through
+                    if (chainGptCommands.includes(subcommand)) {
+                        console.log(`[Terminal Chatter] Passing through ChainGPT command: ${subcommand}`);
+                        return originalExecuteCommand.call(this, command);
+                    }
+                    
+                    // Special case: 'chat help' - show both systems
+                    if (subcommand === 'help') {
+                        console.log(`[Terminal Chatter] Showing combined help for both systems`);
+                        showChatHelp();
+                        return;
+                    }
+                    
+                    // If no subcommand or unknown subcommand, let it pass through to ChainGPT
+                    console.log(`[Terminal Chatter] Unknown chat command, passing through to ChainGPT: ${subcommand || 'none'}`);
                 }
                 
                 return originalExecuteCommand.call(this, command);

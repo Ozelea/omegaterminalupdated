@@ -62,7 +62,9 @@ window.OmegaCommands.Basic = {
         terminal.log('');
         terminal.log('🏭 TOKEN & NFT CREATION:', 'info');
         terminal.log('  create               Deploy your own ERC20 token');
-        terminal.log('  nft                  Deploy your own NFT collection (ERC721)');
+        terminal.log('  nft                  ChainGPT AI NFT Generator (type "nft help")');
+        terminal.log('  chat                 ChainGPT Web3 AI Chatbot (type "chat help")');
+        terminal.log('  news                 Crypto News System (type "news help")');
         terminal.log('');
         terminal.log('📊 MARKET DATA:', 'info');
         terminal.log('  ds search <token>    DexScreener token search');
@@ -106,8 +108,24 @@ window.OmegaCommands.Basic = {
         terminal.log('🎭 ENTERTAINMENT:', 'info');
         terminal.log('  rickroll, matrix, hack, disco, fortune');
         terminal.log('');
-        terminal.log('🤖 AI ASSISTANT:', 'info');
+        terminal.log('🤖 AI ASSISTANT & NFT:', 'info');
         terminal.log('  ai <message>         Chat with OMEGA AI (natural language)');
+        terminal.log('  chat ask "<question>" Ask ChainGPT Web3 AI');
+        terminal.log('  chat stream "<question>" Real-time AI streaming');
+        terminal.log('  chat context "<question>" AI with custom context');
+        terminal.log('  chat history "<question>" AI with conversation memory');
+        terminal.log('  chat help            Show chat commands help');
+        terminal.log('  nft generate <prompt> Generate AI NFT images (ChainGPT)');
+        terminal.log('  nft enhance <prompt>  Enhance prompt with AI');
+        terminal.log('  nft help             Show full NFT commands');
+        terminal.log('  news latest          Latest crypto news');
+        terminal.log('  news hot             Trending crypto news');
+        terminal.log('  news btc             Bitcoin news');
+        terminal.log('  news eth             Ethereum news');
+        terminal.log('  news search "<query>" Search crypto news');
+        terminal.log('  news expand-all      Expand all articles in terminal');
+        terminal.log('  news collapse-all    Collapse all expanded articles');
+        terminal.log('  news help            Show news commands help');
         terminal.log('');
         
         const isAIMode = localStorage.getItem('omega-ai-mode') === 'true';

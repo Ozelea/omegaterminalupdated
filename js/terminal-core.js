@@ -591,7 +591,24 @@ class OmegaMinerTerminal {
                     await OmegaCommands.Remaining.createToken(this, args);
                     break;
                 case 'nft':
-                    await OmegaCommands.Remaining.createNFT(this, args);
+                    // ChainGPT AI NFT Generator
+                    console.log('[DEBUG] NFT command called');
+                    console.log('[DEBUG] window.ChainGPTCommands:', window.ChainGPTCommands);
+                    console.log('[DEBUG] args:', args);
+                    
+                    if (window.ChainGPTCommands && window.ChainGPTCommands.nft) {
+                        console.log('[DEBUG] Using ChainGPT NFT commands');
+                        await window.ChainGPTCommands.nft(this, args);
+                    } else {
+                        console.log('[DEBUG] ChainGPT commands not found, using fallback');
+                        console.log('[DEBUG] OmegaCommands.Remaining:', window.OmegaCommands?.Remaining);
+                        // Fallback to old NFT command
+                        if (window.OmegaCommands && window.OmegaCommands.Remaining && window.OmegaCommands.Remaining.createNFT) {
+                            await OmegaCommands.Remaining.createNFT(this, args);
+                        } else {
+                            this.log('❌ NFT commands not loaded. Please refresh the page.', 'error');
+                        }
+                    }
                     break;
                 case 'rome':
                     OmegaCommands.Remaining.rome(this, args);

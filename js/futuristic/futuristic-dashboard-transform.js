@@ -74,6 +74,63 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Claim Faucet</span>
                     </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat ask', 'Enter your question and press Enter:')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/></svg>
+                        <span>Ask ChainGPT</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft generate', 'Enter your NFT prompt and press Enter:')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2L13.09,8.26L22,9L13.09,9.74L12,16L10.91,9.74L2,9L10.91,8.26L12,2Z"/></svg>
+                        <span>Generate NFT</span>
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📰 CRYPTO NEWS</div>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('news latest')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z"/></svg>
+                        <span>Latest News</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('news hot')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Trending News</span>
+                    </button>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'crypto-news')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Crypto News</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="crypto-news" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news btc')">
+                            <span>→ ₿ Bitcoin News</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news eth')">
+                            <span>→ Ξ Ethereum News</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news sol')">
+                            <span>→ ◎ Solana News</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('news search', 'Enter search query and press Enter:')">
+                            <span>→ 🔍 Search News</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news category news')">
+                            <span>→ 📰 News Articles</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news sources')">
+                            <span>→ 📡 News Sources</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news expand-all')">
+                            <span>→ 📖 Expand All</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news collapse-all')">
+                            <span>→ 📄 Collapse All</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news clear-expansions')">
+                            <span>→ 🧹 Clear & Reload</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('news help')">
+                            <span>→ ❓ News Help</span>
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="sidebar-section">
@@ -193,21 +250,67 @@
                 </div>
                 
                 <div class="sidebar-section">
-                    <div class="sidebar-title">NFT & WEB3</div>
+                    <div class="sidebar-title">AI & NFT TOOLS</div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'chaingpt-chat')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/></svg>
+                        <span>ChainGPT Chat</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="chaingpt-chat" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat init', 'Enter your ChainGPT API key and press Enter:')">
+                            <span>→ 🔑 Initialize API</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat ask', 'Enter your question and press Enter:')">
+                            <span>→ 💬 Ask Question</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat stream', 'Enter your question for real-time streaming:')">
+                            <span>→ 🌊 Stream Response</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat context', 'Enter your question with custom context:')">
+                            <span>→ 🎯 Context Chat</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat history', 'Enter your question with conversation memory:')">
+                            <span>→ 🧠 Memory Chat</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('chat test')">
+                            <span>→ 🧪 Test API</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('chat help')">
+                            <span>→ ❓ Chat Help</span>
+                        </button>
+                    </div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'nft')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2L13.09,8.26L22,9L13.09,9.74L12,16L10.91,9.74L2,9L10.91,8.26L12,2Z"/></svg>
-                        <span>NFT Tools</span>
+                        <span>NFT Generator</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="nft" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft')">
-                            <span>→ Create NFT Collection</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft init', 'Enter your ChainGPT API key and press Enter:')">
+                            <span>→ 🔑 Initialize API</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft generate', 'Enter your NFT prompt and press Enter:')">
+                            <span>→ 🎨 Generate AI NFT</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft models')">
+                            <span>→ 🤖 AI Models</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft styles')">
+                            <span>→ 🎭 Art Styles</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft enhance', 'Enter prompt to enhance and press Enter:')">
+                            <span>→ ✨ Enhance Prompt</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft gallery')">
+                            <span>→ 🖼️ View Gallery</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft test')">
+                            <span>→ 🧪 Test API</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommand('opensea trending')">
-                            <span>→ Trending NFTs</span>
+                            <span>→ 📊 Trending NFTs</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('near agent deploy', 'Enter agent name and press Enter:')">
-                            <span>→ Deploy Shade Agent</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft help')">
+                            <span>→ ❓ NFT Help</span>
                         </button>
                     </div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'solana')">
@@ -803,6 +906,16 @@
         },
         
         toggleClassicMode: function() {
+            // Prevent view mode switching on mobile devices
+            const isMobile = this.isMobileDevice();
+            if (isMobile) {
+                console.log('📱 View mode switching is disabled on mobile devices');
+                if (window.terminal) {
+                    window.terminal.log('📱 Basic terminal mode is locked on mobile devices', 'info');
+                }
+                return;
+            }
+            
             const dashboard = document.querySelector('.omega-dashboard');
             const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
             
@@ -820,6 +933,14 @@
         
         toggleViewMode: function() {
             this.toggleClassicMode();
+        },
+        
+        isMobileDevice: function() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+            const isMobileUA = mobileRegex.test(userAgent);
+            const isSmallScreen = window.innerWidth <= 768;
+            return isMobileUA || isSmallScreen;
         },
         
         updateViewModeButton: function() {
@@ -850,9 +971,16 @@
             
             localStorage.setItem('omega-theme-mode', newTheme);
             
+            // Add switching class to ensure smooth transitions
+            document.body.classList.add('switching-theme');
+            
             // Check if terminal is in Apple UI (Modern UI) mode
             const terminal = document.getElementById('terminal');
             const isAppleUI = terminal && terminal.classList.contains('apple-ui');
+            
+            // Ensure command input stays focused and visible during switch
+            const commandInput = document.getElementById('commandInput');
+            const wasActive = document.activeElement === commandInput;
             
             if (newTheme === 'light') {
                 document.body.classList.add('light-mode');
@@ -873,6 +1001,18 @@
                     console.log('✅ Apple UI: Switched to dark mode');
                 }
             }
+            
+            // Restore focus to command input if it was active
+            if (wasActive && commandInput) {
+                setTimeout(() => {
+                    commandInput.focus();
+                }, 0);
+            }
+            
+            // Remove switching class after transition
+            setTimeout(() => {
+                document.body.classList.remove('switching-theme');
+            }, 300);
             
             this.updateThemeModeButton();
             
@@ -1144,9 +1284,26 @@
         }
     };
     
+    // Mobile detection function
+    const isMobileDevice = () => {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+        const isMobileUA = mobileRegex.test(userAgent);
+        const isSmallScreen = window.innerWidth <= 768;
+        return isMobileUA || isSmallScreen;
+    };
+    
     // Auto-transform when DOM is ready (unless user prefers basic mode)
-    const savedViewMode = localStorage.getItem('omega-view-mode');
+    const isMobile = isMobileDevice();
+    let savedViewMode = localStorage.getItem('omega-view-mode');
     const savedTheme = localStorage.getItem('omega-theme-mode') || 'dark';
+    
+    // Force basic mode on mobile devices
+    if (isMobile) {
+        savedViewMode = 'basic';
+        localStorage.setItem('omega-view-mode', 'basic');
+        console.log('📱 Mobile device detected - forcing basic terminal mode');
+    }
     
     // Apply theme immediately
     if (savedTheme === 'light') {

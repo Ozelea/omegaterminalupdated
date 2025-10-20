@@ -771,6 +771,7 @@ body.light-mode .terminal-output::-webkit-scrollbar-thumb:hover {
     box-sizing: border-box;
     position: relative;
     z-index: 5;
+    margin-top: auto;
 }
 
 .input-line {
@@ -1233,6 +1234,17 @@ span.cursor {
         white-space: pre-wrap !important;
         flex: 1 !important;
         display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Terminal content container mobile fix */
+    .terminal-content,
+    #terminalContent {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        overflow-x: hidden !important;
     }
     
     /* Ensure terminal lines display horizontally */
@@ -1241,11 +1253,51 @@ span.cursor {
     .log-line {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         word-wrap: break-word !important;
+        word-break: break-word !important;
         white-space: pre-wrap !important;
         margin-bottom: 8px !important;
         writing-mode: horizontal-tb !important;
         text-orientation: mixed !important;
+        direction: ltr !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Output log types - ensure full width display */
+    .output,
+    .output.info,
+    .output.error,
+    .output.success,
+    .output.warning,
+    .terminal-line.output,
+    .terminal-line.info,
+    .terminal-line.error,
+    .terminal-line.success,
+    .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        white-space: pre-wrap !important;
+        writing-mode: horizontal-tb !important;
+        direction: ltr !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* All children of output elements */
+    .output *,
+    .terminal-line.output *,
+    .terminal-line.info *,
+    .terminal-line.error *,
+    .terminal-line.success *,
+    .terminal-line.warning * {
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
     }
     
     /* Terminal input section */
@@ -1301,6 +1353,18 @@ span.cursor {
         width: 16px !important;
         height: 16px !important;
     }
+    
+    /* Hide view mode toggle buttons on mobile - force basic mode only */
+    #view-mode-toggle-btn,
+    #view-toggle-btn,
+    #basic-mode-toggle,
+    .view-mode-toggle,
+    button[onclick*="toggleViewMode"],
+    .sidebar-button[onclick*="toggleViewMode"] {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
 }
 
 /* Extra small devices (phones, 480px and down) */
@@ -1348,13 +1412,45 @@ span.cursor {
     .terminal-output {
         padding: 8px !important;
         font-size: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .terminal-content,
+    #terminalContent {
+        width: 100% !important;
+        max-width: 100% !important;
     }
     
     .terminal-line,
     .output-line {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         writing-mode: horizontal-tb !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Output log types for small mobile */
+    .output,
+    .output.info,
+    .output.error,
+    .output.success,
+    .output.warning,
+    .terminal-line.output,
+    .terminal-line.info,
+    .terminal-line.error,
+    .terminal-line.success,
+    .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
     }
     
     /* Make floating toggle smaller on very small screens */
@@ -1381,6 +1477,20 @@ body.basic-terminal-mode #terminal-wrapper {
     background: var(--void-black) !important;
     display: flex !important;
     flex-direction: column !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+/* Basic terminal mode - Terminal container */
+body.basic-terminal-mode #terminal {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    flex: 1 !important;
 }
 
 /* Only show terminal-wrapper's header in basic mode, not the old terminal's header */
@@ -1424,10 +1534,105 @@ body.light-mode.basic-terminal-mode #terminal-wrapper {
     background: var(--deep-space) !important;
 }
 
+/* Basic terminal mode - Input section positioning */
+body.basic-terminal-mode .terminal-input-section {
+    padding: 12px 20px !important;
+    margin-top: auto !important;
+    background: transparent !important;
+    border-top: 1px solid rgba(0, 188, 242, 0.2) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 5 !important;
+    order: 999 !important;
+}
+
+body.basic-terminal-mode .input-line {
+    display: flex !important;
+    align-items: center !important;
+    background: rgba(0, 188, 242, 0.05) !important;
+    width: 100% !important;
+    gap: 8px !important;
+    position: relative !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 188, 242, 0.2) !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+
+body.basic-terminal-mode .input-line:focus-within {
+    background: rgba(0, 188, 242, 0.08) !important;
+    border-color: rgba(0, 188, 242, 0.4) !important;
+    box-shadow: 0 0 0 2px rgba(0, 188, 242, 0.1) !important;
+}
+
+body.basic-terminal-mode .input-prompt {
+    color: #00bcf2 !important;
+    font-weight: 600 !important;
+    margin-right: 0 !important;
+    font-size: 15px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.5px !important;
+}
+
+body.basic-terminal-mode .input-field {
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-family: "Courier New", monospace !important;
+    font-size: 18px !important;
+    outline: none !important;
+    flex: 1 !important;
+    padding: 5px !important;
+    caret-color: #ffffff !important;
+}
+
+/* Light mode basic terminal input */
+body.light-mode.basic-terminal-mode .terminal-input-section {
+    background: transparent !important;
+    border-top-color: rgba(0, 81, 213, 0.15) !important;
+}
+
+body.light-mode.basic-terminal-mode .input-line {
+    background: rgba(0, 81, 213, 0.05) !important;
+    border-color: rgba(0, 81, 213, 0.2) !important;
+}
+
+body.light-mode.basic-terminal-mode .input-line:focus-within {
+    background: rgba(0, 81, 213, 0.08) !important;
+    border-color: #0051d5 !important;
+    box-shadow: 0 0 0 2px rgba(0, 81, 213, 0.15) !important;
+}
+
+body.light-mode.basic-terminal-mode .input-prompt {
+    color: #0051d5 !important;
+}
+
+body.light-mode.basic-terminal-mode .input-field {
+    color: #1D1D1F !important;
+}
+
+/* Basic terminal mode - Content area */
+body.basic-terminal-mode .terminal-content {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 20px 24px !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    order: 1 !important;
+}
+
 /* Basic terminal mode - Mobile optimizations */
 @media (max-width: 768px) {
     body.basic-terminal-mode #terminal {
-        padding: 12px !important;
+        padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
@@ -1438,6 +1643,26 @@ body.light-mode.basic-terminal-mode #terminal-wrapper {
     body.basic-terminal-mode #terminal-wrapper {
         width: 100vw !important;
         height: 100vh !important;
+    }
+    
+    body.basic-terminal-mode .terminal-content {
+        padding: 16px 20px !important;
+    }
+    
+    body.basic-terminal-mode .terminal-input-section {
+        padding: 10px 16px !important;
+    }
+    
+    body.basic-terminal-mode .input-line {
+        padding: 8px 12px !important;
+    }
+    
+    body.basic-terminal-mode .input-prompt {
+        font-size: 14px !important;
+    }
+    
+    body.basic-terminal-mode .input-field {
+        font-size: 16px !important;
     }
     
     /* Hide action button labels on mobile in basic mode */
@@ -1474,14 +1699,48 @@ body.light-mode.basic-terminal-mode #terminal-wrapper {
         white-space: pre-wrap !important;
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    body.basic-terminal-mode .terminal-content,
+    body.basic-terminal-mode #terminalContent {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        overflow-x: hidden !important;
     }
     
     body.basic-terminal-mode .terminal-line,
     body.basic-terminal-mode .output-line {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         word-wrap: break-word !important;
+        word-break: break-word !important;
         white-space: pre-wrap !important;
+        writing-mode: horizontal-tb !important;
+        direction: ltr !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Output log types for basic mode */
+    body.basic-terminal-mode .output,
+    body.basic-terminal-mode .output.info,
+    body.basic-terminal-mode .output.error,
+    body.basic-terminal-mode .output.success,
+    body.basic-terminal-mode .output.warning,
+    body.basic-terminal-mode .terminal-line.output,
+    body.basic-terminal-mode .terminal-line.info,
+    body.basic-terminal-mode .terminal-line.error,
+    body.basic-terminal-mode .terminal-line.success,
+    body.basic-terminal-mode .terminal-line.warning {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
     }
 }
 
@@ -1503,6 +1762,14 @@ body.light-mode.basic-terminal-mode #terminal-wrapper {
     body.basic-terminal-mode .terminal-output {
         font-size: 12px !important;
         padding: 8px !important;
+    }
+    
+    /* Hide view mode toggle on small mobile basic mode */
+    body.basic-terminal-mode #view-mode-toggle-btn,
+    body.basic-terminal-mode #view-toggle-btn,
+    body.basic-terminal-mode #basic-mode-toggle,
+    body.basic-terminal-mode .view-mode-toggle {
+        display: none !important;
     }
 }
 
