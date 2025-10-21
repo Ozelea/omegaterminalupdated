@@ -148,6 +148,16 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
                 terminal.style.transform = '';
                 terminal.style.opacity = '';
             }
+            
+            // Reset input field styling when deactivating
+            const inputField = document.querySelector('.input-field') || document.getElementById('commandInput');
+            if (inputField) {
+                // Remove inline styles to let CSS take over
+                inputField.style.removeProperty('color');
+                inputField.style.removeProperty('opacity');
+                inputField.style.removeProperty('visibility');
+                inputField.style.removeProperty('-webkit-text-fill-color');
+            }
         };
         
         // Removed intrusive welcome banner - keeping it clean!
@@ -158,33 +168,28 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
             this.log('══════════════════════════', 'info');
             this.log('', 'info');
             
-            this.log('🍎 PREMIUM THEMES:', 'success');
-            this.log('  modern ui                 Apple-style glass-morphism (PREMIUM)', 'output');
-            this.log('  modern                    Same as modern ui', 'output');
-            this.log('  apple                     Same as modern ui', 'output');
-            this.log('  modern-dark               Apple UI in dark mode', 'output');
-            this.log('  apple-dark                Same as modern-dark', 'output');
+            this.log('💎 PREMIUM THEMES:', 'success');
+            this.log('  theme executive        ⭐ Premium professional with gold accents', 'output');
+            this.log('  theme modern ui        Apple-style glass-morphism', 'output');
+            this.log('  theme modern           Same as modern ui', 'output');
+            this.log('  theme apple            Same as modern ui', 'output');
+            this.log('  theme modern-dark      Apple UI in dark mode', 'output');
+            this.log('  theme apple-dark       Same as modern-dark', 'output');
             this.log('', 'info');
             
-            this.log('🎮 EXISTING THEMES:', 'info');
-            this.log('  dark                      Classic dark theme', 'output');
-            this.log('  light                     Classic light theme', 'output');
-            this.log('  matrix                    Matrix green theme', 'output');
-            this.log('  retro                     Retro terminal theme', 'output');
-            this.log('', 'info');
-            
-            this.log('💎 CRYPTO THEMES:', 'info');
-            this.log('  bitcoin                   Bitcoin orange theme', 'output');
-            this.log('  ethereum                  Ethereum blue theme', 'output');
-            this.log('  solana                    Solana purple theme', 'output');
-            this.log('  pepe                      Pepe green meme theme', 'output');
-            this.log('  doge                      Dogecoin gold theme', 'output');
+            this.log('🎨 CLASSIC THEMES:', 'info');
+            this.log('  theme dark             Default dark terminal theme', 'output');
+            this.log('  theme light            Light mode with dark text', 'output');
+            this.log('  theme matrix           Green-on-black Matrix style', 'output');
+            this.log('  theme retro            Retro amber terminal', 'output');
+            this.log('  theme powershell       Windows PowerShell blue theme', 'output');
             this.log('', 'info');
             
             this.log('🎯 EXAMPLES:', 'info');
-            this.log('  theme modern ui           Activate premium Apple interface', 'info');
-            this.log('  theme modern-dark         Apple UI in dark mode', 'info');
-            this.log('  theme bitcoin             Bitcoin-themed interface', 'info');
+            this.log('  theme executive        Premium professional interface', 'info');
+            this.log('  theme modern ui        Activate Apple interface', 'info');
+            this.log('  theme modern-dark      Apple UI in dark mode', 'info');
+            this.log('  theme matrix           Matrix hacker mode', 'info');
         };
         
         // Add command aliases for better discovery

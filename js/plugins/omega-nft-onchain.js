@@ -521,20 +521,164 @@ console.log('🎨 Loading Omega NFT On-Chain Minter v3.0 (Pinata)...');
     function showCollection() {
         if (nftState.userNFTs.length === 0) {
             window.terminal.log('📭 No NFTs minted yet', 'info');
-            window.terminal.log('💡 Use "nft mint" to create your first NFT!', 'info');
+            window.terminal.log('💡 Use "omega mint" to create your first NFT!', 'info');
             return;
         }
         
-        window.terminal.log('🎨 Your NFT Collection:', 'info');
+        window.terminal.log('🎨 Your Omega Network NFT Collection:', 'success');
+        window.terminal.log(`📊 Total NFTs: ${nftState.userNFTs.length}`, 'info');
         window.terminal.log('', 'output');
         
-        nftState.userNFTs.forEach((nft, i) => {
-            window.terminal.log(`${i + 1}. ${nft.name} (Token #${nft.tokenId})`, 'output');
-            window.terminal.log(`   Contract: ${nft.contract}`, 'output');
-            window.terminal.log(`   Tx Hash: ${nft.txHash}`, 'output');
-            window.terminal.log(`   Minted: ${new Date(nft.mintedAt).toLocaleString()}`, 'output');
-            window.terminal.log('', 'output');
-        });
+        // Display collection in a futuristic grid
+        const collectionHtml = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin: 24px 0;">
+                ${nftState.userNFTs.map((nft, i) => `
+                    <div class="omega-nft-card" style="
+                        background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(15,15,26,0.95)); 
+                        border: 1px solid rgba(0,212,255,0.25); 
+                        border-radius: 16px; 
+                        padding: 20px; 
+                        backdrop-filter: blur(20px); 
+                        box-shadow: 0 8px 32px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08); 
+                        position: relative; 
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                    ">
+                        <!-- Animated background effect -->
+                        <div style="
+                            position: absolute; 
+                            top: 0; 
+                            left: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.02) 50%, transparent 70%); 
+                            animation: shimmer 4s infinite; 
+                            pointer-events: none;
+                        "></div>
+                        
+                        <div style="text-align: center; margin-bottom: 16px; position: relative; z-index: 1;">
+                            <h4 style="
+                                color: var(--cyber-blue); 
+                                margin: 0 0 12px 0; 
+                                font-size: 1.2em; 
+                                font-weight: 600;
+                                text-shadow: 0 0 8px rgba(0,212,255,0.4);
+                                letter-spacing: 0.5px;
+                                font-family: var(--font-tech);
+                            ">🏛️ ${nft.name}</h4>
+                            <div style="
+                                background: linear-gradient(135deg, rgba(10,10,15,0.8), rgba(26,26,40,0.9)); 
+                                border: 1px solid rgba(0,212,255,0.2); 
+                                border-radius: 12px; 
+                                padding: 16px; 
+                                display: inline-block; 
+                                box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+                                transition: all 0.3s ease;
+                            ">
+                                <div style="
+                                    width: 200px; 
+                                    height: 200px; 
+                                    background: linear-gradient(135deg, #0a0a0f, #1a1a28); 
+                                    border: 1px solid rgba(0,212,255,0.2); 
+                                    border-radius: 8px; 
+                                    display: flex;
+                                    align-items: center; 
+                                    justify-content: center; 
+                                    color: var(--cyber-blue); 
+                                    font-size: 3em; 
+                                    text-shadow: 0 0 20px rgba(0,212,255,0.6);
+                                ">🏛️</div>
+                            </div>
+                        </div>
+                        
+                        <div style="
+                            background: linear-gradient(135deg, rgba(10,10,15,0.6), rgba(26,26,40,0.7)); 
+                            border: 1px solid rgba(0,212,255,0.15); 
+                            border-radius: 12px; 
+                            padding: 16px; 
+                            margin: 16px 0; 
+                            position: relative;
+                            z-index: 1;
+                        ">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85em; color: #E0E0E0; font-family: var(--font-tech);">
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: var(--cyber-blue); font-weight: 600;">🆔</span><span style="color: #FFFFFF; font-weight: 500;">Token ID:</span></div>
+                                <div style="color: #B0B0B0;">#${nft.tokenId}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">📄</span><span style="color: #FFFFFF; font-weight: 500;">Contract:</span></div>
+                                <div style="color: #B0B0B0; word-break: break-all; font-size: 0.75em;">${nft.contract}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">🔗</span><span style="color: #FFFFFF; font-weight: 500;">Tx Hash:</span></div>
+                                <div style="color: #B0B0B0; word-break: break-all; font-size: 0.75em;">${nft.txHash}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">📅</span><span style="color: #FFFFFF; font-weight: 500;">Minted:</span></div>
+                                <div style="color: #B0B0B0;">${new Date(nft.mintedAt).toLocaleString()}</div>
+                            </div>
+                        </div>
+                        
+                        <div style="
+                            display: flex; 
+                            gap: 8px; 
+                            justify-content: center; 
+                            margin-top: 16px; 
+                            position: relative;
+                            z-index: 1;
+                            flex-wrap: wrap;
+                        ">
+                            <button onclick="window.terminal.executeCommand('omega view ${i + 1}')" style="
+                                background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.05)); 
+                                color: var(--cyber-blue); 
+                                border: 1px solid rgba(0,212,255,0.3); 
+                                padding: 8px 16px; 
+                                border-radius: 6px; 
+                                cursor: pointer; 
+                                font-weight: 500; 
+                                box-shadow: 0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                transition: all 0.3s ease; 
+                                font-family: var(--font-tech);
+                                font-size: 0.75em;
+                                letter-spacing: 0.3px;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,212,255,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,212,255,0.3)';">
+                                <span style="margin-right: 4px;">🔍</span>View Details
+                            </button>
+                            <button onclick="navigator.clipboard.writeText('${nft.contract}'); window.terminal && window.terminal.log('📋 Contract address copied to clipboard', 'success');" style="
+                                background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.05)); 
+                                color: var(--matrix-green); 
+                                border: 1px solid rgba(0,255,136,0.3); 
+                                padding: 8px 16px; 
+                                border-radius: 6px; 
+                                cursor: pointer; 
+                                font-weight: 500; 
+                                box-shadow: 0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                transition: all 0.3s ease; 
+                                font-family: var(--font-tech);
+                                font-size: 0.75em;
+                                letter-spacing: 0.3px;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,255,136,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,255,136,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,255,136,0.3)';">
+                                <span style="margin-right: 4px;">📋</span>Copy Contract
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <style>
+                @keyframes shimmer {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(100%); }
+                }
+                
+                .omega-nft-card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 40px rgba(0,212,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+                    border-color: rgba(0,212,255,0.35) !important;
+                }
+            </style>
+        `;
+        
+        window.terminal.logHtml(collectionHtml, 'output');
+        window.terminal.log('');
+        window.terminal.log('💡 Use the buttons above to view details or copy contract addresses', 'info');
     }
     
     function viewNFT(index) {

@@ -775,193 +775,285 @@ console.log('🔧 Loading Enhanced Profile System...');
                         </div>
                     </div>
                     
-                    <!-- Python Scripts Section -->
-                    <div style="
-                        margin-bottom: 32px;
-                        background: rgba(0, 0, 0, 0.3);
-                        border: 1px solid rgba(255, 215, 0, 0.3);
-                        border-radius: 12px;
-                        padding: 20px;
-                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-                    ">
-                        <div style="
-                            font-size: 1.1em;
-                            font-weight: 700;
-                            color: #ffd700;
-                            margin-bottom: 16px;
-                            text-transform: uppercase;
-                            letter-spacing: 1.5px;
-                            display: flex;
-                            align-items: center;
-                            gap: 10px;
-                            font-family: 'Courier New', monospace;
-                        ">
-                            <span style="font-size: 1.3em;">🐍</span>
-                            <span>PYTHON SCRIPTS</span>
-                        </div>
-                        
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 8px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
-                                <span style="color: #ffd700;">▶</span> UPLOAD SCRIPT (.py)
-                            </label>
-                            <input type="file" id="python-script-upload" accept=".py" style="
-                                width: 100%;
-                                padding: 12px 14px;
-                                border: 1px solid rgba(255, 215, 0, 0.4);
-                                border-radius: 8px;
-                                font-size: 0.9em;
-                                background: rgba(0, 0, 0, 0.5);
-                                color: #ffd700;
-                                transition: all 0.3s ease;
-                                box-sizing: border-box;
-                                font-family: 'Courier New', monospace;
-                                cursor: pointer;
-                            " onchange="uploadPythonScript(this)">
-                        </div>
-                        
-                        <div id="python-scripts-list" style="
-                            max-height: 200px;
-                            overflow-y: auto;
-                            background: rgba(0, 0, 0, 0.3);
-                            border-radius: 8px;
-                            border: 1px solid rgba(255, 215, 0, 0.2);
-                            margin-bottom: 12px;
-                        ">
-                            <!-- Python scripts will be populated here -->
-                        </div>
-                        
-                        <div style="display: flex; gap: 8px;">
-                            <button onclick="runPythonScriptFromProfile()" style="
-                                flex: 1;
-                                background: linear-gradient(135deg, var(--matrix-green, #00ff88), #00cc66);
-                                color: #000;
-                                border: 1px solid var(--matrix-green, #00ff88);
-                                padding: 12px;
-                                border-radius: var(--radius-md, 8px);
-                                font-size: 0.9em;
-                                font-weight: 700;
-                                cursor: pointer;
-                                font-family: var(--font-mono, 'Courier New', monospace);
-                                box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
-                                transition: all var(--transition-fast, 0.2s);
-                            " onmouseover="this.style.boxShadow='0 0 20px rgba(0, 255, 136, 0.5)'" onmouseout="this.style.boxShadow='0 0 12px rgba(0, 255, 136, 0.3)'">▶ RUN</button>
-                            
-                            <button onclick="deletePythonScriptFromProfile()" style="
-                                flex: 1;
-                                background: linear-gradient(135deg, var(--danger-red, #ff3366), #ff4477);
-                                color: white;
-                                border: 1px solid var(--danger-red, #ff3366);
-                                padding: 12px;
-                                border-radius: var(--radius-md, 8px);
-                                font-size: 0.9em;
-                                font-weight: 700;
-                                cursor: pointer;
-                                font-family: var(--font-mono, 'Courier New', monospace);
-                                box-shadow: 0 0 12px rgba(255, 51, 102, 0.3);
-                                transition: all var(--transition-fast, 0.2s);
-                            " onmouseover="this.style.boxShadow='0 0 20px rgba(255, 51, 102, 0.5)'" onmouseout="this.style.boxShadow='0 0 12px rgba(255, 51, 102, 0.3)'">🗑️ DELETE</button>
-                        </div>
-                    </div>
                     
-                    <!-- API Keys Section -->
-                    <div style="
+                    <!-- API Keys Management Section -->
+                    <div class="api-keys-container" style="
                         margin-bottom: 32px;
-                        background: rgba(0, 0, 0, 0.3);
-                        border: 1px solid rgba(255, 140, 0, 0.3);
-                        border-radius: 12px;
-                        padding: 20px;
-                        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                        background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(15,15,26,0.95)); 
+                        border: 1px solid rgba(0,212,255,0.25); 
+                        border-radius: 16px; 
+                        padding: 24px; 
+                        backdrop-filter: blur(20px); 
+                        box-shadow: 0 8px 32px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08); 
+                        position: relative; 
+                        overflow: hidden;
+                        transition: all 0.3s ease;
                     ">
+                        <!-- Animated background effect -->
                         <div style="
-                            font-size: 1.1em;
+                            position: absolute; 
+                            top: 0; 
+                            left: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.02) 50%, transparent 70%); 
+                            animation: shimmer 4s infinite; 
+                            pointer-events: none;
+                        "></div>
+                        
+                        <div style="
+                            font-size: 1.2em;
                             font-weight: 700;
-                            color: #ff8c00;
-                            margin-bottom: 16px;
+                            color: var(--cyber-blue);
+                            margin-bottom: 20px;
                             text-transform: uppercase;
                             letter-spacing: 1.5px;
                             display: flex;
                             align-items: center;
-                            gap: 10px;
-                            font-family: 'Courier New', monospace;
+                            gap: 12px;
+                            font-family: var(--font-tech);
+                            text-shadow: 0 0 8px rgba(0,212,255,0.4);
+                            position: relative;
+                            z-index: 1;
                         ">
-                            <span style="font-size: 1.3em;">🔑</span>
-                            <span>API KEYS</span>
+                            <span style="font-size: 1.4em;">🔑</span>
+                            <span>API KEYS MANAGEMENT</span>
                         </div>
                         
-                        <div style="margin-bottom: 12px;">
-                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
-                                <span style="color: #ff8c00;">▶</span> OPENSEA
-                            </label>
-                            <input type="password" id="opensea-key" placeholder="sk_..." style="
-                                width: 100%;
-                                padding: 12px 14px;
-                                border: 1px solid rgba(255, 140, 0, 0.4);
-                                border-radius: 8px;
-                                font-size: 0.9em;
-                                background: rgba(0, 0, 0, 0.5);
-                                color: #ff8c00;
-                                transition: all 0.3s ease;
-                                box-sizing: border-box;
-                                font-family: 'Courier New', monospace;
-                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('opensea', this.value)">
-                        </div>
-                        
-                        <div style="margin-bottom: 12px;">
-                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
-                                <span style="color: #ff8c00;">▶</span> DEXSCREENER
-                            </label>
-                            <input type="password" id="dexscreener-key" placeholder="ds_..." style="
-                                width: 100%;
-                                padding: 12px 14px;
-                                border: 1px solid rgba(255, 140, 0, 0.4);
-                                border-radius: 8px;
-                                font-size: 0.9em;
-                                background: rgba(0, 0, 0, 0.5);
-                                color: #ff8c00;
-                                transition: all 0.3s ease;
-                                box-sizing: border-box;
-                                font-family: 'Courier New', monospace;
-                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('dexscreener', this.value)">
-                        </div>
-                        
-                        <div style="margin-bottom: 12px;">
-                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
-                                <span style="color: #ff8c00;">▶</span> DEFI LLAMA
-                            </label>
-                            <input type="password" id="defillama-key" placeholder="ll_..." style="
-                                width: 100%;
-                                padding: 12px 14px;
-                                border: 1px solid rgba(255, 140, 0, 0.4);
-                                border-radius: 8px;
-                                font-size: 0.9em;
-                                background: rgba(0, 0, 0, 0.5);
-                                color: #ff8c00;
-                                transition: all 0.3s ease;
-                                box-sizing: border-box;
-                                font-family: 'Courier New', monospace;
-                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('defillama', this.value)">
-                        </div>
-                        
-                        <div style="margin-bottom: 16px;">
-                            <label style="display: block; color: rgba(255, 255, 255, 0.8); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: 'Courier New', monospace; letter-spacing: 0.5px;">
-                                <span style="color: #ff8c00;">▶</span> PGT TRACKER
-                            </label>
-                            <input type="password" id="pgt-key" placeholder="pgt_..." style="
-                                width: 100%;
-                                padding: 12px 14px;
-                                border: 1px solid rgba(255, 140, 0, 0.4);
-                                border-radius: 8px;
-                                font-size: 0.9em;
-                                background: rgba(0, 0, 0, 0.5);
-                                color: #ff8c00;
-                                transition: all 0.3s ease;
-                                box-sizing: border-box;
-                                font-family: 'Courier New', monospace;
-                                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-                            " onfocus="this.style.border='1px solid rgba(255, 140, 0, 0.8)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 140, 0, 0.4)'" onblur="this.style.border='1px solid rgba(255, 140, 0, 0.4)'; this.style.boxShadow='inset 0 2px 6px rgba(0, 0, 0, 0.4)'" onchange="updateAPIKey('pgt', this.value)">
+                        <div style="
+                            background: linear-gradient(135deg, rgba(10,10,15,0.6), rgba(26,26,40,0.7)); 
+                            border: 1px solid rgba(0,212,255,0.15); 
+                            border-radius: 12px; 
+                            padding: 20px; 
+                            margin-bottom: 20px; 
+                            position: relative;
+                            z-index: 1;
+                        ">
+                            <div style="
+                                display: grid; 
+                                grid-template-columns: 1fr 1fr; 
+                                gap: 16px; 
+                                margin-bottom: 16px;
+                            ">
+                                <!-- ChainGPT NFT Generator -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">🎨</span> ChainGPT NFT
+                                    </label>
+                                    <input type="password" id="chaingpt-nft-key" placeholder="Enter ChainGPT NFT API key..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('chaingpt-nft', this.value)">
+                                </div>
+                                
+                                <!-- ChainGPT Chat -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">🤖</span> ChainGPT Chat
+                                    </label>
+                                    <input type="password" id="chaingpt-chat-key" placeholder="Enter ChainGPT Chat API key..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('chaingpt-chat', this.value)">
+                                </div>
+                                
+                                <!-- OpenSea -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">🌊</span> OpenSea
+                                    </label>
+                                    <input type="password" id="opensea-key" placeholder="sk_..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('opensea', this.value)">
+                                </div>
+                                
+                                <!-- DexScreener -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">📊</span> DexScreener
+                                    </label>
+                                    <input type="password" id="dexscreener-key" placeholder="ds_..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('dexscreener', this.value)">
+                                </div>
+                                
+                                <!-- DeFi Llama -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">🦙</span> DeFi Llama
+                                    </label>
+                                    <input type="password" id="defillama-key" placeholder="ll_..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('defillama', this.value)">
+                                </div>
+                                
+                                <!-- Alpha Vantage -->
+                                <div style="margin-bottom: 12px;">
+                                    <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
+                                        <span style="color: var(--cyber-blue);">📈</span> Alpha Vantage
+                                    </label>
+                                    <input type="password" id="alpha-vantage-key" placeholder="AV_..." style="
+                                        width: 100%;
+                                        padding: 12px 14px;
+                                        border: 1px solid rgba(0,212,255,0.3);
+                                        border-radius: 8px;
+                                        font-size: 0.9em;
+                                        background: rgba(0,0,0,0.4);
+                                        color: var(--cyber-blue);
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        font-family: var(--font-tech);
+                                        box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+                                    " onfocus="this.style.border='1px solid rgba(0,212,255,0.6)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3), 0 0 12px rgba(0,212,255,0.3)'" onblur="this.style.border='1px solid rgba(0,212,255,0.3)'; this.style.boxShadow='inset 0 2px 6px rgba(0,0,0,0.3)'" onchange="updateAPIKey('alpha-vantage', this.value)">
+                                </div>
+                            </div>
+                            
+                            <!-- API Enhancement Disclaimer -->
+                            <div style="
+                                background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.04)); 
+                                border: 1px solid rgba(0,255,136,0.2); 
+                                border-radius: 10px; 
+                                padding: 16px; 
+                                margin: 16px 0; 
+                                position: relative;
+                                z-index: 1;
+                            ">
+                                <div style="
+                                    display: flex; 
+                                    align-items: flex-start; 
+                                    gap: 12px;
+                                ">
+                                    <div style="
+                                        font-size: 1.2em; 
+                                        color: var(--matrix-green); 
+                                        margin-top: 2px;
+                                        text-shadow: 0 0 8px rgba(0,255,136,0.4);
+                                    ">💡</div>
+                                    <div>
+                                        <div style="
+                                            color: var(--matrix-green); 
+                                            font-weight: 600; 
+                                            font-size: 0.9em; 
+                                            margin-bottom: 6px;
+                                            font-family: var(--font-tech);
+                                            letter-spacing: 0.5px;
+                                        ">ENHANCE YOUR TERMINAL</div>
+                                        <div style="
+                                            color: rgba(255,255,255,0.8); 
+                                            font-size: 0.8em; 
+                                            line-height: 1.4;
+                                            font-family: var(--font-tech);
+                                        ">
+                                            Add your personal API keys to unlock premium features and enhanced functionality. 
+                                            Your keys are stored locally and securely encrypted.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div style="
+                                display: flex; 
+                                gap: 12px; 
+                                margin-top: 16px;
+                                flex-wrap: wrap;
+                            ">
+                                <button onclick="testAllAPIKeys()" style="
+                                    background: linear-gradient(135deg, var(--matrix-green), #00cc66); 
+                                    color: #000; 
+                                    border: 1px solid var(--matrix-green); 
+                                    padding: 10px 16px; 
+                                    border-radius: 8px; 
+                                    font-size: 0.85em; 
+                                    font-weight: 600; 
+                                    cursor: pointer; 
+                                    font-family: var(--font-tech);
+                                    box-shadow: 0 4px 16px rgba(0,255,136,0.25);
+                                    transition: all 0.3s ease;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.5px;
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,136,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,255,136,0.25)'">🧪 TEST ALL</button>
+                                
+                                <button onclick="clearAllAPIKeys()" style="
+                                    background: linear-gradient(135deg, var(--danger-red), #ff4477); 
+                                    color: white; 
+                                    border: 1px solid var(--danger-red); 
+                                    padding: 10px 16px; 
+                                    border-radius: 8px; 
+                                    font-size: 0.85em; 
+                                    font-weight: 600; 
+                                    cursor: pointer; 
+                                    font-family: var(--font-tech);
+                                    box-shadow: 0 4px 16px rgba(255,51,102,0.25);
+                                    transition: all 0.3s ease;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.5px;
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255,51,102,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(255,51,102,0.25)'">🗑️ CLEAR ALL</button>
+                                
+                                <button onclick="exportAPIKeys()" style="
+                                    background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-blue-dim)); 
+                                    color: #000; 
+                                    border: 1px solid var(--cyber-blue); 
+                                    padding: 10px 16px; 
+                                    border-radius: 8px; 
+                                    font-size: 0.85em; 
+                                    font-weight: 600; 
+                                    cursor: pointer; 
+                                    font-family: var(--font-tech);
+                                    box-shadow: 0 4px 16px rgba(0,212,255,0.25);
+                                    transition: all 0.3s ease;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.5px;
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,212,255,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,212,255,0.25)'">📤 EXPORT</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -1064,9 +1156,6 @@ console.log('🔧 Loading Enhanced Profile System...');
         
         // Update address book
         updateAddressBookUI();
-        
-        // Update Python scripts
-        updatePythonScriptsUI();
         
         // Update API keys
         updateAPIKeysUI();
@@ -1212,50 +1301,27 @@ console.log('🔧 Loading Enhanced Profile System...');
         `).join('');
     }
     
-    function updatePythonScriptsUI() {
-        const pythonScriptsList = document.getElementById('python-scripts-list');
-        if (!pythonScriptsList) return;
-        
-        if (profileData.pythonScripts.length === 0) {
-            pythonScriptsList.innerHTML = `
-                <div style="text-align: center; color: #8E8E93; padding: 20px; font-style: italic;">
-                    No Python scripts uploaded
-                </div>
-            `;
-            return;
-        }
-        
-        pythonScriptsList.innerHTML = profileData.pythonScripts.map((script, index) => `
-            <div style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                margin-bottom: 8px;
-                background: rgba(28, 28, 30, 0.5);
-                cursor: pointer;
-            " onclick="selectPythonScript(${index})" id="python-script-${index}">
-                <div>
-                    <div style="font-weight: 600; color: #FFFFFF;">${script.name}</div>
-                    <div style="font-size: 0.8em; color: #8E8E93;">${script.size} bytes</div>
-                </div>
-                <div style="font-size: 0.8em; color: #34C759;">🐍</div>
-            </div>
-        `).join('');
-    }
     
     function updateAPIKeysUI() {
+        // ChainGPT APIs
+        const chaingptNftKey = document.getElementById('chaingpt-nft-key');
+        const chaingptChatKey = document.getElementById('chaingpt-chat-key');
+        
+        // Market Data APIs
         const openseaKey = document.getElementById('opensea-key');
         const dexscreenerKey = document.getElementById('dexscreener-key');
         const defillamaKey = document.getElementById('defillama-key');
-        const pgtKey = document.getElementById('pgt-key');
         
-        if (openseaKey) openseaKey.value = profileData.apiKeys.opensea;
-        if (dexscreenerKey) dexscreenerKey.value = profileData.apiKeys.dexscreener;
-        if (defillamaKey) defillamaKey.value = profileData.apiKeys.defillama;
-        if (pgtKey) pgtKey.value = profileData.apiKeys.pgt;
+        // Stock APIs
+        const alphaVantageKey = document.getElementById('alpha-vantage-key');
+        
+        // Update values
+        if (chaingptNftKey) chaingptNftKey.value = profileData.apiKeys['chaingpt-nft'] || '';
+        if (chaingptChatKey) chaingptChatKey.value = profileData.apiKeys['chaingpt-chat'] || '';
+        if (openseaKey) openseaKey.value = profileData.apiKeys.opensea || '';
+        if (dexscreenerKey) dexscreenerKey.value = profileData.apiKeys.dexscreener || '';
+        if (defillamaKey) defillamaKey.value = profileData.apiKeys.defillama || '';
+        if (alphaVantageKey) alphaVantageKey.value = profileData.apiKeys['alpha-vantage'] || '';
     }
     
     function updateFullscreenUI() {
@@ -1320,6 +1386,73 @@ console.log('🔧 Loading Enhanced Profile System...');
         if (window.terminal && window.terminal.apiKeys) {
             window.terminal.apiKeys[service] = key;
         }
+        
+        // Update localStorage for specific services
+        if (service === 'chaingpt-nft') {
+            localStorage.setItem('chaingpt-nft-api-key', key);
+        } else if (service === 'chaingpt-chat') {
+            localStorage.setItem('chaingpt-chat-api-key', key);
+        }
+    };
+    
+    // New API key management functions
+    window.testAllAPIKeys = function() {
+        window.terminal.log('🧪 Testing all API keys...', 'info');
+        
+        const apiServices = [
+            { key: 'chaingpt-nft', name: 'ChainGPT NFT', test: () => window.terminal.log('✅ ChainGPT NFT API key configured', 'success') },
+            { key: 'chaingpt-chat', name: 'ChainGPT Chat', test: () => window.terminal.log('✅ ChainGPT Chat API key configured', 'success') },
+            { key: 'opensea', name: 'OpenSea', test: () => window.terminal.log('✅ OpenSea API key configured', 'success') },
+            { key: 'dexscreener', name: 'DexScreener', test: () => window.terminal.log('✅ DexScreener API key configured', 'success') },
+            { key: 'defillama', name: 'DeFi Llama', test: () => window.terminal.log('✅ DeFi Llama API key configured', 'success') },
+            { key: 'alpha-vantage', name: 'Alpha Vantage', test: () => window.terminal.log('✅ Alpha Vantage API key configured', 'success') }
+        ];
+        
+        apiServices.forEach(service => {
+            const key = profileData.apiKeys[service.key];
+            if (key && key.trim()) {
+                service.test();
+            } else {
+                window.terminal.log(`❌ ${service.name} API key not configured`, 'error');
+            }
+        });
+        
+        window.terminal.log('', 'output');
+        window.terminal.log('💡 Configure missing API keys in the profile to enable all features', 'info');
+    };
+    
+    window.clearAllAPIKeys = function() {
+        if (confirm('⚠️ Are you sure you want to clear all API keys? This action cannot be undone.')) {
+            // Clear all API keys
+            profileData.apiKeys = {};
+            saveProfileData();
+            
+            // Clear localStorage
+            localStorage.removeItem('chaingpt-nft-api-key');
+            localStorage.removeItem('chaingpt-chat-api-key');
+            
+            // Update UI
+            updateAPIKeysUI();
+            
+            window.terminal.log('🗑️ All API keys cleared', 'info');
+        }
+    };
+    
+    window.exportAPIKeys = function() {
+        const apiKeysData = {
+            timestamp: new Date().toISOString(),
+            apiKeys: profileData.apiKeys
+        };
+        
+        const dataStr = JSON.stringify(apiKeysData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `omega-terminal-api-keys-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        
+        window.terminal.log('📤 API keys exported successfully', 'success');
     };
     
     

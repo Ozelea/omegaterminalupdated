@@ -1,0 +1,720 @@
+/* ============================================
+   OMEGA TERMINAL - EXECUTIVE THEME v1.0
+   Premium Professional Interface
+   Sophisticated Dark • Elegant Design
+   ============================================ */
+
+:root.theme-executive,
+body.theme-executive {
+    /* Executive Color Palette - Premium Professional */
+    --exec-midnight: #0a0e27;
+    --exec-navy: #141b3d;
+    --exec-slate: #1e2649;
+    --exec-charcoal: #2a3159;
+    --exec-steel: #3a4270;
+    
+    /* Premium Gold Accents */
+    --exec-gold: #d4af37;
+    --exec-gold-dim: #b8942d;
+    --exec-gold-glow: rgba(212, 175, 55, 0.25);
+    --exec-gold-bright: #f4cf57;
+    
+    /* Executive Blue Accents */
+    --exec-blue: #4a90e2;
+    --exec-blue-dim: #3a7bc8;
+    --exec-blue-glow: rgba(74, 144, 226, 0.25);
+    --exec-blue-bright: #5fa8ff;
+    
+    /* Sophisticated Accents */
+    --exec-platinum: #e5e5e5;
+    --exec-silver: #c0c0c0;
+    --exec-bronze: #cd7f32;
+    --exec-emerald: #50c878;
+    --exec-ruby: #e74c3c;
+    --exec-amber: #f39c12;
+    
+    /* Premium Glass Effects */
+    --exec-glass-bg: rgba(30, 38, 73, 0.85);
+    --exec-glass-border: rgba(212, 175, 55, 0.2);
+    --exec-glass-border-alt: rgba(74, 144, 226, 0.2);
+    --exec-glass-blur: blur(24px);
+    --exec-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    
+    /* Premium Typography */
+    --exec-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    --exec-font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    --exec-font-heading: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* Spacing - Professional Scale */
+    --exec-space-xs: 6px;
+    --exec-space-sm: 12px;
+    --exec-space-md: 20px;
+    --exec-space-lg: 32px;
+    --exec-space-xl: 48px;
+    
+    /* Border Radius - Refined */
+    --exec-radius-sm: 6px;
+    --exec-radius-md: 10px;
+    --exec-radius-lg: 14px;
+    --exec-radius-xl: 20px;
+    
+    /* Transitions - Smooth & Professional */
+    --exec-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --exec-transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --exec-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   BASE STYLES - EXECUTIVE THEME
+   ============================================ */
+
+body.theme-executive {
+    background: linear-gradient(135deg, var(--exec-midnight) 0%, var(--exec-navy) 50%, var(--exec-slate) 100%) !important;
+    color: var(--exec-platinum) !important;
+    font-family: var(--exec-font-primary) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Premium Background Pattern */
+body.theme-executive::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Subtle Grid Overlay */
+body.theme-executive::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+/* ============================================
+   TERMINAL CONTAINER - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .terminal {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    -webkit-backdrop-filter: var(--exec-glass-blur) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-lg) !important;
+    box-shadow: 
+        var(--exec-glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 80px rgba(212, 175, 55, 0.08) !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   TERMINAL HEADER - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .terminal-header {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.08) 0%, 
+        rgba(74, 144, 226, 0.05) 100%) !important;
+    border-bottom: 1px solid var(--exec-glass-border) !important;
+    padding: var(--exec-space-md) !important;
+    border-radius: var(--exec-radius-lg) var(--exec-radius-lg) 0 0 !important;
+}
+
+body.theme-executive .terminal-title {
+    color: var(--exec-gold-bright) !important;
+    font-family: var(--exec-font-heading) !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-shadow: 
+        0 0 20px var(--exec-gold-glow),
+        0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    background: linear-gradient(135deg, var(--exec-gold-bright), var(--exec-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-executive .terminal-status {
+    color: var(--exec-silver) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+/* ============================================
+   TERMINAL CONTENT - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .terminal-content {
+    font-family: var(--exec-font-mono) !important;
+    color: var(--exec-platinum) !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--exec-gold) var(--exec-navy);
+}
+
+/* Custom Scrollbar for Executive Theme */
+body.theme-executive .terminal-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+body.theme-executive .terminal-content::-webkit-scrollbar-track {
+    background: var(--exec-navy);
+    border-radius: var(--exec-radius-sm);
+}
+
+body.theme-executive .terminal-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--exec-gold), var(--exec-gold-dim));
+    border-radius: var(--exec-radius-sm);
+    border: 2px solid var(--exec-navy);
+}
+
+body.theme-executive .terminal-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--exec-gold-bright), var(--exec-gold));
+}
+
+/* ============================================
+   TERMINAL OUTPUT STYLING - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .terminal-line {
+    line-height: 1.6 !important;
+    padding: 2px 0 !important;
+}
+
+body.theme-executive .prompt {
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px var(--exec-gold-glow);
+}
+
+body.theme-executive .command {
+    color: var(--exec-platinum) !important;
+    font-weight: 500 !important;
+}
+
+body.theme-executive .output {
+    color: var(--exec-silver) !important;
+    font-size: 14px !important;
+}
+
+body.theme-executive .error {
+    color: var(--exec-ruby) !important;
+    font-weight: 600 !important;
+    text-shadow: 0 0 8px rgba(231, 76, 60, 0.3);
+}
+
+body.theme-executive .success {
+    color: var(--exec-emerald) !important;
+    font-weight: 600 !important;
+    text-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
+}
+
+body.theme-executive .warning {
+    color: var(--exec-amber) !important;
+    font-weight: 600 !important;
+    text-shadow: 0 0 8px rgba(243, 156, 18, 0.3);
+}
+
+body.theme-executive .info {
+    color: var(--exec-blue-bright) !important;
+    font-weight: 500 !important;
+    text-shadow: 0 0 8px var(--exec-blue-glow);
+}
+
+/* ============================================
+   TERMINAL INPUT SECTION - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .terminal-input-section {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.05) 0%, 
+        rgba(74, 144, 226, 0.03) 100%) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-md) !important;
+    padding: var(--exec-space-md) !important;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 4px 16px rgba(0, 0, 0, 0.2) !important;
+    transition: all var(--exec-transition-normal);
+}
+
+body.theme-executive .terminal-input-section:focus-within {
+    border-color: var(--exec-gold) !important;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        0 0 0 3px var(--exec-gold-glow) !important;
+}
+
+body.theme-executive .input-prompt {
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+    font-family: var(--exec-font-mono) !important;
+    text-shadow: 0 0 10px var(--exec-gold-glow);
+}
+
+body.theme-executive .input-field {
+    color: var(--exec-platinum) !important;
+    font-family: var(--exec-font-mono) !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    caret-color: var(--exec-gold-bright);
+}
+
+body.theme-executive .input-field::placeholder {
+    color: var(--exec-steel) !important;
+    font-style: italic;
+}
+
+body.theme-executive .input-field::selection {
+    background: var(--exec-gold-glow);
+    color: var(--exec-platinum);
+}
+
+/* ============================================
+   BUTTONS & CONTROLS - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .theme-toggle,
+body.theme-executive button {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.15) 0%, 
+        rgba(74, 144, 226, 0.1) 100%) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-sm) !important;
+    color: var(--exec-platinum) !important;
+    font-family: var(--exec-font-primary) !important;
+    font-weight: 600 !important;
+    transition: all var(--exec-transition-fast);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.theme-executive .theme-toggle:hover,
+body.theme-executive button:hover {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.25) 0%, 
+        rgba(74, 144, 226, 0.2) 100%) !important;
+    border-color: var(--exec-gold) !important;
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 4px 16px rgba(212, 175, 55, 0.3),
+        0 0 20px var(--exec-gold-glow);
+}
+
+body.theme-executive .theme-toggle:active,
+body.theme-executive button:active {
+    transform: translateY(0);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   MODALS & POPUPS - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .modal-overlay {
+    background: rgba(10, 14, 39, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+body.theme-executive .modal-content {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-xl) !important;
+    box-shadow: 
+        var(--exec-glass-shadow),
+        0 0 60px rgba(212, 175, 55, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+body.theme-executive .modal-title {
+    color: var(--exec-gold-bright) !important;
+    font-family: var(--exec-font-heading) !important;
+    text-shadow: 0 0 20px var(--exec-gold-glow) !important;
+}
+
+body.theme-executive .modal-button {
+    background: linear-gradient(135deg, var(--exec-gold), var(--exec-gold-dim)) !important;
+    border: none !important;
+    box-shadow: 
+        0 4px 16px var(--exec-gold-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+body.theme-executive .modal-button:hover {
+    background: linear-gradient(135deg, var(--exec-gold-bright), var(--exec-gold)) !important;
+    box-shadow: 
+        0 6px 24px var(--exec-gold-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-3px);
+}
+
+/* ============================================
+   STATS & DATA DISPLAYS - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .mining-status,
+body.theme-executive .stat-box {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid var(--exec-glass-border-alt) !important;
+    border-radius: var(--exec-radius-md) !important;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-executive .stat-label {
+    color: var(--exec-silver) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px !important;
+}
+
+body.theme-executive .stat-value {
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+    text-shadow: 0 0 10px var(--exec-gold-glow);
+}
+
+/* ============================================
+   PROGRESS BARS - EXECUTIVE
+   ============================================ */
+
+body.theme-executive .progress-bar {
+    background: var(--exec-navy) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-md) !important;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-executive .progress-fill {
+    background: linear-gradient(90deg, 
+        var(--exec-gold) 0%, 
+        var(--exec-gold-bright) 50%, 
+        var(--exec-gold) 100%) !important;
+    box-shadow: 
+        0 0 20px var(--exec-gold-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    background-size: 200% 100%;
+    animation: progressShine 2s linear infinite;
+}
+
+@keyframes progressShine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   FUTURISTIC DASHBOARD - EXECUTIVE THEME
+   ============================================ */
+
+body.theme-executive .omega-dashboard {
+    background: transparent !important;
+}
+
+/* Executive Header */
+body.theme-executive .omega-header {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border-bottom: 1px solid var(--exec-glass-border) !important;
+    box-shadow: 
+        0 4px 24px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+body.theme-executive .header-brand .brand-text {
+    background: linear-gradient(135deg, var(--exec-gold-bright), var(--exec-gold)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
+    font-weight: 800 !important;
+}
+
+body.theme-executive .version-badge {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.2) 0%, 
+        rgba(74, 144, 226, 0.15) 100%) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+}
+
+body.theme-executive .status-dot {
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* Executive Sidebar */
+body.theme-executive .omega-sidebar {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border-right: 1px solid var(--exec-glass-border) !important;
+    box-shadow: 
+        4px 0 24px rgba(0, 0, 0, 0.3),
+        inset -1px 0 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+body.theme-executive .sidebar-title {
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+    font-family: var(--exec-font-heading) !important;
+    letter-spacing: 1px !important;
+    text-shadow: 0 0 10px var(--exec-gold-glow);
+    border-bottom: 1px solid var(--exec-glass-border) !important;
+}
+
+body.theme-executive .sidebar-button {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.08) 0%, 
+        rgba(74, 144, 226, 0.05) 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.15) !important;
+    color: var(--exec-platinum) !important;
+    transition: all var(--exec-transition-fast);
+    font-weight: 600 !important;
+}
+
+body.theme-executive .sidebar-button:hover {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.2) 0%, 
+        rgba(74, 144, 226, 0.15) 100%) !important;
+    border-color: var(--exec-gold) !important;
+    transform: translateX(4px);
+    box-shadow: 
+        -4px 0 16px var(--exec-gold-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.theme-executive .sidebar-icon {
+    filter: drop-shadow(0 0 4px var(--exec-gold-glow));
+}
+
+body.theme-executive .sub-action-button {
+    background: rgba(212, 175, 55, 0.05) !important;
+    border-left: 2px solid var(--exec-gold) !important;
+    color: var(--exec-silver) !important;
+    transition: all var(--exec-transition-fast);
+}
+
+body.theme-executive .sub-action-button:hover {
+    background: rgba(212, 175, 55, 0.15) !important;
+    color: var(--exec-gold-bright) !important;
+    border-left-color: var(--exec-gold-bright) !important;
+    transform: translateX(6px);
+}
+
+/* Executive Main Panel */
+body.theme-executive .omega-main {
+    background: linear-gradient(135deg, 
+        rgba(10, 14, 39, 0.5) 0%, 
+        rgba(20, 27, 61, 0.5) 100%) !important;
+}
+
+body.theme-executive .main-terminal-container {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-lg) !important;
+    box-shadow: 
+        var(--exec-glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Executive Stats Panel */
+body.theme-executive .omega-stats-panel {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border-left: 1px solid var(--exec-glass-border) !important;
+    box-shadow: 
+        -4px 0 24px rgba(0, 0, 0, 0.3),
+        inset 1px 0 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+body.theme-executive .panel-title {
+    color: var(--exec-gold-bright) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px var(--exec-gold-glow);
+    border-bottom: 1px solid var(--exec-glass-border) !important;
+}
+
+/* ============================================
+   ANIMATIONS - EXECUTIVE
+   ============================================ */
+
+@keyframes execGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--exec-gold-glow);
+    }
+    50% {
+        box-shadow: 0 0 30px var(--exec-gold-glow), 0 0 40px var(--exec-blue-glow);
+    }
+}
+
+@keyframes execPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+/* Pulse animation for important elements */
+body.theme-executive .mining-status.active {
+    animation: execPulse 3s ease-in-out infinite;
+}
+
+/* ============================================
+   SPECIAL COMPONENTS - EXECUTIVE
+   ============================================ */
+
+/* NFT & Chat Displays */
+body.theme-executive .nft-display-container,
+body.theme-executive .chaingpt-chat-container {
+    background: var(--exec-glass-bg) !important;
+    backdrop-filter: var(--exec-glass-blur) !important;
+    border: 1px solid var(--exec-glass-border) !important;
+    border-radius: var(--exec-radius-lg) !important;
+    box-shadow: 
+        var(--exec-glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    transition: all var(--exec-transition-normal);
+}
+
+body.theme-executive .nft-display-container:hover,
+body.theme-executive .chaingpt-chat-container:hover {
+    border-color: var(--exec-gold) !important;
+    box-shadow: 
+        var(--exec-glass-shadow),
+        0 0 40px var(--exec-gold-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-4px);
+}
+
+/* Copyable Elements */
+body.theme-executive .copyable {
+    color: var(--exec-gold-bright) !important;
+    text-decoration: underline;
+    text-decoration-color: var(--exec-gold);
+    transition: all var(--exec-transition-fast);
+}
+
+body.theme-executive .copyable:hover {
+    color: var(--exec-gold-bright) !important;
+    text-shadow: 0 0 15px var(--exec-gold-glow);
+    text-decoration-color: var(--exec-gold-bright);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE - EXECUTIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    body.theme-executive .terminal {
+        border-radius: var(--exec-radius-md) !important;
+    }
+    
+    body.theme-executive .terminal-header {
+        padding: var(--exec-space-sm) !important;
+    }
+    
+    body.theme-executive .terminal-title {
+        font-size: 20px !important;
+    }
+}
+
+/* ============================================
+   LOADING & TRANSITION EFFECTS - EXECUTIVE
+   ============================================ */
+
+@keyframes fadeInExec {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.theme-executive .terminal-line {
+    animation: fadeInExec 0.3s ease-out;
+}
+
+/* ============================================
+   ACCESSIBILITY - EXECUTIVE
+   ============================================ */
+
+body.theme-executive *:focus-visible {
+    outline: 2px solid var(--exec-gold) !important;
+    outline-offset: 2px;
+    border-radius: var(--exec-radius-sm);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    body.theme-executive {
+        --exec-gold-bright: #ffdf80;
+        --exec-platinum: #ffffff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    body.theme-executive *,
+    body.theme-executive *::before,
+    body.theme-executive *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES - EXECUTIVE
+   ============================================ */
+
+@media print {
+    body.theme-executive {
+        background: white !important;
+        color: black !important;
+    }
+    
+    body.theme-executive .terminal {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+    }
+}
+

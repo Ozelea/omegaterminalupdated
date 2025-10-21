@@ -333,11 +333,12 @@ window.OmegaConfig = {
         'alpha quote', 'alpha daily', 'alpha overview', 'alpha macro', 'solana connect', 'solana generate', 'solana status', 'solana test', 'solana search', 'solana swap',
         'near generate', 'near connect', 'near swap', 'near tokens', 'eclipse tokens', 'eclipse price', 'eclipse swap', 'eclipse connect', 'eclipse generate', 'eclipse balance',
         'airdrop', 'hyperliquid', 'polymarket', 'magiceden', 'import', 'create', 'nft', 'ascii', 'rome', 'rome help', 'rome token create', 'profile', 'profile open', 'profile close', 'game', 'game list', 'game help', 'play', 'play snake', 'play pacman', 'play clicker', 'play cookies',
-        'spotify', 'spotify open', 'spotify connect', 'spotify disconnect', 'spotify play', 'spotify pause', 'spotify next', 'spotify prev', 'spotify search', 'spotify close', 'spotify help', 'music'
+        'spotify', 'spotify open', 'spotify connect', 'spotify disconnect', 'spotify play', 'spotify pause', 'spotify next', 'spotify prev', 'spotify search', 'spotify close', 'spotify help', 'music',
+        'youtube', 'youtube open', 'youtube close', 'youtube search', 'youtube play', 'youtube pause', 'youtube next', 'youtube prev', 'youtube mute', 'youtube unmute', 'youtube help', 'yt', 'video'
     ],
     
     // Theme Options
-    THEMES: ['dark', 'light', 'matrix', 'retro', 'powershell'],
+    THEMES: ['dark', 'light', 'matrix', 'retro', 'powershell', 'executive'],
     
     // Cache Busting URLs
     CACHE_BUSTER_PARAMS: ['v=', 'v=1752771858262', 'v=20241219']

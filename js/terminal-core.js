@@ -307,7 +307,14 @@ class OmegaMinerTerminal {
         const themeToggle = document.querySelector('.theme-toggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                OmegaThemes.toggleTheme();
+                if (window.OmegaThemes && window.OmegaThemes.toggleTheme) {
+                    const newTheme = OmegaThemes.toggleTheme();
+                    const themeDescriptions = OmegaThemes.getThemeDescriptions();
+                    const description = themeDescriptions[newTheme] || newTheme;
+                    
+                    this.log(`🎨 Theme cycled to: ${newTheme}`, 'success');
+                    this.log(`   ${description}`, 'info');
+                }
             });
             themeToggle.textContent = '';
         }
@@ -471,8 +478,32 @@ class OmegaMinerTerminal {
                     await OmegaCommands.Wallet.send(this, command);
                     break;
                 case 'import':
-                    this.log('💡 To import a wallet, use "import" directly when prompted at startup', 'info');
-                    this.log('🔄 Or refresh the page to see wallet options again', 'info');
+                    if (args.length > 1) {
+                        await OmegaCommands.Wallet.importWallet(this, args[1]);
+                    } else {
+                        this.log('❌ Usage: import <private-key>', 'error');
+                        this.log('💡 Example: import 0x1234567890abcdef...', 'info');
+                    }
+                    break;
+                case 'export':
+                    OmegaCommands.Wallet.exportWallet(this);
+                    break;
+                case 'test-wallet':
+                    OmegaCommands.Wallet.testWallet(this);
+                    break;
+                case 'fund':
+                    if (OmegaWallet.isConnected()) {
+                        await OmegaCommands.Wallet.fundOmegaWallet(OmegaWallet.getCurrentAddress(), this);
+                    } else {
+                        this.log('❌ No wallet connected. Use "connect" first.', 'error');
+                    }
+                    break;
+                case 'fund-direct':
+                    if (OmegaWallet.isConnected()) {
+                        await OmegaCommands.Wallet.fundWalletDirect(OmegaWallet.getCurrentAddress(), this);
+                    } else {
+                        this.log('❌ No wallet connected. Use "connect" first.', 'error');
+                    }
                     break;
                 
                 // Mining commands
@@ -516,6 +547,12 @@ class OmegaMinerTerminal {
                     await OmegaCommands.Entertainment.spotify(this, args);
                     break;
                 
+                case 'youtube':
+                case 'yt':
+                case 'video':
+                    await OmegaCommands.YouTube.youtube(this, args);
+                    break;
+                
                 // Network/Stress Testing commands
                 case 'stress':
                     await OmegaCommands.Network.stress(this);
@@ -553,6 +590,29 @@ class OmegaMinerTerminal {
                     break;
                 case 'alphakey':
                     OmegaCommands.API.alphakey(this, args);
+                    break;
+                case 'defillama':
+                    await OmegaCommands.API.defillama(this, args);
+                    break;
+                case 'llama':
+                    // Alias for defillama
+                    await OmegaCommands.API.defillama(this, args);
+                    break;
+                case 'chart':
+                    await OmegaCommands.API.chart(this, args);
+                    break;
+                case 'pgt':
+                    await OmegaCommands.API.pgt(this, args);
+                    break;
+                case 'news':
+                    // Use new news commands module (handles panel + terminal)
+                    if (window.OmegaCommands && window.OmegaCommands.News) {
+                        await window.OmegaCommands.News.news(this, args.slice(1));
+                    } else if (window.CryptoNewsCommands && window.CryptoNewsCommands.news) {
+                        await window.CryptoNewsCommands.news(this, args);
+                    } else {
+                        this.log('❌ Crypto News not loaded. Please refresh.', 'error');
+                    }
                     break;
                 
                 // Remaining commands (placeholder implementations)
@@ -681,7 +741,7 @@ class OmegaMinerTerminal {
     }
     
     logCommand(command) {
-        this.logHtml(`<span class="prompt">root@omega-Terminal:~$</span> <span class="command">${OmegaUtils.escapeHtml(command)}</span>`, 'output');
+        this.logHtml(`<span class="prompt">Ω Terminal:~$</span> <span class="command">${OmegaUtils.escapeHtml(command)}</span>`, 'output');
     }
     
     clearTerminal() {

@@ -10,11 +10,13 @@ window.OmegaCommands.API = {
     // DexScreener short command (fixed to use proper relayer endpoints)
     ds: async function(terminal, args) {
         if (!args || args.length < 2) {
-            terminal.log('Usage: ds <search|trending> [query]', 'info');
+            terminal.log('Usage: ds <search|trending|analytics|portfolio> [query]', 'info');
             terminal.log('Examples:', 'info');
             terminal.log('  ds search WETH', 'info');
             terminal.log('  ds search bitcoin', 'info');
             terminal.log('  ds trending', 'info');
+            terminal.log('  ds analytics ETH', 'info');
+            terminal.log('  ds portfolio', 'info');
             return;
         }
 
@@ -75,9 +77,22 @@ window.OmegaCommands.API = {
             } catch (error) {
                 terminal.log(`❌ DexScreener trending failed: ${error.message}`, 'error');
             }
+        } else if (subCommand === 'analytics' && args.length >= 3) {
+            const token = args[2].toUpperCase();
+            terminal.log(`📊 DEXSCREENER ANALYTICS: ${token}`, 'info');
+            terminal.log(`🔗 Fetching analytics data for ${token}...`, 'info');
+            terminal.log('🚧 Analytics integration coming soon!', 'warning');
+            terminal.log('💡 This will show detailed analytics and market data', 'info');
+            
+        } else if (subCommand === 'portfolio') {
+            terminal.log('💼 DEXSCREENER PORTFOLIO', 'info');
+            terminal.log('🔗 Fetching portfolio data...', 'info');
+            terminal.log('🚧 Portfolio integration coming soon!', 'warning');
+            terminal.log('💡 This will show portfolio tracking and analytics', 'info');
+            
         } else {
-            terminal.log('Usage: ds <search|trending> [query]', 'info');
-            terminal.log('Examples: ds search WETH, ds trending', 'info');
+            terminal.log('Usage: ds <search|trending|analytics|portfolio> [query]', 'info');
+            terminal.log('Examples: ds search WETH, ds trending, ds analytics ETH, ds portfolio', 'info');
         }
     },
 
@@ -582,5 +597,213 @@ window.OmegaCommands.API = {
         localStorage.setItem('omega-alphavantage-key', apiKey);
         terminal.log('✅ Alpha Vantage API key stored locally', 'success');
         terminal.log('💡 This key will be used for stock and economic data requests', 'info');
+    },
+
+    // DeFi Llama integration
+    defillama: async function(terminal, args) {
+        if (!args || args.length < 2) {
+            terminal.log('=== DEFI LLAMA INTEGRATION ===', 'info');
+            terminal.log('🦙 DeFi Llama - DeFi TVL and Protocol Data', 'info');
+            terminal.log('', 'output');
+            terminal.log('📊 TVL COMMANDS:', 'info');
+            terminal.log('  defillama tvl                    → Total DeFi TVL (calculated)', 'output');
+            terminal.log('  defillama protocols [limit]      → Top protocols by TVL', 'output');
+            terminal.log('  defillama chains [limit]         → TVL by blockchain', 'output');
+            terminal.log('  defillama tvl <protocol>         → Specific protocol TVL', 'output');
+            terminal.log('', 'output');
+            terminal.log('💰 PRICE COMMANDS:', 'info');
+            terminal.log('  defillama price <token>          → Current token price', 'output');
+            terminal.log('  defillama tokens <t1,t2,t3>      → Multiple token prices', 'output');
+            terminal.log('', 'output');
+            terminal.log('🔍 ANALYSIS COMMANDS:', 'info');
+            terminal.log('  defillama trending               → Protocols by 24h change', 'output');
+            terminal.log('  defillama debug <token>          → Debug token price lookup', 'output');
+            terminal.log('', 'output');
+            terminal.log('⚡ EXAMPLES:', 'info');
+            terminal.log('  defillama tvl                    → Total DeFi TVL', 'output');
+            terminal.log('  defillama protocols 5            → Top 5 protocols', 'output');
+            terminal.log('  defillama price ethereum         → ETH price', 'output');
+            terminal.log('  defillama tokens eth,btc,sol     → Multiple prices', 'output');
+            terminal.log('  defillama debug bitcoin          → Debug price lookup', 'output');
+            terminal.log('  defillama chains 10              → Top 10 chains', 'output');
+            return;
+        }
+
+        const subcommand = args[1].toLowerCase();
+        
+        switch(subcommand) {
+            case 'tvl':
+                if (args.length > 2) {
+                    // Specific protocol TVL
+                    const protocol = args.slice(2).join(' ');
+                    terminal.log(`📊 DEFI LLAMA PROTOCOL TVL: ${protocol.toUpperCase()}`, 'info');
+                    terminal.log(`🔗 Fetching TVL data for ${protocol}...`, 'info');
+                    terminal.log('🚧 Protocol TVL integration coming soon!', 'warning');
+                    terminal.log('💡 This will show specific protocol TVL data', 'info');
+                } else {
+                    // Total DeFi TVL
+                    terminal.log('📊 DEFI LLAMA TOTAL TVL', 'info');
+                    terminal.log('🔗 Fetching Total Value Locked across all DeFi...', 'info');
+                    terminal.log('🚧 Total TVL integration coming soon!', 'warning');
+                    terminal.log('💡 This will show total DeFi TVL across all protocols', 'info');
+                }
+                break;
+                
+            case 'protocols':
+                const protocolLimit = args.length > 2 ? args[2] : '10';
+                terminal.log(`🏛️ DEFI LLAMA TOP ${protocolLimit} PROTOCOLS`, 'info');
+                terminal.log(`🔗 Fetching top ${protocolLimit} protocols by TVL...`, 'info');
+                terminal.log('🚧 Protocol rankings integration coming soon!', 'warning');
+                terminal.log('💡 This will show top protocols ranked by TVL', 'info');
+                break;
+                
+            case 'chains':
+                const chainLimit = args.length > 2 ? args[2] : '10';
+                terminal.log(`⛓️ DEFI LLAMA TOP ${chainLimit} CHAINS`, 'info');
+                terminal.log(`🔗 Fetching top ${chainLimit} chains by TVL...`, 'info');
+                terminal.log('🚧 Chain TVL integration coming soon!', 'warning');
+                terminal.log('💡 This will show TVL data by blockchain', 'info');
+                break;
+                
+            case 'price':
+                if (args.length < 3) {
+                    terminal.log('❌ Usage: defillama price <token>', 'error');
+                    terminal.log('💡 Example: defillama price ethereum', 'info');
+                    return;
+                }
+                const token = args[2].toLowerCase();
+                terminal.log(`💰 DEFI LLAMA PRICE: ${token.toUpperCase()}`, 'info');
+                terminal.log(`🔗 Fetching current price for ${token}...`, 'info');
+                terminal.log('🚧 Price data integration coming soon!', 'warning');
+                terminal.log('💡 This will show current token price and market data', 'info');
+                break;
+                
+            case 'tokens':
+                if (args.length < 3) {
+                    terminal.log('❌ Usage: defillama tokens <token1,token2,token3>', 'error');
+                    terminal.log('💡 Example: defillama tokens eth,btc,sol', 'info');
+                    return;
+                }
+                const tokens = args[2].split(',').map(t => t.trim().toUpperCase()).join(', ');
+                terminal.log(`💎 DEFI LLAMA MULTI-TOKEN PRICES: ${tokens}`, 'info');
+                terminal.log(`🔗 Fetching prices for multiple tokens...`, 'info');
+                terminal.log('🚧 Multi-token price integration coming soon!', 'warning');
+                terminal.log('💡 This will show prices for multiple tokens at once', 'info');
+                break;
+                
+            case 'trending':
+                terminal.log('📈 DEFI LLAMA TRENDING PROTOCOLS', 'info');
+                terminal.log('🔗 Fetching protocols by 24h change...', 'info');
+                terminal.log('🚧 Trending protocols integration coming soon!', 'warning');
+                terminal.log('💡 This will show protocols with highest 24h TVL changes', 'info');
+                break;
+                
+            case 'debug':
+                if (args.length < 3) {
+                    terminal.log('❌ Usage: defillama debug <token>', 'error');
+                    terminal.log('💡 Example: defillama debug bitcoin', 'info');
+                    return;
+                }
+                const debugToken = args[2].toLowerCase();
+                terminal.log(`🐛 DEFI LLAMA DEBUG: ${debugToken.toUpperCase()}`, 'info');
+                terminal.log(`🔗 Debugging price lookup for ${debugToken}...`, 'info');
+                terminal.log('🚧 Debug integration coming soon!', 'warning');
+                terminal.log('💡 This will debug token price lookup issues', 'info');
+                break;
+                
+            default:
+                terminal.log(`❌ Unknown DeFi Llama command: ${subcommand}`, 'error');
+                terminal.log('💡 Use: defillama tvl, defillama protocols, defillama price <token>', 'info');
+        }
+    },
+
+    // Chart integration
+    chart: async function(terminal, args) {
+        if (!args || args.length < 2) {
+            terminal.log('Usage: chart <symbol>', 'info');
+            terminal.log('Examples:', 'info');
+            terminal.log('  chart BTC', 'info');
+            terminal.log('  chart ETH', 'info');
+            terminal.log('  chart SOL', 'info');
+            return;
+        }
+
+        const symbol = args[1].toUpperCase();
+        terminal.log(`📈 Loading chart for ${symbol}...`, 'info');
+        
+        // Trigger the chart display in the futuristic dashboard
+        if (window.FuturisticDashboard && window.FuturisticDashboard.showChart) {
+            window.FuturisticDashboard.showChart(symbol);
+        } else {
+            terminal.log('📈 Chart functionality requires futuristic dashboard view', 'warning');
+            terminal.log('💡 Switch to futuristic view to see live charts', 'info');
+        }
+    },
+
+    // Portfolio Tracker (PGT)
+    pgt: async function(terminal, args) {
+        if (!args || args.length < 2) {
+            terminal.log('=== PORTFOLIO TRACKER (PGT) ===', 'info');
+            terminal.log('📊 Portfolio tracking and analytics', 'info');
+            terminal.log('', 'output');
+            terminal.log('📋 Available Commands:', 'info');
+            terminal.log('  pgt track <address>    Track a new wallet address', 'output');
+            terminal.log('  pgt portfolio          View portfolio overview', 'output');
+            terminal.log('  pgt wallets            List tracked wallets', 'output');
+            terminal.log('  pgt refresh            Refresh portfolio data', 'output');
+            terminal.log('  pgt help               Show detailed help', 'output');
+            return;
+        }
+
+        const subcommand = args[1].toLowerCase();
+        
+        switch (subcommand) {
+            case 'track':
+                if (args.length < 3) {
+                    terminal.log('Usage: pgt track <wallet-address>', 'error');
+                    terminal.log('Example: pgt track 0x1234567890abcdef...', 'info');
+                    return;
+                }
+                const address = args[2];
+                terminal.log(`📊 Tracking wallet: ${address}`, 'info');
+                terminal.log('🚧 Portfolio tracking is being implemented', 'warning');
+                terminal.log('💡 This will track token balances and portfolio value', 'info');
+                break;
+                
+            case 'portfolio':
+                terminal.log('📊 PORTFOLIO OVERVIEW', 'info');
+                terminal.log('🚧 Portfolio overview is being implemented', 'warning');
+                terminal.log('💡 This will show total value, P&L, and asset breakdown', 'info');
+                break;
+                
+            case 'wallets':
+                terminal.log('📋 TRACKED WALLETS', 'info');
+                terminal.log('🚧 Wallet list is being implemented', 'warning');
+                terminal.log('💡 This will show all tracked wallet addresses', 'info');
+                break;
+                
+            case 'refresh':
+                terminal.log('🔄 Refreshing portfolio data...', 'info');
+                terminal.log('🚧 Portfolio refresh is being implemented', 'warning');
+                terminal.log('💡 This will update all portfolio values', 'info');
+                break;
+                
+            case 'help':
+                terminal.log('=== PORTFOLIO TRACKER HELP ===', 'info');
+                terminal.log('📊 PGT (Portfolio Tracker) provides comprehensive portfolio management', 'info');
+                terminal.log('', 'output');
+                terminal.log('🔧 Features (Coming Soon):', 'info');
+                terminal.log('  • Multi-wallet tracking', 'output');
+                terminal.log('  • Real-time portfolio valuation', 'output');
+                terminal.log('  • P&L tracking and analytics', 'output');
+                terminal.log('  • Token balance monitoring', 'output');
+                terminal.log('  • Historical performance data', 'output');
+                break;
+                
+            default:
+                terminal.log(`Unknown pgt command: ${subcommand}`, 'error');
+                terminal.log('Type "pgt help" for available commands', 'info');
+                break;
+        }
     }
 }; 

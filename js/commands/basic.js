@@ -9,136 +9,286 @@ window.testBasicLoading();
 
 window.OmegaCommands.Basic = {
     // Help command
-    help: function(terminal) {
-        terminal.log('=== OMEGA TERMINAL HELP ===', 'info');
-        terminal.log('');
-        terminal.log('📡 WALLET COMMANDS:', 'info');
-        terminal.log('  connect              Connect MetaMask wallet or create Omega wallet');
-        terminal.log('  disconnect           Disconnect wallet');
-        terminal.log('  balance              Show wallet balance');
-        terminal.log('  send <amount> <to>   Send OMEGA tokens');
-        terminal.log('');
-        terminal.log('⛏️  MINING COMMANDS:', 'info');
-        terminal.log('  mine                 Start mining OMEGA tokens');
-        terminal.log('  claim                Claim mining rewards');
-        terminal.log('  faucet               Claim from the faucet (24h cooldown)');
-        terminal.log('  faucet status        Check faucet claim status');
-        terminal.log('  status               Show mining status');
-        terminal.log('  stats                Show detailed mining statistics');
-        terminal.log('');
-        terminal.log('🔧 NETWORK COMMANDS:', 'info');
-        terminal.log('  stress               Start network stress test');
-        terminal.log('  stopstress           Stop network stress test');
-        terminal.log('  stressstats          Show stress test statistics');
-        terminal.log('');
-        terminal.log('🎨 INTERFACE COMMANDS:', 'info');
-        terminal.log('  theme [light|dark]   Toggle light/dark mode (or type "theme" for info)');
-        terminal.log('  gui <style>          Transform UI (chatgpt, discord, aol, windows95, limewire)');
-        terminal.log('  view [basic|futuristic] Toggle view mode');
-        terminal.log('  clear                Clear terminal');
-        terminal.log('  help                 Show this help message');
-        terminal.log('');
-        terminal.log('🔐 PRIVACY COMMANDS:', 'info');
-        terminal.log('  mixer -help          Show mixer help for private transactions');
-        terminal.log('');
-        terminal.log('🌐 NEAR PROTOCOL:', 'info');
-        terminal.log('  near connect         Connect your NEAR wallet');
-        terminal.log('  near balance         Check NEAR balance');
-        terminal.log('  near account         Get account information');
-        terminal.log('  near validators      Show network validators');
-        terminal.log('  near agent           Deploy/manage AI Shade Agents');
-        terminal.log('  near deploy          Deploy smart contracts');
-        terminal.log('  near help            Show detailed NEAR commands');
-        terminal.log('');
-        terminal.log('🤖 AI ASSISTANT:', 'info');
-        terminal.log('  ai <message>         Chat with Omega AI powered by OpenAI');
-        terminal.log('');
-        terminal.log('📧 COMMUNICATION:', 'info');
-        terminal.log('  email                Send on-chain encrypted messages');
-        terminal.log('  inbox [all]          Check encrypted inbox');
-        terminal.log('  ens register <name>  Register Omega ENS name');
-        terminal.log('  ens resolve <name>   Resolve Omega ENS to address');
-        terminal.log('  ens search <name>    Search for Omega ENS name');
-        terminal.log('');
-        terminal.log('🏭 TOKEN & NFT CREATION:', 'info');
-        terminal.log('  create               Deploy your own ERC20 token');
-        terminal.log('  nft                  ChainGPT AI NFT Generator (type "nft help")');
-        terminal.log('  chat                 ChainGPT Web3 AI Chatbot (type "chat help")');
-        terminal.log('  news                 Crypto News System (type "news help")');
-        terminal.log('');
-        terminal.log('📊 MARKET DATA:', 'info');
-        terminal.log('  ds search <token>    DexScreener token search');
-        terminal.log('  ds trending          DexScreener trending tokens');
-        terminal.log('  cg search <token>    GeckoTerminal token search');
-        terminal.log('  cg networks          GeckoTerminal networks');
-        terminal.log('  alpha quote <symbol> Alpha Vantage stock quotes');
-        terminal.log('  alpha daily <symbol> Alpha Vantage daily stock data');
-        terminal.log('  alpha overview <sym> Alpha Vantage company overview');
-        terminal.log('  alphakey             Alpha Vantage API information');
-        terminal.log('');
-        terminal.log('💱 SWAP & TRADE:', 'info');
-        terminal.log('  solana connect       Connect Phantom wallet');
-        terminal.log('  solana generate      Generate browser wallet');
-        terminal.log('  solana status        Show available wallets');
-        terminal.log('  solana search <token> Search tokens with full details');
-        terminal.log('  solana swap          Token swaps (any wallet)');
-        terminal.log('  near swap            Cross-chain swaps via Near Intents');
-        terminal.log('  eclipse wallet       Eclipse wallet operations');
-        terminal.log('  eclipse swap         Eclipse token swaps');
-        terminal.log('');
-        terminal.log('🔗 REFERRAL PROGRAM:', 'info');
-        terminal.log('  referral create      Create your referral code');
-        terminal.log('  referral stats       View referral performance');
-        terminal.log('  referral share       Get social sharing links');
-        terminal.log('  referral leaderboard Top referrers rankings');
-        terminal.log('  referral dashboard   Open web dashboard');
-        terminal.log('');
-        terminal.log('🏛️ ROME NETWORK:', 'info');
-        terminal.log('  rome help            Show Rome Network commands');
-        terminal.log('  rome token create    Create a new token on Rome Network');
-        terminal.log('');
-        terminal.log('👤 PROFILE:', 'info');
-        terminal.log('  profile              Open enhanced profile manager');
-        terminal.log('');
-        terminal.log('🎮 GAMES:', 'info');
-        terminal.log('  game list            Show all available games');
-        terminal.log('  play <game>          Play a game (snake, pacman, clicker, etc.)');
-        terminal.log('  game help            Show game commands');
-        terminal.log('');
-        terminal.log('🎭 ENTERTAINMENT:', 'info');
-        terminal.log('  rickroll, matrix, hack, disco, fortune');
-        terminal.log('');
-        terminal.log('🤖 AI ASSISTANT & NFT:', 'info');
-        terminal.log('  ai <message>         Chat with OMEGA AI (natural language)');
-        terminal.log('  chat ask "<question>" Ask ChainGPT Web3 AI');
-        terminal.log('  chat stream "<question>" Real-time AI streaming');
-        terminal.log('  chat context "<question>" AI with custom context');
-        terminal.log('  chat history "<question>" AI with conversation memory');
-        terminal.log('  chat help            Show chat commands help');
-        terminal.log('  nft generate <prompt> Generate AI NFT images (ChainGPT)');
-        terminal.log('  nft enhance <prompt>  Enhance prompt with AI');
-        terminal.log('  nft help             Show full NFT commands');
-        terminal.log('  news latest          Latest crypto news');
-        terminal.log('  news hot             Trending crypto news');
-        terminal.log('  news btc             Bitcoin news');
-        terminal.log('  news eth             Ethereum news');
-        terminal.log('  news search "<query>" Search crypto news');
-        terminal.log('  news expand-all      Expand all articles in terminal');
-        terminal.log('  news collapse-all    Collapse all expanded articles');
-        terminal.log('  news help            Show news commands help');
+    help: function(terminal, args) {
+        // Check if user wants category-specific help
+        if (args && args.length > 1) {
+            const category = args[1].toLowerCase();
+            this.showCategoryHelp(terminal, category);
+            return;
+        }
+        terminal.log('=== Ω Terminal v2.0.1 Commands ===', 'info');
         terminal.log('');
         
-        const isAIMode = localStorage.getItem('omega-ai-mode') === 'true';
-        if (isAIMode) {
-            terminal.log('🤖 AI Mode: ON', 'success');
-            terminal.log('💡 Unknown commands will be processed as natural language', 'info');
-            terminal.log('💡 Try: "what\'s my balance" or "help me create a token"', 'info');
-        } else {
-            terminal.log('🤖 AI Mode: OFF', 'info');
-            terminal.log('💡 Click the AI Mode button for natural language assistance', 'info');
+        // New Features Section
+        terminal.log('🆕 --- NEW FEATURES (v2.0.1) ----', 'success');
+        terminal.log('🍎 Modern UI:', 'info');
+        terminal.log('modern ui | modern-dark', 'output');
+        terminal.log('Apple-style glass-morphism', 'output');
+        terminal.log('', 'output');
+        terminal.log('📊 DexScreener Analytics:', 'info');
+        terminal.log('dexscreener search | analytics | portfolio | watchlist', 'output');
+        terminal.log('Complete token analysis suite', 'output');
+        terminal.log('', 'output');
+        terminal.log('🦙 DeFi Llama:', 'info');
+        terminal.log('defillama tvl | protocols | price | chains', 'output');
+        terminal.log('TVL & price data', 'output');
+        terminal.log('', 'output');
+        terminal.log('🎮 Games & Fun:', 'info');
+        terminal.log('games | arcade | flappy | mystery-box', 'output');
+        terminal.log('Entertainment & challenges', 'output');
+        terminal.log('', 'output');
+        terminal.log('🎯 PGT Portfolio:', 'info');
+        terminal.log('pgt track <address> | pgt portfolio | pgt wallets', 'output');
+        terminal.log('Auto-detect network, real-time tracking', 'output');
+        terminal.log('', 'output');
+        terminal.log('🏗️ Terminal Builder:', 'info');
+        terminal.log('terminal create | list | launch', 'output');
+        terminal.log('Create custom terminals with URLs', 'output');
+        terminal.log('', 'output');
+        terminal.log('🔵 NEAR Wallet:', 'info');
+        terminal.log('near connect | balance | swap', 'output');
+        terminal.log('NEAR ecosystem integration', 'output');
+        terminal.log('', 'output');
+        terminal.log('🌊 OpenSea NFTs:', 'info');
+        terminal.log('nft search | collection | floor | trending | portfolio', 'output');
+        terminal.log('Professional NFT analytics & trading', 'output');
+        terminal.log('• Search collections • Floor price tracking • Portfolio management', 'output');
+        terminal.log('');
+        
+        // Core Wallet Functions
+        terminal.log('--- Core Wallet Functions ----', 'info');
+        terminal.log('Commands: connect | disconnect | balance | faucet | send | network | forceadd | rpccheck', 'output');
+        terminal.log('');
+        
+        // AI Assistant
+        terminal.log('--- AI Assistant ----', 'info');
+        terminal.log('AI Mode: ai - Toggle AI assistant to answer questions and execute commands naturally', 'output');
+        terminal.log('');
+        
+        // Mining & Rewards
+        terminal.log('--- Mining & Rewards ---', 'info');
+        terminal.log('Commands: mine | claim | status | stats', 'output');
+        terminal.log('');
+        
+        // Themes & Interface
+        terminal.log('🎨 --- Themes & Interface ----', 'info');
+        terminal.log('Themes: modern ui | modern-dark | dark | matrix | retro | bitcoin | ethereum | solana | pepe', 'output');
+        terminal.log('GUI Modes: gui [ios, chatgpt, discord, aol, windows95, limewire]', 'output');
+        terminal.log('');
+        
+        // Analytics & Data
+        terminal.log('📊 --- Analytics & Data ----', 'info');
+        terminal.log('DexScreener:', 'info');
+        terminal.log('dexscreener search BONK', 'output');
+        terminal.log('dexscreener analytics ETH', 'output');
+        terminal.log('dexscreener portfolio', 'output');
+        terminal.log('', 'output');
+        terminal.log('DeFi Llama:', 'info');
+        terminal.log('defillama tvl', 'output');
+        terminal.log('defillama price ethereum', 'output');
+        terminal.log('defillama protocols', 'output');
+        terminal.log('', 'output');
+        terminal.log('OpenSea NFTs:', 'info');
+        terminal.log('nft search azuki', 'output');
+        terminal.log('nft floor bayc', 'output');
+        terminal.log('nft trending', 'output');
+        terminal.log('', 'output');
+        terminal.log('GeckoTerminal:', 'info');
+        terminal.log('cg help', 'output');
+        terminal.log('');
+        
+        // Blockchain Networks
+        terminal.log('--- Blockchain Networks ---', 'info');
+        terminal.log('Solana:', 'info');
+        terminal.log('solana help', 'output');
+        terminal.log('', 'output');
+        terminal.log('Eclipse:', 'info');
+        terminal.log('eclipse help', 'output');
+        terminal.log('', 'output');
+        terminal.log('NEAR:', 'info');
+        terminal.log('near connect | near help', 'output');
+        terminal.log('', 'output');
+        terminal.log('Hyperliquid:', 'info');
+        terminal.log('hyperliquid help', 'output');
+        terminal.log('', 'output');
+        terminal.log('OpenSea NFTs:', 'info');
+        terminal.log('nft search | nft trending | nft portfolio', 'output');
+        terminal.log('');
+        
+        // Advanced Features
+        terminal.log('--- Advanced Features ---', 'info');
+        terminal.log('Mixer (Privacy):', 'info');
+        terminal.log('mixer help', 'output');
+        terminal.log('', 'output');
+        terminal.log('Ambassador:', 'info');
+        terminal.log('ambassador help', 'output');
+        terminal.log('', 'output');
+        terminal.log('Polymarket:', 'info');
+        terminal.log('polymarket help', 'output');
+        terminal.log('', 'output');
+        terminal.log('🎮 Games:', 'info');
+        terminal.log('game list | play', 'output');
+        terminal.log('', 'output');
+        terminal.log('Email:', 'info');
+        terminal.log('email | inbox', 'output');
+        terminal.log('Encrypted messaging system', 'output');
+        terminal.log('');
+        
+        // Quick Start Guide
+        terminal.log('🚀 --- Quick Start Guide ----', 'info');
+        terminal.log('💡 Try: modern ui for beautiful Apple-style interface', 'output');
+        terminal.log('💡 Try: dexscreener search BONK for token analysis', 'output');
+        terminal.log('💡 Try: defillama tvl for DeFi data', 'output');
+        terminal.log('💡 Try: nft trending for hot NFT collections', 'output');
+        terminal.log('💡 Try: pgt portfolio for multi-chain portfolio tracking', 'output');
+        terminal.log('💡 Try: game list for interactive games', 'output');
+        terminal.log('');
+        
+        // Economy & Trading
+        terminal.log('--- Economy & Trading ---', 'info');
+        terminal.log('alpha help stocks & economy data', 'output');
+        terminal.log('');
+        
+        // Footer
+        terminal.log('---', 'output');
+        terminal.log('Ω Terminal v2.0.1 - Modern Apple UI • Enhanced Analytics • DeFi Integration • NFT Trading', 'info');
+    },
+
+    // Category-specific help
+    showCategoryHelp: function(terminal, category) {
+        terminal.log(`=== ${category.toUpperCase()} HELP ===`, 'info');
+        terminal.log('');
+        
+        switch(category) {
+            case 'wallet':
+            case 'wallets':
+                terminal.log('💰 WALLET COMMANDS:', 'info');
+                terminal.log('  connect              → Connect MetaMask or create Omega wallet');
+                terminal.log('  disconnect           → Disconnect current wallet');
+                terminal.log('  balance              → Show all wallet balances & total value');
+                terminal.log('  send <amount> <to>   → Send OMEGA tokens');
+                terminal.log('  import <private-key> → Import wallet from private key');
+                terminal.log('  export               → Export wallet for other apps');
+                terminal.log('  test-wallet          → Test wallet connection & status');
+                terminal.log('  fund                 → Try to fund wallet with 0.1 OMEGA');
+                terminal.log('  fund-direct          → Direct blockchain funding (bypass relayer)');
+                break;
+                
+            case 'mining':
+                terminal.log('⛏️  MINING COMMANDS:', 'info');
+                terminal.log('  mine                 → Start mining OMEGA tokens');
+                terminal.log('  claim                → Claim mining rewards');
+                terminal.log('  faucet               → Claim from faucet (24h cooldown)');
+                terminal.log('  faucet status        → Check faucet claim status');
+                terminal.log('  status               → Show mining status');
+                terminal.log('  stats                → Show detailed mining statistics');
+                break;
+                
+            case 'market':
+            case 'analytics':
+                terminal.log('📊 MARKET DATA & ANALYTICS:', 'info');
+                terminal.log('  ds search <token>    → DexScreener token search & analysis');
+                terminal.log('  ds trending          → DexScreener trending tokens');
+                terminal.log('  ds analytics <token> → Detailed token analytics');
+                terminal.log('  ds portfolio         → Portfolio tracking & analytics');
+                terminal.log('  defillama tvl        → Total DeFi TVL (calculated)');
+                terminal.log('  defillama protocols [limit] → Top protocols by TVL');
+                terminal.log('  defillama chains [limit] → TVL by blockchain');
+                terminal.log('  defillama tvl <protocol> → Specific protocol TVL');
+                terminal.log('  defillama price <token> → Current token price');
+                terminal.log('  defillama tokens <t1,t2,t3> → Multiple token prices');
+                terminal.log('  defillama trending   → Protocols by 24h change');
+                terminal.log('  defillama debug <token> → Debug token price lookup');
+                terminal.log('  llama <command>      → Alias for defillama commands');
+                terminal.log('  chart <symbol>       → Live trading charts (BTC, ETH, SOL)');
+                terminal.log('  cg search <token>    → GeckoTerminal token search');
+                terminal.log('  cg networks          → GeckoTerminal networks');
+                break;
+                
+            case 'ai':
+            case 'nft':
+                terminal.log('🤖 AI & NFT TOOLS:', 'info');
+                terminal.log('  ai <message>         → Chat with OMEGA AI (natural language)');
+                terminal.log('  chat init <api-key>  → Initialize ChainGPT AI');
+                terminal.log('  chat ask "<question>" → Ask ChainGPT Web3 AI');
+                terminal.log('  chat stream "<question>" → Real-time AI streaming');
+                terminal.log('  chat context "<question>" → AI with custom context');
+                terminal.log('  chat history "<question>" → AI with conversation memory');
+                terminal.log('  chat test            → Test ChainGPT connection');
+                terminal.log('  chat help            → Show chat commands help');
+                terminal.log('  nft init <api-key>   → Initialize ChainGPT NFT Generator');
+                terminal.log('  nft generate <prompt> → Generate AI NFT images');
+                terminal.log('  nft enhance <prompt> → Enhance prompt with AI');
+                terminal.log('  nft models           → Show available AI models');
+                terminal.log('  nft styles           → Show art styles');
+                terminal.log('  nft gallery          → View generated NFT gallery');
+                terminal.log('  nft test             → Test NFT API connection');
+                terminal.log('  nft help             → Show full NFT commands');
+                break;
+                
+            case 'news':
+                terminal.log('📰 CRYPTO NEWS:', 'info');
+                terminal.log('  news latest          → Latest crypto news');
+                terminal.log('  news hot             → Trending crypto news');
+                terminal.log('  news btc             → Bitcoin news');
+                terminal.log('  news eth             → Ethereum news');
+                terminal.log('  news sol             → Solana news');
+                terminal.log('  news search "<query>" → Search crypto news');
+                terminal.log('  news category news   → News articles');
+                terminal.log('  news sources         → News sources');
+                terminal.log('  news expand-all      → Expand all articles');
+                terminal.log('  news collapse-all    → Collapse all articles');
+                terminal.log('  news clear-expansions → Clear & reload');
+                terminal.log('  news help            → Show news commands help');
+                break;
+                
+            case 'solana':
+            case 'near':
+            case 'eclipse':
+                terminal.log('🌐 MULTI-CHAIN SUPPORT:', 'info');
+                terminal.log('  solana connect       → Connect Phantom wallet');
+                terminal.log('  solana generate      → Generate browser wallet');
+                terminal.log('  solana status        → Show available wallets');
+                terminal.log('  solana search <token> → Search tokens with details');
+                terminal.log('  solana swap          → Token swaps');
+                terminal.log('  near connect         → Connect NEAR wallet');
+                terminal.log('  near balance         → Check NEAR balance');
+                terminal.log('  near account         → Get account information');
+                terminal.log('  near validators      → Show network validators');
+                terminal.log('  near agent           → Deploy/manage AI Shade Agents');
+                terminal.log('  near deploy          → Deploy smart contracts');
+                terminal.log('  near help            → Show detailed NEAR commands');
+                terminal.log('  eclipse wallet       → Eclipse wallet operations');
+                terminal.log('  eclipse swap         → Eclipse token swaps');
+                break;
+                
+            case 'games':
+            case 'entertainment':
+                terminal.log('🎮 GAMES & ENTERTAINMENT:', 'info');
+                terminal.log('  game list            → Show all available games');
+                terminal.log('  play <game>          → Play a game (snake, pacman, clicker, etc.)');
+                terminal.log('  game help            → Show game commands');
+                terminal.log('  rickroll, matrix, hack, disco, fortune → Fun commands');
+                break;
+                
+            case 'theme':
+            case 'interface':
+            case 'ui':
+                terminal.log('🎨 INTERFACE & THEMES:', 'info');
+                terminal.log('  theme [light|dark]   → Toggle light/dark mode');
+                terminal.log('  gui <style>          → Transform UI (chatgpt, discord, aol, windows95, limewire)');
+                terminal.log('  view [basic|futuristic] → Toggle view mode');
+                terminal.log('  clear                → Clear terminal');
+                break;
+                
+            default:
+                terminal.log(`❌ Unknown category: ${category}`, 'error');
+                terminal.log('💡 Available categories: wallet, mining, market, ai, news, solana, near, games, theme', 'info');
+                terminal.log('💡 Use "help" to see all commands', 'info');
         }
         
-        terminal.logHtml('<span style="color:#cccccc">💡 Need more help? Visit our Gitbook: <a href="https://omega-6.gitbook.io/omega" target="_blank">https://omega-6.gitbook.io/omega</a></span>', 'info');
+        terminal.log('');
+        terminal.log('💡 Use "help" to see all commands', 'info');
     },
 
     // Clear terminal
@@ -153,42 +303,58 @@ window.OmegaCommands.Basic = {
             terminal.log('═══════════════════════════════════════', 'output');
             terminal.log('');
             
-            terminal.log('🌓 APPEARANCE MODES:', 'success');
-            terminal.log('  theme light        - Switch to light mode', 'output');
-            terminal.log('  theme dark         - Switch to dark mode', 'output');
-            terminal.log('  theme toggle       - Toggle light/dark mode', 'output');
+            // Show actual available themes from config
+            const availableThemes = window.OmegaConfig?.THEMES || ['dark', 'light', 'matrix', 'retro', 'powershell', 'executive'];
+            const currentTheme = window.OmegaThemes?.getCurrentTheme() || localStorage.getItem('omega-terminal-theme') || 'dark';
+            
+            terminal.log('💎 PREMIUM THEMES:', 'success');
+            terminal.log('  theme executive        ⭐ Premium professional with gold accents', 'output');
+            terminal.log('  theme modern ui        Apple-style glass-morphism', 'output');
+            terminal.log('  theme modern           Same as modern ui', 'output');
+            terminal.log('  theme apple            Same as modern ui', 'output');
+            terminal.log('  theme modern-dark      Apple UI in dark mode', 'output');
+            terminal.log('  theme apple-dark       Same as modern-dark', 'output');
+            terminal.log('');
+            
+            terminal.log('🎨 CLASSIC THEMES:', 'success');
+            terminal.log('  theme dark             Default dark terminal theme', 'output');
+            terminal.log('  theme light            Light mode with dark text', 'output');
+            terminal.log('  theme matrix           Green-on-black Matrix style', 'output');
+            terminal.log('  theme retro            Retro amber terminal', 'output');
+            terminal.log('  theme powershell       Windows PowerShell blue theme', 'output');
             terminal.log('');
             
             terminal.log('🎮 GUI INTERFACE STYLES:', 'success');
-            terminal.log('  gui chatgpt        - ChatGPT-style interface', 'output');
-            terminal.log('  gui discord        - Discord-style interface', 'output');
-            terminal.log('  gui aol            - AOL Instant Messenger style', 'output');
-            terminal.log('  gui windows95      - Windows 95 retro style', 'output');
-            terminal.log('  gui limewire       - LimeWire P2P style', 'output');
-            terminal.log('  gui terminal       - Return to normal terminal', 'output');
+            terminal.log('  gui chatgpt            ChatGPT-style interface', 'output');
+            terminal.log('  gui discord            Discord-style interface', 'output');
+            terminal.log('  gui aol                AOL Instant Messenger style', 'output');
+            terminal.log('  gui windows95          Windows 95 retro style', 'output');
+            terminal.log('  gui limewire           LimeWire P2P style', 'output');
+            terminal.log('  gui terminal           Return to normal terminal', 'output');
             terminal.log('');
             
             terminal.log('📊 VIEW MODES:', 'success');
-            terminal.log('  view basic         - Minimal terminal view', 'output');
-            terminal.log('  view futuristic    - Full dashboard view', 'output');
-            terminal.log('  view toggle        - Toggle between views', 'output');
+            terminal.log('  view basic             Minimal terminal view', 'output');
+            terminal.log('  view futuristic        Full dashboard view (recommended with Executive)', 'output');
+            terminal.log('  view toggle            Toggle between views', 'output');
             terminal.log('');
             
-            terminal.log('💡 QUICK TIPS:', 'info');
-            terminal.log('  • Light/Dark mode works in ALL GUI styles', 'output');
-            terminal.log('  • Use header buttons for quick toggles', 'output');
-            terminal.log('  • All themes preserve terminal functionality', 'output');
-            terminal.log('  • Your preferences are saved automatically', 'output');
+            terminal.log('💡 RECOMMENDED COMBINATIONS:', 'info');
+            terminal.log('  theme executive + view futuristic  → Premium dashboard experience', 'output');
+            terminal.log('  theme executive + view basic       → Professional terminal', 'output');
+            terminal.log('  theme matrix + view basic          → Hacker mode', 'output');
             terminal.log('');
-            
-            const currentMode = localStorage.getItem('omega-theme-mode') || 'dark';
-            const currentView = localStorage.getItem('omega-view-mode') || 'futuristic';
-            const currentGUI = localStorage.getItem('omega-gui-style') || 'terminal';
             
             terminal.log('🎯 CURRENT SETTINGS:', 'info');
-            terminal.log(`  Appearance: ${currentMode === 'light' ? '🌞 Light Mode' : '🌙 Dark Mode'}`, 'output');
+            terminal.log(`  Theme: ${currentTheme}${currentTheme === 'executive' ? ' ⭐ (Premium)' : ''}`, 'output');
+            
+            const currentView = localStorage.getItem('omega-view-mode') || 'futuristic';
+            const currentGUI = localStorage.getItem('omega-gui-style') || 'terminal';
             terminal.log(`  View: ${currentView === 'basic' ? '⌨️  Basic Terminal' : '📊 Futuristic Dashboard'}`, 'output');
             terminal.log(`  GUI Style: ${currentGUI}`, 'output');
+            terminal.log('');
+            
+            terminal.log('✨ Your preferences are saved automatically', 'success');
             return;
         }
 
@@ -648,7 +814,7 @@ window.OmegaCommands.Basic = {
             <div class="terminal-content" id="terminalContent"></div>
             <div class="terminal-input-section">
                 <div class="input-line">
-                    <span class="input-prompt">root@omega-Terminal:~$</span>
+                    <span class="input-prompt">Ω Terminal:~$</span>
                     <input type="text" class="input-field" id="commandInput" placeholder="Enter command..." autocomplete="off">
                     <span class="cursor">|</span>
                 </div>
@@ -1129,7 +1295,7 @@ window.OmegaCommands.Basic = {
                             newInputSection.style.cssText = 'display: flex !important; width: calc(100vw - 40px) !important; max-width: calc(100vw - 40px) !important; box-sizing: border-box !important; background: rgba(255,255,255,0.05) !important; border: 1px solid #ffffff !important; border-radius: 5px !important; padding: 15px !important; margin: 0 !important; overflow: hidden !important;';
             newInputSection.innerHTML = `
                                   <div class="input-line" style="display: flex !important; width: 100% !important; align-items: center;">
-                      <span class="input-prompt">root@omega-Terminal:~$</span>
+                      <span class="input-prompt">Ω Terminal:~$</span>
                       <input type="text" class="input-field" id="commandInput" placeholder="" autocomplete="off" style="flex: 1 !important; width: 100% !important; min-width: 0 !important; background: none !important; border: none !important; color: #ffffff !important; font-family: 'Courier New', monospace !important; outline: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; overflow: visible !important;">
                   </div>
             `;

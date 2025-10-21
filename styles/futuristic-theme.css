@@ -54,6 +54,246 @@
 }
 
 /* ============================================
+   NFT & CHAT DISPLAY STYLING
+   ============================================ */
+
+/* NFT Display Container */
+.nft-display-container {
+    transition: all 0.3s ease;
+}
+
+.nft-display-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,212,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    border-color: rgba(0,212,255,0.35) !important;
+}
+
+/* ChainGPT Chat Container */
+.chaingpt-chat-container {
+    transition: all 0.3s ease;
+}
+
+.chaingpt-chat-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,212,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    border-color: rgba(0,212,255,0.35) !important;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+    0% { 
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% { 
+        transform: translateX(100%); 
+        opacity: 0;
+    }
+}
+
+/* Enhanced Button Hover Effects */
+.nft-display-container button,
+.chaingpt-chat-container button {
+    position: relative;
+    overflow: hidden;
+}
+
+.nft-display-container button::before,
+.chaingpt-chat-container button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.nft-display-container button:hover::before,
+.chaingpt-chat-container button:hover::before {
+    left: 100%;
+}
+
+/* NFT Button Specific Styling */
+.nft-display-container button {
+    backdrop-filter: blur(10px);
+}
+
+.nft-display-container button:hover {
+    backdrop-filter: blur(15px);
+}
+
+/* Light Mode NFT Button Adjustments */
+body.light-mode .nft-display-container button {
+    background: linear-gradient(135deg, rgba(0,81,213,0.08), rgba(0,81,213,0.04)) !important;
+    border-color: rgba(0,81,213,0.25) !important;
+    color: var(--cyber-blue) !important;
+}
+
+body.light-mode .nft-display-container button:hover {
+    border-color: rgba(0,81,213,0.4) !important;
+    box-shadow: 0 4px 12px rgba(0,81,213,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* Light Mode Adjustments */
+body.light-mode .nft-display-container,
+body.light-mode .chaingpt-chat-container {
+    background: linear-gradient(135deg, rgba(0,81,213,0.08), rgba(245,245,247,0.95)) !important;
+    border-color: rgba(0,81,213,0.25) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .nft-display-container h3,
+body.light-mode .chaingpt-chat-container h3 {
+    color: var(--cyber-blue) !important;
+}
+
+body.light-mode .nft-display-container .nft-info,
+body.light-mode .chaingpt-chat-container .chat-content {
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(235,235,240,0.9)) !important;
+    border-color: rgba(0,81,213,0.15) !important;
+    color: #1d1d1f !important;
+}
+
+/* ============================================
+   ENHANCED PROFILE SYSTEM STYLING
+   ============================================ */
+
+/* Profile Container */
+.api-keys-container {
+    transition: all 0.3s ease;
+}
+
+.api-keys-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,212,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+    border-color: rgba(0,212,255,0.35) !important;
+}
+
+/* Profile Input Fields */
+.api-keys-container input[type="password"],
+.api-keys-container input[type="text"] {
+    transition: all 0.3s ease;
+}
+
+.api-keys-container input[type="password"]:focus,
+.api-keys-container input[type="text"]:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,212,255,0.3), inset 0 2px 6px rgba(0,0,0,0.3) !important;
+}
+
+/* Profile Buttons */
+.api-keys-container button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.api-keys-container button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.api-keys-container button:hover::before {
+    left: 100%;
+}
+
+/* Light Mode Profile Adjustments */
+body.light-mode .api-keys-container {
+    background: linear-gradient(135deg, rgba(0,81,213,0.08), rgba(245,245,247,0.95)) !important;
+    border-color: rgba(0,81,213,0.25) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .api-keys-container h3 {
+    color: var(--cyber-blue) !important;
+}
+
+body.light-mode .api-keys-container input[type="password"],
+body.light-mode .api-keys-container input[type="text"] {
+    background: rgba(255,255,255,0.8) !important;
+    border-color: rgba(0,81,213,0.3) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .api-keys-container input[type="password"]:focus,
+body.light-mode .api-keys-container input[type="text"]:focus {
+    border-color: rgba(0,81,213,0.6) !important;
+    box-shadow: 0 4px 16px rgba(0,81,213,0.3), inset 0 2px 6px rgba(0,0,0,0.1) !important;
+}
+
+/* NFT Gallery Styling */
+.nft-gallery-card,
+.omega-nft-card {
+    backdrop-filter: blur(10px);
+}
+
+.nft-gallery-card:hover,
+.omega-nft-card:hover {
+    backdrop-filter: blur(15px);
+}
+
+/* NFT Gallery Button Hover Effects */
+.nft-gallery-card button,
+.omega-nft-card button {
+    position: relative;
+    overflow: hidden;
+}
+
+.nft-gallery-card button::before,
+.omega-nft-card button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.nft-gallery-card button:hover::before,
+.omega-nft-card button:hover::before {
+    left: 100%;
+}
+
+/* Light Mode NFT Gallery Adjustments */
+body.light-mode .nft-gallery-card,
+body.light-mode .omega-nft-card {
+    background: linear-gradient(135deg, rgba(0,81,213,0.08), rgba(245,245,247,0.95)) !important;
+    border-color: rgba(0,81,213,0.25) !important;
+    color: #1d1d1f !important;
+}
+
+body.light-mode .nft-gallery-card h4,
+body.light-mode .omega-nft-card h4 {
+    color: var(--cyber-blue) !important;
+}
+
+body.light-mode .nft-gallery-card button,
+body.light-mode .omega-nft-card button {
+    background: linear-gradient(135deg, rgba(0,81,213,0.08), rgba(0,81,213,0.04)) !important;
+    border-color: rgba(0,81,213,0.25) !important;
+    color: var(--cyber-blue) !important;
+}
+
+body.light-mode .nft-gallery-card button:hover,
+body.light-mode .omega-nft-card button:hover {
+    border-color: rgba(0,81,213,0.4) !important;
+    box-shadow: 0 4px 12px rgba(0,81,213,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* ============================================
    LIGHT MODE THEME VARIABLES
    ============================================ */
 
@@ -407,45 +647,136 @@ body::after {
 .sidebar-section {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-sm);
+    gap: var(--gap-xs);
+    margin-bottom: var(--gap-lg);
+    padding: var(--gap-sm);
+    background: rgba(0, 212, 255, 0.02);
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    border-radius: var(--radius-md);
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-section:hover {
+    background: rgba(0, 212, 255, 0.04);
+    border-color: rgba(0, 212, 255, 0.12);
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.1);
 }
 
 .sidebar-title {
-    font-size: 11px;
-    letter-spacing: 1.5px;
+    font-size: 9px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     color: var(--cyber-blue-dim);
     margin-bottom: var(--gap-sm);
-    padding-bottom: var(--gap-sm);
-    border-bottom: 1px solid var(--glass-border);
+    padding: var(--gap-xs) var(--gap-sm);
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+}
+
+.sidebar-title.quick-actions-title {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.1);
+}
+
+.section-toggle {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    color: var(--cyber-blue-dim);
+    cursor: pointer;
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.section-toggle:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: var(--cyber-blue);
+    color: var(--cyber-blue);
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.toggle-icon {
+    width: 10px;
+    height: 10px;
+    fill: currentColor;
+    transition: transform var(--transition-fast);
+    filter: drop-shadow(0 0 2px currentColor);
+}
+
+.sidebar-section.minimized {
+    background: rgba(0, 212, 255, 0.01);
+    border-color: rgba(0, 212, 255, 0.05);
+}
+
+.sidebar-section.minimized .sidebar-title {
+    margin-bottom: 0;
+    background: rgba(0, 212, 255, 0.03);
+    border-color: rgba(0, 212, 255, 0.1);
+}
+
+.sidebar-section.minimized .sidebar-section-content {
+    display: none !important;
+}
+
+.sidebar-section-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    padding: var(--gap-xs) 0;
 }
 
 .sidebar-button {
-    background: rgba(0, 212, 255, 0.05);
-    border: 1px solid var(--glass-border);
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.15);
     border-radius: var(--radius-md);
-    padding: var(--gap-md);
+    padding: 10px 12px;
     color: var(--cyber-blue);
     font-family: var(--font-tech);
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-fast);
     display: flex;
     align-items: center;
-    gap: var(--gap-sm);
+    gap: 8px;
+    min-height: 36px;
+    margin-bottom: var(--gap-xs);
+    position: relative;
+    overflow: hidden;
 }
 
 .sidebar-button:hover {
-    background: rgba(0, 212, 255, 0.15);
+    background: rgba(0, 212, 255, 0.18);
     border-color: var(--cyber-blue);
-    box-shadow: 0 0 15px var(--cyber-blue-glow);
-    transform: translateX(4px);
+    box-shadow: 0 0 20px var(--cyber-blue-glow), inset 0 0 10px rgba(0, 212, 255, 0.1);
+    transform: translateX(6px) scale(1.02);
+    color: var(--cyber-blue-bright);
 }
 
 .sidebar-button.active {
-    background: rgba(0, 212, 255, 0.2);
+    background: rgba(0, 212, 255, 0.25);
     border-color: var(--cyber-blue);
-    box-shadow: inset 0 0 10px var(--cyber-blue-glow);
+    box-shadow: inset 0 0 15px var(--cyber-blue-glow), 0 0 10px rgba(0, 212, 255, 0.3);
+    color: var(--cyber-blue-bright);
+    transform: translateX(2px);
 }
 
 .sidebar-button.sidebar-expandable {
@@ -454,26 +785,33 @@ body::after {
 }
 
 .sidebar-button.expanded {
-    background: rgba(0, 212, 255, 0.15);
+    background: rgba(0, 212, 255, 0.2);
     border-color: var(--cyber-blue);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+    color: var(--cyber-blue-bright);
 }
 
 .sidebar-button .expand-icon {
     position: absolute;
     right: 8px;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     fill: var(--cyber-blue-dim);
     transition: transform var(--transition-fast);
+    filter: drop-shadow(0 0 2px currentColor);
 }
 
 /* Sub-actions menu */
 .sub-actions {
-    margin-top: var(--gap-xs);
-    margin-left: var(--gap-md);
-    padding-left: var(--gap-sm);
-    border-left: 2px solid rgba(0, 212, 255, 0.2);
+    margin-top: var(--gap-sm);
+    margin-left: var(--gap-lg);
+    padding: var(--gap-sm);
+    background: rgba(0, 212, 255, 0.03);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid rgba(0, 212, 255, 0.3);
     animation: slideDown 0.3s ease-out;
+    position: relative;
 }
 
 @keyframes slideDown {
@@ -491,29 +829,33 @@ body::after {
 
 .sub-action-button {
     width: 100%;
-    background: rgba(0, 212, 255, 0.05);
-    border: 1px solid rgba(0, 212, 255, 0.15);
+    background: rgba(0, 212, 255, 0.06);
+    border: 1px solid rgba(0, 212, 255, 0.12);
     border-radius: var(--radius-sm);
-    padding: 6px var(--gap-sm);
+    padding: 6px 10px;
     color: var(--cyber-blue-dim);
-    font-size: 10px;
+    font-size: 9px;
+    font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-fast);
     text-align: left;
-    margin-bottom: 4px;
+    margin-bottom: var(--gap-xs);
+    min-height: 28px;
     display: block;
+    position: relative;
+    overflow: hidden;
 }
 
 .sub-action-button:hover {
-    background: rgba(0, 212, 255, 0.15);
+    background: rgba(0, 212, 255, 0.18);
     color: var(--cyber-blue-bright);
     border-color: var(--cyber-blue);
-    transform: translateX(4px);
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+    transform: translateX(6px) scale(1.01);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.25), inset 0 0 8px rgba(0, 212, 255, 0.1);
 }
 
 .sub-action-button:last-child {
-    margin-bottom: var(--gap-sm);
+    margin-bottom: 0;
 }
 
 .sub-action-button span {
@@ -526,6 +868,8 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 2px currentColor);
 }
 
 /* ============================================

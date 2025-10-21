@@ -9,7 +9,7 @@ window.OmegaThemes = {
     },
     
     // Set theme
-    setTheme: function(themeName) {
+    setTheme: function(themeName, silent = false) {
         if (!OmegaConfig.THEMES.includes(themeName)) {
             console.warn(`Theme "${themeName}" not found. Available themes:`, OmegaConfig.THEMES);
             return;
@@ -33,11 +33,22 @@ window.OmegaThemes = {
         localStorage.setItem('omega-terminal-theme', themeName);
         this.currentTheme = themeName;
         
-        // Log theme change if terminal exists
-        if (window.terminal) {
-            window.terminal.log(`Theme set to ${themeName} mode`, 'success');
+        // Log theme change if terminal exists (unless silent mode)
+        if (!silent) {
+            if (window.terminal) {
+                window.terminal.log(`✅ Theme set to ${themeName} mode`, 'success');
+            } else {
+                console.log(`Theme set to ${themeName} mode`);
+            }
         } else {
             console.log(`Theme set to ${themeName} mode`);
+        }
+        
+        // Trigger input field fix
+        if (window.fixInputField) {
+            setTimeout(() => {
+                window.fixInputField(themeName, false, false);
+            }, 50);
         }
     },
     
@@ -46,7 +57,9 @@ window.OmegaThemes = {
         const currentIndex = OmegaConfig.THEMES.indexOf(this.currentTheme);
         const nextIndex = (currentIndex + 1) % OmegaConfig.THEMES.length;
         const nextTheme = OmegaConfig.THEMES[nextIndex];
-        this.setTheme(nextTheme);
+        // Use silent mode - let caller handle the message
+        this.setTheme(nextTheme, true);
+        return nextTheme;
     },
     
     // Apply theme (called during initialization)
@@ -71,7 +84,8 @@ window.OmegaThemes = {
             'light': 'Light mode with dark text on light background',
             'matrix': 'Green-on-black Matrix movie style',
             'retro': 'Retro amber terminal style',
-            'powershell': 'Windows PowerShell blue theme'
+            'powershell': 'Windows PowerShell blue theme',
+            'executive': '⭐ Premium professional theme with gold accents'
         };
     }
 }; 

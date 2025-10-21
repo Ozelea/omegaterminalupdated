@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     newInputSection.style.cssText = 'display: flex !important; width: calc(100vw - 40px) !important; max-width: calc(100vw - 40px) !important; box-sizing: border-box !important; background: rgba(255,255,255,0.05) !important; border: 1px solid #ffffff !important; border-radius: 5px !important; padding: 15px !important; margin: 0 !important; overflow: hidden !important;';
                     newInputSection.innerHTML = `
                                                   <div class="input-line" style="display: flex !important; width: 100% !important; align-items: center;">
-                              <span class="input-prompt">root@omega-Terminal:~$</span>
+                              <span class="input-prompt">Ω Terminal:~$</span>
                                                              <input type="text" class="input-field" id="commandInput" placeholder="" autocomplete="off" style="flex: 1 !important; width: 100% !important; min-width: 0 !important; background: none !important; border: none !important; color: #ffffff !important; font-family: 'Courier New', monospace !important; outline: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; overflow: visible !important;">
                           </div>
                     `;

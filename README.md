@@ -145,6 +145,13 @@ help                         # View all available commands
 - `profile` - Open profile management
 - `profile apikeys` - Manage API keys
 
+### Media Commands
+- `spotify open` - Open Spotify music player
+- `spotify search <query>` - Search and play music
+- `youtube open` - Open YouTube video player  
+- `youtube search <query>` - Search and watch videos
+- `yt` / `video` - Aliases for YouTube
+
 ---
 
 ## Project Structure
@@ -253,12 +260,20 @@ Enhance functionality with your own API keys:
 ### Themes
 Switch between multiple visual themes:
 ```bash
-theme chatgpt      # Conversational AI interface
-theme discord      # Discord-style chat
-theme windows95    # Retro DOS interface
-theme aol          # 90s instant messenger
-theme modern       # Default modern theme
+theme executive    # ⭐ NEW! Premium professional theme with gold accents
+theme dark         # Default dark terminal theme
+theme light        # Light mode with dark text
+theme matrix       # Green-on-black Matrix style
+theme retro        # Retro amber terminal
+theme powershell   # Windows PowerShell blue theme
 ```
+
+**New: Executive Theme** - A premium, professional UI with:
+- Luxurious gold & navy color scheme
+- Glass-morphism effects
+- Smooth animations
+- Professional typography
+- Perfect for presentations and professional use
 
 ---
 

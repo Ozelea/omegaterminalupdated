@@ -9,9 +9,10 @@ console.log('[DEBUG] Loading ChainGPT NFT Generator module...');
 const ChainGPTNFT = {
     // Configuration
     config: {
-        apiKey: null,
+        // Default API key provided for Omega Terminal users
+        apiKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzM2ZGQyZmRiMjk3NzdjMmM5MWE0MzciLCJpYXQiOjE3MzE2MjQyMzl9.vG8xW5tQVqPwJxqCqTqGQp_GiFWxqPKJPTqpR_1MrfI',
         baseUrl: 'https://api.chaingpt.org',
-        initialized: false
+        initialized: true  // Auto-initialized with default key
     },
     
     // Alternative base URLs to try
@@ -75,13 +76,18 @@ const ChainGPTNFT = {
      * Get API key from storage or config
      */
     getApiKey: function() {
-        if (this.config.apiKey) return this.config.apiKey;
+        // Check for user's custom API key first
         const stored = localStorage.getItem('chaingpt-api-key');
         if (stored) {
             this.config.apiKey = stored;
             this.config.initialized = true;
+            return stored;
         }
-        return stored;
+        
+        // Fall back to default API key
+        if (this.config.apiKey) return this.config.apiKey;
+        
+        return this.config.apiKey; // Return default key
     },
 
     /**
@@ -97,7 +103,7 @@ const ChainGPTNFT = {
     enhancePrompt: async function(prompt) {
         const apiKey = this.getApiKey();
         if (!apiKey) {
-            throw new Error('Not initialized. Use: nft init <api-key>');
+            throw new Error('ChainGPT API not available. Please try again.');
         }
 
         const response = await fetch(`${this.config.baseUrl}/nft/enhancePrompt`, {
@@ -123,7 +129,7 @@ const ChainGPTNFT = {
     generateImage: async function(options) {
         const apiKey = this.getApiKey();
         if (!apiKey) {
-            throw new Error('Not initialized. Use: nft init <api-key>');
+            throw new Error('ChainGPT API not available. Please try again.');
         }
 
         // Use the correct payload structure that we know works
@@ -296,7 +302,7 @@ const ChainGPTNFT = {
     mintNFT: async function(options) {
         const apiKey = this.getApiKey();
         if (!apiKey) {
-            throw new Error('Not initialized. Use: nft init <api-key>');
+            throw new Error('ChainGPT API not available. Please try again.');
         }
 
         const payload = {
@@ -321,8 +327,29 @@ const ChainGPTNFT = {
         });
 
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Failed to mint NFT');
+            let errorMessage = 'Failed to mint NFT';
+            try {
+                const error = await response.json();
+                errorMessage = error.error || error.message || errorMessage;
+            } catch (e) {
+                // If response is not JSON, use status text
+                errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+            }
+            
+            // Provide more specific error messages
+            if (response.status === 401) {
+                errorMessage = 'Invalid API key. Please check your ChainGPT API key.';
+            } else if (response.status === 400) {
+                errorMessage = 'Invalid request. Please check your collection ID and parameters.';
+            } else if (response.status === 403) {
+                errorMessage = 'Insufficient credits. Please add credits to your ChainGPT account.';
+            } else if (response.status === 404) {
+                errorMessage = 'Collection not found. Please verify your collection ID.';
+            } else if (response.status >= 500) {
+                errorMessage = 'ChainGPT server error. Please try again later.';
+            }
+            
+            throw new Error(errorMessage);
         }
 
         return await response.json();
@@ -334,7 +361,7 @@ const ChainGPTNFT = {
     getChains: async function() {
         const apiKey = this.getApiKey();
         if (!apiKey) {
-            throw new Error('Not initialized. Use: nft init <api-key>');
+            throw new Error('ChainGPT API not available. Please try again.');
         }
 
         const response = await fetch(`${this.config.baseUrl}/nft/get-chains`, {
@@ -454,8 +481,13 @@ const ChainGPTCommands = {
      */
     handleInit: async function(terminal, args) {
         if (args.length < 2) {
-            terminal.log('❌ Usage: nft init <api-key>', 'error');
-            terminal.log('💡 Get your API key from: https://api.chaingpt.org', 'info');
+            terminal.log('ℹ️ ChainGPT NFT Generator is already configured!', 'info');
+            terminal.log('✅ Default API key is active - no setup needed!', 'success');
+            terminal.log('💡 Just use: nft generate "your prompt"', 'info');
+            terminal.log('');
+            terminal.log('🔑 Want to use your own API key?', 'info');
+            terminal.log('  Usage: nft init <your-api-key>', 'output');
+            terminal.log('  Get key from: https://api.chaingpt.org', 'output');
             return;
         }
 
@@ -464,7 +496,7 @@ const ChainGPTCommands = {
 
         if (result.success) {
             terminal.log('✅ ' + result.message, 'success');
-            terminal.log('🎨 You can now generate AI NFTs!', 'success');
+            terminal.log('🎨 Now using your custom API key!', 'success');
             terminal.log('💡 Try: nft generate "a futuristic city"', 'info');
         } else {
             terminal.log('❌ ' + result.error, 'error');
@@ -475,8 +507,10 @@ const ChainGPTCommands = {
      * Generate NFT
      */
     handleGenerate: async function(terminal, args) {
+        // Now works automatically with default API key!
+        // Users can optionally use their own key with: nft init <api-key>
         if (!ChainGPTNFT.isInitialized()) {
-            terminal.log('❌ Not initialized. Use: nft init <api-key>', 'error');
+            terminal.log('❌ ChainGPT system error. Please try again or use: nft init <your-key>', 'error');
             return;
         }
 
@@ -562,30 +596,135 @@ const ChainGPTCommands = {
                 images.forEach((img, index) => {
                     // Enhanced NFT display with futuristic styling
                     const nftHtml = `
-                        <div style="background: linear-gradient(135deg, rgba(0,255,255,0.08), rgba(0,0,0,0.95)); border: 2px solid rgba(0,255,255,0.4); border-radius: 16px; padding: 24px; margin: 20px 0; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1); position: relative; overflow: hidden;">
+                        <div class="nft-display-container" style="
+                            background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(15,15,26,0.95)); 
+                            border: 1px solid rgba(0,212,255,0.25); 
+                            border-radius: 16px; 
+                            padding: 24px; 
+                            margin: 20px 0; 
+                            backdrop-filter: blur(20px); 
+                            box-shadow: 0 8px 32px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08); 
+                            position: relative; 
+                            overflow: hidden;
+                            transition: all 0.3s ease;
+                        ">
                             <!-- Animated background effect -->
-                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(0,255,255,0.03) 50%, transparent 70%); animation: shimmer 3s infinite; pointer-events: none;"></div>
+                            <div style="
+                                position: absolute; 
+                                top: 0; 
+                                left: 0; 
+                                right: 0; 
+                                bottom: 0; 
+                                background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.02) 50%, transparent 70%); 
+                                animation: shimmer 4s infinite; 
+                                pointer-events: none;
+                            "></div>
                             
                             <div style="text-align: center; margin-bottom: 24px; position: relative; z-index: 1;">
-                                <h3 style="color: #00FFFF; margin: 0 0 16px 0; font-size: 1.6em; font-weight: 600; text-shadow: 0 0 10px rgba(0,255,255,0.5); letter-spacing: 1px;">🎨 GENERATED NFT #${index + 1}</h3>
-                                <div style="background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,20,0.9)); border: 1px solid rgba(0,255,255,0.3); border-radius: 12px; padding: 20px; display: inline-block; box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);">
-                                    <img src="${img.url}" alt="Generated NFT" style="max-width: 500px; max-height: 500px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.6); border: 1px solid rgba(0,255,255,0.2);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                    <div style="display: none; width: 500px; height: 500px; background: linear-gradient(135deg, #001a1a, #003333); border: 1px solid rgba(0,255,255,0.3); border-radius: 8px; align-items: center; justify-content: center; color: #00FFFF; font-size: 3em; text-shadow: 0 0 20px rgba(0,255,255,0.8);">🎨</div>
+                                <h3 style="
+                                    color: var(--cyber-blue); 
+                                    margin: 0 0 16px 0; 
+                                    font-size: 1.4em; 
+                                    font-weight: 600; 
+                                    text-shadow: 0 0 8px rgba(0,212,255,0.4); 
+                                    letter-spacing: 0.5px;
+                                    font-family: var(--font-tech);
+                                ">🎨 GENERATED NFT #${index + 1}</h3>
+                                <div style="
+                                    background: linear-gradient(135deg, rgba(10,10,15,0.8), rgba(26,26,40,0.9)); 
+                                    border: 1px solid rgba(0,212,255,0.2); 
+                                    border-radius: 12px; 
+                                    padding: 20px; 
+                                    display: inline-block; 
+                                    box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+                                    transition: all 0.3s ease;
+                                ">
+                                    <img src="${img.url}" alt="Generated NFT" style="
+                                        max-width: 400px; 
+                                        max-height: 400px; 
+                                        border-radius: 8px; 
+                                        box-shadow: 0 4px 16px rgba(0,0,0,0.4); 
+                                        border: 1px solid rgba(0,212,255,0.15);
+                                        transition: all 0.3s ease;
+                                    " onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div style="
+                                        display: none; 
+                                        width: 400px; 
+                                        height: 400px; 
+                                        background: linear-gradient(135deg, #0a0a0f, #1a1a28); 
+                                        border: 1px solid rgba(0,212,255,0.2); 
+                                        border-radius: 8px; 
+                                        align-items: center; 
+                                        justify-content: center; 
+                                        color: var(--cyber-blue); 
+                                        font-size: 3em; 
+                                        text-shadow: 0 0 20px rgba(0,212,255,0.6);
+                                    ">🎨</div>
                                 </div>
                             </div>
                             
-                            <div style="background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(20,20,20,0.8)); border: 1px solid rgba(0,255,255,0.2); border-radius: 12px; padding: 20px; margin: 20px 0; position: relative; z-index: 1;">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.95em; color: #E0E0E0;">
-                                    <div style="display: flex; align-items: center; gap: 8px;"><span style="color: #00FFFF; font-weight: 600;">📝</span><span style="color: #FFFFFF; font-weight: 500;">Prompt:</span><span style="color: #B0B0B0;">${options.prompt}</span></div>
+                            <div style="
+                                background: linear-gradient(135deg, rgba(10,10,15,0.6), rgba(26,26,40,0.7)); 
+                                border: 1px solid rgba(0,212,255,0.15); 
+                                border-radius: 12px; 
+                                padding: 20px; 
+                                margin: 20px 0; 
+                                position: relative; 
+                                z-index: 1;
+                            ">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.9em; color: #E0E0E0; font-family: var(--font-tech);">
+                                    <div style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--cyber-blue); font-weight: 600;">📝</span><span style="color: #FFFFFF; font-weight: 500;">Prompt:</span><span style="color: #B0B0B0;">${options.prompt}</span></div>
                                     <div style="display: flex; align-items: center; gap: 8px;"><span style="color: #00FFFF; font-weight: 600;">🎯</span><span style="color: #FFFFFF; font-weight: 500;">Model:</span><span style="color: #B0B0B0;">${options.model}</span></div>
                                     <div style="display: flex; align-items: center; gap: 8px;"><span style="color: #00FFFF; font-weight: 600;">🎨</span><span style="color: #FFFFFF; font-weight: 500;">Style:</span><span style="color: #B0B0B0;">${options.style || 'photographic'}</span></div>
                                     <div style="display: flex; align-items: center; gap: 8px;"><span style="color: #00FFFF; font-weight: 600;">📏</span><span style="color: #FFFFFF; font-weight: 500;">Size:</span><span style="color: #B0B0B0;">${options.width}x${options.height}</span></div>
                                 </div>
                             </div>
                             
-                            <div style="text-align: center; margin-top: 20px; position: relative; z-index: 1;">
-                                <button onclick="window.open('${img.url}', '_blank')" style="background: linear-gradient(135deg, #00FFFF, #0080FF); color: #000; border: 1px solid rgba(0,255,255,0.5); padding: 14px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; margin: 0 8px; box-shadow: 0 4px 16px rgba(0,255,255,0.3), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,255,255,0.3), inset 0 1px 0 rgba(255,255,255,0.2)';">🔍 VIEW FULL SIZE</button>
-                                <button onclick="navigator.clipboard.writeText('${img.url}')" style="background: linear-gradient(135deg, #00FF80, #00CC66); color: #000; border: 1px solid rgba(0,255,128,0.5); padding: 14px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; margin: 0 8px; box-shadow: 0 4px 16px rgba(0,255,128,0.3), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,128,0.4), inset 0 1px 0 rgba(255,255,255,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,255,128,0.3), inset 0 1px 0 rgba(255,255,255,0.2)';">📋 COPY URL</button>
+                            <div style="
+                                display: flex; 
+                                gap: 12px; 
+                                justify-content: center; 
+                                margin-top: 20px; 
+                                position: relative; 
+                                z-index: 1;
+                                flex-wrap: wrap;
+                            ">
+                                <button onclick="window.open('${img.url}', '_blank')" style="
+                                    background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.05)); 
+                                    color: var(--cyber-blue); 
+                                    border: 1px solid rgba(0,212,255,0.3); 
+                                    padding: 10px 20px; 
+                                    border-radius: 6px; 
+                                    cursor: pointer; 
+                                    font-weight: 500; 
+                                    box-shadow: 0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                    transition: all 0.3s ease; 
+                                    font-family: var(--font-tech);
+                                    font-size: 0.8em;
+                                    letter-spacing: 0.3px;
+                                    position: relative;
+                                    overflow: hidden;
+                                " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,212,255,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,212,255,0.3)';">
+                                    <span style="margin-right: 6px;">🔍</span>View Full Size
+                                </button>
+                                <button onclick="navigator.clipboard.writeText('${img.url}'); window.terminal && window.terminal.log('📋 Image URL copied to clipboard', 'success');" style="
+                                    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.05)); 
+                                    color: var(--matrix-green); 
+                                    border: 1px solid rgba(0,255,136,0.3); 
+                                    padding: 10px 20px; 
+                                    border-radius: 6px; 
+                                    cursor: pointer; 
+                                    font-weight: 500; 
+                                    box-shadow: 0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                    transition: all 0.3s ease; 
+                                    font-family: var(--font-tech);
+                                    font-size: 0.8em;
+                                    letter-spacing: 0.3px;
+                                    position: relative;
+                                    overflow: hidden;
+                                " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,255,136,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,255,136,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,255,136,0.3)';">
+                                    <span style="margin-right: 6px;">📋</span>Copy URL
+                                </button>
                             </div>
                         </div>
                         
@@ -719,49 +858,85 @@ const ChainGPTCommands = {
         }
 
         if (args.length < 2) {
-            terminal.log('❌ Usage: nft mint <collection-id>', 'error');
+            terminal.log('❌ Usage: nft mint <collection-id> [name] [description] [symbol] [chain]', 'error');
+            terminal.log('', 'output');
+            terminal.log('📝 Required Parameters:', 'info');
+            terminal.log('  collection-id: Your ChainGPT collection ID', 'output');
+            terminal.log('  name: NFT name (optional, defaults to "AI Generated NFT")', 'output');
+            terminal.log('  description: NFT description (optional, defaults to auto-generated)', 'output');
+            terminal.log('  symbol: NFT symbol (optional, defaults to "OMEGA")', 'output');
+            terminal.log('  chain: Blockchain network (optional, defaults to "BNB Smart Chain (Mainnet)")', 'output');
+            terminal.log('', 'output');
+            terminal.log('🎯 Examples:', 'info');
+            terminal.log('  nft mint 68f782c18f8fe32acc37a24e', 'output');
+            terminal.log('  nft mint 68f782c18f8fe32acc37a24e "My AI Art" "Generated with ChainGPT" "AIART"', 'output');
+            terminal.log('  nft mint 68f782c18f8fe32acc37a24e "Cyberpunk Robot" "AI-generated cyberpunk artwork" "CYBER" "Ethereum (Mainnet)"', 'output');
+            terminal.log('', 'output');
+            terminal.log('💡 Use "nft chains" to see supported networks', 'info');
             return;
         }
 
         const collectionId = args[1];
+        const name = args[2] || 'AI Generated NFT';
+        const description = args[3] || 'Created with ChainGPT AI NFT Generator via Omega Terminal';
+        const symbol = args[4] || 'OMEGA';
+        const chain = args[5] || 'BNB Smart Chain (Mainnet)';
         
         terminal.log('⛏️  Minting NFT...', 'info');
+        terminal.log('', 'output');
+        terminal.log('📋 Minting Details:', 'info');
+        terminal.log(`  Collection ID: ${collectionId}`, 'output');
+        terminal.log(`  Name: ${name}`, 'output');
+        terminal.log(`  Description: ${description}`, 'output');
+        terminal.log(`  Symbol: ${symbol}`, 'output');
+        terminal.log(`  Chain: ${chain}`, 'output');
+        terminal.log('', 'output');
 
         try {
-            // Get mint details interactively
-            terminal.log('');
-            terminal.log('📝 NFT Metadata Required:', 'info');
-            terminal.log('💡 You will need: name, description, symbol', 'info');
-            terminal.log('');
-            
             const options = {
                 collectionId: collectionId,
-                name: 'AI Generated NFT',
-                description: 'Created with ChainGPT AI NFT Generator via Omega Terminal',
-                symbol: 'OMEGA'
+                name: name,
+                description: description,
+                symbol: symbol,
+                chain: chain
             };
 
+            terminal.log('🔄 Sending mint request to ChainGPT...', 'info');
             const result = await ChainGPTNFT.mintNFT(options);
             
             terminal.log('✅ NFT Minted Successfully!', 'success');
-            terminal.log('');
+            terminal.log('', 'output');
             
             if (result.data) {
                 if (result.data.image) {
-                    terminal.log(`🖼️  Image: ${result.data.image}`, 'info');
+                    terminal.log(`🖼️  Image URL: ${result.data.image}`, 'info');
                 }
                 if (result.data.metadata) {
-                    terminal.log(`📄 Metadata: ${result.data.metadata}`, 'info');
+                    terminal.log(`📄 Metadata URL: ${result.data.metadata}`, 'info');
                 }
                 if (result.data.transactionHash) {
-                    terminal.log(`🔗 Transaction: ${result.data.transactionHash}`, 'info');
+                    terminal.log(`🔗 Transaction Hash: ${result.data.transactionHash}`, 'info');
+                }
+                if (result.data.tokenId) {
+                    terminal.log(`🆔 Token ID: ${result.data.tokenId}`, 'info');
+                }
+                if (result.data.contractAddress) {
+                    terminal.log(`📄 Contract: ${result.data.contractAddress}`, 'info');
                 }
             }
             
-            terminal.log('');
-            terminal.log('💡 Use: nft chains (to see supported networks)', 'info');
+            terminal.log('', 'output');
+            terminal.log('🎉 Your NFT has been successfully minted on the blockchain!', 'success');
+            terminal.log('💡 Use "nft gallery" to view all your generated NFTs', 'info');
         } catch (error) {
             terminal.log(`❌ Minting failed: ${error.message}`, 'error');
+            terminal.log('', 'output');
+            terminal.log('🔍 Troubleshooting:', 'info');
+            terminal.log('  • Check your API key: nft status', 'output');
+            terminal.log('  • Verify collection ID is correct', 'output');
+            terminal.log('  • Ensure you have sufficient credits', 'output');
+            terminal.log('  • Check supported chains: nft chains', 'output');
+            terminal.log('  • Verify network connectivity', 'output');
         }
     },
 
@@ -855,14 +1030,14 @@ const ChainGPTCommands = {
     handleHelp: function(terminal) {
         terminal.log('=== ChainGPT AI NFT Generator - Detailed Help ===', 'info');
         terminal.log('');
-        terminal.log('📖 GETTING STARTED', 'success');
-        terminal.log('  1. Get API key: https://api.chaingpt.org', 'output');
-        terminal.log('  2. Initialize: nft init <api-key>', 'output');
-        terminal.log('  3. Generate: nft generate "your prompt"', 'output');
+        terminal.log('✨ READY TO USE!', 'success');
+        terminal.log('  ChainGPT NFT Generator is pre-configured and ready!', 'output');
+        terminal.log('  Just type: nft generate "your prompt"', 'output');
+        terminal.log('  No API key setup required! 🎉', 'info');
         terminal.log('');
         terminal.log('🎨 COMMANDS', 'success');
-        terminal.log('  nft init <api-key>', 'info');
-        terminal.log('    Set up your ChainGPT API key', 'output');
+        terminal.log('  nft generate "<prompt>" [options]', 'info');
+        terminal.log('    Generate AI NFT image from text (works immediately!)', 'output');
         terminal.log('');
         terminal.log('  nft generate "<prompt>" [options]', 'info');
         terminal.log('    Generate AI NFT image from text', 'output');
@@ -874,8 +1049,9 @@ const ChainGPTCommands = {
         terminal.log('  nft enhance "<prompt>"', 'info');
         terminal.log('    Improve your prompt with AI (0.5 credits)', 'output');
         terminal.log('');
-        terminal.log('  nft mint <collection-id>', 'info');
-        terminal.log('    Mint your generated NFT on-chain', 'output');
+        terminal.log('  nft mint <collection-id> [name] [description] [symbol] [chain]', 'info');
+        terminal.log('    Mint your generated NFT on-chain with custom metadata', 'output');
+        terminal.log('    Example: nft mint 68f782c18f8fe32acc37a24e "My AI Art" "Generated with ChainGPT" "AIART"', 'output');
         terminal.log('');
         terminal.log('  nft models', 'info');
         terminal.log('    List available AI models', 'output');
@@ -895,6 +1071,9 @@ const ChainGPTCommands = {
         terminal.log('  nft gallery', 'info');
         terminal.log('    View all your generated NFTs', 'output');
         terminal.log('');
+        terminal.log('  nft init <api-key> (optional)', 'info');
+        terminal.log('    Use your own ChainGPT API key if you prefer', 'output');
+        terminal.log('');
         terminal.log('💰 PRICING', 'success');
         terminal.log('  Standard models: 1 credit per image', 'output');
         terminal.log('  DALL-E 3: 4.75 credits per image', 'output');
@@ -906,6 +1085,8 @@ const ChainGPTCommands = {
         terminal.log('  nft generate "cute robot" --style=3d-model', 'output');
         terminal.log('  nft generate "epic dragon" --model=Dale3 --enhance', 'output');
         terminal.log('  nft enhance "cat wizard"', 'output');
+        terminal.log('  nft mint 68f782c18f8fe32acc37a24e', 'output');
+        terminal.log('  nft mint 68f782c18f8fe32acc37a24e "Cyberpunk Art" "AI-generated artwork" "CYBER"', 'output');
         terminal.log('');
         terminal.log('🔗 RESOURCES', 'success');
         terminal.log('  API Dashboard: https://api.chaingpt.org', 'output');
@@ -918,11 +1099,12 @@ const ChainGPTCommands = {
      */
     handleTest: async function(terminal) {
         if (!ChainGPTNFT.isInitialized()) {
-            terminal.log('❌ Not initialized. Use: nft init <api-key>', 'error');
+            terminal.log('❌ ChainGPT system error', 'error');
             return;
         }
 
         terminal.log('🧪 Testing ChainGPT API connection...', 'info');
+        terminal.log('✅ Using default Omega Terminal API key', 'success');
         
         const apiKey = ChainGPTNFT.getApiKey();
         terminal.log(`🔑 API Key: ${apiKey.substring(0, 8)}...`, 'info');
@@ -1027,34 +1209,177 @@ const ChainGPTCommands = {
         terminal.log(`📊 Total NFTs: ${gallery.length}`, 'info');
         terminal.log('');
 
-        // Display gallery in a grid
+        // Display gallery in a grid with futuristic styling
         const galleryHtml = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin: 24px 0;">
                 ${gallery.map((nft, index) => `
-                    <div style="background: linear-gradient(135deg, rgba(138,43,226,0.1), rgba(255,255,255,0.95)); border: 2px solid rgba(138,43,226,0.3); border-radius: 16px; padding: 16px; backdrop-filter: blur(20px); box-shadow: 0 8px 24px rgba(138,43,226,0.2);">
-                        <div style="text-align: center; margin-bottom: 12px;">
-                            <h4 style="color: #8A2BE2; margin: 0 0 8px 0; font-size: 1.1em;">🎨 NFT #${index + 1}</h4>
-                            <div style="background: rgba(255,255,255,0.9); border-radius: 12px; padding: 12px; display: inline-block;">
-                                <img src="${nft.url}" alt="NFT" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 4px 12px rgba(138,43,226,0.3);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div style="display: none; width: 200px; height: 200px; background: linear-gradient(135deg, #8A2BE2, #9A4CF0); border-radius: 8px; align-items: center; justify-content: center; color: #fff; font-size: 2em;">🎨</div>
+                    <div class="nft-gallery-card" style="
+                        background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(15,15,26,0.95)); 
+                        border: 1px solid rgba(0,212,255,0.25); 
+                        border-radius: 16px; 
+                        padding: 20px; 
+                        backdrop-filter: blur(20px); 
+                        box-shadow: 0 8px 32px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08); 
+                        position: relative; 
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                    ">
+                        <!-- Animated background effect -->
+                        <div style="
+                            position: absolute; 
+                            top: 0; 
+                            left: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.02) 50%, transparent 70%); 
+                            animation: shimmer 4s infinite; 
+                            pointer-events: none;
+                        "></div>
+                        
+                        <div style="text-align: center; margin-bottom: 16px; position: relative; z-index: 1;">
+                            <h4 style="
+                                color: var(--cyber-blue); 
+                                margin: 0 0 12px 0; 
+                                font-size: 1.2em; 
+                                font-weight: 600;
+                                text-shadow: 0 0 8px rgba(0,212,255,0.4);
+                                letter-spacing: 0.5px;
+                                font-family: var(--font-tech);
+                            ">🎨 NFT #${index + 1}</h4>
+                            <div style="
+                                background: linear-gradient(135deg, rgba(10,10,15,0.8), rgba(26,26,40,0.9)); 
+                                border: 1px solid rgba(0,212,255,0.2); 
+                                border-radius: 12px; 
+                                padding: 16px; 
+                                display: inline-block; 
+                                box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+                                transition: all 0.3s ease;
+                            ">
+                                <img src="${nft.url}" alt="NFT" style="
+                                    max-width: 220px; 
+                                    max-height: 220px; 
+                                    border-radius: 8px; 
+                                    box-shadow: 0 4px 16px rgba(0,0,0,0.4); 
+                                    border: 1px solid rgba(0,212,255,0.15);
+                                    transition: all 0.3s ease;
+                                " onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="
+                                    display: none; 
+                                    width: 220px; 
+                                    height: 220px; 
+                                    background: linear-gradient(135deg, #0a0a0f, #1a1a28); 
+                                    border: 1px solid rgba(0,212,255,0.2); 
+                                    border-radius: 8px; 
+                                    align-items: center; 
+                                    justify-content: center; 
+                                    color: var(--cyber-blue); 
+                                    font-size: 3em; 
+                                    text-shadow: 0 0 20px rgba(0,212,255,0.6);
+                                ">🎨</div>
                             </div>
                         </div>
                         
-                        <div style="background: rgba(255,255,255,0.8); border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 0.85em;">
-                            <div style="margin-bottom: 4px;"><strong>📝 Prompt:</strong> ${nft.prompt}</div>
-                            <div style="margin-bottom: 4px;"><strong>🎯 Model:</strong> ${nft.model}</div>
-                            <div style="margin-bottom: 4px;"><strong>🎨 Style:</strong> ${nft.style}</div>
-                            <div style="margin-bottom: 4px;"><strong>📅 Date:</strong> ${new Date(nft.timestamp).toLocaleDateString()}</div>
+                        <div style="
+                            background: linear-gradient(135deg, rgba(10,10,15,0.6), rgba(26,26,40,0.7)); 
+                            border: 1px solid rgba(0,212,255,0.15); 
+                            border-radius: 12px; 
+                            padding: 16px; 
+                            margin: 16px 0; 
+                            position: relative;
+                            z-index: 1;
+                        ">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85em; color: #E0E0E0; font-family: var(--font-tech);">
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: var(--cyber-blue); font-weight: 600;">📝</span><span style="color: #FFFFFF; font-weight: 500;">Prompt:</span></div>
+                                <div style="color: #B0B0B0; word-break: break-word;">${nft.prompt}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">🎯</span><span style="color: #FFFFFF; font-weight: 500;">Model:</span></div>
+                                <div style="color: #B0B0B0;">${nft.model}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">🎨</span><span style="color: #FFFFFF; font-weight: 500;">Style:</span></div>
+                                <div style="color: #B0B0B0;">${nft.style}</div>
+                                <div style="display: flex; align-items: center; gap: 6px;"><span style="color: #00FFFF; font-weight: 600;">📅</span><span style="color: #FFFFFF; font-weight: 500;">Date:</span></div>
+                                <div style="color: #B0B0B0;">${new Date(nft.timestamp).toLocaleDateString()}</div>
+                            </div>
                         </div>
                         
-                        <div style="text-align: center;">
-                            <button onclick="window.open('${nft.url}', '_blank')" style="background: linear-gradient(135deg, #8A2BE2, #9A4CF0); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 0 4px; font-size: 0.8em; box-shadow: 0 2px 8px rgba(138,43,226,0.3);">🔍 View</button>
-                            <button onclick="navigator.clipboard.writeText('${nft.url}')" style="background: linear-gradient(135deg, #34C759, #30D158); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 0 4px; font-size: 0.8em; box-shadow: 0 2px 8px rgba(52,199,89,0.3);">📋 Copy</button>
-                            ${nft.collectionId ? `<button onclick="window.terminal.executeCommand('nft mint ${nft.collectionId}')" style="background: linear-gradient(135deg, #FF9500, #FFA726); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 0 4px; font-size: 0.8em; box-shadow: 0 2px 8px rgba(255,149,0,0.3);">⛏️ Mint</button>` : ''}
+                        <div style="
+                            display: flex; 
+                            gap: 8px; 
+                            justify-content: center; 
+                            margin-top: 16px; 
+                            position: relative;
+                            z-index: 1;
+                            flex-wrap: wrap;
+                        ">
+                            <button onclick="window.open('${nft.url}', '_blank')" style="
+                                background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.05)); 
+                                color: var(--cyber-blue); 
+                                border: 1px solid rgba(0,212,255,0.3); 
+                                padding: 8px 16px; 
+                                border-radius: 6px; 
+                                cursor: pointer; 
+                                font-weight: 500; 
+                                box-shadow: 0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                transition: all 0.3s ease; 
+                                font-family: var(--font-tech);
+                                font-size: 0.75em;
+                                letter-spacing: 0.3px;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,212,255,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,212,255,0.3)';">
+                                <span style="margin-right: 4px;">🔍</span>View
+                            </button>
+                            <button onclick="navigator.clipboard.writeText('${nft.url}'); window.terminal && window.terminal.log('📋 NFT URL copied to clipboard', 'success');" style="
+                                background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.05)); 
+                                color: var(--matrix-green); 
+                                border: 1px solid rgba(0,255,136,0.3); 
+                                padding: 8px 16px; 
+                                border-radius: 6px; 
+                                cursor: pointer; 
+                                font-weight: 500; 
+                                box-shadow: 0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                transition: all 0.3s ease; 
+                                font-family: var(--font-tech);
+                                font-size: 0.75em;
+                                letter-spacing: 0.3px;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,255,136,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,255,136,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,255,136,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,255,136,0.3)';">
+                                <span style="margin-right: 4px;">📋</span>Copy
+                            </button>
+                            ${nft.collectionId ? `<button onclick="window.terminal.executeCommand('nft mint ${nft.collectionId}')" style="
+                                background: linear-gradient(135deg, rgba(255,149,0,0.1), rgba(255,149,0,0.05)); 
+                                color: #FF9500; 
+                                border: 1px solid rgba(255,149,0,0.3); 
+                                padding: 8px 16px; 
+                                border-radius: 6px; 
+                                cursor: pointer; 
+                                font-weight: 500; 
+                                box-shadow: 0 2px 8px rgba(255,149,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                transition: all 0.3s ease; 
+                                font-family: var(--font-tech);
+                                font-size: 0.75em;
+                                letter-spacing: 0.3px;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(255,149,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(255,149,0,0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(255,149,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,149,0,0.3)';">
+                                <span style="margin-right: 4px;">⛏️</span>Mint
+                            </button>` : ''}
                         </div>
                     </div>
                 `).join('')}
             </div>
+            
+            <style>
+                @keyframes shimmer {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(100%); }
+                }
+                
+                .nft-gallery-card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 40px rgba(0,212,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+                    border-color: rgba(0,212,255,0.35) !important;
+                }
+            </style>
         `;
 
         terminal.logHtml(galleryHtml, 'output');

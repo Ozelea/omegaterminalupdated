@@ -307,16 +307,67 @@ const ChainGPTChatCommands = {
                 
                 // Display response with beautiful formatting
                 const responseHtml = `
-                    <div style="background: linear-gradient(135deg, rgba(0,123,255,0.1), rgba(255,255,255,0.95)); border: 2px solid rgba(0,123,255,0.3); border-radius: 20px; padding: 20px; margin: 20px 0; backdrop-filter: blur(30px); box-shadow: 0 12px 40px rgba(0,123,255,0.2);">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <h3 style="color: #007BFF; margin: 0 0 10px 0; font-size: 1.5em;">🤖 ChainGPT Web3 AI</h3>
+                    <div class="chaingpt-chat-container" style="
+                        background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(15,15,26,0.95)); 
+                        border: 1px solid rgba(0,212,255,0.25); 
+                        border-radius: 16px; 
+                        padding: 24px; 
+                        margin: 20px 0; 
+                        backdrop-filter: blur(20px); 
+                        box-shadow: 0 8px 32px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.08); 
+                        position: relative; 
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                    ">
+                        <!-- Animated background effect -->
+                        <div style="
+                            position: absolute; 
+                            top: 0; 
+                            left: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.02) 50%, transparent 70%); 
+                            animation: shimmer 4s infinite; 
+                            pointer-events: none;
+                        "></div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px; position: relative; z-index: 1;">
+                            <h3 style="
+                                color: var(--cyber-blue); 
+                                margin: 0 0 10px 0; 
+                                font-size: 1.4em; 
+                                font-weight: 600;
+                                text-shadow: 0 0 8px rgba(0,212,255,0.4);
+                                letter-spacing: 0.5px;
+                                font-family: var(--font-tech);
+                            ">🤖 ChainGPT Web3 AI</h3>
                         </div>
                         
-                        <div style="background: rgba(255,255,255,0.9); border-radius: 16px; padding: 20px; margin: 16px 0; font-size: 1.1em; line-height: 1.6; color: #333;">
+                        <div style="
+                            background: linear-gradient(135deg, rgba(10,10,15,0.8), rgba(26,26,40,0.9)); 
+                            border: 1px solid rgba(0,212,255,0.15); 
+                            border-radius: 12px; 
+                            padding: 20px; 
+                            margin: 16px 0; 
+                            font-size: 1em; 
+                            line-height: 1.6; 
+                            color: #E0E0E0;
+                            font-family: var(--font-tech);
+                            position: relative;
+                            z-index: 1;
+                        ">
                             ${responseText.replace(/\n/g, '<br>')}
                         </div>
                         
-                        <div style="text-align: center; margin-top: 16px; font-size: 0.9em; color: #666;">
+                        <div style="
+                            text-align: center; 
+                            margin-top: 16px; 
+                            font-size: 0.85em; 
+                            color: #B0B0B0;
+                            font-family: var(--font-tech);
+                            position: relative;
+                            z-index: 1;
+                        ">
                             💰 Credits used: 0.5 | 🤖 Model: general_assistant
                         </div>
                     </div>
