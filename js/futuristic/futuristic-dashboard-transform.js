@@ -1,28 +1,28 @@
 // Futuristic Dashboard Transformation
 // Transforms the existing terminal into a 3-panel dashboard
 
-(function() {
-    'use strict';
-    
-    console.log('🚀 Loading Futuristic Dashboard Transform...');
-    
-    function transformToDashboard() {
-        console.log('🔧 Transforming terminal to futuristic dashboard...');
-        
-        // Wait for terminal to be ready
-        if (!document.getElementById('terminal')) {
-            console.log('⏳ Waiting for terminal...');
-            setTimeout(transformToDashboard, 100);
-            return;
-        }
-        
-        const terminal = document.getElementById('terminal');
-        if (!terminal) return;
-        
-        // Create dashboard wrapper
-        const dashboard = document.createElement('div');
-        dashboard.className = 'omega-dashboard';
-        dashboard.innerHTML = `
+(function () {
+  "use strict";
+
+  console.log("🚀 Loading Futuristic Dashboard Transform...");
+
+  function transformToDashboard() {
+    console.log("🔧 Transforming terminal to futuristic dashboard...");
+
+    // Wait for terminal to be ready
+    if (!document.getElementById("terminal")) {
+      console.log("⏳ Waiting for terminal...");
+      setTimeout(transformToDashboard, 100);
+      return;
+    }
+
+    const terminal = document.getElementById("terminal");
+    if (!terminal) return;
+
+    // Create dashboard wrapper
+    const dashboard = document.createElement("div");
+    dashboard.className = "omega-dashboard";
+    dashboard.innerHTML = `
         <!-- Header -->
         <header class="omega-header">
              <div class="header-brand">
@@ -43,10 +43,33 @@
                         <span id="futuristic-wallet-info">NO WALLET</span>
                     </div>
                     
-                    <button class="sidebar-button" id="header-ai-toggle" onclick="if(window.FuturisticDashboard){window.FuturisticDashboard.toggleAI()}" style="padding: 6px 12px; margin-right: 8px;" title="Toggle AI Mode">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/></svg>
-                        <span id="header-ai-label">AI</span>
-                    </button>
+                    <label for="headerAiProviderSelect" style="color: var(--cyber-blue-bright); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
+                    <select id="headerAiProviderSelect" title="Select AI Provider" style="
+                        background: rgba(0, 212, 255, 0.08);
+                        border: 1px solid rgba(0, 212, 255, 0.3);
+                        border-radius: 6px;
+                        padding: 6px 10px;
+                        color: var(--cyber-blue-bright);
+                        font-family: 'Courier New', monospace;
+                        font-size: 11px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        background-image: linear-gradient(45deg, transparent 50%, var(--cyber-blue-bright) 50%), linear-gradient(135deg, var(--cyber-blue-bright) 50%, transparent 50%);
+                        background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
+                        background-size: 5px 5px, 5px 5px;
+                        background-repeat: no-repeat;
+                        min-width: 120px;
+                        margin-right: 8px;
+                    ">
+                        <option value="off">Off</option>
+                        <option value="near">NEAR AI</option>
+                        <option value="openai">OpenAI</option>
+                    </select>
                     
                     <button class="sidebar-button" onclick="if(window.FuturisticDashboard){window.FuturisticDashboard.cycleTheme()}" style="padding: 6px 12px;" title="Cycle Color Scheme">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
@@ -661,6 +684,33 @@
                             <svg viewBox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5Z"/></svg>
                         </a>
                         <div class="terminal-divider"></div>
+                        <label for="wrapperAiProviderSelect" style="color: var(--cyber-blue-bright); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
+                        <select id="wrapperAiProviderSelect" title="Select AI Provider" style="
+                            background: rgba(0, 212, 255, 0.08);
+                            border: 1px solid rgba(0, 212, 255, 0.3);
+                            border-radius: 6px;
+                            padding: 6px 10px;
+                            color: var(--cyber-blue-bright);
+                            font-family: 'Courier New', monospace;
+                            font-size: 11px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            background-image: linear-gradient(45deg, transparent 50%, var(--cyber-blue-bright) 50%), linear-gradient(135deg, var(--cyber-blue-bright) 50%, transparent 50%);
+                            background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
+                            background-size: 5px 5px, 5px 5px;
+                            background-repeat: no-repeat;
+                            min-width: 120px;
+                            margin-right: 8px;
+                        ">
+                            <option value="off">Off</option>
+                            <option value="near">NEAR AI</option>
+                            <option value="openai">OpenAI</option>
+                        </select>
                         <button class="terminal-action-btn" onclick="window.FuturisticDashboard.toggleThemeMode()" id="theme-toggle-btn" title="Toggle Dark/Light Mode">
                             <svg viewBox="0 0 24 24"><path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
                             <span id="theme-mode-label">Light</span>
@@ -706,28 +756,66 @@
                 </div>
             </aside>
         `;
-        
-        // Insert dashboard before terminal
-        document.body.insertBefore(dashboard, terminal);
-        
-        // Move terminal into dashboard
-        const terminalWrapper = document.getElementById('terminal-wrapper');
-        terminalWrapper.appendChild(terminal);
-        
-        // Remove OLD terminal header from index.html (we have our own modern one)
-        const originalHeader = terminal.querySelector('.terminal-header');
-        if (originalHeader) {
-            originalHeader.style.display = 'none';
+
+    // Insert dashboard before terminal
+    document.body.insertBefore(dashboard, terminal);
+
+    // Move terminal into dashboard
+    const terminalWrapper = document.getElementById("terminal-wrapper");
+    terminalWrapper.appendChild(terminal);
+
+    // Initialize header AI provider dropdown(s)
+    setTimeout(() => {
+      const sel = document.getElementById("headerAiProviderSelect");
+      const selWrapper = document.getElementById("wrapperAiProviderSelect");
+      const applyInit = (control) => {
+        if (!control) return;
+        let provider = "off";
+        if (window.terminal && window.terminal.aiProvider) {
+          provider = window.terminal.aiProvider;
+        } else {
+          provider = localStorage.getItem("omega-ai-provider") || "off";
         }
-        
-        // Remove old tab bar from index.html
-        const oldTabBar = terminal.querySelector('.tab-bar');
-        if (oldTabBar) {
-            oldTabBar.style.display = 'none';
-        }
-        
-        // Style the terminal for dashboard
-        terminal.style.cssText = `
+        try {
+          control.value = provider;
+        } catch (e) {}
+        control.addEventListener("change", (e) => {
+          const val = e.target.value;
+          if (
+            window.terminal &&
+            typeof window.terminal.setAIProvider === "function"
+          ) {
+            window.terminal.setAIProvider(val);
+          } else {
+            localStorage.setItem("omega-ai-provider", val);
+          }
+          // Update sidebar label immediately
+          if (
+            window.FuturisticDashboard &&
+            typeof window.FuturisticDashboard.syncAIToggleState === "function"
+          ) {
+            window.FuturisticDashboard.syncAIToggleState();
+          }
+        });
+      };
+      applyInit(sel);
+      applyInit(selWrapper);
+    }, 0);
+
+    // Remove OLD terminal header from index.html (we have our own modern one)
+    const originalHeader = terminal.querySelector(".terminal-header");
+    if (originalHeader) {
+      originalHeader.style.display = "none";
+    }
+
+    // Remove old tab bar from index.html
+    const oldTabBar = terminal.querySelector(".tab-bar");
+    if (oldTabBar) {
+      oldTabBar.style.display = "none";
+    }
+
+    // Style the terminal for dashboard
+    terminal.style.cssText = `
             background: transparent !important;
             border: none !important;
             padding: 0 !important;
@@ -736,788 +824,841 @@
             display: flex !important;
             flex-direction: column !important;
         `;
-        
-        // Setup command input handling
-        window.FuturisticDashboard.setupCommandInput();
-        
-         // Start monitoring
-         window.FuturisticDashboard.startMonitoring();
-         
-         // Restore minimized sections
-         setTimeout(() => {
-             window.FuturisticDashboard.restoreMinimizedSections();
-         }, 100);
-        
-        // Replace header logo with SVG
+
+    // Setup command input handling
+    window.FuturisticDashboard.setupCommandInput();
+
+    // Start monitoring
+    window.FuturisticDashboard.startMonitoring();
+
+    // Restore minimized sections
+    setTimeout(() => {
+      window.FuturisticDashboard.restoreMinimizedSections();
+    }, 100);
+
+    // Replace header logo with SVG
+    setTimeout(() => {
+      if (window.OmegaSymbolLogo && window.OmegaSymbolLogo.replaceHeaderLogo) {
+        window.OmegaSymbolLogo.replaceHeaderLogo();
+        console.log("✅ Header logo initialized");
+      }
+    }, 100);
+
+    console.log("✅ Dashboard transformation complete!");
+  }
+
+  // Dashboard controller
+  window.FuturisticDashboard = {
+    commandCount: 0,
+    startTime: Date.now(),
+
+    executeCommand: function (cmd) {
+      console.log("Executing command:", cmd);
+      this.commandCount++;
+      const commandsEl = document.getElementById("futuristic-commands");
+      if (commandsEl) {
+        commandsEl.textContent = this.commandCount;
+      }
+
+      // Add to activity log
+      const activity = document.getElementById("futuristic-activity");
+      if (activity) {
+        const entry = document.createElement("div");
+        entry.style.padding = "4px 0";
+        entry.textContent = `• ${cmd}`;
+        activity.insertBefore(entry, activity.firstChild);
+
+        // Keep only last 10
+        while (activity.children.length > 10) {
+          activity.removeChild(activity.lastChild);
+        }
+      }
+
+      // Execute command properly
+      this.sendCommandToTerminal(cmd);
+    },
+
+    toggleSubActions: function (button, parentId) {
+      const subMenu = document.querySelector(
+        `.sub-actions[data-parent="${parentId}"]`
+      );
+      const expandIcon = button.querySelector(".expand-icon");
+
+      if (!subMenu) return;
+
+      // Close other sub-menus
+      document.querySelectorAll(".sub-actions").forEach((menu) => {
+        if (menu !== subMenu) {
+          menu.style.display = "none";
+          const otherButton = document.querySelector(
+            `.sidebar-expandable[onclick*="${menu.dataset.parent}"]`
+          );
+          if (otherButton) {
+            const otherIcon = otherButton.querySelector(".expand-icon");
+            if (otherIcon) otherIcon.style.transform = "rotate(0deg)";
+            otherButton.classList.remove("expanded");
+          }
+        }
+      });
+
+      // Toggle current menu
+      const isOpen = subMenu.style.display === "block";
+      subMenu.style.display = isOpen ? "none" : "block";
+      if (expandIcon) {
+        expandIcon.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
+      }
+      button.classList.toggle("expanded", !isOpen);
+    },
+
+    executeCommandWithInput: function (baseCmd, promptText) {
+      // Use terminal's input instead of popup
+      const terminal = window.terminal;
+      const input = document.getElementById("commandInput");
+
+      if (!terminal || !input) {
+        console.error("Terminal or input not found");
+        return;
+      }
+
+      // Show prompt in terminal
+      terminal.log("💡 " + promptText, "info");
+      terminal.log("", "output");
+
+      // Pre-fill the command input with the base command and a space
+      input.value = baseCmd + " ";
+
+      // Focus the input so user can type
+      input.focus();
+
+      // Position cursor at the end
+      setTimeout(() => {
+        input.setSelectionRange(input.value.length, input.value.length);
+      }, 0);
+    },
+
+    sendCommandToTerminal: function (cmd) {
+      const input = document.getElementById("commandInput");
+      if (!input) {
+        console.error("Command input not found");
+        return;
+      }
+
+      // Set the command value
+      input.value = cmd;
+
+      // Trigger the input event first
+      const inputEvent = new Event("input", { bubbles: true });
+      input.dispatchEvent(inputEvent);
+
+      // Create and dispatch keypress event (what terminal-core.js listens for)
+      const keypressEvent = new KeyboardEvent("keypress", {
+        key: "Enter",
+        code: "Enter",
+        keyCode: 13,
+        which: 13,
+        bubbles: true,
+        cancelable: true,
+      });
+
+      console.log("Dispatching keypress event for command:", cmd);
+      input.dispatchEvent(keypressEvent);
+
+      // Also try keydown as backup
+      const keydownEvent = new KeyboardEvent("keydown", {
+        key: "Enter",
+        code: "Enter",
+        keyCode: 13,
+        which: 13,
+        bubbles: true,
+        cancelable: true,
+      });
+      input.dispatchEvent(keydownEvent);
+    },
+
+    // Direct command execution (bypasses input field)
+    executeCommandDirect: function (cmd) {
+      console.log("🚀 Executing command directly:", cmd);
+      console.log("🔍 Terminal object available:", !!window.terminal);
+      console.log(
+        "🔍 Terminal executeCommand method:",
+        !!(
+          window.terminal &&
+          typeof window.terminal.executeCommand === "function"
+        )
+      );
+
+      // Increment command counter
+      this.commandCount++;
+      const commandsEl = document.getElementById("futuristic-commands");
+      if (commandsEl) {
+        commandsEl.textContent = this.commandCount;
+      }
+
+      // Try to use terminal's direct method if available
+      if (
+        window.terminal &&
+        typeof window.terminal.executeCommand === "function"
+      ) {
+        console.log("✅ Using terminal.executeCommand for:", cmd);
+        try {
+          window.terminal.executeCommand(cmd);
+          return;
+        } catch (error) {
+          console.error("❌ Error executing command:", error);
+          window.terminal.log(
+            `❌ Error executing command: ${error.message}`,
+            "error"
+          );
+          return;
+        }
+      }
+
+      // Try to use terminal's log method to show command
+      if (window.terminal && typeof window.terminal.log === "function") {
+        console.log("⚠️ Using terminal.log fallback for:", cmd);
+        window.terminal.log(`> ${cmd}`, "info");
+
+        // Simulate command processing
         setTimeout(() => {
-            if (window.OmegaSymbolLogo && window.OmegaSymbolLogo.replaceHeaderLogo) {
-                window.OmegaSymbolLogo.replaceHeaderLogo();
-                console.log('✅ Header logo initialized');
-            }
+          this.processCommandResult(cmd);
         }, 100);
-        
-        console.log('✅ Dashboard transformation complete!');
-    }
-    
-    // Dashboard controller
-    window.FuturisticDashboard = {
-        commandCount: 0,
-        startTime: Date.now(),
-        
-        executeCommand: function(cmd) {
-            console.log('Executing command:', cmd);
-            this.commandCount++;
-            const commandsEl = document.getElementById('futuristic-commands');
-            if (commandsEl) {
-                commandsEl.textContent = this.commandCount;
-            }
-            
-            // Add to activity log
-            const activity = document.getElementById('futuristic-activity');
-            if (activity) {
-                const entry = document.createElement('div');
-                entry.style.padding = '4px 0';
-                entry.textContent = `• ${cmd}`;
-                activity.insertBefore(entry, activity.firstChild);
-                
-                // Keep only last 10
-                while (activity.children.length > 10) {
-                    activity.removeChild(activity.lastChild);
-                }
-            }
-            
-            // Execute command properly
-            this.sendCommandToTerminal(cmd);
-        },
-        
-        toggleSubActions: function(button, parentId) {
-            const subMenu = document.querySelector(`.sub-actions[data-parent="${parentId}"]`);
-            const expandIcon = button.querySelector('.expand-icon');
-            
-            if (!subMenu) return;
-            
-            // Close other sub-menus
-            document.querySelectorAll('.sub-actions').forEach(menu => {
-                if (menu !== subMenu) {
-                    menu.style.display = 'none';
-                    const otherButton = document.querySelector(`.sidebar-expandable[onclick*="${menu.dataset.parent}"]`);
-                    if (otherButton) {
-                        const otherIcon = otherButton.querySelector('.expand-icon');
-                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                        otherButton.classList.remove('expanded');
-                    }
-                }
-            });
-            
-            // Toggle current menu
-            const isOpen = subMenu.style.display === 'block';
-            subMenu.style.display = isOpen ? 'none' : 'block';
-            if (expandIcon) {
-                expandIcon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-            }
-            button.classList.toggle('expanded', !isOpen);
-        },
-        
-        executeCommandWithInput: function(baseCmd, promptText) {
-            // Use terminal's input instead of popup
-            const terminal = window.terminal;
-            const input = document.getElementById('commandInput');
-            
-            if (!terminal || !input) {
-                console.error('Terminal or input not found');
-                return;
-            }
-            
-            // Show prompt in terminal
-            terminal.log('💡 ' + promptText, 'info');
-            terminal.log('', 'output');
-            
-            // Pre-fill the command input with the base command and a space
-            input.value = baseCmd + ' ';
-            
-            // Focus the input so user can type
-            input.focus();
-            
-            // Position cursor at the end
+        return;
+      }
+
+      // Fallback to input method
+      console.log("🔄 Using sendCommandToTerminal for:", cmd);
+      this.sendCommandToTerminal(cmd);
+    },
+
+    processCommandResult: function (cmd) {
+      // Handle common commands
+      const cmdLower = cmd.toLowerCase().trim();
+
+      switch (cmdLower) {
+        case "help":
+          window.terminal.log("Available commands:", "info");
+          window.terminal.log("• help - Show this help", "info");
+          window.terminal.log("• connect - Connect wallet", "info");
+          window.terminal.log("• balance - Check balance", "info");
+          window.terminal.log("• clear - Clear terminal", "info");
+          break;
+        case "clear":
+          const output = document.getElementById("terminalOutput");
+          if (output) {
+            output.innerHTML = "";
+          }
+          break;
+        case "connect":
+          window.terminal.log("Connecting to wallet...", "warning");
+          window.terminal.log("Please use browser wallet extension", "info");
+          break;
+        case "balance":
+          window.terminal.log("Balance: 0.00 ETH", "warning");
+          window.terminal.log("Connect wallet to see balance", "info");
+          break;
+        default:
+          window.terminal.log(`Command not found: ${cmd}`, "error");
+          window.terminal.log('Type "help" for available commands', "info");
+      }
+    },
+
+    // Handle manual command input from terminal
+    setupCommandInput: function () {
+      const input = document.getElementById("commandInput");
+      if (!input) return;
+
+      // Method 1: Hook into terminal's executeCommand if available
+      if (
+        window.terminal &&
+        typeof window.terminal.executeCommand === "function"
+      ) {
+        const originalExecute = window.terminal.executeCommand;
+        const self = this;
+
+        window.terminal.executeCommand = function (cmd) {
+          // Increment counter
+          self.commandCount++;
+          const commandsEl = document.getElementById("futuristic-commands");
+          if (commandsEl) {
+            commandsEl.textContent = self.commandCount;
+            // Add subtle flash effect
+            commandsEl.style.color = "var(--cyber-blue-bright)";
             setTimeout(() => {
-                input.setSelectionRange(input.value.length, input.value.length);
-            }, 0);
-        },
-        
-        sendCommandToTerminal: function(cmd) {
-            const input = document.getElementById('commandInput');
-            if (!input) {
-                console.error('Command input not found');
-                return;
-            }
-            
-            // Set the command value
-            input.value = cmd;
-            
-            // Trigger the input event first
-            const inputEvent = new Event('input', { bubbles: true });
-            input.dispatchEvent(inputEvent);
-            
-            // Create and dispatch keypress event (what terminal-core.js listens for)
-            const keypressEvent = new KeyboardEvent('keypress', {
-                key: 'Enter',
-                code: 'Enter',
-                keyCode: 13,
-                which: 13,
-                bubbles: true,
-                cancelable: true
-            });
-            
-            console.log('Dispatching keypress event for command:', cmd);
-            input.dispatchEvent(keypressEvent);
-            
-            // Also try keydown as backup
-            const keydownEvent = new KeyboardEvent('keydown', {
-                key: 'Enter',
-                code: 'Enter',
-                keyCode: 13,
-                which: 13,
-                bubbles: true,
-                cancelable: true
-            });
-            input.dispatchEvent(keydownEvent);
-        },
-        
-        // Direct command execution (bypasses input field)
-        executeCommandDirect: function(cmd) {
-            console.log('🚀 Executing command directly:', cmd);
-            console.log('🔍 Terminal object available:', !!window.terminal);
-            console.log('🔍 Terminal executeCommand method:', !!(window.terminal && typeof window.terminal.executeCommand === 'function'));
-            
-            // Increment command counter
+              commandsEl.style.color = "";
+            }, 200);
+          }
+
+          // Call original function
+          return originalExecute.apply(this, arguments);
+        };
+
+        console.log("✅ Command counter hooked into terminal.executeCommand");
+      }
+
+      // Method 2: Listen to command input keypress events
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && input.value.trim()) {
+          // Small delay to let terminal process first
+          setTimeout(() => {
             this.commandCount++;
-            const commandsEl = document.getElementById('futuristic-commands');
+            const commandsEl = document.getElementById("futuristic-commands");
             if (commandsEl) {
-                commandsEl.textContent = this.commandCount;
+              commandsEl.textContent = this.commandCount;
+              commandsEl.style.color = "var(--cyber-blue-bright)";
+              setTimeout(() => {
+                commandsEl.style.color = "";
+              }, 200);
             }
-            
-            // Try to use terminal's direct method if available
-            if (window.terminal && typeof window.terminal.executeCommand === 'function') {
-                console.log('✅ Using terminal.executeCommand for:', cmd);
-                try {
-                    window.terminal.executeCommand(cmd);
-                    return;
-                } catch (error) {
-                    console.error('❌ Error executing command:', error);
-                    window.terminal.log(`❌ Error executing command: ${error.message}`, 'error');
-                    return;
-                }
-            }
-            
-            // Try to use terminal's log method to show command
-            if (window.terminal && typeof window.terminal.log === 'function') {
-                console.log('⚠️ Using terminal.log fallback for:', cmd);
-                window.terminal.log(`> ${cmd}`, 'info');
-                
-                // Simulate command processing
-                setTimeout(() => {
-                    this.processCommandResult(cmd);
-                }, 100);
-                return;
-            }
-            
-            // Fallback to input method
-            console.log('🔄 Using sendCommandToTerminal for:', cmd);
-            this.sendCommandToTerminal(cmd);
-        },
-        
-        processCommandResult: function(cmd) {
-            // Handle common commands
-            const cmdLower = cmd.toLowerCase().trim();
-            
-            switch (cmdLower) {
-                case 'help':
-                    window.terminal.log('Available commands:', 'info');
-                    window.terminal.log('• help - Show this help', 'info');
-                    window.terminal.log('• connect - Connect wallet', 'info');
-                    window.terminal.log('• balance - Check balance', 'info');
-                    window.terminal.log('• clear - Clear terminal', 'info');
-                    break;
-                case 'clear':
-                    const output = document.getElementById('terminalOutput');
-                    if (output) {
-                        output.innerHTML = '';
-                    }
-                    break;
-                case 'connect':
-                    window.terminal.log('Connecting to wallet...', 'warning');
-                    window.terminal.log('Please use browser wallet extension', 'info');
-                    break;
-                case 'balance':
-                    window.terminal.log('Balance: 0.00 ETH', 'warning');
-                    window.terminal.log('Connect wallet to see balance', 'info');
-                    break;
-                default:
-                    window.terminal.log(`Command not found: ${cmd}`, 'error');
-                    window.terminal.log('Type "help" for available commands', 'info');
-            }
-        },
-        
-        // Handle manual command input from terminal
-        setupCommandInput: function() {
-            const input = document.getElementById('commandInput');
-            if (!input) return;
-            
-            // Method 1: Hook into terminal's executeCommand if available
-            if (window.terminal && typeof window.terminal.executeCommand === 'function') {
-                const originalExecute = window.terminal.executeCommand;
-                const self = this;
-                
-                window.terminal.executeCommand = function(cmd) {
-                    // Increment counter
-                    self.commandCount++;
-                    const commandsEl = document.getElementById('futuristic-commands');
-                    if (commandsEl) {
-                        commandsEl.textContent = self.commandCount;
-                        // Add subtle flash effect
-                        commandsEl.style.color = 'var(--cyber-blue-bright)';
-                        setTimeout(() => {
-                            commandsEl.style.color = '';
-                        }, 200);
-                    }
-                    
-                    // Call original function
-                    return originalExecute.apply(this, arguments);
-                };
-                
-                console.log('✅ Command counter hooked into terminal.executeCommand');
-            }
-            
-            // Method 2: Listen to command input keypress events
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && input.value.trim()) {
-                    // Small delay to let terminal process first
-                    setTimeout(() => {
-                        this.commandCount++;
-                        const commandsEl = document.getElementById('futuristic-commands');
-                        if (commandsEl) {
-                            commandsEl.textContent = this.commandCount;
-                            commandsEl.style.color = 'var(--cyber-blue-bright)';
-                            setTimeout(() => {
-                                commandsEl.style.color = '';
-                            }, 200);
-                        }
-                    }, 50);
-                }
-            });
-            
-            console.log('✅ Command input handler attached');
-            console.log('✅ Command counter active on all executions');
-        },
-        
-        startMonitoring: function() {
-            // Sync initial AI toggle state
-            this.syncAIToggleState();
-            
-            // Update uptime every second
-            setInterval(() => {
-                const uptime = Math.floor((Date.now() - this.startTime) / 1000);
-                const hours = Math.floor(uptime / 3600).toString().padStart(2, '0');
-                const mins = Math.floor((uptime % 3600) / 60).toString().padStart(2, '0');
-                const secs = (uptime % 60).toString().padStart(2, '0');
-                const uptimeEl = document.getElementById('futuristic-uptime');
-                if (uptimeEl) {
-                    uptimeEl.textContent = `${hours}:${mins}:${secs}`;
-                }
-            }, 1000);
-            
-            // Periodically sync AI toggle state (in case it's changed from main terminal)
-            setInterval(() => {
-                this.syncAIToggleState();
-            }, 1000);
-        },
-        
-        syncAIToggleState: function() {
-            // Sync AI toggle labels with terminal's actual state
-            if (window.terminal && window.terminal.isAIModeOn !== undefined) {
-                const sidebarToggle = document.getElementById('sidebar-ai-toggle');
-                const headerAILabel = document.getElementById('header-ai-label');
-                const headerAIToggle = document.getElementById('header-ai-toggle');
-                
-                if (window.terminal.isAIModeOn) {
-                    if (sidebarToggle) sidebarToggle.textContent = 'AI: ON';
-                    if (headerAILabel) headerAILabel.textContent = 'AI: ON';
-                    if (headerAIToggle) headerAIToggle.classList.add('ai-active');
-                } else {
-                    if (sidebarToggle) sidebarToggle.textContent = 'AI: OFF';
-                    if (headerAILabel) headerAILabel.textContent = 'AI: OFF';
-                    if (headerAIToggle) headerAIToggle.classList.remove('ai-active');
-                }
-            }
-        },
-        
-        toggleAI: function() {
-            // Toggle AI mode by calling the terminal's toggleAIMode method
-            if (window.terminal && typeof window.terminal.toggleAIMode === 'function') {
-                window.terminal.toggleAIMode();
-                
-                // Update sidebar and header labels to match + add animation
-                const sidebarToggle = document.getElementById('sidebar-ai-toggle');
-                const headerAILabel = document.getElementById('header-ai-label');
-                const headerAIToggle = document.getElementById('header-ai-toggle');
-                
-                if (window.terminal.isAIModeOn) {
-                    if (sidebarToggle) sidebarToggle.textContent = 'AI: ON';
-                    if (headerAILabel) headerAILabel.textContent = 'AI: ON';
-                    if (headerAIToggle) headerAIToggle.classList.add('ai-active');
-                } else {
-                    if (sidebarToggle) sidebarToggle.textContent = 'AI: OFF';
-                    if (headerAILabel) headerAILabel.textContent = 'AI: OFF';
-                    if (headerAIToggle) headerAIToggle.classList.remove('ai-active');
-                }
-            } else {
-                console.error('Terminal instance or toggleAIMode method not found');
-            }
-        },
-        
-        cycleTheme: function() {
-            console.log('🔄 cycleTheme() called from FuturisticDashboard');
-            
-            // Cycle through all available themes (dark, light, matrix, retro, powershell, executive)
-            if (typeof window.OmegaThemes !== 'undefined' && typeof window.OmegaThemes.toggleTheme === 'function') {
-                console.log('✅ OmegaThemes available, calling toggleTheme()');
-                
-                try {
-                    const newTheme = window.OmegaThemes.toggleTheme();
-                    console.log('✅ New theme applied:', newTheme);
-                    
-                    // Get theme description
-                    const themeDescriptions = window.OmegaThemes.getThemeDescriptions();
-                    const description = themeDescriptions[newTheme] || newTheme;
-                    
-                    // Show notification in terminal
-                    if (window.terminal && typeof window.terminal.log === 'function') {
-                        window.terminal.log(`🎨 Theme cycled to: ${newTheme}`, 'success');
-                        window.terminal.log(`   ${description}`, 'info');
-                    }
-                    
-                    console.log(`✅ Theme cycled to: ${newTheme} - ${description}`);
-                    
-                    // Trigger input field fix for the new theme
-                    if (typeof window.fixInputField === 'function') {
-                        setTimeout(() => {
-                            window.fixInputField(newTheme, false, false);
-                        }, 100);
-                    }
-                } catch (error) {
-                    console.error('❌ Error cycling theme:', error);
-                }
-            } else {
-                console.error('❌ OmegaThemes system not available');
-                console.log('window.OmegaThemes:', window.OmegaThemes);
-                console.log('Type of OmegaThemes:', typeof window.OmegaThemes);
-            }
-        },
-        
-        showChart: function(symbol) {
-            console.log(`📈 Loading chart for ${symbol}`);
-            
-            // Show the chart panel
-            const chartPanel = document.getElementById('chart-panel');
-            if (chartPanel) {
-                chartPanel.style.display = 'block';
-            }
-            
-            // Update symbol display
-            const symbolDisplay = document.getElementById('chart-symbol-display');
-            if (symbolDisplay) {
-                symbolDisplay.textContent = `${symbol.toUpperCase()}/USD`;
-            }
-            
-            // Clear previous chart
-            const container = document.getElementById('chart-container');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            
-            // Create TradingView widget
-            const widgetConfig = {
-                symbol: `BINANCE:${symbol.toUpperCase()}USDT`,
-                interval: '60',
-                theme: 'dark',
-                style: '1',
-                locale: 'en',
-                toolbar_bg: 'rgba(0, 0, 0, 0.5)',
-                enable_publishing: false,
-                allow_symbol_change: false,
-                hide_top_toolbar: false,
-                hide_legend: true,
-                save_image: false,
-                container_id: 'chart-container',
-                autosize: true,
-                studies: [],
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                gridColor: 'rgba(0, 212, 255, 0.1)',
-                height: 280,
-                width: '100%'
-            };
-            
-            // Create iframe with TradingView widget
-            const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width: 100%; height: 280px; border: none; display: block;';
-            iframe.scrolling = 'no';
-            
-            // Use TradingView's lightweight chart embed
-            iframe.src = `https://s.tradingview.com/embed-widget/symbol-overview/?locale=en#${encodeURIComponent(JSON.stringify({
-                symbols: [[`BINANCE:${symbol.toUpperCase()}USDT|1D`]],
-                chartOnly: false,
-                width: '100%',
-                height: '280',
-                colorTheme: 'dark',
-                showVolume: false,
-                scalePosition: 'no',
-                scaleMode: 'Normal',
-                fontFamily: 'Courier New, monospace',
-                fontSize: '10',
-                noTimeScale: false,
-                valuesTracking: '1',
-                changeMode: 'price-and-percent',
-                chartType: 'area',
-                lineColor: 'rgba(0, 212, 255, 1)',
-                topColor: 'rgba(0, 212, 255, 0.4)',
-                bottomColor: 'rgba(0, 212, 255, 0.0)',
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                gridLineColor: 'rgba(0, 212, 255, 0.1)'
-            }))}`;
-            
-            container.appendChild(iframe);
-            
-            // Log to terminal
-            if (window.terminal) {
-                window.terminal.log(`📈 Chart loaded: ${symbol.toUpperCase()}/USD`, 'success');
-                window.terminal.log(`📊 View the chart in the right panel →`, 'info');
-            }
-        },
-        
-        closeChart: function() {
-            const chartPanel = document.getElementById('chart-panel');
-            if (chartPanel) {
-                chartPanel.style.display = 'none';
-            }
-        },
-        
-        toggleClassicMode: function() {
-            // Prevent view mode switching on mobile devices
-            const isMobile = this.isMobileDevice();
-            if (isMobile) {
-                console.log('📱 View mode switching is disabled on mobile devices');
-                if (window.terminal) {
-                    window.terminal.log('📱 Basic terminal mode is locked on mobile devices', 'info');
-                }
-                return;
-            }
-            
-            const dashboard = document.querySelector('.omega-dashboard');
-            const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
-            
-            if (dashboard) {
-                // Toggle based on current mode
-                if (currentMode === 'basic') {
-                    // Switch to futuristic mode
-                    this.enableFuturisticMode();
-                } else {
-                    // Switch to basic mode
-                    this.enableBasicMode();
-                }
-            }
-        },
-        
-        toggleViewMode: function() {
-            this.toggleClassicMode();
-        },
-        
-        isMobileDevice: function() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-            const isMobileUA = mobileRegex.test(userAgent);
-            const isSmallScreen = window.innerWidth <= 768;
-            return isMobileUA || isSmallScreen;
-        },
-        
-        updateViewModeButton: function() {
-            const viewModeLabel = document.getElementById('view-mode-label');
-            const viewModeHeaderLabel = document.getElementById('view-mode-header-label');
-            const currentMode = localStorage.getItem('omega-view-mode') || 'futuristic';
-            
-            if (viewModeLabel) {
-                if (currentMode === 'basic') {
-                    viewModeLabel.textContent = 'Dashboard View';
-                } else {
-                    viewModeLabel.textContent = 'Basic View';
-                }
-            }
-            
-            if (viewModeHeaderLabel) {
-                if (currentMode === 'basic') {
-                    viewModeHeaderLabel.textContent = 'Dashboard';
-                } else {
-                    viewModeHeaderLabel.textContent = 'Basic';
-                }
-            }
-        },
-        
-        toggleThemeMode: function() {
-            const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            localStorage.setItem('omega-theme-mode', newTheme);
-            
-            // Add switching class to ensure smooth transitions
-            document.body.classList.add('switching-theme');
-            
-            // Check if terminal is in Apple UI (Modern UI) mode
-            const terminal = document.getElementById('terminal');
-            const isAppleUI = terminal && terminal.classList.contains('apple-ui');
-            
-            // Ensure command input stays focused and visible during switch
-            const commandInput = document.getElementById('commandInput');
-            const wasActive = document.activeElement === commandInput;
-            
-            if (newTheme === 'light') {
-                document.body.classList.add('light-mode');
-                document.body.classList.remove('dark-mode');
-                
-                // Handle Apple UI theme specifically
-                if (isAppleUI && terminal) {
-                    terminal.classList.remove('dark');
-                    console.log('✅ Apple UI: Switched to light mode');
-                }
-            } else {
-                document.body.classList.add('dark-mode');
-                document.body.classList.remove('light-mode');
-                
-                // Handle Apple UI theme specifically
-                if (isAppleUI && terminal) {
-                    terminal.classList.add('dark');
-                    console.log('✅ Apple UI: Switched to dark mode');
-                }
-            }
-            
-            // Restore focus to command input if it was active
-            if (wasActive && commandInput) {
-                setTimeout(() => {
-                    commandInput.focus();
-                }, 0);
-            }
-            
-            // Remove switching class after transition
+          }, 50);
+        }
+      });
+
+      console.log("✅ Command input handler attached");
+      console.log("✅ Command counter active on all executions");
+    },
+
+    startMonitoring: function () {
+      // Sync initial AI toggle state
+      this.syncAIToggleState();
+
+      // Update uptime every second
+      setInterval(() => {
+        const uptime = Math.floor((Date.now() - this.startTime) / 1000);
+        const hours = Math.floor(uptime / 3600)
+          .toString()
+          .padStart(2, "0");
+        const mins = Math.floor((uptime % 3600) / 60)
+          .toString()
+          .padStart(2, "0");
+        const secs = (uptime % 60).toString().padStart(2, "0");
+        const uptimeEl = document.getElementById("futuristic-uptime");
+        if (uptimeEl) {
+          uptimeEl.textContent = `${hours}:${mins}:${secs}`;
+        }
+      }, 1000);
+
+      // Periodically sync AI toggle state (in case it's changed from main terminal)
+      setInterval(() => {
+        this.syncAIToggleState();
+      }, 1000);
+    },
+
+    syncAIToggleState: function () {
+      // Sync AI controls with terminal's actual state
+      const provider =
+        (window.terminal && window.terminal.aiProvider) ||
+        localStorage.getItem("omega-ai-provider") ||
+        "off";
+      const sidebarToggle = document.getElementById("sidebar-ai-toggle");
+      const headerSelect = document.getElementById("headerAiProviderSelect");
+      const wrapperSelect = document.getElementById("wrapperAiProviderSelect");
+
+      // Sidebar label shows OFF/NEAR/OPENAI
+      if (sidebarToggle) {
+        const label =
+          provider === "off" ? "OFF" : provider === "near" ? "NEAR" : "OPENAI";
+        sidebarToggle.textContent = `AI: ${label}`;
+      }
+      // Header select reflects provider
+      if (headerSelect && headerSelect.value !== provider) {
+        try {
+          headerSelect.value = provider;
+        } catch (e) {}
+      }
+      if (wrapperSelect && wrapperSelect.value !== provider) {
+        try {
+          wrapperSelect.value = provider;
+        } catch (e) {}
+      }
+    },
+
+    toggleAI: function () {
+      // Cycle provider using terminal's toggleAIMode (off -> near -> openai -> off)
+      if (
+        window.terminal &&
+        typeof window.terminal.toggleAIMode === "function"
+      ) {
+        window.terminal.toggleAIMode();
+        this.syncAIToggleState();
+      } else {
+        console.error("Terminal instance or toggleAIMode method not found");
+      }
+    },
+
+    cycleTheme: function () {
+      console.log("🔄 cycleTheme() called from FuturisticDashboard");
+
+      // Cycle through all available themes (dark, light, matrix, retro, powershell, executive)
+      if (
+        typeof window.OmegaThemes !== "undefined" &&
+        typeof window.OmegaThemes.toggleTheme === "function"
+      ) {
+        console.log("✅ OmegaThemes available, calling toggleTheme()");
+
+        try {
+          const newTheme = window.OmegaThemes.toggleTheme();
+          console.log("✅ New theme applied:", newTheme);
+
+          // Get theme description
+          const themeDescriptions = window.OmegaThemes.getThemeDescriptions();
+          const description = themeDescriptions[newTheme] || newTheme;
+
+          // Show notification in terminal
+          if (window.terminal && typeof window.terminal.log === "function") {
+            window.terminal.log(`🎨 Theme cycled to: ${newTheme}`, "success");
+            window.terminal.log(`   ${description}`, "info");
+          }
+
+          console.log(`✅ Theme cycled to: ${newTheme} - ${description}`);
+
+          // Trigger input field fix for the new theme
+          if (typeof window.fixInputField === "function") {
             setTimeout(() => {
-                document.body.classList.remove('switching-theme');
-            }, 300);
-            
-            this.updateThemeModeButton();
-            
-            if (window.terminal) {
-                window.terminal.log(`✅ Switched to ${newTheme} mode`, 'success');
-            }
-            
-            console.log(`🎨 Theme switched to ${newTheme} mode`);
-        },
-        
-        updateThemeModeButton: function() {
-            const themeModeLabel = document.getElementById('theme-mode-label');
-            const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
-            
-            if (themeModeLabel) {
-                if (currentTheme === 'dark') {
-                    themeModeLabel.textContent = 'Light';
-                } else {
-                    themeModeLabel.textContent = 'Dark';
-                }
-            }
-        },
-        
-        enableBasicMode: function() {
-            const dashboard = document.querySelector('.omega-dashboard');
-            const terminal = document.getElementById('terminal');
-            const terminalWrapper = document.getElementById('terminal-wrapper');
-            
-            if (dashboard && terminalWrapper) {
-                // Hide dashboard (keep terminal wrapper structure)
-                dashboard.style.display = 'none';
-                
-                // Move terminal wrapper to body (not just terminal)
-                if (terminalWrapper.parentElement !== document.body) {
-                    document.body.appendChild(terminalWrapper);
-                }
-                
-                // Style terminal wrapper for full-screen basic mode
-                terminalWrapper.style.display = 'flex';
-                terminalWrapper.style.flexDirection = 'column';
-                terminalWrapper.style.position = 'fixed';
-                terminalWrapper.style.top = '0';
-                terminalWrapper.style.left = '0';
-                terminalWrapper.style.width = '100vw';
-                terminalWrapper.style.height = '100vh';
-                terminalWrapper.style.maxWidth = '100vw';
-                terminalWrapper.style.maxHeight = '100vh';
-                terminalWrapper.style.zIndex = '1000';
-                terminalWrapper.style.background = 'var(--void-black, #0a0a0f)';
-                terminalWrapper.style.padding = '0';
-                terminalWrapper.style.boxSizing = 'border-box';
-                
-                // HIDE the original terminal's header (from index.html) - prevent duplicates
-                if (terminal) {
-                    const originalTerminalHeader = terminal.querySelector('.terminal-header');
-                    if (originalTerminalHeader) {
-                        originalTerminalHeader.style.display = 'none';
-                        originalTerminalHeader.style.visibility = 'hidden';
-                        originalTerminalHeader.style.opacity = '0';
-                    }
-                    
-                    // Also hide the old tab bar if it exists
-                    const oldTabBar = terminal.querySelector('.tab-bar');
-                    if (oldTabBar) {
-                        oldTabBar.style.display = 'none';
-                    }
-                    
-                    terminal.style.display = 'flex';
-                    terminal.style.flexDirection = 'column';
-                    terminal.style.width = '100%';
-                    terminal.style.height = '100%';
-                    terminal.style.background = 'transparent';
-                    terminal.style.padding = '0';
-                }
-                
-                // Apply modern futuristic UI classes
-                document.body.classList.remove('futuristic-mode');
-                document.body.classList.add('basic-terminal-mode');
-                document.body.classList.add('modern-terminal-ui');
-                
-                // Ensure terminal wrapper has modern styling
-                if (terminal) {
-                    terminal.classList.add('modern-ui');
-                    terminal.classList.add('futuristic-theme');
-                }
-                
-                localStorage.setItem('omega-view-mode', 'basic');
-                
-                console.log('📺 Basic terminal mode enabled with modern UI');
-                if (window.terminal) {
-                    window.terminal.log('✅ Basic terminal mode enabled', 'success');
-                }
-                this.updateViewModeButton();
-                this.updateThemeModeButton();
-                
-                // SHOW ONLY the terminal wrapper's header (the dashboard-style header with all controls)
-                const terminalWrapperHeader = terminalWrapper.querySelector('.terminal-header');
-                if (terminalWrapperHeader) {
-                    terminalWrapperHeader.style.display = 'flex';
-                    terminalWrapperHeader.style.visibility = 'visible';
-                    terminalWrapperHeader.style.opacity = '1';
-                    terminalWrapperHeader.style.pointerEvents = 'auto';
-                }
-                
-                // Make sure terminal wrapper is visible
-                terminalWrapper.style.display = 'flex';
-            }
-        },
-        
-        enableFuturisticMode: function() {
-            const dashboard = document.querySelector('.omega-dashboard');
-            const terminal = document.getElementById('terminal');
-            const terminalWrapper = document.getElementById('terminal-wrapper');
-            const dashboardTerminalSlot = dashboard ? dashboard.querySelector('main.omega-terminal') : null;
-            
-            if (dashboard && terminalWrapper) {
-                // Find the correct place in dashboard to put terminal wrapper back
-                const mainTerminalSlot = dashboard.querySelector('.omega-sidebar').nextElementSibling;
-                
-                // Move terminal wrapper back into dashboard
-                if (mainTerminalSlot && terminalWrapper.parentElement !== mainTerminalSlot.parentElement) {
-                    mainTerminalSlot.parentElement.insertBefore(terminalWrapper, mainTerminalSlot.nextSibling);
-                }
-                
-                // Reset terminal wrapper styles
-                if (terminalWrapper) {
-                    terminalWrapper.style.display = '';
-                    terminalWrapper.style.flexDirection = '';
-                    terminalWrapper.style.position = '';
-                    terminalWrapper.style.top = '';
-                    terminalWrapper.style.left = '';
-                    terminalWrapper.style.width = '';
-                    terminalWrapper.style.height = '';
-                    terminalWrapper.style.maxWidth = '';
-                    terminalWrapper.style.maxHeight = '';
-                    terminalWrapper.style.zIndex = '';
-                    terminalWrapper.style.background = '';
-                    terminalWrapper.style.padding = '';
-                    terminalWrapper.style.boxSizing = '';
-                }
-                
-                // Reset terminal styles
-                if (terminal) {
-                    terminal.style.display = '';
-                    terminal.style.flexDirection = '';
-                    terminal.style.width = '';
-                    terminal.style.height = '';
-                    terminal.style.background = '';
-                    terminal.style.padding = '';
-                    
-                    // Keep modern UI classes
-                    terminal.classList.add('modern-ui');
-                    terminal.classList.add('futuristic-theme');
-                }
-                
-                // Don't remove floating toggle - using header button instead
-                // this.removeBasicModeToggle();
-                
-                // Show dashboard
-                dashboard.style.display = 'grid';
-                document.body.classList.add('futuristic-mode');
-                document.body.classList.remove('basic-terminal-mode');
-                document.body.classList.add('modern-terminal-ui');
-                localStorage.setItem('omega-view-mode', 'futuristic');
-                console.log('🚀 Futuristic dashboard mode enabled');
-                if (window.terminal) {
-                    window.terminal.log('✅ Futuristic dashboard mode enabled', 'success');
-                }
-                this.updateViewModeButton();
-                this.updateThemeModeButton();
-            } else {
-                // Create dashboard if it doesn't exist
-                transformToDashboard();
-                document.body.classList.add('futuristic-mode');
-                document.body.classList.remove('basic-terminal-mode');
-                document.body.classList.add('modern-terminal-ui');
-                localStorage.setItem('omega-view-mode', 'futuristic');
-                this.updateViewModeButton();
-                this.updateThemeModeButton();
-            }
-        },
-        
-        createBasicModeToggle: function() {
-            // Don't create toggle if welcome screen is still showing
-            if (!document.body.classList.contains('omega-initialized')) {
-                console.log('⏳ Waiting for welcome screen to finish...');
-                return;
-            }
-            
-            // Remove existing toggle if it exists
-            this.removeBasicModeToggle();
-            
-            // Create floating toggle button
-            const toggleBtn = document.createElement('button');
-            toggleBtn.id = 'basic-mode-toggle';
-            toggleBtn.className = 'basic-mode-toggle';
-            toggleBtn.innerHTML = `
+              window.fixInputField(newTheme, false, false);
+            }, 100);
+          }
+        } catch (error) {
+          console.error("❌ Error cycling theme:", error);
+        }
+      } else {
+        console.error("❌ OmegaThemes system not available");
+        console.log("window.OmegaThemes:", window.OmegaThemes);
+        console.log("Type of OmegaThemes:", typeof window.OmegaThemes);
+      }
+    },
+
+    showChart: function (symbol) {
+      console.log(`📈 Loading chart for ${symbol}`);
+
+      // Show the chart panel
+      const chartPanel = document.getElementById("chart-panel");
+      if (chartPanel) {
+        chartPanel.style.display = "block";
+      }
+
+      // Update symbol display
+      const symbolDisplay = document.getElementById("chart-symbol-display");
+      if (symbolDisplay) {
+        symbolDisplay.textContent = `${symbol.toUpperCase()}/USD`;
+      }
+
+      // Clear previous chart
+      const container = document.getElementById("chart-container");
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      // Create TradingView widget
+      const widgetConfig = {
+        symbol: `BINANCE:${symbol.toUpperCase()}USDT`,
+        interval: "60",
+        theme: "dark",
+        style: "1",
+        locale: "en",
+        toolbar_bg: "rgba(0, 0, 0, 0.5)",
+        enable_publishing: false,
+        allow_symbol_change: false,
+        hide_top_toolbar: false,
+        hide_legend: true,
+        save_image: false,
+        container_id: "chart-container",
+        autosize: true,
+        studies: [],
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        gridColor: "rgba(0, 212, 255, 0.1)",
+        height: 280,
+        width: "100%",
+      };
+
+      // Create iframe with TradingView widget
+      const iframe = document.createElement("iframe");
+      iframe.style.cssText =
+        "width: 100%; height: 280px; border: none; display: block;";
+      iframe.scrolling = "no";
+
+      // Use TradingView's lightweight chart embed
+      iframe.src = `https://s.tradingview.com/embed-widget/symbol-overview/?locale=en#${encodeURIComponent(
+        JSON.stringify({
+          symbols: [[`BINANCE:${symbol.toUpperCase()}USDT|1D`]],
+          chartOnly: false,
+          width: "100%",
+          height: "280",
+          colorTheme: "dark",
+          showVolume: false,
+          scalePosition: "no",
+          scaleMode: "Normal",
+          fontFamily: "Courier New, monospace",
+          fontSize: "10",
+          noTimeScale: false,
+          valuesTracking: "1",
+          changeMode: "price-and-percent",
+          chartType: "area",
+          lineColor: "rgba(0, 212, 255, 1)",
+          topColor: "rgba(0, 212, 255, 0.4)",
+          bottomColor: "rgba(0, 212, 255, 0.0)",
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          gridLineColor: "rgba(0, 212, 255, 0.1)",
+        })
+      )}`;
+
+      container.appendChild(iframe);
+
+      // Log to terminal
+      if (window.terminal) {
+        window.terminal.log(
+          `📈 Chart loaded: ${symbol.toUpperCase()}/USD`,
+          "success"
+        );
+        window.terminal.log(`📊 View the chart in the right panel →`, "info");
+      }
+    },
+
+    closeChart: function () {
+      const chartPanel = document.getElementById("chart-panel");
+      if (chartPanel) {
+        chartPanel.style.display = "none";
+      }
+    },
+
+    toggleClassicMode: function () {
+      // Prevent view mode switching on mobile devices
+      const isMobile = this.isMobileDevice();
+      if (isMobile) {
+        console.log("📱 View mode switching is disabled on mobile devices");
+        if (window.terminal) {
+          window.terminal.log(
+            "📱 Basic terminal mode is locked on mobile devices",
+            "info"
+          );
+        }
+        return;
+      }
+
+      const dashboard = document.querySelector(".omega-dashboard");
+      const currentMode =
+        localStorage.getItem("omega-view-mode") || "futuristic";
+
+      if (dashboard) {
+        // Toggle based on current mode
+        if (currentMode === "basic") {
+          // Switch to futuristic mode
+          this.enableFuturisticMode();
+        } else {
+          // Switch to basic mode
+          this.enableBasicMode();
+        }
+      }
+    },
+
+    toggleViewMode: function () {
+      this.toggleClassicMode();
+    },
+
+    isMobileDevice: function () {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const mobileRegex =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+      const isMobileUA = mobileRegex.test(userAgent);
+      const isSmallScreen = window.innerWidth <= 768;
+      return isMobileUA || isSmallScreen;
+    },
+
+    updateViewModeButton: function () {
+      const viewModeLabel = document.getElementById("view-mode-label");
+      const viewModeHeaderLabel = document.getElementById(
+        "view-mode-header-label"
+      );
+      const currentMode =
+        localStorage.getItem("omega-view-mode") || "futuristic";
+
+      if (viewModeLabel) {
+        if (currentMode === "basic") {
+          viewModeLabel.textContent = "Dashboard View";
+        } else {
+          viewModeLabel.textContent = "Basic View";
+        }
+      }
+
+      if (viewModeHeaderLabel) {
+        if (currentMode === "basic") {
+          viewModeHeaderLabel.textContent = "Dashboard";
+        } else {
+          viewModeHeaderLabel.textContent = "Basic";
+        }
+      }
+    },
+
+    toggleThemeMode: function () {
+      const currentTheme = localStorage.getItem("omega-theme-mode") || "dark";
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      localStorage.setItem("omega-theme-mode", newTheme);
+
+      // Add switching class to ensure smooth transitions
+      document.body.classList.add("switching-theme");
+
+      // Check if terminal is in Apple UI (Modern UI) mode
+      const terminal = document.getElementById("terminal");
+      const isAppleUI = terminal && terminal.classList.contains("apple-ui");
+
+      // Ensure command input stays focused and visible during switch
+      const commandInput = document.getElementById("commandInput");
+      const wasActive = document.activeElement === commandInput;
+
+      if (newTheme === "light") {
+        document.body.classList.add("light-mode");
+        document.body.classList.remove("dark-mode");
+
+        // Handle Apple UI theme specifically
+        if (isAppleUI && terminal) {
+          terminal.classList.remove("dark");
+          console.log("✅ Apple UI: Switched to light mode");
+        }
+      } else {
+        document.body.classList.add("dark-mode");
+        document.body.classList.remove("light-mode");
+
+        // Handle Apple UI theme specifically
+        if (isAppleUI && terminal) {
+          terminal.classList.add("dark");
+          console.log("✅ Apple UI: Switched to dark mode");
+        }
+      }
+
+      // Restore focus to command input if it was active
+      if (wasActive && commandInput) {
+        setTimeout(() => {
+          commandInput.focus();
+        }, 0);
+      }
+
+      // Remove switching class after transition
+      setTimeout(() => {
+        document.body.classList.remove("switching-theme");
+      }, 300);
+
+      this.updateThemeModeButton();
+
+      if (window.terminal) {
+        window.terminal.log(`✅ Switched to ${newTheme} mode`, "success");
+      }
+
+      console.log(`🎨 Theme switched to ${newTheme} mode`);
+    },
+
+    updateThemeModeButton: function () {
+      const themeModeLabel = document.getElementById("theme-mode-label");
+      const currentTheme = localStorage.getItem("omega-theme-mode") || "dark";
+
+      if (themeModeLabel) {
+        if (currentTheme === "dark") {
+          themeModeLabel.textContent = "Light";
+        } else {
+          themeModeLabel.textContent = "Dark";
+        }
+      }
+    },
+
+    enableBasicMode: function () {
+      const dashboard = document.querySelector(".omega-dashboard");
+      const terminal = document.getElementById("terminal");
+      const terminalWrapper = document.getElementById("terminal-wrapper");
+
+      if (dashboard && terminalWrapper) {
+        // Hide dashboard (keep terminal wrapper structure)
+        dashboard.style.display = "none";
+
+        // Move terminal wrapper to body (not just terminal)
+        if (terminalWrapper.parentElement !== document.body) {
+          document.body.appendChild(terminalWrapper);
+        }
+
+        // Style terminal wrapper for full-screen basic mode
+        terminalWrapper.style.display = "flex";
+        terminalWrapper.style.flexDirection = "column";
+        terminalWrapper.style.position = "fixed";
+        terminalWrapper.style.top = "0";
+        terminalWrapper.style.left = "0";
+        terminalWrapper.style.width = "100vw";
+        terminalWrapper.style.height = "100vh";
+        terminalWrapper.style.maxWidth = "100vw";
+        terminalWrapper.style.maxHeight = "100vh";
+        terminalWrapper.style.zIndex = "1000";
+        terminalWrapper.style.background = "var(--void-black, #0a0a0f)";
+        terminalWrapper.style.padding = "0";
+        terminalWrapper.style.boxSizing = "border-box";
+
+        // HIDE the original terminal's header (from index.html) - prevent duplicates
+        if (terminal) {
+          const originalTerminalHeader =
+            terminal.querySelector(".terminal-header");
+          if (originalTerminalHeader) {
+            originalTerminalHeader.style.display = "none";
+            originalTerminalHeader.style.visibility = "hidden";
+            originalTerminalHeader.style.opacity = "0";
+          }
+
+          // Also hide the old tab bar if it exists
+          const oldTabBar = terminal.querySelector(".tab-bar");
+          if (oldTabBar) {
+            oldTabBar.style.display = "none";
+          }
+
+          terminal.style.display = "flex";
+          terminal.style.flexDirection = "column";
+          terminal.style.width = "100%";
+          terminal.style.height = "100%";
+          terminal.style.background = "transparent";
+          terminal.style.padding = "0";
+        }
+
+        // Apply modern futuristic UI classes
+        document.body.classList.remove("futuristic-mode");
+        document.body.classList.add("basic-terminal-mode");
+        document.body.classList.add("modern-terminal-ui");
+
+        // Ensure terminal wrapper has modern styling
+        if (terminal) {
+          terminal.classList.add("modern-ui");
+          terminal.classList.add("futuristic-theme");
+        }
+
+        localStorage.setItem("omega-view-mode", "basic");
+
+        console.log("📺 Basic terminal mode enabled with modern UI");
+        if (window.terminal) {
+          window.terminal.log("✅ Basic terminal mode enabled", "success");
+        }
+        this.updateViewModeButton();
+        this.updateThemeModeButton();
+
+        // SHOW ONLY the terminal wrapper's header (the dashboard-style header with all controls)
+        const terminalWrapperHeader =
+          terminalWrapper.querySelector(".terminal-header");
+        if (terminalWrapperHeader) {
+          terminalWrapperHeader.style.display = "flex";
+          terminalWrapperHeader.style.visibility = "visible";
+          terminalWrapperHeader.style.opacity = "1";
+          terminalWrapperHeader.style.pointerEvents = "auto";
+        }
+
+        // Make sure terminal wrapper is visible
+        terminalWrapper.style.display = "flex";
+      }
+    },
+
+    enableFuturisticMode: function () {
+      const dashboard = document.querySelector(".omega-dashboard");
+      const terminal = document.getElementById("terminal");
+      const terminalWrapper = document.getElementById("terminal-wrapper");
+      const dashboardTerminalSlot = dashboard
+        ? dashboard.querySelector("main.omega-terminal")
+        : null;
+
+      if (dashboard && terminalWrapper) {
+        // Find the correct place in dashboard to put terminal wrapper back
+        const mainTerminalSlot =
+          dashboard.querySelector(".omega-sidebar").nextElementSibling;
+
+        // Move terminal wrapper back into dashboard
+        if (
+          mainTerminalSlot &&
+          terminalWrapper.parentElement !== mainTerminalSlot.parentElement
+        ) {
+          mainTerminalSlot.parentElement.insertBefore(
+            terminalWrapper,
+            mainTerminalSlot.nextSibling
+          );
+        }
+
+        // Reset terminal wrapper styles
+        if (terminalWrapper) {
+          terminalWrapper.style.display = "";
+          terminalWrapper.style.flexDirection = "";
+          terminalWrapper.style.position = "";
+          terminalWrapper.style.top = "";
+          terminalWrapper.style.left = "";
+          terminalWrapper.style.width = "";
+          terminalWrapper.style.height = "";
+          terminalWrapper.style.maxWidth = "";
+          terminalWrapper.style.maxHeight = "";
+          terminalWrapper.style.zIndex = "";
+          terminalWrapper.style.background = "";
+          terminalWrapper.style.padding = "";
+          terminalWrapper.style.boxSizing = "";
+        }
+
+        // Reset terminal styles
+        if (terminal) {
+          terminal.style.display = "";
+          terminal.style.flexDirection = "";
+          terminal.style.width = "";
+          terminal.style.height = "";
+          terminal.style.background = "";
+          terminal.style.padding = "";
+
+          // Keep modern UI classes
+          terminal.classList.add("modern-ui");
+          terminal.classList.add("futuristic-theme");
+        }
+
+        // Don't remove floating toggle - using header button instead
+        // this.removeBasicModeToggle();
+
+        // Show dashboard
+        dashboard.style.display = "grid";
+        document.body.classList.add("futuristic-mode");
+        document.body.classList.remove("basic-terminal-mode");
+        document.body.classList.add("modern-terminal-ui");
+        localStorage.setItem("omega-view-mode", "futuristic");
+        console.log("🚀 Futuristic dashboard mode enabled");
+        if (window.terminal) {
+          window.terminal.log(
+            "✅ Futuristic dashboard mode enabled",
+            "success"
+          );
+        }
+        this.updateViewModeButton();
+        this.updateThemeModeButton();
+      } else {
+        // Create dashboard if it doesn't exist
+        transformToDashboard();
+        document.body.classList.add("futuristic-mode");
+        document.body.classList.remove("basic-terminal-mode");
+        document.body.classList.add("modern-terminal-ui");
+        localStorage.setItem("omega-view-mode", "futuristic");
+        this.updateViewModeButton();
+        this.updateThemeModeButton();
+      }
+    },
+
+    createBasicModeToggle: function () {
+      // Don't create toggle if welcome screen is still showing
+      if (!document.body.classList.contains("omega-initialized")) {
+        console.log("⏳ Waiting for welcome screen to finish...");
+        return;
+      }
+
+      // Remove existing toggle if it exists
+      this.removeBasicModeToggle();
+
+      // Create floating toggle button
+      const toggleBtn = document.createElement("button");
+      toggleBtn.id = "basic-mode-toggle";
+      toggleBtn.className = "basic-mode-toggle";
+      toggleBtn.innerHTML = `
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
                 </svg>
                 <span>Dashboard</span>
             `;
-            toggleBtn.title = 'Switch to Dashboard View';
-            toggleBtn.onclick = () => {
-                this.enableFuturisticMode();
-            };
-            
-            // Add styles - matching futuristic theme
-            toggleBtn.style.cssText = `
+      toggleBtn.title = "Switch to Dashboard View";
+      toggleBtn.onclick = () => {
+        this.enableFuturisticMode();
+      };
+
+      // Add styles - matching futuristic theme
+      toggleBtn.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
@@ -1540,242 +1681,256 @@
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
             `;
-            
-            // Add hover effect
-            toggleBtn.onmouseenter = () => {
-                toggleBtn.style.background = 'rgba(15, 15, 26, 0.95)';
-                toggleBtn.style.borderColor = '#00d4ff';
-                toggleBtn.style.boxShadow = '0 4px 20px rgba(0, 212, 255, 0.25)';
-                toggleBtn.style.transform = 'translateY(-2px)';
-                toggleBtn.style.color = '#00ffff';
-            };
-            
-            toggleBtn.onmouseleave = () => {
-                toggleBtn.style.background = 'rgba(15, 15, 26, 0.85)';
-                toggleBtn.style.borderColor = 'rgba(0, 212, 255, 0.3)';
-                toggleBtn.style.boxShadow = '0 2px 12px rgba(0, 212, 255, 0.15)';
-                toggleBtn.style.transform = 'translateY(0)';
-                toggleBtn.style.color = '#00d4ff';
-            };
-            
-            document.body.appendChild(toggleBtn);
-            
-            // Fade in animation
-            setTimeout(() => {
-                toggleBtn.style.opacity = '0';
-                toggleBtn.style.transform = 'translateY(-20px)';
-                setTimeout(() => {
-                    toggleBtn.style.transition = 'all 0.3s ease';
-                    toggleBtn.style.opacity = '1';
-                    toggleBtn.style.transform = 'translateY(0)';
-                }, 10);
-            }, 10);
-        },
-        
-        removeBasicModeToggle: function() {
-            const existingToggle = document.getElementById('basic-mode-toggle');
-            if (existingToggle) {
-                existingToggle.remove();
-            }
-        },
 
-        // Toggle section minimize/expand
-        toggleSection: function(sectionId) {
-            console.log('Toggling section:', sectionId);
-            
-            const section = document.querySelector(`[data-section="${sectionId}"]`);
-            if (!section) {
-                console.error('Section not found:', sectionId);
-                return;
-            }
-            
-            const content = section.querySelector('.sidebar-section-content') || section;
-            const toggleButton = section.querySelector('.section-toggle');
-            const toggleIcon = toggleButton.querySelector('.toggle-icon');
-            
-            // Check if section is currently minimized
-            const isMinimized = section.classList.contains('minimized');
-            
-            if (isMinimized) {
-                // Expand section
-                section.classList.remove('minimized');
-                content.style.display = 'block';
-                toggleIcon.style.transform = 'rotate(0deg)';
-                console.log('Expanded section:', sectionId);
-            } else {
-                // Minimize section
-                section.classList.add('minimized');
-                content.style.display = 'none';
-                toggleIcon.style.transform = 'rotate(-90deg)';
-                console.log('Minimized section:', sectionId);
-            }
-            
-            // Save state to localStorage
-            const minimizedSections = JSON.parse(localStorage.getItem('omega-minimized-sections') || '[]');
-            if (isMinimized) {
-                // Remove from minimized list
-                const index = minimizedSections.indexOf(sectionId);
-                if (index > -1) {
-                    minimizedSections.splice(index, 1);
-                }
-            } else {
-                // Add to minimized list
-                if (!minimizedSections.includes(sectionId)) {
-                    minimizedSections.push(sectionId);
-                }
-            }
-            localStorage.setItem('omega-minimized-sections', JSON.stringify(minimizedSections));
-        },
+      // Add hover effect
+      toggleBtn.onmouseenter = () => {
+        toggleBtn.style.background = "rgba(15, 15, 26, 0.95)";
+        toggleBtn.style.borderColor = "#00d4ff";
+        toggleBtn.style.boxShadow = "0 4px 20px rgba(0, 212, 255, 0.25)";
+        toggleBtn.style.transform = "translateY(-2px)";
+        toggleBtn.style.color = "#00ffff";
+      };
 
-        // Restore minimized sections from localStorage
-        restoreMinimizedSections: function() {
-            const minimizedSections = JSON.parse(localStorage.getItem('omega-minimized-sections') || '[]');
-            console.log('Restoring minimized sections:', minimizedSections);
-            
-            minimizedSections.forEach(sectionId => {
-                const section = document.querySelector(`[data-section="${sectionId}"]`);
-                if (section) {
-                    const content = section.querySelector('.sidebar-section-content') || section;
-                    const toggleButton = section.querySelector('.section-toggle');
-                    const toggleIcon = toggleButton.querySelector('.toggle-icon');
-                    
-                    section.classList.add('minimized');
-                    content.style.display = 'none';
-                    toggleIcon.style.transform = 'rotate(-90deg)';
-                }
-            });
-        },
+      toggleBtn.onmouseleave = () => {
+        toggleBtn.style.background = "rgba(15, 15, 26, 0.85)";
+        toggleBtn.style.borderColor = "rgba(0, 212, 255, 0.3)";
+        toggleBtn.style.boxShadow = "0 2px 12px rgba(0, 212, 255, 0.15)";
+        toggleBtn.style.transform = "translateY(0)";
+        toggleBtn.style.color = "#00d4ff";
+      };
 
-        // Chart functionality
-        showChart: function(symbol) {
-            console.log('Showing chart for:', symbol);
-            
-            // Hide other panels
-            const pgtPanel = document.getElementById('pgt-stats-panel');
-            if (pgtPanel) pgtPanel.style.display = 'none';
-            
-            // Show chart panel
-            const chartPanel = document.getElementById('chart-panel');
-            if (chartPanel) {
-                chartPanel.style.display = 'block';
-                
-                // Update symbol display
-                const symbolDisplay = document.getElementById('chart-symbol-display');
-                if (symbolDisplay) {
-                    symbolDisplay.textContent = `${symbol}/USD`;
-                }
-                
-                // Create TradingView widget
-                this.createTradingViewWidget(symbol);
-            }
-        },
+      document.body.appendChild(toggleBtn);
 
-        closeChart: function() {
-            const chartPanel = document.getElementById('chart-panel');
-            if (chartPanel) {
-                chartPanel.style.display = 'none';
-            }
-        },
+      // Fade in animation
+      setTimeout(() => {
+        toggleBtn.style.opacity = "0";
+        toggleBtn.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+          toggleBtn.style.transition = "all 0.3s ease";
+          toggleBtn.style.opacity = "1";
+          toggleBtn.style.transform = "translateY(0)";
+        }, 10);
+      }, 10);
+    },
 
-        createTradingViewWidget: function(symbol) {
-            const container = document.getElementById('chart-container');
-            if (!container) return;
-            
-            // Clear existing content
-            container.innerHTML = '';
-            
-            // Create TradingView widget configuration
-            const widgetConfig = {
-                symbol: `BINANCE:${symbol}USDT`,
-                interval: 'D',
-                timezone: 'Etc/UTC',
-                theme: 'dark',
-                style: '1',
-                locale: 'en',
-                toolbar_bg: '#1e1e1e',
-                enable_publishing: false,
-                hide_top_toolbar: false,
-                hide_legend: false,
-                save_image: false,
-                container_id: 'chart-container',
-                studies: [],
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                gridColor: 'rgba(0, 212, 255, 0.1)',
-                height: 280,
-                width: '100%'
-            };
-            
-            // Create iframe with TradingView widget
-            const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width: 100%; height: 280px; border: none; display: block;';
-            iframe.scrolling = 'no';
-            iframe.src = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview_${Date.now()}&symbol=${encodeURIComponent(widgetConfig.symbol)}&interval=${widgetConfig.interval}&symboledit=1&saveimage=0&toolbarbg=1e1e1e&studies=[]&theme=dark&style=1&timezone=Etc%2FUTC&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en&utm_source=omegaterminal.com&utm_medium=widget&utm_campaign=chart&utm_term=${symbol}`;
-            
-            container.appendChild(iframe);
+    removeBasicModeToggle: function () {
+      const existingToggle = document.getElementById("basic-mode-toggle");
+      if (existingToggle) {
+        existingToggle.remove();
+      }
+    },
+
+    // Toggle section minimize/expand
+    toggleSection: function (sectionId) {
+      console.log("Toggling section:", sectionId);
+
+      const section = document.querySelector(`[data-section="${sectionId}"]`);
+      if (!section) {
+        console.error("Section not found:", sectionId);
+        return;
+      }
+
+      const content =
+        section.querySelector(".sidebar-section-content") || section;
+      const toggleButton = section.querySelector(".section-toggle");
+      const toggleIcon = toggleButton.querySelector(".toggle-icon");
+
+      // Check if section is currently minimized
+      const isMinimized = section.classList.contains("minimized");
+
+      if (isMinimized) {
+        // Expand section
+        section.classList.remove("minimized");
+        content.style.display = "block";
+        toggleIcon.style.transform = "rotate(0deg)";
+        console.log("Expanded section:", sectionId);
+      } else {
+        // Minimize section
+        section.classList.add("minimized");
+        content.style.display = "none";
+        toggleIcon.style.transform = "rotate(-90deg)";
+        console.log("Minimized section:", sectionId);
+      }
+
+      // Save state to localStorage
+      const minimizedSections = JSON.parse(
+        localStorage.getItem("omega-minimized-sections") || "[]"
+      );
+      if (isMinimized) {
+        // Remove from minimized list
+        const index = minimizedSections.indexOf(sectionId);
+        if (index > -1) {
+          minimizedSections.splice(index, 1);
         }
-    };
-    
-    // Mobile detection function
-    const isMobileDevice = () => {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-        const isMobileUA = mobileRegex.test(userAgent);
-        const isSmallScreen = window.innerWidth <= 768;
-        return isMobileUA || isSmallScreen;
-    };
-    
-    // Auto-transform when DOM is ready (unless user prefers basic mode)
-    const isMobile = isMobileDevice();
-    let savedViewMode = localStorage.getItem('omega-view-mode');
-    const savedTheme = localStorage.getItem('omega-theme-mode') || 'dark';
-    
-    // Force basic mode on mobile devices
-    if (isMobile) {
-        savedViewMode = 'basic';
-        localStorage.setItem('omega-view-mode', 'basic');
-        console.log('📱 Mobile device detected - forcing basic terminal mode');
-    }
-    
-    // Apply theme immediately
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        document.body.classList.remove('dark-mode');
-    } else {
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode');
-    }
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            // Always create the dashboard, but hide it if basic mode is preferred
-            transformToDashboard();
-            if (savedViewMode === 'basic') {
-                setTimeout(() => {
-                    window.FuturisticDashboard.enableBasicMode();
-                    window.FuturisticDashboard.updateThemeModeButton();
-                }, 100);
-            } else {
-                // Initialize button labels
-                setTimeout(() => {
-                    window.FuturisticDashboard.updateViewModeButton();
-                    window.FuturisticDashboard.updateThemeModeButton();
-                }, 100);
-            }
-        });
-    } else {
-        transformToDashboard();
-        if (savedViewMode === 'basic') {
-            setTimeout(() => {
-                window.FuturisticDashboard.enableBasicMode();
-                window.FuturisticDashboard.updateThemeModeButton();
-            }, 100);
-        } else {
-            // Initialize button labels
-            setTimeout(() => {
-                window.FuturisticDashboard.updateViewModeButton();
-                window.FuturisticDashboard.updateThemeModeButton();
-            }, 100);
+      } else {
+        // Add to minimized list
+        if (!minimizedSections.includes(sectionId)) {
+          minimizedSections.push(sectionId);
         }
+      }
+      localStorage.setItem(
+        "omega-minimized-sections",
+        JSON.stringify(minimizedSections)
+      );
+    },
+
+    // Restore minimized sections from localStorage
+    restoreMinimizedSections: function () {
+      const minimizedSections = JSON.parse(
+        localStorage.getItem("omega-minimized-sections") || "[]"
+      );
+      console.log("Restoring minimized sections:", minimizedSections);
+
+      minimizedSections.forEach((sectionId) => {
+        const section = document.querySelector(`[data-section="${sectionId}"]`);
+        if (section) {
+          const content =
+            section.querySelector(".sidebar-section-content") || section;
+          const toggleButton = section.querySelector(".section-toggle");
+          const toggleIcon = toggleButton.querySelector(".toggle-icon");
+
+          section.classList.add("minimized");
+          content.style.display = "none";
+          toggleIcon.style.transform = "rotate(-90deg)";
+        }
+      });
+    },
+
+    // Chart functionality
+    showChart: function (symbol) {
+      console.log("Showing chart for:", symbol);
+
+      // Hide other panels
+      const pgtPanel = document.getElementById("pgt-stats-panel");
+      if (pgtPanel) pgtPanel.style.display = "none";
+
+      // Show chart panel
+      const chartPanel = document.getElementById("chart-panel");
+      if (chartPanel) {
+        chartPanel.style.display = "block";
+
+        // Update symbol display
+        const symbolDisplay = document.getElementById("chart-symbol-display");
+        if (symbolDisplay) {
+          symbolDisplay.textContent = `${symbol}/USD`;
+        }
+
+        // Create TradingView widget
+        this.createTradingViewWidget(symbol);
+      }
+    },
+
+    closeChart: function () {
+      const chartPanel = document.getElementById("chart-panel");
+      if (chartPanel) {
+        chartPanel.style.display = "none";
+      }
+    },
+
+    createTradingViewWidget: function (symbol) {
+      const container = document.getElementById("chart-container");
+      if (!container) return;
+
+      // Clear existing content
+      container.innerHTML = "";
+
+      // Create TradingView widget configuration
+      const widgetConfig = {
+        symbol: `BINANCE:${symbol}USDT`,
+        interval: "D",
+        timezone: "Etc/UTC",
+        theme: "dark",
+        style: "1",
+        locale: "en",
+        toolbar_bg: "#1e1e1e",
+        enable_publishing: false,
+        hide_top_toolbar: false,
+        hide_legend: false,
+        save_image: false,
+        container_id: "chart-container",
+        studies: [],
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        gridColor: "rgba(0, 212, 255, 0.1)",
+        height: 280,
+        width: "100%",
+      };
+
+      // Create iframe with TradingView widget
+      const iframe = document.createElement("iframe");
+      iframe.style.cssText =
+        "width: 100%; height: 280px; border: none; display: block;";
+      iframe.scrolling = "no";
+      iframe.src = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview_${Date.now()}&symbol=${encodeURIComponent(
+        widgetConfig.symbol
+      )}&interval=${
+        widgetConfig.interval
+      }&symboledit=1&saveimage=0&toolbarbg=1e1e1e&studies=[]&theme=dark&style=1&timezone=Etc%2FUTC&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en&utm_source=omegaterminal.com&utm_medium=widget&utm_campaign=chart&utm_term=${symbol}`;
+
+      container.appendChild(iframe);
+    },
+  };
+
+  // Mobile detection function
+  const isMobileDevice = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const mobileRegex =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    const isMobileUA = mobileRegex.test(userAgent);
+    const isSmallScreen = window.innerWidth <= 768;
+    return isMobileUA || isSmallScreen;
+  };
+
+  // Auto-transform when DOM is ready (unless user prefers basic mode)
+  const isMobile = isMobileDevice();
+  let savedViewMode = localStorage.getItem("omega-view-mode");
+  const savedTheme = localStorage.getItem("omega-theme-mode") || "dark";
+
+  // Force basic mode on mobile devices
+  if (isMobile) {
+    savedViewMode = "basic";
+    localStorage.setItem("omega-view-mode", "basic");
+    console.log("📱 Mobile device detected - forcing basic terminal mode");
+  }
+
+  // Apply theme immediately
+  if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    document.body.classList.remove("dark-mode");
+  } else {
+    document.body.classList.add("dark-mode");
+    document.body.classList.remove("light-mode");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      // Always create the dashboard, but hide it if basic mode is preferred
+      transformToDashboard();
+      if (savedViewMode === "basic") {
+        setTimeout(() => {
+          window.FuturisticDashboard.enableBasicMode();
+          window.FuturisticDashboard.updateThemeModeButton();
+        }, 100);
+      } else {
+        // Initialize button labels
+        setTimeout(() => {
+          window.FuturisticDashboard.updateViewModeButton();
+          window.FuturisticDashboard.updateThemeModeButton();
+        }, 100);
+      }
+    });
+  } else {
+    transformToDashboard();
+    if (savedViewMode === "basic") {
+      setTimeout(() => {
+        window.FuturisticDashboard.enableBasicMode();
+        window.FuturisticDashboard.updateThemeModeButton();
+      }, 100);
+    } else {
+      // Initialize button labels
+      setTimeout(() => {
+        window.FuturisticDashboard.updateViewModeButton();
+        window.FuturisticDashboard.updateThemeModeButton();
+      }, 100);
     }
-    
+  }
 })();

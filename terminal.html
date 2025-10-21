@@ -24,29 +24,29 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/eth-crypto@2.1.2/dist/lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
-    
+
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
     <script src="js/utils.js"></script>
-    
+
     <!-- Futuristic UI System -->
     <script src="js/futuristic/futuristic-customizer.js"></script>
     <script src="js/futuristic/terminal-theme-bridge.js"></script>
     <script src="js/futuristic/futuristic-welcome-screen.js"></script>
     <script src="js/futuristic/welcome-screen-fix.js"></script>
     <script src="js/futuristic/futuristic-dashboard-transform.js"></script>
-    
+
     <!-- UI Components -->
     <script src="ui/svg-icons-replacement.js"></script>
     <script src="ui/omega-symbol-logo.js"></script>
-    
+
     <link rel="stylesheet" href="styles/gui-themes.css" />
     <link rel="stylesheet" href="styles/apple-ui-theme.css" />
     <link rel="stylesheet" href="styles/simple-input-fix.css" />
     <link rel="stylesheet" href="styles/mobile-terminal-fix.css" />
     <link rel="stylesheet" href="styles/mobile-games-fix.css" />
-    
+
     <!-- FUTURISTIC THEME -->
     <link rel="stylesheet" href="styles/futuristic-theme.css" />
     <link rel="stylesheet" href="styles/futuristic-mode.css" />
@@ -56,11 +56,14 @@
     <link rel="stylesheet" href="styles/svg-icons-system.css" />
     <link rel="stylesheet" href="styles/omega-logos.css" />
     <link rel="stylesheet" href="styles/omega-symbol-logo.css" />
-    
+
     <!-- EXECUTIVE THEME - Premium Professional UI -->
     <link rel="stylesheet" href="styles/executive-theme.css" />
     <link rel="stylesheet" href="styles/pgt-portfolio-integration.css" />
-    <link rel="stylesheet" href="styles/pgt-tracker-styles.css?v=layout-fix-2" />
+    <link
+      rel="stylesheet"
+      href="styles/pgt-tracker-styles.css?v=layout-fix-2"
+    />
     <link rel="stylesheet" href="styles/multi-network-connector.css" />
     <link rel="stylesheet" href="styles/chart-viewer.css" />
     <link rel="stylesheet" href="styles/spotify-player.css" />
@@ -103,7 +106,7 @@
     <script src="js/plugins/multi-network-connector.js"></script>
     <!-- Theme Input Field Fix -->
     <script src="js/plugins/theme-input-fix.js"></script>
-    
+
     <!-- Command Modules -->
     <script src="js/commands/basic.js"></script>
     <script src="js/commands/api.js"></script>
@@ -121,7 +124,7 @@
     <script src="js/commands/chaingpt-nft.js?v=1.0.5"></script>
     <script src="js/commands/crypto-news.js?v=1.0.0"></script>
     <script src="js/commands/youtube.js"></script>
-    
+
     <!-- Solana Web3.js for Solana support -->
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <script>
@@ -140,8 +143,7 @@
       // Cache bust for updates (clean version number)
       if (!window.location.search.includes("v=")) {
         const timestamp = Date.now();
-        const newUrl =
-          window.location.href.split("?")[0] + "?v=" + timestamp;
+        const newUrl = window.location.href.split("?")[0] + "?v=" + timestamp;
         console.log("Cache refresh: " + timestamp);
         window.location.href = newUrl;
       }
@@ -291,7 +293,7 @@
         line-height: 1.4;
         overflow: hidden;
       }
-      
+
       /* CRITICAL: Disable ALL animated overlays and scanlines */
       body::after,
       body::before,
@@ -301,7 +303,7 @@
         content: none !important;
         animation: none !important;
       }
-      
+
       /* Hide native browser caret (we use custom indicator) */
       input[type="text"],
       #commandInput,
@@ -312,13 +314,13 @@
         direction: ltr !important;
         unicode-bidi: normal !important;
       }
-      
+
       /* Enhanced cursor indicator */
       .omega-cursor-indicator {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        font-family: 'Courier New', monospace;
+        font-family: "Courier New", monospace;
         font-size: 14px;
         color: #00ffff;
         pointer-events: none;
@@ -327,21 +329,27 @@
         user-select: none;
         line-height: 1;
       }
-      
+
       @keyframes omegaCursorBlink {
-        0%, 49% { opacity: 1; }
-        50%, 100% { opacity: 0; }
+        0%,
+        49% {
+          opacity: 1;
+        }
+        50%,
+        100% {
+          opacity: 0;
+        }
       }
-      
+
       body.light-mode .omega-cursor-indicator {
         color: #0051d5;
       }
-      
+
       /* Ensure input line is positioned */
       .input-line {
         position: relative;
       }
-      
+
       /* Remove any custom cursor elements */
       .cursor,
       span.cursor,
@@ -350,179 +358,179 @@
         display: none !important;
         visibility: hidden !important;
       }
-      
+
       /* Old Terminal Light Mode Styles */
       body.light-mode .terminal {
         background: #ffffff !important;
         color: #1d1d1f !important;
       }
-      
+
       body.light-mode .terminal-header {
         background: #f5f5f7 !important;
         border-bottom-color: #d1d1d6 !important;
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
       }
-      
+
       body.light-mode .terminal-title {
         color: #1d1d1f !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .terminal-status {
         color: #0051d5 !important;
         background: rgba(0, 81, 213, 0.08) !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .tab-bar {
         background: #f5f5f7 !important;
         border-bottom-color: #d1d1d6 !important;
       }
-      
+
       body.light-mode .tab {
         color: #636366 !important;
         font-weight: 500;
       }
-      
+
       body.light-mode .tab.active {
         color: #0051d5 !important;
         border-bottom-color: #0051d5 !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .terminal-content {
         background: #ffffff !important;
         color: #1d1d1f !important;
       }
-      
+
       body.light-mode .terminal-output {
         color: #1d1d1f !important;
       }
-      
+
       body.light-mode .terminal-line,
       body.light-mode .output-line {
         color: #1d1d1f !important;
       }
-      
+
       body.light-mode .input-prompt,
       body.light-mode .prompt-symbol,
       body.light-mode .prompt-text {
         color: #007a3d !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .input-field,
       body.light-mode #commandInput {
         color: #1d1d1f !important;
         caret-color: #0051d5 !important;
         font-weight: 500;
       }
-      
+
       /* Light mode status message colors */
       body.light-mode .text-success,
       body.light-mode .success {
         color: #007a3d !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .text-error,
       body.light-mode .error {
         color: #d70015 !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .text-warning,
       body.light-mode .warning {
         color: #c93400 !important;
         font-weight: 600;
       }
-      
+
       body.light-mode .text-info,
       body.light-mode .info {
         color: #0051d5 !important;
         font-weight: 500;
       }
-      
+
       body.light-mode .text-matrix,
       body.light-mode .matrix {
         color: #007a3d !important;
       }
-      
+
       body.light-mode .text-cyan,
       body.light-mode .cyan {
         color: #0051d5 !important;
       }
-      
+
       body.light-mode .text-purple,
       body.light-mode .purple {
         color: #5e5ce6 !important;
       }
-      
+
       /* Light mode links */
       body.light-mode a {
         color: #0051d5 !important;
       }
-      
+
       body.light-mode a:hover {
         color: #0040dd !important;
         text-decoration: underline;
       }
-      
+
       /* Light mode header buttons */
       body.light-mode .header-control-btn {
         background: rgba(0, 81, 213, 0.08) !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
         color: #0051d5 !important;
       }
-      
+
       body.light-mode .header-control-btn:hover {
         background: rgba(0, 81, 213, 0.15) !important;
         border-color: #0051d5 !important;
         box-shadow: 0 0 10px rgba(0, 81, 213, 0.2) !important;
       }
-      
+
       body.light-mode .ai-toggle {
         background: rgba(0, 81, 213, 0.08) !important;
         color: #0051d5 !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
       }
-      
+
       body.light-mode .theme-toggle {
         background: rgba(0, 81, 213, 0.08) !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
       }
-      
+
       /* Light mode input section */
       body.light-mode .terminal-input-section {
         background: transparent !important;
         border-top-color: rgba(0, 81, 213, 0.15) !important;
       }
-      
+
       body.light-mode .input-line {
         background: rgba(0, 81, 213, 0.05) !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
       }
-      
+
       body.light-mode .input-line:focus-within {
         background: rgba(0, 81, 213, 0.08) !important;
         border-color: #0051d5 !important;
         box-shadow: 0 0 0 2px rgba(0, 81, 213, 0.15) !important;
       }
-      
+
       /* Light mode basic terminal mode */
       body.light-mode.basic-terminal-mode {
         background: #f5f5f7 !important;
       }
-      
+
       body.light-mode.basic-terminal-mode #terminal-wrapper {
         background: #ffffff !important;
       }
-      
+
       body.light-mode.basic-terminal-mode .terminal-header {
         background: #f5f5f7 !important;
       }
-      
+
       /* Header control button hover effects */
       .header-control-btn:hover {
         background: rgba(0, 188, 242, 0.2) !important;
@@ -530,11 +538,11 @@
         box-shadow: 0 0 10px rgba(0, 188, 242, 0.2) !important;
         transform: translateY(-1px);
       }
-      
+
       .header-control-btn:active {
         transform: translateY(0);
       }
-      
+
       /* Header icon buttons (social links) */
       .header-icon-btn:hover {
         background: rgba(0, 188, 242, 0.2) !important;
@@ -542,13 +550,13 @@
         box-shadow: 0 0 10px rgba(0, 188, 242, 0.2) !important;
         transform: translateY(-2px);
       }
-      
+
       body.light-mode .header-icon-btn {
         background: rgba(0, 81, 213, 0.08) !important;
         border-color: rgba(0, 81, 213, 0.2) !important;
         color: #0051d5 !important;
       }
-      
+
       body.light-mode .header-icon-btn:hover {
         background: rgba(0, 81, 213, 0.15) !important;
         border-color: #0051d5 !important;
@@ -589,7 +597,7 @@
         overflow: hidden;
         box-sizing: border-box;
       }
-      
+
       /* Ensure old terminal has proper flex layout */
       .terminal:not(.basic-terminal-mode) {
         display: flex !important;
@@ -618,7 +626,8 @@
         font-weight: 500;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         letter-spacing: 0.5px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica Neue", Arial, sans-serif;
       }
 
       .terminal-status {
@@ -679,7 +688,7 @@
         position: relative;
         z-index: 5;
       }
-      
+
       /* Basic terminal mode input section override */
       body.basic-terminal-mode .terminal-input-section {
         padding: 12px 20px !important;
@@ -696,7 +705,7 @@
         z-index: 5 !important;
         order: 999 !important;
       }
-      
+
       /* Basic terminal mode - Terminal container */
       body.basic-terminal-mode #terminal {
         display: flex !important;
@@ -708,7 +717,7 @@
         overflow: hidden !important;
         flex: 1 !important;
       }
-      
+
       /* Basic terminal mode - Content area */
       body.basic-terminal-mode .terminal-content {
         flex: 1 1 auto !important;
@@ -736,7 +745,7 @@
         scrollbar-width: thin;
         scrollbar-color: rgba(0, 188, 242, 0.5) rgba(0, 0, 0, 0.2);
       }
-      
+
       /* Ensure old terminal content is properly positioned */
       .terminal:not(.basic-terminal-mode) .terminal-content {
         flex: 1 1 auto !important;
@@ -745,36 +754,36 @@
         min-height: 0 !important;
         max-height: 100% !important;
       }
-      
+
       /* Ensure old terminal input section is at bottom */
       .terminal:not(.basic-terminal-mode) .terminal-input-section {
         margin-top: auto !important;
         flex-shrink: 0 !important;
       }
-      
+
       .terminal-content::-webkit-scrollbar {
         width: 8px;
       }
-      
+
       .terminal-content::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.2);
         border-radius: 4px;
       }
-      
+
       .terminal-content::-webkit-scrollbar-thumb {
         background: rgba(0, 188, 242, 0.5);
         border-radius: 4px;
         transition: background 0.2s ease;
       }
-      
+
       .terminal-content::-webkit-scrollbar-thumb:hover {
         background: rgba(0, 188, 242, 0.7);
       }
-      
+
       body.light-mode .terminal-content::-webkit-scrollbar-thumb {
         background: rgba(0, 81, 213, 0.5);
       }
-      
+
       body.light-mode .terminal-content::-webkit-scrollbar-thumb:hover {
         background: rgba(0, 81, 213, 0.7);
       }
@@ -784,28 +793,28 @@
         .terminal-header {
           padding: 12px 16px;
         }
-        
+
         .terminal-content {
           padding: 16px 20px;
         }
-        
+
         .terminal-input-section {
           padding: 10px 16px;
         }
-        
+
         .input-line {
           padding: 10px 14px;
           gap: 8px;
         }
-        
+
         .input-prompt {
           font-size: 14px;
         }
-        
+
         .input-field {
           font-size: 14px;
         }
-        
+
         .terminal-title {
           font-size: 16px;
         }
@@ -977,7 +986,7 @@
         transition: all 0.2s ease;
         box-sizing: border-box;
       }
-      
+
       .input-line:focus-within {
         background: rgba(0, 188, 242, 0.08);
         border-color: rgba(0, 188, 242, 0.4);
@@ -1533,7 +1542,7 @@
           transform: translate(50px, 50px);
         }
       }
-      
+
       /* Ensure boot animation is hidden after initialization */
       body.omega-initialized .boot-animation,
       body.omega-initialized #bootAnimation {
@@ -1835,7 +1844,12 @@
     <!-- Boot Animation -->
     <div class="boot-animation" id="bootAnimation">
       <div class="omega-container">
-        <div class="omega-main" style="color: #ffffff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);">Ω</div>
+        <div
+          class="omega-main"
+          style="color: #ffffff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.8)"
+        >
+          Ω
+        </div>
         <!-- Removed omega-orbit circle for clean logo -->
       </div>
       <div class="welcome-container">
@@ -1870,10 +1884,10 @@
             margin-left: auto;
           "
         >
-          <a 
-            href="https://omeganetwork.co/landing" 
-            target="_blank" 
-            class="header-icon-btn" 
+          <a
+            href="https://omeganetwork.co/landing"
+            target="_blank"
+            class="header-icon-btn"
             title="Omega Network Website"
             style="
               background: rgba(0, 188, 242, 0.1);
@@ -1890,13 +1904,15 @@
             "
           >
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+              <path
+                d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+              />
             </svg>
           </a>
-          <a 
-            href="https://discord.com/invite/omeganetwork" 
-            target="_blank" 
-            class="header-icon-btn" 
+          <a
+            href="https://discord.com/invite/omeganetwork"
+            target="_blank"
+            class="header-icon-btn"
             title="Discord Community"
             style="
               background: rgba(0, 188, 242, 0.1);
@@ -1913,13 +1929,15 @@
             "
           >
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8Z"/>
+              <path
+                d="M22,24L16.75,19L17.38,21H4.5A2.5,2.5 0 0,1 2,18.5V3.5A2.5,2.5 0 0,1 4.5,1H19.5A2.5,2.5 0 0,1 22,3.5V24M12,6.8C9.32,6.8 7.44,7.95 7.44,7.95C8.47,7.03 10.27,6.5 10.27,6.5L10.1,6.33C8.41,6.36 6.88,7.53 6.88,7.53C5.16,11.12 5.27,14.22 5.27,14.22C6.67,16.03 8.75,15.9 8.75,15.9L9.46,15C8.21,14.73 7.42,13.62 7.42,13.62C7.42,13.62 9.3,14.9 12,14.9C14.7,14.9 16.58,13.62 16.58,13.62C16.58,13.62 15.79,14.73 14.54,15L15.25,15.9C15.25,15.9 17.33,16.03 18.73,14.22C18.73,14.22 18.84,11.12 17.12,7.53C17.12,7.53 15.59,6.36 13.9,6.33L13.73,6.5C13.73,6.5 15.53,7.03 16.56,7.95C16.56,7.95 14.68,6.8 12,6.8Z"
+              />
             </svg>
           </a>
-          <a 
-            href="https://x.com/omega_netw0rk" 
-            target="_blank" 
-            class="header-icon-btn" 
+          <a
+            href="https://x.com/omega_netw0rk"
+            target="_blank"
+            class="header-icon-btn"
             title="X (Twitter)"
             style="
               background: rgba(0, 188, 242, 0.1);
@@ -1936,13 +1954,15 @@
             "
           >
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              />
             </svg>
           </a>
-          <a 
-            href="https://omega-6.gitbook.io/omega/" 
-            target="_blank" 
-            class="header-icon-btn" 
+          <a
+            href="https://omega-6.gitbook.io/omega/"
+            target="_blank"
+            class="header-icon-btn"
             title="Documentation"
             style="
               background: rgba(0, 188, 242, 0.1);
@@ -1959,13 +1979,22 @@
             "
           >
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5Z"/>
+              <path
+                d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5Z"
+              />
             </svg>
           </a>
-          <div style="width: 1px; height: 20px; background: rgba(0, 188, 242, 0.3); margin: 0 4px;"></div>
-          <button 
-            class="header-control-btn" 
-            title="Toggle Dark/Light Mode" 
+          <div
+            style="
+              width: 1px;
+              height: 20px;
+              background: rgba(0, 188, 242, 0.3);
+              margin: 0 4px;
+            "
+          ></div>
+          <button
+            class="header-control-btn"
+            title="Toggle Dark/Light Mode"
             id="oldTerminalThemeToggle"
             onclick="window.toggleOldTerminalTheme()"
             style="
@@ -1986,13 +2015,15 @@
             "
           >
             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/>
+              <path
+                d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"
+              />
             </svg>
             <span id="oldTerminalThemeLabel">LIGHT</span>
           </button>
-          <button 
-            class="header-control-btn" 
-            title="Switch to Dashboard View" 
+          <button
+            class="header-control-btn"
+            title="Switch to Dashboard View"
             id="oldTerminalDashboardToggle"
             onclick="window.switchToFuturisticUI()"
             style="
@@ -2013,13 +2044,60 @@
             "
           >
             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
+              <path
+                d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"
+              />
             </svg>
             <span>DASHBOARD</span>
           </button>
-          <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">
-            AI Mode (off)
-          </button>
+          <!-- AI Provider Dropdown -->
+          <label
+            for="aiProviderSelect"
+            style="
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+            >AI:</label
+          >
+          <select
+            id="aiProviderSelect"
+            title="Select AI Provider"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 10px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              appearance: none;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              background-image: linear-gradient(
+                  45deg,
+                  transparent 50%,
+                  #00bcf2 50%
+                ),
+                linear-gradient(135deg, #00bcf2 50%, transparent 50%);
+              background-position: calc(100% - 15px) calc(1em + 2px),
+                calc(100% - 10px) calc(1em + 2px);
+              background-size: 5px 5px, 5px 5px;
+              background-repeat: no-repeat;
+              min-width: 110px;
+            "
+          >
+            <option value="off">Off</option>
+            <option value="near">NEAR AI</option>
+            <option value="openai">OpenAI</option>
+          </select>
           <div class="terminal-status" id="connectionStatus">DISCONNECTED</div>
         </div>
       </div>
@@ -2074,9 +2152,14 @@
           box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
         "
       >
-        <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24 hours.<br />
-        If you try to claim again before the cooldown is over, the transaction will fail.<br /><br />
-        <b>📱 Platform Notice:</b> Mobile experience is currently being optimized. For the best terminal experience with full features and optimal performance, we recommend using a desktop browser. Mobile support coming soon! 🚀
+        <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24
+        hours.<br />
+        If you try to claim again before the cooldown is over, the transaction
+        will fail.<br /><br />
+        <b>📱 Platform Notice:</b> Mobile experience is currently being
+        optimized. For the best terminal experience with full features and
+        optimal performance, we recommend using a desktop browser. Mobile
+        support coming soon! 🚀
       </div>
       <div class="terminal-content" id="terminalContent"></div>
       <div class="terminal-input-section">
@@ -2228,198 +2311,215 @@
         };
         console.log("Ethers fallback loaded successfully");
       }
-      
+
       // Old Terminal UI Theme Toggle Function
-      window.toggleOldTerminalTheme = function() {
-        const currentTheme = localStorage.getItem('omega-theme-mode') || 'dark';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        localStorage.setItem('omega-theme-mode', newTheme);
-        
-        const terminal = document.getElementById('terminal');
-        const terminalContent = document.querySelector('.terminal-content');
-        const terminalOutput = document.querySelector('.terminal-output');
+      window.toggleOldTerminalTheme = function () {
+        const currentTheme = localStorage.getItem("omega-theme-mode") || "dark";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        localStorage.setItem("omega-theme-mode", newTheme);
+
+        const terminal = document.getElementById("terminal");
+        const terminalContent = document.querySelector(".terminal-content");
+        const terminalOutput = document.querySelector(".terminal-output");
         const body = document.body;
-        
+
         // Check if terminal is in Apple UI (Modern UI) mode
-        const isAppleUI = terminal && terminal.classList.contains('apple-ui');
-        
-        if (newTheme === 'light') {
+        const isAppleUI = terminal && terminal.classList.contains("apple-ui");
+
+        if (newTheme === "light") {
           // Apply light mode
-          body.classList.add('light-mode');
-          body.classList.remove('dark-mode');
-          
+          body.classList.add("light-mode");
+          body.classList.remove("dark-mode");
+
           // Handle Apple UI theme specifically
           if (isAppleUI && terminal) {
-            terminal.classList.remove('dark');
-            console.log('✅ Apple UI: Switched to light mode');
+            terminal.classList.remove("dark");
+            console.log("✅ Apple UI: Switched to light mode");
           }
-          
+
           // Update terminal styles
           if (terminal) {
-            terminal.style.background = '#ffffff';
-            terminal.style.color = '#1d1d1f';
+            terminal.style.background = "#ffffff";
+            terminal.style.color = "#1d1d1f";
           }
           if (terminalContent) {
-            terminalContent.style.background = '#ffffff';
-            terminalContent.style.color = '#1d1d1f';
+            terminalContent.style.background = "#ffffff";
+            terminalContent.style.color = "#1d1d1f";
           }
           if (terminalOutput) {
-            terminalOutput.style.color = '#1d1d1f';
+            terminalOutput.style.color = "#1d1d1f";
           }
-          
+
           // Update all output lines
-          document.querySelectorAll('.terminal-line, .output-line').forEach(line => {
-            line.style.color = '#1d1d1f';
-          });
-          
+          document
+            .querySelectorAll(".terminal-line, .output-line")
+            .forEach((line) => {
+              line.style.color = "#1d1d1f";
+            });
+
           // Update prompts
-          document.querySelectorAll('.input-prompt, .prompt-symbol, .prompt-text').forEach(prompt => {
-            prompt.style.color = '#007a3d';
-          });
-          
+          document
+            .querySelectorAll(".input-prompt, .prompt-symbol, .prompt-text")
+            .forEach((prompt) => {
+              prompt.style.color = "#007a3d";
+            });
+
           // Update command input
-          const commandInput = document.getElementById('commandInput');
+          const commandInput = document.getElementById("commandInput");
           if (commandInput) {
-            commandInput.style.color = '#1d1d1f';
+            commandInput.style.color = "#1d1d1f";
           }
-          
+
           // Update button label
-          const label = document.getElementById('oldTerminalThemeLabel');
-          if (label) label.textContent = 'DARK';
-          
-          console.log('✅ Switched to light mode - all text updated');
-          
+          const label = document.getElementById("oldTerminalThemeLabel");
+          if (label) label.textContent = "DARK";
+
+          console.log("✅ Switched to light mode - all text updated");
+
           // Log to terminal if available
           if (window.terminal && window.terminal.log) {
-            window.terminal.log('🌞 Light mode enabled', 'success');
+            window.terminal.log("🌞 Light mode enabled", "success");
           }
         } else {
           // Apply dark mode
-          body.classList.add('dark-mode');
-          body.classList.remove('light-mode');
-          
+          body.classList.add("dark-mode");
+          body.classList.remove("light-mode");
+
           // Handle Apple UI theme specifically
           if (isAppleUI && terminal) {
-            terminal.classList.add('dark');
-            console.log('✅ Apple UI: Switched to dark mode');
+            terminal.classList.add("dark");
+            console.log("✅ Apple UI: Switched to dark mode");
           }
-          
+
           // Update terminal styles
           if (terminal) {
-            terminal.style.background = '#000';
-            terminal.style.color = '#ffffff';
+            terminal.style.background = "#000";
+            terminal.style.color = "#ffffff";
           }
           if (terminalContent) {
-            terminalContent.style.background = '#000';
-            terminalContent.style.color = '#ffffff';
+            terminalContent.style.background = "#000";
+            terminalContent.style.color = "#ffffff";
           }
           if (terminalOutput) {
-            terminalOutput.style.color = '#ffffff';
+            terminalOutput.style.color = "#ffffff";
           }
-          
+
           // Update all output lines
-          document.querySelectorAll('.terminal-line, .output-line').forEach(line => {
-            line.style.color = '';
-          });
-          
+          document
+            .querySelectorAll(".terminal-line, .output-line")
+            .forEach((line) => {
+              line.style.color = "";
+            });
+
           // Update prompts
-          document.querySelectorAll('.input-prompt, .prompt-symbol, .prompt-text').forEach(prompt => {
-            prompt.style.color = '';
-          });
-          
+          document
+            .querySelectorAll(".input-prompt, .prompt-symbol, .prompt-text")
+            .forEach((prompt) => {
+              prompt.style.color = "";
+            });
+
           // Update command input
-          const commandInput = document.getElementById('commandInput');
+          const commandInput = document.getElementById("commandInput");
           if (commandInput) {
-            commandInput.style.color = '';
+            commandInput.style.color = "";
           }
-          
+
           // Update button label
-          const label = document.getElementById('oldTerminalThemeLabel');
-          if (label) label.textContent = 'LIGHT';
-          
-          console.log('✅ Switched to dark mode');
-          
+          const label = document.getElementById("oldTerminalThemeLabel");
+          if (label) label.textContent = "LIGHT";
+
+          console.log("✅ Switched to dark mode");
+
           // Log to terminal if available
           if (window.terminal && window.terminal.log) {
-            window.terminal.log('🌙 Dark mode enabled', 'success');
+            window.terminal.log("🌙 Dark mode enabled", "success");
           }
         }
-        
+
         // If futuristic dashboard exists, sync with it
-        if (window.FuturisticDashboard && window.FuturisticDashboard.updateThemeModeButton) {
+        if (
+          window.FuturisticDashboard &&
+          window.FuturisticDashboard.updateThemeModeButton
+        ) {
           window.FuturisticDashboard.updateThemeModeButton();
         }
       };
-      
+
       // Switch from Old Terminal to Futuristic Dashboard UI
-      window.switchToFuturisticUI = function() {
-        console.log('🚀 Switching to Futuristic Dashboard UI...');
-        
+      window.switchToFuturisticUI = function () {
+        console.log("🚀 Switching to Futuristic Dashboard UI...");
+
         // Save preference
-        localStorage.setItem('omega-view-mode', 'futuristic');
-        
+        localStorage.setItem("omega-view-mode", "futuristic");
+
         // If dashboard already exists, just enable it
-        if (window.FuturisticDashboard && window.FuturisticDashboard.enableFuturisticMode) {
+        if (
+          window.FuturisticDashboard &&
+          window.FuturisticDashboard.enableFuturisticMode
+        ) {
           window.FuturisticDashboard.enableFuturisticMode();
-          
+
           if (window.terminal) {
-            window.terminal.log('✅ Switched to Futuristic Dashboard', 'success');
+            window.terminal.log(
+              "✅ Switched to Futuristic Dashboard",
+              "success"
+            );
           }
         } else {
           // Dashboard doesn't exist yet, reload page (it will auto-load dashboard)
-          console.log('🔄 Reloading to initialize dashboard...');
+          console.log("🔄 Reloading to initialize dashboard...");
           location.reload();
         }
       };
-      
+
       // Initialize theme on page load for old terminal
-        (function() {
-          const savedTheme = localStorage.getItem('omega-theme-mode') || 'dark';
-          if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-            document.body.classList.remove('dark-mode');
-          } else {
-            document.body.classList.add('dark-mode');
-            document.body.classList.remove('light-mode');
+      (function () {
+        const savedTheme = localStorage.getItem("omega-theme-mode") || "dark";
+        if (savedTheme === "light") {
+          document.body.classList.add("light-mode");
+          document.body.classList.remove("dark-mode");
+        } else {
+          document.body.classList.add("dark-mode");
+          document.body.classList.remove("light-mode");
+        }
+      })();
+
+      // Enhanced cursor indicator system
+      window.initCursorIndicator = function () {
+        const input = document.getElementById("commandInput");
+        if (!input) {
+          // Retry if input not ready
+          setTimeout(window.initCursorIndicator, 100);
+          return;
+        }
+
+        // Check if already initialized
+        if (input.dataset.cursorInit === "true") return;
+        input.dataset.cursorInit = "true";
+
+        // Create cursor indicator element
+        let indicator = document.getElementById("omegaCursorIndicator");
+        if (!indicator) {
+          indicator = document.createElement("span");
+          indicator.id = "omegaCursorIndicator";
+          indicator.className = "omega-cursor-indicator";
+          indicator.textContent = "█";
+
+          // Insert after the input
+          const inputLine = input.closest(".input-line");
+          if (inputLine) {
+            inputLine.appendChild(indicator);
           }
-        })();
-        
-        // Enhanced cursor indicator system
-        window.initCursorIndicator = function() {
-          const input = document.getElementById('commandInput');
-          if (!input) {
-            // Retry if input not ready
-            setTimeout(window.initCursorIndicator, 100);
-            return;
-          }
-          
-          // Check if already initialized
-          if (input.dataset.cursorInit === 'true') return;
-          input.dataset.cursorInit = 'true';
-          
-          // Create cursor indicator element
-          let indicator = document.getElementById('omegaCursorIndicator');
-          if (!indicator) {
-            indicator = document.createElement('span');
-            indicator.id = 'omegaCursorIndicator';
-            indicator.className = 'omega-cursor-indicator';
-            indicator.textContent = '█';
-            
-            // Insert after the input
-            const inputLine = input.closest('.input-line');
-            if (inputLine) {
-              inputLine.appendChild(indicator);
-            }
-          }
-          
-          // Position updater function
-          function updateCursorPosition() {
-            if (!indicator || !input) return;
-            
-            // Create measurement element
-            const measure = document.createElement('span');
-            measure.style.cssText = `
+        }
+
+        // Position updater function
+        function updateCursorPosition() {
+          if (!indicator || !input) return;
+
+          // Create measurement element
+          const measure = document.createElement("span");
+          measure.style.cssText = `
               font-family: ${window.getComputedStyle(input).fontFamily};
               font-size: ${window.getComputedStyle(input).fontSize};
               font-weight: ${window.getComputedStyle(input).fontWeight};
@@ -2429,42 +2529,44 @@
               white-space: pre;
               left: -9999px;
             `;
-            measure.textContent = input.value || '';
-            document.body.appendChild(measure);
-            
-            const textWidth = measure.offsetWidth;
-            document.body.removeChild(measure);
-            
-            // Get input's offset relative to parent
-            const inputRect = input.getBoundingClientRect();
-            const lineRect = input.closest('.input-line')?.getBoundingClientRect();
-            
-            if (lineRect) {
-              const offset = inputRect.left - lineRect.left;
-              indicator.style.left = (offset + textWidth + 2) + 'px';
-            }
+          measure.textContent = input.value || "";
+          document.body.appendChild(measure);
+
+          const textWidth = measure.offsetWidth;
+          document.body.removeChild(measure);
+
+          // Get input's offset relative to parent
+          const inputRect = input.getBoundingClientRect();
+          const lineRect = input
+            .closest(".input-line")
+            ?.getBoundingClientRect();
+
+          if (lineRect) {
+            const offset = inputRect.left - lineRect.left;
+            indicator.style.left = offset + textWidth + 2 + "px";
           }
-          
-          // Attach event listeners
-          input.addEventListener('input', updateCursorPosition);
-          input.addEventListener('keyup', updateCursorPosition);
-          input.addEventListener('keydown', updateCursorPosition);
-          input.addEventListener('click', updateCursorPosition);
-          input.addEventListener('focus', updateCursorPosition);
-          
-          // Initial position
-          setTimeout(updateCursorPosition, 50);
-          
-          console.log('✅ Cursor indicator initialized');
-        };
-        
-        // Initialize on DOM ready
-        document.addEventListener('DOMContentLoaded', window.initCursorIndicator);
-        
-        // Also retry after a delay to catch dynamically created inputs
-        setTimeout(window.initCursorIndicator, 500);
-        setTimeout(window.initCursorIndicator, 1000);
-        setTimeout(window.initCursorIndicator, 2000);
+        }
+
+        // Attach event listeners
+        input.addEventListener("input", updateCursorPosition);
+        input.addEventListener("keyup", updateCursorPosition);
+        input.addEventListener("keydown", updateCursorPosition);
+        input.addEventListener("click", updateCursorPosition);
+        input.addEventListener("focus", updateCursorPosition);
+
+        // Initial position
+        setTimeout(updateCursorPosition, 50);
+
+        console.log("✅ Cursor indicator initialized");
+      };
+
+      // Initialize on DOM ready
+      document.addEventListener("DOMContentLoaded", window.initCursorIndicator);
+
+      // Also retry after a delay to catch dynamically created inputs
+      setTimeout(window.initCursorIndicator, 500);
+      setTimeout(window.initCursorIndicator, 1000);
+      setTimeout(window.initCursorIndicator, 2000);
 
       class OmegaMinerTerminal {
         // For AI/automation: queue of prompt responses
@@ -2837,8 +2939,9 @@
           this.solanaAddress = null;
           this.awaitingWalletChoice = false;
 
-          // Initialize AI mode state
-          this.isAIModeOn = false;
+          // Initialize AI provider/mode state
+          this.aiProvider = localStorage.getItem("omega-ai-provider") || "off"; // 'off' | 'near' | 'openai'
+          this.isAIModeOn = this.aiProvider !== "off";
           this.executingAICommands = false;
         }
 
@@ -2866,61 +2969,92 @@
          * Check if a command looks like a question
          */
         isQuestionLike(command) {
-            const questionWords = [
-                'what', 'how', 'why', 'when', 'where', 'who', 'which', 'can', 'could', 'would', 'should',
-                'is', 'are', 'was', 'were', 'do', 'does', 'did', 'will', 'shall', 'may', 'might',
-                'explain', 'tell', 'describe', 'define', 'show', 'help', 'guide', 'tutorial'
+          const questionWords = [
+            "what",
+            "how",
+            "why",
+            "when",
+            "where",
+            "who",
+            "which",
+            "can",
+            "could",
+            "would",
+            "should",
+            "is",
+            "are",
+            "was",
+            "were",
+            "do",
+            "does",
+            "did",
+            "will",
+            "shall",
+            "may",
+            "might",
+            "explain",
+            "tell",
+            "describe",
+            "define",
+            "show",
+            "help",
+            "guide",
+            "tutorial",
+          ];
+
+          const questionMarks = ["?"];
+          const commandLower = command.toLowerCase().trim();
+
+          // Check for question marks
+          if (questionMarks.some((mark) => commandLower.includes(mark))) {
+            return true;
+          }
+
+          // Check if it starts with a question word
+          if (
+            questionWords.some((word) => commandLower.startsWith(word + " "))
+          ) {
+            return true;
+          }
+
+          // Check if it contains multiple words and looks like a question
+          const words = commandLower.split(/\s+/);
+          if (words.length >= 2) {
+            // Check if it contains question words anywhere
+            if (questionWords.some((word) => words.includes(word))) {
+              return true;
+            }
+
+            // Check for common question patterns
+            const questionPatterns = [
+              /^what is/,
+              /^how to/,
+              /^how do/,
+              /^how can/,
+              /^why is/,
+              /^when is/,
+              /^where is/,
+              /^who is/,
+              /^can you/,
+              /^could you/,
+              /^would you/,
+              /^should i/,
+              /^explain/,
+              /^tell me/,
+              /^describe/,
+              /^define/,
+              /^show me/,
+              /^help me/,
             ];
-            
-            const questionMarks = ['?'];
-            const commandLower = command.toLowerCase().trim();
-            
-            // Check for question marks
-            if (questionMarks.some(mark => commandLower.includes(mark))) {
-                return true;
+
+            if (
+              questionPatterns.some((pattern) => pattern.test(commandLower))
+            ) {
+              return true;
             }
-            
-            // Check if it starts with a question word
-            if (questionWords.some(word => commandLower.startsWith(word + ' '))) {
-                return true;
-            }
-            
-            // Check if it contains multiple words and looks like a question
-            const words = commandLower.split(/\s+/);
-            if (words.length >= 2) {
-                // Check if it contains question words anywhere
-                if (questionWords.some(word => words.includes(word))) {
-                    return true;
-                }
-                
-                // Check for common question patterns
-                const questionPatterns = [
-                    /^what is/,
-                    /^how to/,
-                    /^how do/,
-                    /^how can/,
-                    /^why is/,
-                    /^when is/,
-                    /^where is/,
-                    /^who is/,
-                    /^can you/,
-                    /^could you/,
-                    /^would you/,
-                    /^should i/,
-                    /^explain/,
-                    /^tell me/,
-                    /^describe/,
-                    /^define/,
-                    /^show me/,
-                    /^help me/
-                ];
-                
-                if (questionPatterns.some(pattern => pattern.test(commandLower))) {
-                    return true;
-                }
-            }
-            
-            return false;
+          }
+
+          return false;
         }
 
         loadTheme() {
@@ -2950,29 +3084,56 @@
             setTimeout(() => {
               // Hide boot animation
               document.getElementById("bootAnimation").style.display = "none";
-              
+
               // Always go directly to terminal (no UI selection screen)
               document.getElementById("terminal").style.display = "flex";
               this.applyTheme();
               // Enhanced welcome sequence
-              this.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', "output");
-              this.log('', "output");
-              this.log('    01001111 01101101 01100101 01100111 01100001', "info");
-              this.log('', "output");
-              this.log('    ⚡ WELCOME TO Ω OMEGA TERMINAL v2.0.1', "success");
-              this.log('', "output");
-              this.log('    🚀 Your Gateway to Web3, DeFi, NFTs & Advanced Trading', "info");
-              this.log('', "output");
-              this.log('    💡 Quick Start:', "output");
-              this.log('       • Type "connect" to connect your wallet', "output");
-              this.log('       • Type "help" to see all available commands', "output");
-              this.log('       • Type "chart BTC" for live crypto charts', "output");
-              this.log('       • Type "spotify" for music player integration', "output");
-              this.log('', "output");
-              this.log('    🌐 Access: Omega Network • Multi-Chain • DeFi Analytics', "info");
-              this.log('', "output");
-              this.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', "output");
-              this.log('', "output");
+              this.log(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                "output"
+              );
+              this.log("", "output");
+              this.log(
+                "    01001111 01101101 01100101 01100111 01100001",
+                "info"
+              );
+              this.log("", "output");
+              this.log("    ⚡ WELCOME TO Ω OMEGA TERMINAL v2.0.1", "success");
+              this.log("", "output");
+              this.log(
+                "    🚀 Your Gateway to Web3, DeFi, NFTs & Advanced Trading",
+                "info"
+              );
+              this.log("", "output");
+              this.log("    💡 Quick Start:", "output");
+              this.log(
+                '       • Type "connect" to connect your wallet',
+                "output"
+              );
+              this.log(
+                '       • Type "help" to see all available commands',
+                "output"
+              );
+              this.log(
+                '       • Type "chart BTC" for live crypto charts',
+                "output"
+              );
+              this.log(
+                '       • Type "spotify" for music player integration',
+                "output"
+              );
+              this.log("", "output");
+              this.log(
+                "    🌐 Access: Omega Network • Multi-Chain • DeFi Analytics",
+                "info"
+              );
+              this.log("", "output");
+              this.log(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                "output"
+              );
+              this.log("", "output");
               resolve();
             }, 4000); // Extended boot time to show cool animation
           });
@@ -2980,7 +3141,7 @@
 
         applyUIPreference(preference) {
           const terminal = document.getElementById("terminal");
-          if (preference === 'modern') {
+          if (preference === "modern") {
             terminal.classList.add("apple-ui", "dark");
           }
           // Terminal UI is default, no class needed
@@ -3023,20 +3184,20 @@
           const input = document.getElementById("commandInput");
           if (input) {
             input.focus();
-            
+
             // Add cursor indicator animation on focus/blur
-            const inputLine = input.closest('.input-line');
+            const inputLine = input.closest(".input-line");
             if (inputLine) {
-              input.addEventListener('focus', () => {
-                inputLine.classList.add('active');
+              input.addEventListener("focus", () => {
+                inputLine.classList.add("active");
               });
-              input.addEventListener('blur', () => {
-                inputLine.classList.remove('active');
+              input.addEventListener("blur", () => {
+                inputLine.classList.remove("active");
               });
               // Start with active state since we auto-focus
-              inputLine.classList.add('active');
+              inputLine.classList.add("active");
             }
-            
+
             // Command history and autocomplete state
             this.commandHistory = [];
             this.historyIndex = -1;
@@ -3188,7 +3349,7 @@
             const updateCursorPosition = () => {
               // DISABLED: Using native browser caret instead of custom cursor
               return;
-              
+
               if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
               }
@@ -3283,11 +3444,20 @@
                 input.focus();
               });
           }
-          // Setup AI toggle
-          const aiToggle = document.querySelector(".ai-toggle");
-          if (aiToggle) {
-            aiToggle.addEventListener("click", () => {
-              this.toggleAIMode();
+          // Setup AI provider selector
+          const aiProviderSelect = document.getElementById("aiProviderSelect");
+          if (aiProviderSelect) {
+            // Set initial value from state/localStorage
+            try {
+              aiProviderSelect.value = this.aiProvider || "off";
+            } catch (e) {
+              aiProviderSelect.value = "off";
+            }
+            // Apply initial UI and placeholder
+            this.applyAIProviderUI();
+            aiProviderSelect.addEventListener("change", (e) => {
+              const provider = e.target.value;
+              this.setAIProvider(provider);
             });
           }
 
@@ -3452,24 +3622,51 @@
                 }
               }
             } else {
-              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                "output"
+              );
               this.log("", "info");
               this.log("    ⚠️  NO EVM WALLET DETECTED", "error");
               this.log("", "info");
-              this.log("    🎁 EXCLUSIVE OFFER: Create Your Ω OMEGA Wallet!", "success");
+              this.log(
+                "    🎁 EXCLUSIVE OFFER: Create Your Ω OMEGA Wallet!",
+                "success"
+              );
               this.log("", "info");
               this.log("    💎 What You Get:", "info");
-              this.log("       • 🆓 Free Omega Network wallet (browser-based)", "output");
+              this.log(
+                "       • 🆓 Free Omega Network wallet (browser-based)",
+                "output"
+              );
               this.log("       • 💰 Instant 0.1 OMEGA token airdrop", "output");
-              this.log("       • ⛏️  Ready for mining & claiming rewards", "output");
-              this.log("       • 🔐 Secure, encrypted private key storage", "output");
-              this.log("       • 🚀 Start trading & earning immediately", "output");
+              this.log(
+                "       • ⛏️  Ready for mining & claiming rewards",
+                "output"
+              );
+              this.log(
+                "       • 🔐 Secure, encrypted private key storage",
+                "output"
+              );
+              this.log(
+                "       • 🚀 Start trading & earning immediately",
+                "output"
+              );
               this.log("", "info");
               this.log("    ⌨️  Your Choice:", "info");
-              this.log('       • Type "yes" → Generate Ω OMEGA Wallet + FREE 0.1 OMEGA', "success");
-              this.log('       • Type "no" → Cancel (install MetaMask instead)', "output");
+              this.log(
+                '       • Type "yes" → Generate Ω OMEGA Wallet + FREE 0.1 OMEGA',
+                "success"
+              );
+              this.log(
+                '       • Type "no" → Cancel (install MetaMask instead)',
+                "output"
+              );
               this.log("", "info");
-              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                "output"
+              );
               this.log("", "info");
               this.awaitingWalletChoice = true;
               return;
@@ -3829,7 +4026,10 @@
           if (this.awaitingWalletChoice) {
             this.awaitingWalletChoice = false;
             if (cmd === "yes") {
-              this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+              this.log(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                "output"
+              );
               this.log("", "info");
               this.log("    🎉 GENERATING YOUR Ω OMEGA WALLET...", "info");
               this.log("", "info");
@@ -3852,10 +4052,7 @@
               this.log("", "info");
               this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
               this.log("", "info");
-              this.log(
-                "    ⚠️  CRITICAL: SAVE THESE DETAILS NOW!",
-                "error"
-              );
+              this.log("    ⚠️  CRITICAL: SAVE THESE DETAILS NOW!", "error");
               this.log(
                 "    🔒 Store your private key in a secure password manager",
                 "error"
@@ -3867,10 +4064,7 @@
               this.log("", "info");
               this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
               this.log("", "info");
-              this.log(
-                "    💰 ACTIVATING WELCOME BONUS...",
-                "info"
-              );
+              this.log("    💰 ACTIVATING WELCOME BONUS...", "info");
               this.log(
                 "    🎁 Requesting 0.1 OMEGA tokens from faucet...",
                 "info"
@@ -3889,34 +4083,52 @@
                 const data = await response.json();
                 if (data.success) {
                   this.log("", "info");
-                  this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+                  this.log(
+                    "    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                    "output"
+                  );
                   this.log("    🎉 WELCOME BONUS ACTIVATED!", "success");
-                  this.log("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+                  this.log(
+                    "    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                    "output"
+                  );
                   this.log("", "info");
                   this.log(
                     `    ✅ 0.1 OMEGA tokens deposited to your wallet!`,
                     "success"
                   );
-                  this.log(
-                    `    📜 Transaction Hash: ${data.txHash}`,
-                    "info"
-                  );
-                  this.log("", "info");
-                  this.log("    🚀 YOUR OMEGA TERMINAL IS NOW READY!", "success");
+                  this.log(`    📜 Transaction Hash: ${data.txHash}`, "info");
                   this.log("", "info");
                   this.log(
-                    "    ⚡ Try These Commands:",
-                    "info"
+                    "    🚀 YOUR OMEGA TERMINAL IS NOW READY!",
+                    "success"
                   );
-                  this.log('       • "balance" → Check your 0.1 OMEGA balance', "output");
-                  this.log('       • "mine" → Start mining more OMEGA tokens', "output");
-                  this.log('       • "faucet" → Claim additional tokens (24h cooldown)', "output");
-                  this.log('       • "chart BTC" → View live crypto charts', "output");
+                  this.log("", "info");
+                  this.log("    ⚡ Try These Commands:", "info");
+                  this.log(
+                    '       • "balance" → Check your 0.1 OMEGA balance',
+                    "output"
+                  );
+                  this.log(
+                    '       • "mine" → Start mining more OMEGA tokens',
+                    "output"
+                  );
+                  this.log(
+                    '       • "faucet" → Claim additional tokens (24h cooldown)',
+                    "output"
+                  );
+                  this.log(
+                    '       • "chart BTC" → View live crypto charts',
+                    "output"
+                  );
                   this.log('       • "help" → Explore all features', "output");
                   this.log("", "info");
                   this.log("    🎯 Happy trading & earning!", "success");
                   this.log("", "info");
-                  this.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "output");
+                  this.log(
+                    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                    "output"
+                  );
                   this.log("", "info");
 
                   // Set up the wallet for use
@@ -4432,6 +4644,9 @@
                     evm,
                     solana,
                     chatHistory: this.chatHistory, // Send history for context
+                    ...(this.aiProvider && this.aiProvider !== "off"
+                      ? { provider: this.aiProvider }
+                      : {}),
                   }),
                 });
                 const data = await res.json();
@@ -4526,7 +4741,10 @@
               if (window.OmegaCommands && window.OmegaCommands.Color) {
                 window.OmegaCommands.Color.color(this, args.slice(1));
               } else {
-                this.log('❌ Color palette system not loaded. Please refresh.', 'error');
+                this.log(
+                  "❌ Color palette system not loaded. Please refresh.",
+                  "error"
+                );
               }
               break;
             case "mine":
@@ -4559,7 +4777,7 @@
             case "pgt":
               await this.handlePGTCommand(args);
               break;
-              
+
             case "chart":
               const chartSymbol = args[1];
               if (!chartSymbol) {
@@ -4577,7 +4795,10 @@
                 this.log("", "info");
                 this.log("💡 Chart will appear in the right panel", "info");
               } else {
-                if (window.FuturisticDashboard && window.FuturisticDashboard.showChart) {
+                if (
+                  window.FuturisticDashboard &&
+                  window.FuturisticDashboard.showChart
+                ) {
                   window.FuturisticDashboard.showChart(chartSymbol);
                 } else {
                   this.log("❌ Chart viewer not available", "error");
@@ -5434,15 +5655,22 @@
                 }
                 return;
               }
-              
+
               // Forward unknown Solana subcommands to the modular system
-              if (window.OmegaCommands && window.OmegaCommands.Solana && window.OmegaCommands.Solana.solana) {
+              if (
+                window.OmegaCommands &&
+                window.OmegaCommands.Solana &&
+                window.OmegaCommands.Solana.solana
+              ) {
                 await window.OmegaCommands.Solana.solana(this, args);
               } else {
-                this.log('Unknown solana command. Type "solana" for help.', 'error');
+                this.log(
+                  'Unknown solana command. Type "solana" for help.',
+                  "error"
+                );
               }
               return;
-              
+
             case "near":
               this.log("Near Intents command detected!", "info");
 
@@ -6345,94 +6573,131 @@
               );
               return;
 
-      case "chat":
-        // ChainGPT Web3 AI Chatbot commands
-        console.log('[DEBUG] Chat command detected:', args[1]);
-        console.log('[DEBUG] ChainGPTChatCommands available:', !!window.ChainGPTChatCommands);
-        console.log('[DEBUG] ChainGPT chat function available:', !!(window.ChainGPTChatCommands && window.ChainGPTChatCommands.chat));
-        
-        if (window.ChainGPTChatCommands && window.ChainGPTChatCommands.chat) {
-          console.log('[DEBUG] Routing to ChainGPT Chat commands');
-          await window.ChainGPTChatCommands.chat(this, args.slice(1));
-          return;
-        } else {
-          this.log(
-            "❌ ChainGPT Chat not loaded. Please refresh.",
-            "error"
-          );
-        }
-        return;
+            case "chat":
+              // ChainGPT Web3 AI Chatbot commands
+              console.log("[DEBUG] Chat command detected:", args[1]);
+              console.log(
+                "[DEBUG] ChainGPTChatCommands available:",
+                !!window.ChainGPTChatCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT chat function available:",
+                !!(
+                  window.ChainGPTChatCommands &&
+                  window.ChainGPTChatCommands.chat
+                )
+              );
 
-      case "news":
-        // Crypto News commands
-        console.log('[DEBUG] News command detected:', args[1]);
-        console.log('[DEBUG] CryptoNewsCommands available:', !!window.CryptoNewsCommands);
-        
-        if (window.CryptoNewsCommands && window.CryptoNewsCommands.news) {
-          console.log('[DEBUG] Routing to Crypto News commands');
-          await window.CryptoNewsCommands.news(this, args.slice(1));
-          return;
-        } else {
-          this.log(
-            "❌ Crypto News not loaded. Please refresh.",
-            "error"
-          );
-        }
-        return;
+              if (
+                window.ChainGPTChatCommands &&
+                window.ChainGPTChatCommands.chat
+              ) {
+                console.log("[DEBUG] Routing to ChainGPT Chat commands");
+                await window.ChainGPTChatCommands.chat(this, args.slice(1));
+                return;
+              } else {
+                this.log(
+                  "❌ ChainGPT Chat not loaded. Please refresh.",
+                  "error"
+                );
+              }
+              return;
 
-      case "nft":
-      case "opensea":
-        // Check if it's a ChainGPT AI NFT command
-        const nftSubcommand = args[1]?.toLowerCase();
-        const chainGptCommands = ["init", "generate", "enhance", "mint", "models", "styles", "chains", "status", "test", "gallery", "help"];
-        console.log('[DEBUG] NFT command detected:', nftSubcommand);
-        console.log('[DEBUG] ChainGPTCommands available:', !!window.ChainGPTCommands);
-        console.log('[DEBUG] ChainGPT nft function available:', !!(window.ChainGPTCommands && window.ChainGPTCommands.nft));
-        
-        if (chainGptCommands.includes(nftSubcommand) && window.ChainGPTCommands && window.ChainGPTCommands.nft) {
-          // ChainGPT AI NFT Generator commands
-          console.log('[DEBUG] Routing to ChainGPT NFT commands:', nftSubcommand);
-          // Pass args without the 'nft' prefix since ChainGPT module expects subcommand as args[0]
-          await window.ChainGPTCommands.nft(this, args.slice(1));
-          return;
-        } else if (
-          nftSubcommand === "collection" ||
-          nftSubcommand === "view" ||
-          nftSubcommand === "list"
-        ) {
-          // NFT Minting commands
-          if (window.handleNFTMintCommand) {
-            window.handleNFTMintCommand(args.slice(1));
-          } else {
-            this.log(
-              "❌ NFT Minter not loaded. Please refresh.",
-              "error"
-            );
-          }
-        } else {
-          // OpenSea trading commands
-          if (typeof this.handleNFTCommand === "function") {
-            await this.handleNFTCommand(args);
-          } else {
-            this.log(
-              "❌ Enhanced NFT functionality not loaded. Please refresh the page.",
-              "error"
-            );
-            this.log(
-              "💡 AI NFT: nft init | nft generate | nft enhance",
-              "info"
-            );
-            this.log(
-              "💡 Trading: nft setup | nft search | nft assets | nft buy | nft bid",
-              "info"
-            );
-            this.log(
-              "💡 ChainGPT Minting: nft mint <collection-id> | nft collection | nft view <#>",
-              "info"
-            );
-          }
-        }
-        return;
+            case "news":
+              // Crypto News commands
+              console.log("[DEBUG] News command detected:", args[1]);
+              console.log(
+                "[DEBUG] CryptoNewsCommands available:",
+                !!window.CryptoNewsCommands
+              );
+
+              if (window.CryptoNewsCommands && window.CryptoNewsCommands.news) {
+                console.log("[DEBUG] Routing to Crypto News commands");
+                await window.CryptoNewsCommands.news(this, args.slice(1));
+                return;
+              } else {
+                this.log("❌ Crypto News not loaded. Please refresh.", "error");
+              }
+              return;
+
+            case "nft":
+            case "opensea":
+              // Check if it's a ChainGPT AI NFT command
+              const nftSubcommand = args[1]?.toLowerCase();
+              const chainGptCommands = [
+                "init",
+                "generate",
+                "enhance",
+                "mint",
+                "models",
+                "styles",
+                "chains",
+                "status",
+                "test",
+                "gallery",
+                "help",
+              ];
+              console.log("[DEBUG] NFT command detected:", nftSubcommand);
+              console.log(
+                "[DEBUG] ChainGPTCommands available:",
+                !!window.ChainGPTCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT nft function available:",
+                !!(window.ChainGPTCommands && window.ChainGPTCommands.nft)
+              );
+
+              if (
+                chainGptCommands.includes(nftSubcommand) &&
+                window.ChainGPTCommands &&
+                window.ChainGPTCommands.nft
+              ) {
+                // ChainGPT AI NFT Generator commands
+                console.log(
+                  "[DEBUG] Routing to ChainGPT NFT commands:",
+                  nftSubcommand
+                );
+                // Pass args without the 'nft' prefix since ChainGPT module expects subcommand as args[0]
+                await window.ChainGPTCommands.nft(this, args.slice(1));
+                return;
+              } else if (
+                nftSubcommand === "collection" ||
+                nftSubcommand === "view" ||
+                nftSubcommand === "list"
+              ) {
+                // NFT Minting commands
+                if (window.handleNFTMintCommand) {
+                  window.handleNFTMintCommand(args.slice(1));
+                } else {
+                  this.log(
+                    "❌ NFT Minter not loaded. Please refresh.",
+                    "error"
+                  );
+                }
+              } else {
+                // OpenSea trading commands
+                if (typeof this.handleNFTCommand === "function") {
+                  await this.handleNFTCommand(args);
+                } else {
+                  this.log(
+                    "❌ Enhanced NFT functionality not loaded. Please refresh the page.",
+                    "error"
+                  );
+                  this.log(
+                    "💡 AI NFT: nft init | nft generate | nft enhance",
+                    "info"
+                  );
+                  this.log(
+                    "💡 Trading: nft setup | nft search | nft assets | nft buy | nft bid",
+                    "info"
+                  );
+                  this.log(
+                    "💡 ChainGPT Minting: nft mint <collection-id> | nft collection | nft view <#>",
+                    "info"
+                  );
+                }
+              }
+              return;
 
             case "chatter":
               // Terminal Chatter Mode (Telegram-like chat)
@@ -6447,7 +6712,6 @@
                 );
               }
               return;
-
 
             case "pgt":
               // PGT Portfolio Tracking Integration
@@ -6523,57 +6787,90 @@
                 this.log("═══════════════════════════", "info");
                 this.log("", "info");
                 this.log("📋 AVAILABLE COMMANDS:", "info");
-                this.log("  omega mint       Mint NFT on Omega Network with UI", "output");
-                this.log("  omega collection View your Omega Network NFT collection", "output");
+                this.log(
+                  "  omega mint       Mint NFT on Omega Network with UI",
+                  "output"
+                );
+                this.log(
+                  "  omega collection View your Omega Network NFT collection",
+                  "output"
+                );
                 this.log("  omega help       Show this help message", "output");
                 this.log("", "info");
                 this.log("🎯 EXAMPLES:", "info");
-                this.log("  omega mint       # Open Omega Network NFT minting UI", "info");
+                this.log(
+                  "  omega mint       # Open Omega Network NFT minting UI",
+                  "info"
+                );
                 this.log("  omega collection # View your minted NFTs", "info");
                 this.log("", "info");
-                this.log("💡 Omega Network is a Layer 1 blockchain for NFTs!", "success");
+                this.log(
+                  "💡 Omega Network is a Layer 1 blockchain for NFTs!",
+                  "success"
+                );
                 return;
               }
 
               const omegaSubcommand = args[1]?.toLowerCase();
-              
+
               switch (omegaSubcommand) {
                 case "mint":
                   // Open Omega Network NFT minting UI
                   if (window.handleNFTMintCommand) {
                     window.handleNFTMintCommand(["mint"]);
                   } else {
-                    this.log("❌ Omega NFT Minter not loaded. Please refresh.", "error");
+                    this.log(
+                      "❌ Omega NFT Minter not loaded. Please refresh.",
+                      "error"
+                    );
                   }
                   break;
-                  
+
                 case "collection":
                 case "list":
                   // Show Omega Network NFT collection
                   if (window.handleNFTMintCommand) {
                     window.handleNFTMintCommand(["collection"]);
                   } else {
-                    this.log("❌ Omega NFT Minter not loaded. Please refresh.", "error");
+                    this.log(
+                      "❌ Omega NFT Minter not loaded. Please refresh.",
+                      "error"
+                    );
                   }
                   break;
-                  
+
                 case "help":
                   this.log("🏛️ OMEGA NETWORK NFT HELP", "info");
                   this.log("═══════════════════════════", "info");
                   this.log("", "info");
                   this.log("📋 COMMANDS:", "info");
-                  this.log("  omega mint       Mint NFT on Omega Network with UI", "output");
-                  this.log("  omega collection View your Omega Network NFT collection", "output");
+                  this.log(
+                    "  omega mint       Mint NFT on Omega Network with UI",
+                    "output"
+                  );
+                  this.log(
+                    "  omega collection View your Omega Network NFT collection",
+                    "output"
+                  );
                   this.log("", "info");
                   this.log("🎯 EXAMPLES:", "info");
                   this.log("  omega mint       # Open NFT minting UI", "info");
-                  this.log("  omega collection # View your minted NFTs", "info");
+                  this.log(
+                    "  omega collection # View your minted NFTs",
+                    "info"
+                  );
                   this.log("", "info");
-                  this.log("💡 Upload image, add metadata, and mint on Omega Network!", "info");
+                  this.log(
+                    "💡 Upload image, add metadata, and mint on Omega Network!",
+                    "info"
+                  );
                   break;
-                  
+
                 default:
-                  this.log(`❌ Unknown Omega command: ${omegaSubcommand}`, "error");
+                  this.log(
+                    `❌ Unknown Omega command: ${omegaSubcommand}`,
+                    "error"
+                  );
                   this.log('Type "omega help" for available commands', "info");
               }
               return;
@@ -8863,6 +9160,9 @@
                         evm,
                         solana,
                         chatHistory: this.chatHistory,
+                        ...(this.aiProvider && this.aiProvider !== "off"
+                          ? { provider: this.aiProvider }
+                          : {}),
                       }),
                     });
                     const data = await res.json();
@@ -8915,13 +9215,25 @@
                   }
                 } else {
                   // Check if this looks like a question and ChainGPT is initialized
-                  if (this.isQuestionLike(command) && window.ChainGPTChatCommands && window.ChainGPTChat.isInitialized()) {
-                    console.log('[DEBUG] Detected question-like input, routing to ChainGPT chat');
-                    this.log('🤖 Detected a question! Routing to ChainGPT AI...', 'info');
-                    await window.ChainGPTChatCommands.chat(this, ['ask', command]);
+                  if (
+                    this.isQuestionLike(command) &&
+                    window.ChainGPTChatCommands &&
+                    window.ChainGPTChat.isInitialized()
+                  ) {
+                    console.log(
+                      "[DEBUG] Detected question-like input, routing to ChainGPT chat"
+                    );
+                    this.log(
+                      "🤖 Detected a question! Routing to ChainGPT AI...",
+                      "info"
+                    );
+                    await window.ChainGPTChatCommands.chat(this, [
+                      "ask",
+                      command,
+                    ]);
                     return;
                   }
-                  
+
                   // AI mode is off or this is an AI-executed command, show normal error
                   this.log(`Command not found: ${command}`, "error");
                   this.log('Type "help" for available commands', "info");
@@ -10799,142 +11111,207 @@
 
         detectNetworkFromAddress(address) {
           // Auto-detect network from address format
-          if (address.startsWith('0x') && address.length === 42) {
-            return 'ethereum';
-          } else if (address.length >= 32 && address.length <= 44 && /^[1-9A-HJ-NP-Za-km-z]+$/.test(address)) {
-            return 'solana';
-          } else if (address.includes('.near') || (address.length >= 2 && address.length <= 64 && /^[a-z0-9_-]+$/.test(address))) {
-            return 'near';
-          } else if (address.startsWith('bnb') || address.startsWith('0x')) {
-            return 'bsc';
+          if (address.startsWith("0x") && address.length === 42) {
+            return "ethereum";
+          } else if (
+            address.length >= 32 &&
+            address.length <= 44 &&
+            /^[1-9A-HJ-NP-Za-km-z]+$/.test(address)
+          ) {
+            return "solana";
+          } else if (
+            address.includes(".near") ||
+            (address.length >= 2 &&
+              address.length <= 64 &&
+              /^[a-z0-9_-]+$/.test(address))
+          ) {
+            return "near";
+          } else if (address.startsWith("bnb") || address.startsWith("0x")) {
+            return "bsc";
           }
-          return 'ethereum'; // Default
+          return "ethereum"; // Default
         }
 
         async handlePGTCommand(args) {
-          console.log('🔍 handlePGTCommand called with args:', args);
-          console.log('🔍 window.PGT exists:', !!window.PGT);
-          console.log('🔍 window.PGT.ready:', window.PGT?.ready);
-          
+          console.log("🔍 handlePGTCommand called with args:", args);
+          console.log("🔍 window.PGT exists:", !!window.PGT);
+          console.log("🔍 window.PGT.ready:", window.PGT?.ready);
+
           if (!window.PGT) {
-            this.log("⚠️ PGT integration is loading... Please wait a moment and try again.", "warning");
+            this.log(
+              "⚠️ PGT integration is loading... Please wait a moment and try again.",
+              "warning"
+            );
             return;
           }
 
           if (!window.PGT.ready) {
-            this.log("⚠️ PGT API is initializing... Please wait a few seconds.", "warning");
+            this.log(
+              "⚠️ PGT API is initializing... Please wait a few seconds.",
+              "warning"
+            );
             return;
           }
 
           // args[0] is the main command "pgt", args[1] is the subcommand
-          const subCmd = args[1] ? args[1].toLowerCase() : 'help';
-          
-          console.log('🎯 PGT Command Debug:');
-          console.log('   Full args:', args);
-          console.log('   SubCommand (args[1]):', subCmd);
-          console.log('   Address (args[2]):', args[2]);
-          console.log('   Network (args[3]):', args[3]);
-          
+          const subCmd = args[1] ? args[1].toLowerCase() : "help";
+
+          console.log("🎯 PGT Command Debug:");
+          console.log("   Full args:", args);
+          console.log("   SubCommand (args[1]):", subCmd);
+          console.log("   Address (args[2]):", args[2]);
+          console.log("   Network (args[3]):", args[3]);
+
           try {
-            switch(subCmd) {
-              case 'track':
-              case 'add':
+            switch (subCmd) {
+              case "track":
+              case "add":
                 // args[2] is the address, args[3] is optional network
                 const trackAddr = args[2];
                 let trackNet = args[3];
-                
+
                 if (!trackAddr) {
                   this.log("Usage: pgt track <address> [network]", "error");
-                  this.log("Example: pgt track 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6", "info");
-                  this.log("Network is auto-detected from address format", "info");
+                  this.log(
+                    "Example: pgt track 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",
+                    "info"
+                  );
+                  this.log(
+                    "Network is auto-detected from address format",
+                    "info"
+                  );
                   return;
                 }
-                
+
                 // Auto-detect network if not provided
                 if (!trackNet) {
                   trackNet = this.detectNetworkFromAddress(trackAddr);
                   this.log(`🔍 Auto-detected network: ${trackNet}`, "info");
                 }
-                
-                this.log(`📡 Tracking wallet: ${trackAddr.slice(0, 10)}...`, "info");
+
+                this.log(
+                  `📡 Tracking wallet: ${trackAddr.slice(0, 10)}...`,
+                  "info"
+                );
                 this.log(`⏳ Fetching blockchain data...`, "info");
-                
+
                 const result = await window.PGT.addWallet(trackAddr, trackNet);
-                
+
                 if (result.success) {
                   this.log("═══════════════════════════════════════", "info");
                   this.log(`✅ Wallet tracked successfully!`, "success");
                   this.log(`Address: ${trackAddr}`, "info");
                   this.log(`Network: ${trackNet}`, "info");
-                  
+
                   // Show wallet value from response
                   if (result.data && result.data.wallet) {
                     const wallet = result.data.wallet;
-                    
+
                     this.log("", "info");
                     this.log("📊 Wallet Data:", "info");
-                    
-                    if (wallet.totalValue !== undefined && wallet.totalValue > 0) {
-                      const valueFormatted = wallet.totalValue.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                        minimumFractionDigits: 2
-                      });
-                      this.log(`   Portfolio Value: ${valueFormatted}`, "success");
-                      
+
+                    if (
+                      wallet.totalValue !== undefined &&
+                      wallet.totalValue > 0
+                    ) {
+                      const valueFormatted = wallet.totalValue.toLocaleString(
+                        "en-US",
+                        {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                        }
+                      );
+                      this.log(
+                        `   Portfolio Value: ${valueFormatted}`,
+                        "success"
+                      );
+
                       if (wallet.change24hPercent !== undefined) {
-                        const changeText = `${wallet.change24hPercent >= 0 ? '+' : ''}${wallet.change24hPercent.toFixed(2)}%`;
-                        this.log(`   24h Change: ${changeText}`, wallet.change24hPercent >= 0 ? 'success' : 'error');
+                        const changeText = `${
+                          wallet.change24hPercent >= 0 ? "+" : ""
+                        }${wallet.change24hPercent.toFixed(2)}%`;
+                        this.log(
+                          `   24h Change: ${changeText}`,
+                          wallet.change24hPercent >= 0 ? "success" : "error"
+                        );
                       }
-                      
+
                       // Show detailed token breakdown
                       if (wallet.tokens && wallet.tokens.length > 0) {
                         this.log("", "info");
                         this.log("   💎 Assets Held:", "info");
-                        wallet.tokens.forEach(token => {
+                        wallet.tokens.forEach((token) => {
                           const tokenBalance = token.balance || 0;
                           const tokenValue = token.value || 0;
                           const tokenPrice = token.price || 0;
-                          
-                          if (tokenValue > 0.01) { // Only show valuable assets
+
+                          if (tokenValue > 0.01) {
+                            // Only show valuable assets
                             const balanceStr = tokenBalance.toFixed(4);
-                            const valueStr = tokenValue.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              minimumFractionDigits: 2
-                            });
-                            const priceStr = tokenPrice.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              minimumFractionDigits: 2
-                            });
-                            
-                            this.log(`      • ${token.symbol}: ${balanceStr} tokens`, "info");
-                            this.log(`        Value: ${valueStr} (@ ${priceStr} each)`, "info");
+                            const valueStr = tokenValue.toLocaleString(
+                              "en-US",
+                              {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2,
+                              }
+                            );
+                            const priceStr = tokenPrice.toLocaleString(
+                              "en-US",
+                              {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2,
+                              }
+                            );
+
+                            this.log(
+                              `      • ${token.symbol}: ${balanceStr} tokens`,
+                              "info"
+                            );
+                            this.log(
+                              `        Value: ${valueStr} (@ ${priceStr} each)`,
+                              "info"
+                            );
                           }
                         });
                       }
                     } else {
-                      this.log(`   Value: $0.00 (Empty wallet or blockchain fetch failed)`, "warning");
+                      this.log(
+                        `   Value: $0.00 (Empty wallet or blockchain fetch failed)`,
+                        "warning"
+                      );
                     }
                   }
-                  
+
                   this.log("═══════════════════════════════════════", "info");
-                  this.log("💡 Tip: Use 'pgt portfolio' to see full details", "info");
-                  this.log("💡 Right panel updates automatically every 30 seconds", "info");
+                  this.log(
+                    "💡 Tip: Use 'pgt portfolio' to see full details",
+                    "info"
+                  );
+                  this.log(
+                    "💡 Right panel updates automatically every 30 seconds",
+                    "info"
+                  );
                 } else {
                   this.log(`❌ Error: ${result.error}`, "error");
                 }
                 break;
-                
-              case 'portfolio':
-              case 'p':
+
+              case "portfolio":
+              case "p":
                 this.log("📊 Fetching portfolio data...", "info");
                 const portfolio = await window.PGT.getPortfolio();
-                
+
                 if (portfolio.success && portfolio.data) {
-                  const { totalValue, totalChange24hPercent, walletCount, wallets } = portfolio.data;
-                  
+                  const {
+                    totalValue,
+                    totalChange24hPercent,
+                    walletCount,
+                    wallets,
+                  } = portfolio.data;
+
                   if (walletCount === 0) {
                     this.log("═══════════════════════════════════════", "info");
                     this.log("No wallets tracked yet.", "warning");
@@ -10944,74 +11321,138 @@
                     this.log("   pgt track <address>", "info");
                     this.log("", "info");
                     this.log("Example:", "info");
-                    this.log("   pgt track 0xBB07d617cF64A64F96b29f3f3B65cd741C2C51FC", "info");
+                    this.log(
+                      "   pgt track 0xBB07d617cF64A64F96b29f3f3B65cd741C2C51FC",
+                      "info"
+                    );
                     this.log("", "info");
-                    this.log("Network is automatically detected! 🎯", "success");
+                    this.log(
+                      "Network is automatically detected! 🎯",
+                      "success"
+                    );
                     return;
                   }
-                  
+
                   this.log("╔═══════════════════════════════════════╗", "info");
-                  this.log("║        PGT PORTFOLIO SUMMARY          ║", "success");
+                  this.log(
+                    "║        PGT PORTFOLIO SUMMARY          ║",
+                    "success"
+                  );
                   this.log("╚═══════════════════════════════════════╝", "info");
                   this.log("", "info");
-                  this.log(`Total Value: $${totalValue.toLocaleString('en-US', {minimumFractionDigits: 2})}`, "info");
-                  this.log(`24h Change: ${totalChange24hPercent >= 0 ? '+' : ''}${totalChange24hPercent.toFixed(2)}%`, 
-                    totalChange24hPercent >= 0 ? 'success' : 'error');
+                  this.log(
+                    `Total Value: $${totalValue.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                    })}`,
+                    "info"
+                  );
+                  this.log(
+                    `24h Change: ${
+                      totalChange24hPercent >= 0 ? "+" : ""
+                    }${totalChange24hPercent.toFixed(2)}%`,
+                    totalChange24hPercent >= 0 ? "success" : "error"
+                  );
                   this.log(`Wallets: ${walletCount}`, "info");
                   this.log("", "info");
-                  
+
                   if (wallets && wallets.length > 0) {
                     this.log("", "info");
                     this.log("═══════════════════════════════════════", "info");
                     this.log("TRACKED WALLETS", "success");
                     this.log("═══════════════════════════════════════", "info");
-                    
+
                     wallets.forEach((w, i) => {
                       this.log("", "info");
-                      this.log(`${i + 1}. ${w.label || w.address.slice(0, 10)+'...'}`, "info");
-                      this.log(`   Network: ${w.network.toUpperCase()}`, "info");
+                      this.log(
+                        `${i + 1}. ${
+                          w.label || w.address.slice(0, 10) + "..."
+                        }`,
+                        "info"
+                      );
+                      this.log(
+                        `   Network: ${w.network.toUpperCase()}`,
+                        "info"
+                      );
                       this.log(`   Address: ${w.address}`, "info");
-                      this.log(`   Portfolio Value: $${w.totalValue.toLocaleString('en-US', {minimumFractionDigits: 2})}`, "success");
-                      this.log(`   24h Change: ${w.change24hPercent >= 0 ? '+' : ''}${w.change24hPercent.toFixed(2)}%`, 
-                        w.change24hPercent >= 0 ? 'success' : 'error');
-                      
+                      this.log(
+                        `   Portfolio Value: $${w.totalValue.toLocaleString(
+                          "en-US",
+                          { minimumFractionDigits: 2 }
+                        )}`,
+                        "success"
+                      );
+                      this.log(
+                        `   24h Change: ${
+                          w.change24hPercent >= 0 ? "+" : ""
+                        }${w.change24hPercent.toFixed(2)}%`,
+                        w.change24hPercent >= 0 ? "success" : "error"
+                      );
+
                       // Show token breakdown if available
                       if (w.tokens && w.tokens.length > 0) {
                         this.log("   Assets:", "info");
-                        w.tokens.forEach(token => {
+                        w.tokens.forEach((token) => {
                           const tokenValue = token.value || 0;
                           const tokenBalance = token.balance || 0;
-                          if (tokenValue > 0.01) { // Only show tokens worth more than $0.01
-                            this.log(`      • ${token.symbol}: ${tokenBalance.toFixed(4)} ($${tokenValue.toLocaleString('en-US', {minimumFractionDigits: 2})})`, "info");
+                          if (tokenValue > 0.01) {
+                            // Only show tokens worth more than $0.01
+                            this.log(
+                              `      • ${token.symbol}: ${tokenBalance.toFixed(
+                                4
+                              )} ($${tokenValue.toLocaleString("en-US", {
+                                minimumFractionDigits: 2,
+                              })})`,
+                              "info"
+                            );
                           }
                         });
                       }
-                      
-                      this.log(`   Last Updated: ${new Date(w.lastUpdated).toLocaleTimeString()}`, "info");
+
+                      this.log(
+                        `   Last Updated: ${new Date(
+                          w.lastUpdated
+                        ).toLocaleTimeString()}`,
+                        "info"
+                      );
                     });
-                    
+
                     this.log("", "info");
                     this.log("═══════════════════════════════════════", "info");
                   }
                 } else {
-                  this.log(`❌ Error: ${portfolio.error || 'Failed to fetch portfolio'}`, "error");
+                  this.log(
+                    `❌ Error: ${
+                      portfolio.error || "Failed to fetch portfolio"
+                    }`,
+                    "error"
+                  );
                   this.log("", "info");
                   this.log("💡 Try tracking a wallet first:", "info");
-                  this.log("   pgt track 0xBB07d617cF64A64F96b29f3f3B65cd741C2C51FC", "info");
+                  this.log(
+                    "   pgt track 0xBB07d617cF64A64F96b29f3f3B65cd741C2C51FC",
+                    "info"
+                  );
                 }
                 break;
-                
-              case 'refresh':
+
+              case "refresh":
                 this.log("🔄 Refreshing portfolio data...", "info");
                 await window.PGT.refreshPortfolioStats();
-                this.log("✅ Portfolio stats refreshed! Check the right panel.", "success");
+                this.log(
+                  "✅ Portfolio stats refreshed! Check the right panel.",
+                  "success"
+                );
                 break;
-                
-              case 'wallets':
-              case 'list':
+
+              case "wallets":
+              case "list":
                 const walletsList = await window.PGT.getWallets();
-                
-                if (walletsList.success && walletsList.data && walletsList.data.length > 0) {
+
+                if (
+                  walletsList.success &&
+                  walletsList.data &&
+                  walletsList.data.length > 0
+                ) {
                   this.log("═══════════════════════════════════════", "info");
                   this.log("Tracked Wallets:", "success");
                   this.log("═══════════════════════════════════════", "info");
@@ -11021,59 +11462,89 @@
                     this.log(`   Address: ${w.address}`, "info");
                     this.log("", "info");
                   });
-                } else if (walletsList.success && walletsList.data && walletsList.data.length === 0) {
+                } else if (
+                  walletsList.success &&
+                  walletsList.data &&
+                  walletsList.data.length === 0
+                ) {
                   this.log("No wallets tracked yet.", "warning");
                   this.log("Use: pgt track <address>", "info");
-                  this.log("Network is automatically detected from address format", "info");
+                  this.log(
+                    "Network is automatically detected from address format",
+                    "info"
+                  );
                 } else {
-                  this.log(`❌ Error: ${walletsList.error || 'Failed to fetch wallets'}`, "error");
+                  this.log(
+                    `❌ Error: ${
+                      walletsList.error || "Failed to fetch wallets"
+                    }`,
+                    "error"
+                  );
                 }
                 break;
-                
-              case 'remove':
-              case 'untrack':
+
+              case "remove":
+              case "untrack":
                 const removeAddr = args[2];
                 let removeNet = args[3];
-                
+
                 if (!removeAddr) {
                   this.log("Usage: pgt remove <address> [network]", "error");
                   this.log("Network is auto-detected if not provided", "info");
                   return;
                 }
-                
+
                 // Auto-detect network if not provided
                 if (!removeNet) {
                   removeNet = this.detectNetworkFromAddress(removeAddr);
                   this.log(`🔍 Auto-detected network: ${removeNet}`, "info");
                 }
-                
-                const removeResult = await window.PGT.removeWallet(removeAddr, removeNet);
+
+                const removeResult = await window.PGT.removeWallet(
+                  removeAddr,
+                  removeNet
+                );
                 if (removeResult.success) {
                   this.log(`✅ Wallet removed: ${removeAddr}`, "success");
                 } else {
                   this.log(`❌ Error: ${removeResult.error}`, "error");
                 }
                 break;
-                
-              case 'help':
+
+              case "help":
               default:
                 this.log("╔═══════════════════════════════════════╗", "info");
-                this.log("║          PGT WALLET TRACKING          ║", "success");
+                this.log(
+                  "║          PGT WALLET TRACKING          ║",
+                  "success"
+                );
                 this.log("╚═══════════════════════════════════════╝", "info");
                 this.log("", "info");
                 this.log("pgt track <address>", "info");
                 this.log("  Track any wallet (network auto-detected)", "info");
-                this.log("  Example: pgt track 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6", "info");
-                this.log("  Example: pgt track 13Fhmm27TGQL7b5tDrumcDvWXhK5DxjmdzyMRT12z4ea", "info");
+                this.log(
+                  "  Example: pgt track 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6",
+                  "info"
+                );
+                this.log(
+                  "  Example: pgt track 13Fhmm27TGQL7b5tDrumcDvWXhK5DxjmdzyMRT12z4ea",
+                  "info"
+                );
                 this.log("", "info");
                 this.log("pgt portfolio", "info");
-                this.log("  Show portfolio summary with all tracked wallets", "info");
+                this.log(
+                  "  Show portfolio summary with all tracked wallets",
+                  "info"
+                );
                 this.log("", "info");
                 this.log("pgt wallets", "info");
                 this.log("  List all tracked wallets", "info");
                 this.log("", "info");
                 this.log("pgt refresh", "info");
-                this.log("  Manually refresh portfolio data in stats panel", "info");
+                this.log(
+                  "  Manually refresh portfolio data in stats panel",
+                  "info"
+                );
                 this.log("", "info");
                 this.log("pgt remove <address>", "info");
                 this.log("  Remove a wallet from tracking", "info");
@@ -11086,7 +11557,7 @@
             }
           } catch (error) {
             this.log(`❌ Error: ${error.message}`, "error");
-            console.error('PGT command error:', error);
+            console.error("PGT command error:", error);
           }
         }
 
@@ -11494,9 +11965,14 @@
           this.logHtml("<b>Fair Wallet:</b>", "output");
           if (window.fairWallet && window.fairWallet.address) {
             try {
-              const fairProvider = new this.ethers.providers.JsonRpcProvider('https://testnet-rpc.fair.cloud');
-              const fairBalance = await fairProvider.getBalance(window.fairWallet.address);
-              const fairBalanceFormatted = this.ethers.utils.formatEther(fairBalance);
+              const fairProvider = new this.ethers.providers.JsonRpcProvider(
+                "https://testnet-rpc.fair.cloud"
+              );
+              const fairBalance = await fairProvider.getBalance(
+                window.fairWallet.address
+              );
+              const fairBalanceFormatted =
+                this.ethers.utils.formatEther(fairBalance);
               this.logHtml(
                 `  Balance: <b>${fairBalanceFormatted} FAIR</b>`,
                 "output"
@@ -12173,7 +12649,7 @@
             "matrix",
             "retro",
             "powershell",
-            "executive"
+            "executive",
           ];
           if (!validThemes.includes(theme)) {
             this.log(
@@ -12206,25 +12682,54 @@
           localStorage.setItem("omega-terminal-theme", theme);
         }
 
+        // Cycle AI provider via command or legacy toggle
         toggleAIMode() {
-          const aiToggle = document.querySelector(".ai-toggle");
+          // Cycle order: off -> near -> openai -> off
+          const order = ["off", "near", "openai"];
+          const currentIndex = order.indexOf(this.aiProvider || "off");
+          const nextProvider = order[(currentIndex + 1) % order.length];
+          this.setAIProvider(nextProvider);
+        }
+
+        // Set AI provider and persist, update UI
+        setAIProvider(provider) {
+          const valid = ["off", "near", "openai"];
+          if (!valid.includes(provider)) provider = "off";
+          this.aiProvider = provider;
+          this.isAIModeOn = provider !== "off";
+          localStorage.setItem("omega-ai-provider", provider);
+          this.applyAIProviderUI();
+
+          // Sync futuristic dashboard labels if available
+          if (
+            window.FuturisticDashboard &&
+            typeof window.FuturisticDashboard.syncAIToggleState === "function"
+          ) {
+            window.FuturisticDashboard.syncAIToggleState();
+          }
+        }
+
+        // Reflect provider choice in inputs and header select
+        applyAIProviderUI() {
           const input = document.getElementById("commandInput");
-          this.isAIModeOn = !this.isAIModeOn;
-          console.log("AI Mode toggled to:", this.isAIModeOn);
+          const sel = document.getElementById("aiProviderSelect");
+          if (sel && sel.value !== (this.aiProvider || "off")) {
+            try {
+              sel.value = this.aiProvider || "off";
+            } catch (e) {}
+          }
           if (this.isAIModeOn) {
-            aiToggle.textContent = "AI Mode (on)";
-            this.log("🤖 AI Mode Activated - Ask me anything!", "success");
             if (input)
               input.placeholder = "Enter command or ask me anything...";
+            const label =
+              this.aiProvider === "near"
+                ? "NEAR AI"
+                : this.aiProvider === "openai"
+                ? "OpenAI"
+                : "AI";
+            this.log(`🤖 AI Mode: ${label} enabled`, "info");
           } else {
-            aiToggle.textContent = "AI Mode (off)";
-            this.log("🤖 AI Mode: Disabled", "info");
             if (input) input.placeholder = "Enter command...";
-          }
-          
-          // Sync futuristic dashboard labels if available
-          if (window.FuturisticDashboard && typeof window.FuturisticDashboard.syncAIToggleState === 'function') {
-            window.FuturisticDashboard.syncAIToggleState();
           }
         }
 
@@ -16106,7 +16611,12 @@
                     <div class="terminal-header">
                         <div class="terminal-title">Ω Terminal v2.0.1</div>
                         <div style="display: flex; align-items: center; gap: 18px; margin-left: auto;">
-                            <button class="ai-toggle" title="Toggle AI Mode" id="aiToggle">AI Mode (off)</button>
+                            <label for="aiProviderSelect" style="color:#00bcf2; font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI:</label>
+                            <select id="aiProviderSelect" title="Select AI Provider" style="background: rgba(0, 188, 242, 0.1); border: 1px solid rgba(0, 188, 242, 0.3); border-radius: 6px; padding: 6px 10px; color: #00bcf2; font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #00bcf2 50%), linear-gradient(135deg, #00bcf2 50%, transparent 50%); background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; min-width: 110px;">
+                              <option value="off">Off</option>
+                              <option value="near">NEAR AI</option>
+                              <option value="openai">OpenAI</option>
+                            </select>
                             <button class="theme-toggle" title="Toggle Theme"></button>
                             <div class="terminal-status" id="connectionStatus">CONNECTED</div>
                         </div>
@@ -28241,7 +28751,10 @@
             // Open the perps viewer panel
             window.OmegaPerpsViewer.openPanel();
           } else {
-            this.log("❌ Perps Viewer not loaded. Please refresh the page.", "error");
+            this.log(
+              "❌ Perps Viewer not loaded. Please refresh the page.",
+              "error"
+            );
           }
         };
 
@@ -28262,4 +28775,3 @@
     </script>
   </body>
 </html>
-
