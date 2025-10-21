@@ -59,7 +59,7 @@ console.log('🔧 Loading Enhanced Profile System...');
             
             // Use the existing ENS registration system
             if (window.terminal.executeCommand) {
-                window.terminal.log(`🔗 Registering ENS: ${ensName}`, 'info');
+                window.terminal.log(`Registering ENS: ${ensName}`, 'info');
                 
                 // Call the actual ENS registration command
                 const ensCommand = `ens register ${ensName}`;
@@ -144,9 +144,9 @@ console.log('🔧 Loading Enhanced Profile System...');
         updateChatUI();
         
         if (profileData.chatSettings.enabled) {
-            window.terminal.log('💬 Chat enabled - use "chat" command', 'success');
+            window.terminal.log('Chat enabled - use "chat" command', 'success');
         } else {
-            window.terminal.log('💬 Chat disabled', 'info');
+            window.terminal.log('Chat disabled', 'info');
         }
     }
     
@@ -255,7 +255,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             letter-spacing: 2px;
                             text-transform: uppercase;
                         ">
-                            <span style="display: inline-block; animation: pulse-glow 2s ease-in-out infinite;">▶</span> USER PROFILE
+                            <svg viewBox="0 0 24 24" width="20" height="20" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                            </svg> USER PROFILE
                         </div>
                         <div style="
                             font-size: 0.9em;
@@ -284,7 +286,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                         transition: all var(--transition-fast, 0.15s);
                         font-weight: bold;
                         box-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
-                    " onmouseover="this.style.boxShadow='0 0 20px rgba(255, 51, 102, 0.7)'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px rgba(255, 51, 102, 0.4)'; this.style.transform='scale(1)'">✕</button>
+                    " onmouseover="this.style.boxShadow='0 0 20px rgba(255, 51, 102, 0.7)'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px rgba(255, 51, 102, 0.4)'; this.style.transform='scale(1)'">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                        </svg>
+                    </button>
                     
                     <button onclick="toggleFullscreen()" style="
                         position: absolute;
@@ -305,7 +311,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                         transition: all var(--transition-fast, 0.15s);
                         font-weight: bold;
                         box-shadow: 0 0 10px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3));
-                    " onmouseover="this.style.boxShadow='0 0 20px var(--cyber-blue-glow, rgba(0, 212, 255, 0.6))'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3))'; this.style.transform='scale(1)'" title="Toggle Fullscreen">🖥️</button>
+                    " onmouseover="this.style.boxShadow='0 0 20px var(--cyber-blue-glow, rgba(0, 212, 255, 0.6))'; this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px var(--cyber-blue-glow, rgba(0, 212, 255, 0.3))'; this.style.transform='scale(1)'" title="Toggle Fullscreen">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z"/>
+                        </svg>
+                    </button>
                 </div>
                 
                 <div style="padding: 24px;">
@@ -340,7 +350,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     color: var(--matrix-green, #00ff88);
                                     position: relative;
                                 " onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 0 40px rgba(0, 255, 136, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.2)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 30px rgba(0, 255, 136, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2)'">
-                                    <span style="position: relative; z-index: 2;">👤</span>
+                                    <svg viewBox="0 0 24 24" width="60" height="60" style="position: relative; z-index: 2;">
+                                        <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                                    </svg>
                                     <div style="
                                         position: absolute;
                                         top: 0;
@@ -370,7 +382,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     transition: all var(--transition-fast, 0.2s);
                                     font-size: 1.2em;
                                 " onmouseover="this.style.transform='scale(1.1) rotate(15deg)'; this.style.boxShadow='0 6px 16px rgba(0, 255, 136, 0.6)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'; this.style.boxShadow='0 4px 12px rgba(0, 255, 136, 0.4)'">
-                                    📷
+                                    <svg viewBox="0 0 24 24" width="20" height="20">
+                                        <path fill="currentColor" d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"/>
+                                    </svg>
                                 </div>
                                 
                                 <input type="file" id="enhanced-img-upload" accept="image/*" style="display: none;" onchange="uploadEnhancedImage(this)">
@@ -403,7 +417,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     white-space: nowrap;
                                     overflow: hidden;
                                     text-overflow: ellipsis;
-                                ">🔐 No wallet connected</div>
+                                ">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path fill="currentColor" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z"/>
+                                    </svg> No wallet connected
+                                </div>
                                 
                                 <div id="profile-ens-display" style="
                                     font-size: 0.85em;
@@ -414,7 +432,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     border: 1px solid rgba(0, 212, 255, 0.3);
                                     display: inline-block;
                                     font-family: var(--font-mono, 'Courier New', monospace);
-                                ">📛 No ENS name</div>
+                                ">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                        <path fill="currentColor" d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18"/>
+                                    </svg> No ENS name
+                                </div>
                             </div>
                         </div>
                         
@@ -440,7 +462,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 gap: 8px;
                                 font-family: var(--font-mono, 'Courier New', monospace);
                             ">
-                                <span style="font-size: 1.2em;">📝</span>
+                                <svg viewBox="0 0 24 24" width="20" height="20" style="display: inline-block;">
+                                    <path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                                </svg>
                                 <span>Profile Information</span>
                             </div>
                             
@@ -455,7 +479,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     font-family: var(--font-mono, 'Courier New', monospace);
                                     letter-spacing: 0.5px;
                                 ">
-                                    <span style="color: var(--matrix-green, #00ff88);">▶</span> USERNAME
+                                    USERNAME
                                 </label>
                                 <div style="position: relative;">
                                     <span style="
@@ -465,7 +489,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                                         transform: translateY(-50%);
                                         font-size: 1.1em;
                                         z-index: 2;
-                                    ">👤</span>
+                                    ">
+                                        <svg viewBox="0 0 24 24" width="18" height="18">
+                                            <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
+                                        </svg>
+                                    </span>
                                     <input type="text" id="enhanced-username" placeholder="Enter your username" style="
                                         width: 100%;
                                         padding: 14px 16px 14px 44px;
@@ -493,7 +521,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     font-family: var(--font-mono, 'Courier New', monospace);
                                     letter-spacing: 0.5px;
                                 ">
-                                    <span style="color: var(--cyber-blue, #00d4ff);">▶</span> EMAIL
+                                    EMAIL
                                 </label>
                                 <div style="position: relative;">
                                     <span style="
@@ -503,7 +531,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                                         transform: translateY(-50%);
                                         font-size: 1.1em;
                                         z-index: 2;
-                                    ">📧</span>
+                                    ">
+                                        <svg viewBox="0 0 24 24" width="18" height="18">
+                                            <path fill="currentColor" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                                        </svg>
+                                    </span>
                                     <input type="email" id="enhanced-email" placeholder="user@omega.network" style="
                                         width: 100%;
                                         padding: 14px 16px 14px 44px;
@@ -558,7 +590,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             gap: 10px;
                             font-family: 'Courier New', monospace;
                         ">
-                            <span style="font-size: 1.3em;">🔗</span>
+                            <svg viewBox="0 0 24 24" width="22" height="22" style="display: inline-block;">
+                                <path fill="currentColor" d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2M6,9H18V11H6M14,14H6V12H14M18,8H6V6H18"/>
+                            </svg>
                             <span>OMEGA ENS REGISTRY</span>
                         </div>
                         
@@ -572,7 +606,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 font-family: 'Courier New', monospace;
                                 letter-spacing: 0.5px;
                             ">
-                                <span style="color: #00bfff;">▶</span> ENS NAME
+                                ENS NAME
                             </label>
                             <div style="display: flex; gap: 8px;">
                                 <input type="text" id="enhanced-ens-name" placeholder="yourname.omega" style="
@@ -616,7 +650,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             font-family: 'Courier New', monospace;
                             text-align: center;
                         ">
-                            <span style="font-size: 1.2em;">⚠️</span> No ENS registered<br>
+                            <svg viewBox="0 0 24 24" width="18" height="18" style="display: inline-block; vertical-align: middle; margin-right: 4px;">
+                                <path fill="currentColor" d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                            </svg> No ENS registered<br>
                             <span style="font-size: 0.85em; opacity: 0.8;">Register an ENS name to get started</span>
                         </div>
                     </div>
@@ -642,7 +678,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             gap: 10px;
                             font-family: 'Courier New', monospace;
                         ">
-                            <span style="font-size: 1.3em;">📇</span>
+                            <svg viewBox="0 0 24 24" width="22" height="22" style="display: inline-block;">
+                                <path fill="currentColor" d="M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3Z"/>
+                            </svg>
                             <span>ADDRESS BOOK</span>
                         </div>
                         
@@ -720,7 +758,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             gap: 10px;
                             font-family: 'Courier New', monospace;
                         ">
-                            <span style="font-size: 1.3em;">💬</span>
+                            <svg viewBox="0 0 24 24" width="22" height="22" style="display: inline-block;">
+                                <path fill="currentColor" d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22H9M10,16V19.08L13.08,16H20V4H4V16H10Z"/>
+                            </svg>
                             <span>TERMINAL CHATTER</span>
                         </div>
                         
@@ -732,7 +772,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 border: 1px solid rgba(255, 105, 180, 0.3);
                                 margin-bottom: 12px;
                             ">
-                                <div style="color: #ff69b4; font-weight: 700; margin-bottom: 8px; font-family: 'Courier New', monospace;">🚀 TELEGRAM-STYLE CHAT</div>
+                                <div style="color: #ff69b4; font-weight: 700; margin-bottom: 8px; font-family: 'Courier New', monospace;">TELEGRAM-STYLE CHAT</div>
                                 <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.85em; line-height: 1.5; font-family: 'Courier New', monospace;">
                                     Join the Omega Terminal community chat! Real-time messaging with other users.
                                 </div>
@@ -753,7 +793,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 font-family: var(--font-mono, 'Courier New', monospace);
                                 letter-spacing: 1px;
                             " onmouseover="this.style.boxShadow='0 0 24px rgba(255, 0, 153, 0.6)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 16px rgba(255, 0, 153, 0.4)'; this.style.transform='translateY(0)'">
-                                ▶ OPEN CHATTER
+                                OPEN CHATTER
                             </button>
                         </div>
                         
@@ -768,9 +808,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                         ">
                             <div style="margin-bottom: 8px; color: #ff69b4; font-weight: 700;">[ QUICK COMMANDS ]</div>
                             <div style="margin-left: 12px; line-height: 1.8;">
-                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat</code> - Open chat</div>
-                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat settings</code> - Settings</div>
-                                <div>▶ <code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat help</code> - Help</div>
+                                <div><code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat</code> - Open chat</div>
+                                <div><code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat settings</code> - Settings</div>
+                                <div><code style="background: rgba(0, 255, 65, 0.2); padding: 2px 8px; border-radius: 4px; color: #00ff41;">chat help</code> - Help</div>
                             </div>
                         </div>
                     </div>
@@ -816,7 +856,9 @@ console.log('🔧 Loading Enhanced Profile System...');
                             position: relative;
                             z-index: 1;
                         ">
-                            <span style="font-size: 1.4em;">🔑</span>
+                            <svg viewBox="0 0 24 24" width="24" height="24" style="display: inline-block;">
+                                <path fill="currentColor" d="M7,14A2,2 0 0,1 5,12A2,2 0 0,1 7,10A2,2 0 0,1 9,12A2,2 0 0,1 7,14M12.65,10C11.83,7.67 9.61,6 7,6A6,6 0 0,0 1,12A6,6 0 0,0 7,18C9.61,18 11.83,16.33 12.65,14H17V18H21V14H23V10H12.65Z"/>
+                            </svg>
                             <span>API KEYS MANAGEMENT</span>
                         </div>
                         
@@ -838,7 +880,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- ChainGPT NFT Generator -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">🎨</span> ChainGPT NFT
+                                        ChainGPT NFT
                                     </label>
                                     <input type="password" id="chaingpt-nft-key" placeholder="Enter ChainGPT NFT API key..." style="
                                         width: 100%;
@@ -858,7 +900,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- ChainGPT Chat -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">🤖</span> ChainGPT Chat
+                                        ChainGPT Chat
                                     </label>
                                     <input type="password" id="chaingpt-chat-key" placeholder="Enter ChainGPT Chat API key..." style="
                                         width: 100%;
@@ -878,7 +920,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- OpenSea -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">🌊</span> OpenSea
+                                        OpenSea
                                     </label>
                                     <input type="password" id="opensea-key" placeholder="sk_..." style="
                                         width: 100%;
@@ -898,7 +940,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- DexScreener -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">📊</span> DexScreener
+                                        DexScreener
                                     </label>
                                     <input type="password" id="dexscreener-key" placeholder="ds_..." style="
                                         width: 100%;
@@ -918,7 +960,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- DeFi Llama -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">🦙</span> DeFi Llama
+                                        DeFi Llama
                                     </label>
                                     <input type="password" id="defillama-key" placeholder="ll_..." style="
                                         width: 100%;
@@ -938,7 +980,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                 <!-- Alpha Vantage -->
                                 <div style="margin-bottom: 12px;">
                                     <label style="display: block; color: rgba(255, 255, 255, 0.9); font-weight: 600; margin-bottom: 6px; font-size: 0.85em; font-family: var(--font-tech); letter-spacing: 0.5px;">
-                                        <span style="color: var(--cyber-blue);">📈</span> Alpha Vantage
+                                        Alpha Vantage
                                     </label>
                                     <input type="password" id="alpha-vantage-key" placeholder="AV_..." style="
                                         width: 100%;
@@ -976,7 +1018,11 @@ console.log('🔧 Loading Enhanced Profile System...');
                                         color: var(--matrix-green); 
                                         margin-top: 2px;
                                         text-shadow: 0 0 8px rgba(0,255,136,0.4);
-                                    ">💡</div>
+                                    ">
+                                        <svg viewBox="0 0 24 24" width="20" height="20">
+                                            <path fill="currentColor" d="M12,2A7,7 0 0,1 19,9C19,11.38 17.19,13.47 14.39,14.5C14.61,14.99 15,15.64 15,16.5C15,17.14 14.78,17.73 14.42,18.21C14.71,18.53 14.88,18.95 14.88,19.42C14.88,20.12 14.58,20.76 14.08,21.21V21.5C14.08,22.33 13.41,23 12.58,23H11.42C10.59,23 9.92,22.33 9.92,21.5V21.21C9.42,20.76 9.12,20.12 9.12,19.42C9.12,18.95 9.29,18.53 9.58,18.21C9.22,17.73 9,17.14 9,16.5C9,15.64 9.39,14.99 9.61,14.5C6.81,13.47 5,11.38 5,9A7,7 0 0,1 12,2M12,4A5,5 0 0,0 7,9C7,11.05 8.23,12.81 10.5,13.58C10.5,13.58 11,13.5 11,16.5C11,17 11.45,17.5 12,17.5C12.55,17.5 13,17 13,16.5C13,13.5 13.5,13.58 13.5,13.58C15.77,12.81 17,11.05 17,9A5,5 0 0,0 12,4Z"/>
+                                        </svg>
+                                    </div>
                                     <div>
                                         <div style="
                                             color: var(--matrix-green); 
@@ -1020,7 +1066,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     transition: all 0.3s ease;
                                     text-transform: uppercase;
                                     letter-spacing: 0.5px;
-                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,136,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,255,136,0.25)'">🧪 TEST ALL</button>
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,136,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,255,136,0.25)'">TEST ALL</button>
                                 
                                 <button onclick="clearAllAPIKeys()" style="
                                     background: linear-gradient(135deg, var(--danger-red), #ff4477); 
@@ -1036,7 +1082,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     transition: all 0.3s ease;
                                     text-transform: uppercase;
                                     letter-spacing: 0.5px;
-                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255,51,102,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(255,51,102,0.25)'">🗑️ CLEAR ALL</button>
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255,51,102,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(255,51,102,0.25)'">CLEAR ALL</button>
                                 
                                 <button onclick="exportAPIKeys()" style="
                                     background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-blue-dim)); 
@@ -1052,7 +1098,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                                     transition: all 0.3s ease;
                                     text-transform: uppercase;
                                     letter-spacing: 0.5px;
-                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,212,255,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,212,255,0.25)'">📤 EXPORT</button>
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,212,255,0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,212,255,0.25)'">EXPORT</button>
                             </div>
                         </div>
                     </div>
@@ -1074,7 +1120,7 @@ console.log('🔧 Loading Enhanced Profile System...');
                         letter-spacing: 2px;
                         text-transform: uppercase;
                     " onmouseover="this.style.boxShadow='0 0 32px rgba(0, 255, 136, 0.7)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 0 24px rgba(0, 255, 136, 0.5)'; this.style.transform='translateY(0)'">
-                        💾 SAVE PROFILE
+                        SAVE PROFILE
                     </button>
                     
                 </div>
@@ -1618,7 +1664,7 @@ console.log('🔧 Loading Enhanced Profile System...');
     window.openChatFromProfile = function() {
         if (window.openChat) {
             window.openChat();
-            window.terminal.log('💬 Opening Terminal Chatter...', 'info');
+            window.terminal.log('Opening Terminal Chatter...', 'info');
         } else {
             window.terminal.log('❌ Terminal Chatter not available', 'error');
         }
@@ -1674,7 +1720,7 @@ console.log('🔧 Loading Enhanced Profile System...');
     };
     
     function showEnhancedProfileHelp() {
-        window.terminal.log('👤 Enhanced Profile Commands:', 'info');
+        window.terminal.log('Enhanced Profile Commands:', 'info');
         window.terminal.log('', 'output');
         window.terminal.log('  profile open          - Open enhanced profile', 'output');
         window.terminal.log('  profile close         - Close profile', 'output');
@@ -1682,12 +1728,12 @@ console.log('🔧 Loading Enhanced Profile System...');
         window.terminal.log('  profile help          - Show this help', 'output');
         window.terminal.log('', 'output');
         window.terminal.log('Features:', 'info');
-        window.terminal.log('  🔗 Omega ENS registration', 'output');
-        window.terminal.log('  📇 Address book management', 'output');
-        window.terminal.log('  💬 Terminal Chatter (Telegram-like)', 'output');
-        window.terminal.log('  🐍 Python script management', 'output');
-        window.terminal.log('  🔑 API key management', 'output');
-        window.terminal.log('  🖥️ Fullscreen mode', 'output');
+        window.terminal.log('  Omega ENS registration', 'output');
+        window.terminal.log('  Address book management', 'output');
+        window.terminal.log('  Terminal Chatter (Telegram-like)', 'output');
+        window.terminal.log('  Python script management', 'output');
+        window.terminal.log('  API key management', 'output');
+        window.terminal.log('  Fullscreen mode', 'output');
     }
     
     // ===================================

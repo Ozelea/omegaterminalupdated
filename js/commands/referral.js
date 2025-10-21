@@ -8,7 +8,7 @@ window.OmegaCommands = window.OmegaCommands || {};
 console.log('[DEBUG] Loading OmegaCommands.Referral...');
 
 window.OmegaCommands.Referral = {
-    REFERRAL_API: 'http://localhost:5000/api/referral',
+    REFERRAL_API: 'https://omeganetwork.co/api/referral',
 
     // Main referral command router
     async referral(terminal, args) {
@@ -76,7 +76,7 @@ window.OmegaCommands.Referral = {
         const twitterHandle = args[1] || null;
         const discordId = args[2] || null;
         
-        terminal.log('🔗 Creating your referral code...', 'info');
+        terminal.log('Creating your referral code...', 'info');
         
         try {
             const response = await fetch(`${this.REFERRAL_API}/create`, {
@@ -95,15 +95,15 @@ window.OmegaCommands.Referral = {
                 throw new Error(result.error);
             }
             
-            terminal.log('✅ Referral code created successfully!', 'success');
-            terminal.log(`🎯 Your Code: ${result.referralCode}`, 'success');
-            terminal.log(`🔗 Your Link: ${result.referralUrl}`, 'info');
+            terminal.log('Referral code created successfully!', 'success');
+            terminal.log(`Your Code: ${result.referralCode}`, 'success');
+            terminal.log(`Your Link: ${result.referralUrl}`, 'info');
             terminal.log('', 'info');
-            terminal.log('📢 SOCIAL SHARING:', 'info');
-            terminal.log(`🐦 Twitter: "${result.socialShare.twitter}"`, 'info');
-            terminal.log(`💬 Discord: "${result.socialShare.discord}"`, 'info');
+            terminal.log('SOCIAL SHARING:', 'info');
+            terminal.log(`Twitter: "${result.socialShare.twitter}"`, 'info');
+            terminal.log(`Discord: "${result.socialShare.discord}"`, 'info');
             terminal.log('', 'info');
-            terminal.log('💡 Tip: Use "referral share" to post automatically!', 'success');
+            terminal.log('Tip: Use "referral share" to post automatically!', 'success');
             
         } catch (error) {
             console.error('Referral creation error:', error);
@@ -129,7 +129,7 @@ window.OmegaCommands.Referral = {
             return;
         }
         
-        terminal.log('📊 Loading your referral stats...', 'info');
+        terminal.log('Loading your referral stats...', 'info');
         
         try {
             const response = await fetch(`${this.REFERRAL_API}/stats/${walletAddress}`);
@@ -139,21 +139,21 @@ window.OmegaCommands.Referral = {
                 throw new Error(result.error);
             }
             
-            terminal.log('✅ REFERRAL DASHBOARD', 'success');
-            terminal.log('═════════════════════', 'success');
-            terminal.log(`🎯 Referral Code: ${result.userInfo.referralCode}`, 'info');
-            terminal.log(`🔗 Referral URL: ${result.userInfo.referralUrl}`, 'info');
+            terminal.log('REFERRAL DASHBOARD', 'success');
+            terminal.log('══════════════════════════════════', 'success');
+            terminal.log(`Referral Code: ${result.userInfo.referralCode}`, 'info');
+            terminal.log(`Referral URL: ${result.userInfo.referralUrl}`, 'info');
             terminal.log('', 'info');
             
-            terminal.log('📈 PERFORMANCE STATS:', 'info');
-            terminal.log(`👥 Total Referrals: ${result.stats.totalReferrals}`, 'info');
-            terminal.log(`💰 Total Earned: ${result.stats.totalEarned} OMEGA`, 'success');
-            terminal.log(`⏳ Pending Rewards: ${result.stats.pendingRewards} OMEGA`, 'warning');
-            terminal.log(`✅ Confirmed Rewards: ${result.stats.confirmedRewards} OMEGA`, 'success');
+            terminal.log('PERFORMANCE STATS:', 'info');
+            terminal.log(`Total Referrals: ${result.stats.totalReferrals}`, 'info');
+            terminal.log(`Total Earned: ${result.stats.totalEarned} OMEGA`, 'success');
+            terminal.log(`Pending Rewards: ${result.stats.pendingRewards} OMEGA`, 'warning');
+            terminal.log(`Confirmed Rewards: ${result.stats.confirmedRewards} OMEGA`, 'success');
             terminal.log('', 'info');
             
             if (result.recentReferrals && result.recentReferrals.length > 0) {
-                terminal.log('🔥 RECENT REFERRALS:', 'info');
+                terminal.log('RECENT REFERRALS:', 'info');
                 result.recentReferrals.slice(0, 3).forEach((ref, index) => {
                     const date = new Date(ref.created_at).toLocaleDateString();
                     terminal.log(`   ${index + 1}. ${ref.referee_wallet.substring(0, 10)}... (+${ref.referral_reward} OMEGA) - ${date}`, 'info');
@@ -161,7 +161,7 @@ window.OmegaCommands.Referral = {
             }
             
             terminal.log('', 'info');
-            terminal.log('💡 Commands: referral share | referral leaderboard | referral dashboard', 'success');
+            terminal.log('Commands: referral share | referral leaderboard | referral dashboard', 'success');
             
         } catch (error) {
             console.error('Referral stats error:', error);
@@ -191,27 +191,27 @@ window.OmegaCommands.Referral = {
                 throw new Error(result.error);
             }
             
-            terminal.log('📢 SOCIAL SHARING OPTIONS:', 'info');
-            terminal.log('═══════════════════════════', 'info');
+            terminal.log('SOCIAL SHARING OPTIONS:', 'info');
+            terminal.log('══════════════════════════════════', 'info');
             terminal.log('', 'info');
             
             if (platform === 'all' || platform === 'twitter') {
                 const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(result.socialShare.twitter)}`;
-                terminal.log('🐦 TWITTER SHARE:', 'info');
+                terminal.log('TWITTER SHARE:', 'info');
                 terminal.log(`Link: ${twitterUrl}`, 'success');
                 terminal.log('', 'info');
             }
             
             if (platform === 'all' || platform === 'discord') {
-                terminal.log('💬 DISCORD SHARE:', 'info');
+                terminal.log('DISCORD SHARE:', 'info');
                 terminal.log(`Message: "${result.socialShare.discord}"`, 'success');
                 terminal.log('', 'info');
             }
             
-            terminal.log('📋 YOUR REFERRAL LINK:', 'info');
+            terminal.log('YOUR REFERRAL LINK:', 'info');
             terminal.log(`${result.userInfo.referralUrl}`, 'success');
             terminal.log('', 'info');
-            terminal.log('💰 Earn 10 OMEGA for each successful referral + 2 OMEGA for social sharing!', 'success');
+            terminal.log('Earn 10 OMEGA for each successful referral + 2 OMEGA for social sharing!', 'success');
             
             // Track social campaign
             if (platform !== 'all') {
@@ -245,7 +245,7 @@ window.OmegaCommands.Referral = {
     async leaderboard(terminal, args) {
         const limit = args[0] ? parseInt(args[0]) : 10;
         
-        terminal.log('🏆 Loading referral leaderboard...', 'info');
+        terminal.log('Loading referral leaderboard...', 'info');
         
         try {
             const response = await fetch(`${this.REFERRAL_API}/leaderboard?limit=${limit}`);
@@ -255,24 +255,24 @@ window.OmegaCommands.Referral = {
                 throw new Error(result.error);
             }
             
-            terminal.log('🏆 OMEGA REFERRAL LEADERBOARD', 'success');
-            terminal.log('═══════════════════════════════', 'success');
+            terminal.log('OMEGA AMBASSADOR LEADERBOARD', 'success');
+            terminal.log('══════════════════════════════════════', 'success');
             terminal.log('', 'info');
             
             // Platform stats
             const stats = result.platformStats;
-            terminal.log(`📊 Total Users: ${stats.totalUsers} | Total Referrals: ${stats.totalReferrals} | Rewards: ${stats.totalRewardsDistributed} OMEGA`, 'info');
+            terminal.log(`Total Users: ${stats.totalUsers} | Total Referrals: ${stats.totalReferrals} | Rewards: ${stats.totalRewardsDistributed} OMEGA`, 'info');
             terminal.log('', 'info');
             
             // Leaderboard
             result.leaderboard.forEach((user, index) => {
-                const emoji = user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : '🏅';
+                const rank = user.rank === 1 ? '[1st]' : user.rank === 2 ? '[2nd]' : user.rank === 3 ? '[3rd]' : `[${user.rank}]`;
                 const handle = user.twitterHandle || 'Anonymous';
-                terminal.log(`${emoji} #${user.rank} ${handle} - ${user.referrals} referrals (${user.earned} OMEGA)`, 'info');
+                terminal.log(`${rank} ${handle} - ${user.referrals} referrals (${user.earned} OMEGA)`, 'info');
             });
             
             terminal.log('', 'info');
-            terminal.log('💡 Start referring friends to climb the leaderboard!', 'success');
+            terminal.log('Start referring friends to climb the leaderboard!', 'success');
             
         } catch (error) {
             console.error('Leaderboard error:', error);
@@ -291,7 +291,7 @@ window.OmegaCommands.Referral = {
         const newWalletAddress = args[1];
         const sourcePlatform = args[2] || 'terminal';
         
-        terminal.log('✅ Completing referral...', 'info');
+        terminal.log('Completing referral...', 'info');
         
         try {
             const response = await fetch(`${this.REFERRAL_API}/complete`, {
@@ -310,11 +310,11 @@ window.OmegaCommands.Referral = {
                 throw new Error(result.error);
             }
             
-            terminal.log('🎉 Referral completed successfully!', 'success');
+            terminal.log('Referral completed successfully!', 'success');
             terminal.log(result.message, 'success');
-            terminal.log(`💰 Rewards distributed:`, 'info');
-            terminal.log(`   • Referrer: ${result.rewards.referrer}`, 'success');
-            terminal.log(`   • New User: ${result.rewards.referee}`, 'success');
+            terminal.log(`Rewards distributed:`, 'info');
+            terminal.log(`   Referrer: ${result.rewards.referrer}`, 'success');
+            terminal.log(`   New User: ${result.rewards.referee}`, 'success');
             
         } catch (error) {
             console.error('Referral completion error:', error);
@@ -324,13 +324,13 @@ window.OmegaCommands.Referral = {
 
     // Open dashboard in new window
     openDashboard(terminal) {
-        terminal.log('🚀 Opening referral dashboard...', 'info');
+        terminal.log('Opening ambassador dashboard...', 'info');
         
         try {
-            const dashboardUrl = 'http://localhost:5000/dashboard.html';
+            const dashboardUrl = 'https://omeganetwork.co/ambassador/dashboard';
             window.open(dashboardUrl, '_blank');
-            terminal.log('✅ Dashboard opened in new tab!', 'success');
-            terminal.log(`🔗 URL: ${dashboardUrl}`, 'info');
+            terminal.log('Dashboard opened in new tab!', 'success');
+            terminal.log(`URL: ${dashboardUrl}`, 'info');
         } catch (error) {
             terminal.log('❌ Failed to open dashboard. Make sure referral server is running.', 'error');
             terminal.log('Start server: node omega-referral-system.js', 'info');
@@ -339,32 +339,32 @@ window.OmegaCommands.Referral = {
 
     // Help command
     async help(terminal) {
-        terminal.log('🔗 OMEGA REFERRAL COMMANDS', 'info');
-        terminal.log('═════════════════════════', 'info');
+        terminal.log('OMEGA AMBASSADOR PROGRAM', 'info');
+        terminal.log('═══════════════════════════════════════', 'info');
         terminal.log('', 'info');
         
-        terminal.log('📋 BASIC COMMANDS:', 'info');
-        terminal.log('  referral create [wallet] [@twitter] [discord]  Create referral code', 'info');
-        terminal.log('  referral stats [wallet]                        View your stats', 'info');
+        terminal.log('COMMANDS:', 'info');
+        terminal.log('  referral create [wallet] [@twitter] [discord]  Generate referral link', 'info');
+        terminal.log('  referral stats [wallet]                        View your statistics', 'info');
         terminal.log('  referral share [platform]                      Get sharing links', 'info');
-        terminal.log('  referral leaderboard [limit]                   View top referrers', 'info');
-        terminal.log('  referral dashboard                              Open web dashboard', 'info');
+        terminal.log('  referral leaderboard [limit]                   View top ambassadors', 'info');
+        terminal.log('  referral dashboard                             Open web dashboard', 'info');
         terminal.log('', 'info');
         
-        terminal.log('🎯 EXAMPLES:', 'info');
-        terminal.log('  referral create                                 # Use connected wallet', 'info');
-        terminal.log('  referral create 0x123... @myhandle discord#1234 # With social handles', 'info');
-        terminal.log('  referral share twitter                         # Share on Twitter', 'info');
-        terminal.log('  referral leaderboard 20                        # Top 20 referrers', 'info');
+        terminal.log('EXAMPLES:', 'info');
+        terminal.log('  referral create                                Use connected wallet', 'info');
+        terminal.log('  referral create 0x123... @myhandle discord#1234 With social handles', 'info');
+        terminal.log('  referral share twitter                         Share on Twitter', 'info');
+        terminal.log('  referral leaderboard 20                        Top 20 ambassadors', 'info');
         terminal.log('', 'info');
         
-        terminal.log('💰 REWARDS:', 'info');
-        terminal.log('  • 10 OMEGA tokens for each successful referral', 'success');
-        terminal.log('  • 5 OMEGA tokens for new users who join', 'success');
-        terminal.log('  • 2 OMEGA bonus for social media sharing', 'success');
+        terminal.log('REWARDS:', 'info');
+        terminal.log('  10 OMEGA tokens for each successful referral', 'success');
+        terminal.log('  5 OMEGA tokens for new users who join', 'success');
+        terminal.log('  2 OMEGA bonus for social media sharing', 'success');
         terminal.log('', 'info');
         
-        terminal.log('🚀 Get started: referral create', 'success');
+        terminal.log('Get started: referral create', 'success');
     }
 };
 

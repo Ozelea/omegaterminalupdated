@@ -97,6 +97,46 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                         <span>Clear Terminal</span>
                     </button>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'color-palettes')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/></svg>
+                        <span>Color Palettes</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="color-palettes" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color red')">
+                            <span>Crimson</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color anime')">
+                            <span>Anime</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color ocean')">
+                            <span>Ocean</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color forest')">
+                            <span>Forest</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color sunset')">
+                            <span>Sunset</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color purple')">
+                            <span>Purple</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color cyber')">
+                            <span>Cyber</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color gold')">
+                            <span>Gold</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color ice')">
+                            <span>Ice</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color fire')">
+                            <span>Fire</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color reset')">
+                            <span>Reset Default</span>
+                        </button>
+                    </div>
                     </div>
                 </div>
                 
@@ -259,6 +299,31 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/></svg>
                         <span>Check Balance</span>
                     </button>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'ambassador')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5M19.5,9.5L18,10.5V12.5L19.5,13.5V9.5M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M4.5,9.5V13.5L6,12.5V10.5L4.5,9.5M12,6A1,1 0 0,1 13,7A1,1 0 0,1 12,8A1,1 0 0,1 11,7A1,1 0 0,1 12,6M12,22L9,19H15L12,22M12,2L15,5H9L12,2M3,12L0,9V15L3,12M21,12L24,15V9L21,12Z"/></svg>
+                        <span>Ambassador</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="ambassador" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral create')">
+                            <span>→ Generate Referral Link</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral stats')">
+                            <span>→ View My Stats</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral share')">
+                            <span>→ Share Links</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral leaderboard')">
+                            <span>→ View Leaderboard</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral dashboard')">
+                            <span>→ Open Dashboard</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral help')">
+                            <span>→ Help</span>
+                        </button>
+                    </div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'pgt')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18M12,16H21V8H12M16,13.5A1.5,1.5 0 0,1 14.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,12A1.5,1.5 0 0,1 16,13.5Z"/></svg>
                         <span>Track Wallet</span>

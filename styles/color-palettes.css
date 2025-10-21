@@ -1,0 +1,1578 @@
+/**
+ * Omega Terminal - Dynamic Color Palettes
+ * 10 Creative color schemes that work across all themes
+ * Changes accent colors, borders, buttons, and UI elements
+ */
+
+/* ============================================
+   BASE COLOR VARIABLES (Default - Cyber Blue)
+   ============================================ */
+:root {
+    /* Primary Colors */
+    --palette-primary: #00d4ff;
+    --palette-primary-dark: #0099cc;
+    --palette-primary-light: #33ddff;
+    --palette-primary-glow: rgba(0, 212, 255, 0.3);
+    
+    /* Secondary Colors */
+    --palette-secondary: #00ff88;
+    --palette-secondary-dark: #00cc66;
+    --palette-secondary-light: #33ffaa;
+    
+    /* Accent Colors */
+    --palette-accent: #ff00ff;
+    --palette-accent-dark: #cc00cc;
+    --palette-accent-light: #ff33ff;
+    
+    /* Status Colors */
+    --palette-success: #00ff88;
+    --palette-warning: #ffaa00;
+    --palette-error: #ff4444;
+    --palette-info: #00d4ff;
+    
+    /* UI Element Colors */
+    --palette-border: rgba(0, 212, 255, 0.3);
+    --palette-border-hover: rgba(0, 212, 255, 0.5);
+    --palette-bg-overlay: rgba(0, 212, 255, 0.1);
+    --palette-bg-hover: rgba(0, 212, 255, 0.15);
+    
+    /* Text Colors */
+    --palette-text-primary: #ffffff;
+    --palette-text-secondary: rgba(255, 255, 255, 0.7);
+    --palette-text-accent: #00d4ff;
+    
+    /* Gradient */
+    --palette-gradient: linear-gradient(135deg, #00d4ff, #00ff88);
+    --palette-gradient-hover: linear-gradient(135deg, #33ddff, #33ffaa);
+}
+
+/* ============================================
+   1. RED / CRIMSON - Fierce & Bold
+   ============================================ */
+body[data-color-palette="red"],
+body[data-color-palette="crimson"] {
+    --palette-primary: #ff3366;
+    --palette-primary-dark: #cc0033;
+    --palette-primary-light: #ff6699;
+    --palette-primary-glow: rgba(255, 51, 102, 0.3);
+    
+    --palette-secondary: #ff6b6b;
+    --palette-secondary-dark: #ee5555;
+    --palette-secondary-light: #ff8888;
+    
+    --palette-accent: #ff1744;
+    --palette-accent-dark: #d50000;
+    --palette-accent-light: #ff5177;
+    
+    --palette-success: #ff6b6b;
+    --palette-warning: #ffaa00;
+    --palette-error: #ff1744;
+    --palette-info: #ff3366;
+    
+    --palette-border: rgba(255, 51, 102, 0.3);
+    --palette-border-hover: rgba(255, 51, 102, 0.5);
+    --palette-bg-overlay: rgba(255, 51, 102, 0.1);
+    --palette-bg-hover: rgba(255, 51, 102, 0.15);
+    
+    --palette-text-accent: #ff3366;
+    --palette-gradient: linear-gradient(135deg, #ff3366, #ff6b6b);
+    --palette-gradient-hover: linear-gradient(135deg, #ff6699, #ff8888);
+}
+
+/* ============================================
+   2. ANIME - Vibrant Pink/Purple/Cyan
+   ============================================ */
+body[data-color-palette="anime"] {
+    --palette-primary: #ff1493;
+    --palette-primary-dark: #cc0066;
+    --palette-primary-light: #ff69b4;
+    --palette-primary-glow: rgba(255, 20, 147, 0.3);
+    
+    --palette-secondary: #9d4edd;
+    --palette-secondary-dark: #7b2cbf;
+    --palette-secondary-light: #c77dff;
+    
+    --palette-accent: #00ffff;
+    --palette-accent-dark: #00cccc;
+    --palette-accent-light: #66ffff;
+    
+    --palette-success: #00ffff;
+    --palette-warning: #ffaa00;
+    --palette-error: #ff1493;
+    --palette-info: #9d4edd;
+    
+    --palette-border: rgba(255, 20, 147, 0.3);
+    --palette-border-hover: rgba(255, 20, 147, 0.5);
+    --palette-bg-overlay: rgba(255, 20, 147, 0.1);
+    --palette-bg-hover: rgba(255, 20, 147, 0.15);
+    
+    --palette-text-accent: #ff1493;
+    --palette-gradient: linear-gradient(135deg, #ff1493, #9d4edd, #00ffff);
+    --palette-gradient-hover: linear-gradient(135deg, #ff69b4, #c77dff, #66ffff);
+}
+
+/* ============================================
+   3. OCEAN - Deep Blue/Teal/Cyan
+   ============================================ */
+body[data-color-palette="ocean"],
+body[data-color-palette="blue"] {
+    --palette-primary: #0ea5e9;
+    --palette-primary-dark: #0284c7;
+    --palette-primary-light: #38bdf8;
+    --palette-primary-glow: rgba(14, 165, 233, 0.3);
+    
+    --palette-secondary: #06b6d4;
+    --palette-secondary-dark: #0891b2;
+    --palette-secondary-light: #22d3ee;
+    
+    --palette-accent: #0066cc;
+    --palette-accent-dark: #004499;
+    --palette-accent-light: #3399ff;
+    
+    --palette-success: #06b6d4;
+    --palette-warning: #f59e0b;
+    --palette-error: #ef4444;
+    --palette-info: #0ea5e9;
+    
+    --palette-border: rgba(14, 165, 233, 0.3);
+    --palette-border-hover: rgba(14, 165, 233, 0.5);
+    --palette-bg-overlay: rgba(14, 165, 233, 0.1);
+    --palette-bg-hover: rgba(14, 165, 233, 0.15);
+    
+    --palette-text-accent: #0ea5e9;
+    --palette-gradient: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    --palette-gradient-hover: linear-gradient(135deg, #38bdf8, #22d3ee);
+}
+
+/* ============================================
+   4. FOREST - Emerald/Green/Nature
+   ============================================ */
+body[data-color-palette="forest"],
+body[data-color-palette="green"] {
+    --palette-primary: #10b981;
+    --palette-primary-dark: #059669;
+    --palette-primary-light: #34d399;
+    --palette-primary-glow: rgba(16, 185, 129, 0.3);
+    
+    --palette-secondary: #22c55e;
+    --palette-secondary-dark: #16a34a;
+    --palette-secondary-light: #4ade80;
+    
+    --palette-accent: #14b8a6;
+    --palette-accent-dark: #0d9488;
+    --palette-accent-light: #2dd4bf;
+    
+    --palette-success: #10b981;
+    --palette-warning: #f59e0b;
+    --palette-error: #ef4444;
+    --palette-info: #14b8a6;
+    
+    --palette-border: rgba(16, 185, 129, 0.3);
+    --palette-border-hover: rgba(16, 185, 129, 0.5);
+    --palette-bg-overlay: rgba(16, 185, 129, 0.1);
+    --palette-bg-hover: rgba(16, 185, 129, 0.15);
+    
+    --palette-text-accent: #10b981;
+    --palette-gradient: linear-gradient(135deg, #10b981, #22c55e);
+    --palette-gradient-hover: linear-gradient(135deg, #34d399, #4ade80);
+}
+
+/* ============================================
+   5. SUNSET - Orange/Pink/Purple
+   ============================================ */
+body[data-color-palette="sunset"] {
+    --palette-primary: #f97316;
+    --palette-primary-dark: #ea580c;
+    --palette-primary-light: #fb923c;
+    --palette-primary-glow: rgba(249, 115, 22, 0.3);
+    
+    --palette-secondary: #ec4899;
+    --palette-secondary-dark: #db2777;
+    --palette-secondary-light: #f472b6;
+    
+    --palette-accent: #a855f7;
+    --palette-accent-dark: #9333ea;
+    --palette-accent-light: #c084fc;
+    
+    --palette-success: #f97316;
+    --palette-warning: #fbbf24;
+    --palette-error: #dc2626;
+    --palette-info: #ec4899;
+    
+    --palette-border: rgba(249, 115, 22, 0.3);
+    --palette-border-hover: rgba(249, 115, 22, 0.5);
+    --palette-bg-overlay: rgba(249, 115, 22, 0.1);
+    --palette-bg-hover: rgba(249, 115, 22, 0.15);
+    
+    --palette-text-accent: #f97316;
+    --palette-gradient: linear-gradient(135deg, #f97316, #ec4899, #a855f7);
+    --palette-gradient-hover: linear-gradient(135deg, #fb923c, #f472b6, #c084fc);
+}
+
+/* ============================================
+   6. PURPLE / VIOLET - Royal & Mystical
+   ============================================ */
+body[data-color-palette="purple"],
+body[data-color-palette="violet"] {
+    --palette-primary: #a855f7;
+    --palette-primary-dark: #9333ea;
+    --palette-primary-light: #c084fc;
+    --palette-primary-glow: rgba(168, 85, 247, 0.3);
+    
+    --palette-secondary: #8b5cf6;
+    --palette-secondary-dark: #7c3aed;
+    --palette-secondary-light: #a78bfa;
+    
+    --palette-accent: #d946ef;
+    --palette-accent-dark: #c026d3;
+    --palette-accent-light: #e879f9;
+    
+    --palette-success: #a855f7;
+    --palette-warning: #fbbf24;
+    --palette-error: #f43f5e;
+    --palette-info: #8b5cf6;
+    
+    --palette-border: rgba(168, 85, 247, 0.3);
+    --palette-border-hover: rgba(168, 85, 247, 0.5);
+    --palette-bg-overlay: rgba(168, 85, 247, 0.1);
+    --palette-bg-hover: rgba(168, 85, 247, 0.15);
+    
+    --palette-text-accent: #a855f7;
+    --palette-gradient: linear-gradient(135deg, #a855f7, #8b5cf6);
+    --palette-gradient-hover: linear-gradient(135deg, #c084fc, #a78bfa);
+}
+
+/* ============================================
+   7. CYBER - Neon Cyan/Magenta/Electric
+   ============================================ */
+body[data-color-palette="cyber"],
+body[data-color-palette="neon"] {
+    --palette-primary: #00ffff;
+    --palette-primary-dark: #00cccc;
+    --palette-primary-light: #66ffff;
+    --palette-primary-glow: rgba(0, 255, 255, 0.4);
+    
+    --palette-secondary: #ff00ff;
+    --palette-secondary-dark: #cc00cc;
+    --palette-secondary-light: #ff66ff;
+    
+    --palette-accent: #00ff00;
+    --palette-accent-dark: #00cc00;
+    --palette-accent-light: #66ff66;
+    
+    --palette-success: #00ff00;
+    --palette-warning: #ffff00;
+    --palette-error: #ff00ff;
+    --palette-info: #00ffff;
+    
+    --palette-border: rgba(0, 255, 255, 0.4);
+    --palette-border-hover: rgba(0, 255, 255, 0.6);
+    --palette-bg-overlay: rgba(0, 255, 255, 0.1);
+    --palette-bg-hover: rgba(0, 255, 255, 0.2);
+    
+    --palette-text-accent: #00ffff;
+    --palette-gradient: linear-gradient(135deg, #00ffff, #ff00ff);
+    --palette-gradient-hover: linear-gradient(135deg, #66ffff, #ff66ff);
+}
+
+/* ============================================
+   8. GOLD / LUXURY - Opulent Gold/Bronze
+   ============================================ */
+body[data-color-palette="gold"],
+body[data-color-palette="luxury"] {
+    --palette-primary: #fbbf24;
+    --palette-primary-dark: #d97706;
+    --palette-primary-light: #fcd34d;
+    --palette-primary-glow: rgba(251, 191, 36, 0.3);
+    
+    --palette-secondary: #f59e0b;
+    --palette-secondary-dark: #d97706;
+    --palette-secondary-light: #fbbf24;
+    
+    --palette-accent: #b8860b;
+    --palette-accent-dark: #996515;
+    --palette-accent-light: #daa520;
+    
+    --palette-success: #fbbf24;
+    --palette-warning: #f59e0b;
+    --palette-error: #dc2626;
+    --palette-info: #b8860b;
+    
+    --palette-border: rgba(251, 191, 36, 0.3);
+    --palette-border-hover: rgba(251, 191, 36, 0.5);
+    --palette-bg-overlay: rgba(251, 191, 36, 0.1);
+    --palette-bg-hover: rgba(251, 191, 36, 0.15);
+    
+    --palette-text-accent: #fbbf24;
+    --palette-gradient: linear-gradient(135deg, #fbbf24, #f59e0b);
+    --palette-gradient-hover: linear-gradient(135deg, #fcd34d, #fbbf24);
+}
+
+/* ============================================
+   9. ICE - Glacial Blue/White/Silver
+   ============================================ */
+body[data-color-palette="ice"],
+body[data-color-palette="frost"] {
+    --palette-primary: #e0f2fe;
+    --palette-primary-dark: #bae6fd;
+    --palette-primary-light: #f0f9ff;
+    --palette-primary-glow: rgba(186, 230, 253, 0.3);
+    
+    --palette-secondary: #7dd3fc;
+    --palette-secondary-dark: #38bdf8;
+    --palette-secondary-light: #bae6fd;
+    
+    --palette-accent: #0ea5e9;
+    --palette-accent-dark: #0284c7;
+    --palette-accent-light: #38bdf8;
+    
+    --palette-success: #7dd3fc;
+    --palette-warning: #fbbf24;
+    --palette-error: #f87171;
+    --palette-info: #e0f2fe;
+    
+    --palette-border: rgba(224, 242, 254, 0.3);
+    --palette-border-hover: rgba(224, 242, 254, 0.5);
+    --palette-bg-overlay: rgba(224, 242, 254, 0.1);
+    --palette-bg-hover: rgba(224, 242, 254, 0.15);
+    
+    --palette-text-accent: #7dd3fc;
+    --palette-gradient: linear-gradient(135deg, #e0f2fe, #7dd3fc);
+    --palette-gradient-hover: linear-gradient(135deg, #f0f9ff, #bae6fd);
+}
+
+/* ============================================
+   10. FIRE - Blazing Red/Orange/Yellow
+   ============================================ */
+body[data-color-palette="fire"],
+body[data-color-palette="flame"] {
+    --palette-primary: #ff6b35;
+    --palette-primary-dark: #f04e23;
+    --palette-primary-light: #ff8551;
+    --palette-primary-glow: rgba(255, 107, 53, 0.3);
+    
+    --palette-secondary: #ffd60a;
+    --palette-secondary-dark: #ffc300;
+    --palette-secondary-light: #ffe44d;
+    
+    --palette-accent: #ff0000;
+    --palette-accent-dark: #cc0000;
+    --palette-accent-light: #ff3333;
+    
+    --palette-success: #ffd60a;
+    --palette-warning: #ff6b35;
+    --palette-error: #ff0000;
+    --palette-info: #ff6b35;
+    
+    --palette-border: rgba(255, 107, 53, 0.3);
+    --palette-border-hover: rgba(255, 107, 53, 0.5);
+    --palette-bg-overlay: rgba(255, 107, 53, 0.1);
+    --palette-bg-hover: rgba(255, 107, 53, 0.15);
+    
+    --palette-text-accent: #ff6b35;
+    --palette-gradient: linear-gradient(135deg, #ff0000, #ff6b35, #ffd60a);
+    --palette-gradient-hover: linear-gradient(135deg, #ff3333, #ff8551, #ffe44d);
+}
+
+/* ============================================
+   11. MINT - Fresh Mint/Turquoise
+   ============================================ */
+body[data-color-palette="mint"],
+body[data-color-palette="turquoise"] {
+    --palette-primary: #2dd4bf;
+    --palette-primary-dark: #14b8a6;
+    --palette-primary-light: #5eead4;
+    --palette-primary-glow: rgba(45, 212, 191, 0.3);
+    
+    --palette-secondary: #06b6d4;
+    --palette-secondary-dark: #0891b2;
+    --palette-secondary-light: #22d3ee;
+    
+    --palette-accent: #10b981;
+    --palette-accent-dark: #059669;
+    --palette-accent-light: #34d399;
+    
+    --palette-success: #2dd4bf;
+    --palette-warning: #fbbf24;
+    --palette-error: #f43f5e;
+    --palette-info: #06b6d4;
+    
+    --palette-border: rgba(45, 212, 191, 0.3);
+    --palette-border-hover: rgba(45, 212, 191, 0.5);
+    --palette-bg-overlay: rgba(45, 212, 191, 0.1);
+    --palette-bg-hover: rgba(45, 212, 191, 0.15);
+    
+    --palette-text-accent: #2dd4bf;
+    --palette-gradient: linear-gradient(135deg, #2dd4bf, #06b6d4);
+    --palette-gradient-hover: linear-gradient(135deg, #5eead4, #22d3ee);
+}
+
+/* ============================================
+   12. ROSE - Soft Pink/Rose Gold
+   ============================================ */
+body[data-color-palette="rose"],
+body[data-color-palette="pink"] {
+    --palette-primary: #fb7185;
+    --palette-primary-dark: #f43f5e;
+    --palette-primary-light: #fda4af;
+    --palette-primary-glow: rgba(251, 113, 133, 0.3);
+    
+    --palette-secondary: #ec4899;
+    --palette-secondary-dark: #db2777;
+    --palette-secondary-light: #f472b6;
+    
+    --palette-accent: #e11d48;
+    --palette-accent-dark: #be123c;
+    --palette-accent-light: #f43f5e;
+    
+    --palette-success: #fb7185;
+    --palette-warning: #fbbf24;
+    --palette-error: #e11d48;
+    --palette-info: #ec4899;
+    
+    --palette-border: rgba(251, 113, 133, 0.3);
+    --palette-border-hover: rgba(251, 113, 133, 0.5);
+    --palette-bg-overlay: rgba(251, 113, 133, 0.1);
+    --palette-bg-hover: rgba(251, 113, 133, 0.15);
+    
+    --palette-text-accent: #fb7185;
+    --palette-gradient: linear-gradient(135deg, #fb7185, #ec4899);
+    --palette-gradient-hover: linear-gradient(135deg, #fda4af, #f472b6);
+}
+
+/* ============================================
+   13. AMBER - Warm Amber/Honey
+   ============================================ */
+body[data-color-palette="amber"],
+body[data-color-palette="honey"] {
+    --palette-primary: #f59e0b;
+    --palette-primary-dark: #d97706;
+    --palette-primary-light: #fbbf24;
+    --palette-primary-glow: rgba(245, 158, 11, 0.3);
+    
+    --palette-secondary: #fb923c;
+    --palette-secondary-dark: #f97316;
+    --palette-secondary-light: #fdba74;
+    
+    --palette-accent: #eab308;
+    --palette-accent-dark: #ca8a04;
+    --palette-accent-light: #facc15;
+    
+    --palette-success: #f59e0b;
+    --palette-warning: #fb923c;
+    --palette-error: #dc2626;
+    --palette-info: #eab308;
+    
+    --palette-border: rgba(245, 158, 11, 0.3);
+    --palette-border-hover: rgba(245, 158, 11, 0.5);
+    --palette-bg-overlay: rgba(245, 158, 11, 0.1);
+    --palette-bg-hover: rgba(245, 158, 11, 0.15);
+    
+    --palette-text-accent: #f59e0b;
+    --palette-gradient: linear-gradient(135deg, #f59e0b, #fb923c);
+    --palette-gradient-hover: linear-gradient(135deg, #fbbf24, #fdba74);
+}
+
+/* ============================================
+   14. SLATE - Cool Gray/Silver
+   ============================================ */
+body[data-color-palette="slate"],
+body[data-color-palette="silver"] {
+    --palette-primary: #94a3b8;
+    --palette-primary-dark: #64748b;
+    --palette-primary-light: #cbd5e1;
+    --palette-primary-glow: rgba(148, 163, 184, 0.3);
+    
+    --palette-secondary: #64748b;
+    --palette-secondary-dark: #475569;
+    --palette-secondary-light: #94a3b8;
+    
+    --palette-accent: #475569;
+    --palette-accent-dark: #334155;
+    --palette-accent-light: #64748b;
+    
+    --palette-success: #94a3b8;
+    --palette-warning: #fbbf24;
+    --palette-error: #ef4444;
+    --palette-info: #64748b;
+    
+    --palette-border: rgba(148, 163, 184, 0.3);
+    --palette-border-hover: rgba(148, 163, 184, 0.5);
+    --palette-bg-overlay: rgba(148, 163, 184, 0.1);
+    --palette-bg-hover: rgba(148, 163, 184, 0.15);
+    
+    --palette-text-accent: #94a3b8;
+    --palette-gradient: linear-gradient(135deg, #94a3b8, #64748b);
+    --palette-gradient-hover: linear-gradient(135deg, #cbd5e1, #94a3b8);
+}
+
+/* ============================================
+   15. LAVENDER - Soft Purple/Lilac
+   ============================================ */
+body[data-color-palette="lavender"],
+body[data-color-palette="lilac"] {
+    --palette-primary: #c4b5fd;
+    --palette-primary-dark: #a78bfa;
+    --palette-primary-light: #ddd6fe;
+    --palette-primary-glow: rgba(196, 181, 253, 0.3);
+    
+    --palette-secondary: #a78bfa;
+    --palette-secondary-dark: #8b5cf6;
+    --palette-secondary-light: #c4b5fd;
+    
+    --palette-accent: #8b5cf6;
+    --palette-accent-dark: #7c3aed;
+    --palette-accent-light: #a78bfa;
+    
+    --palette-success: #c4b5fd;
+    --palette-warning: #fbbf24;
+    --palette-error: #f87171;
+    --palette-info: #a78bfa;
+    
+    --palette-border: rgba(196, 181, 253, 0.3);
+    --palette-border-hover: rgba(196, 181, 253, 0.5);
+    --palette-bg-overlay: rgba(196, 181, 253, 0.1);
+    --palette-bg-hover: rgba(196, 181, 253, 0.15);
+    
+    --palette-text-accent: #c4b5fd;
+    --palette-gradient: linear-gradient(135deg, #c4b5fd, #a78bfa);
+    --palette-gradient-hover: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+}
+
+/* ============================================
+   16. TOXIC - Radioactive Green/Lime
+   ============================================ */
+body[data-color-palette="toxic"],
+body[data-color-palette="radioactive"] {
+    --palette-primary: #84cc16;
+    --palette-primary-dark: #65a30d;
+    --palette-primary-light: #a3e635;
+    --palette-primary-glow: rgba(132, 204, 22, 0.4);
+    
+    --palette-secondary: #a3e635;
+    --palette-secondary-dark: #84cc16;
+    --palette-secondary-light: #bef264;
+    
+    --palette-accent: #22c55e;
+    --palette-accent-dark: #16a34a;
+    --palette-accent-light: #4ade80;
+    
+    --palette-success: #84cc16;
+    --palette-warning: #facc15;
+    --palette-error: #dc2626;
+    --palette-info: #a3e635;
+    
+    --palette-border: rgba(132, 204, 22, 0.4);
+    --palette-border-hover: rgba(132, 204, 22, 0.6);
+    --palette-bg-overlay: rgba(132, 204, 22, 0.15);
+    --palette-bg-hover: rgba(132, 204, 22, 0.2);
+    
+    --palette-text-accent: #84cc16;
+    --palette-gradient: linear-gradient(135deg, #84cc16, #a3e635);
+    --palette-gradient-hover: linear-gradient(135deg, #a3e635, #bef264);
+}
+
+/* ============================================
+   APPLY PALETTES TO ALL COMPONENTS
+   ============================================ */
+
+/* ============================================
+   TERMINAL CORE ELEMENTS
+   ============================================ */
+
+/* Terminal Container */
+#terminal,
+.terminal,
+.omega-terminal {
+    border-color: var(--palette-border) !important;
+}
+
+/* Terminal Output */
+.terminal-output {
+    color: var(--palette-text-primary) !important;
+}
+
+/* Command Prompt */
+.terminal-prompt,
+.prompt,
+#prompt {
+    color: var(--palette-primary) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+/* Command Input */
+#command-input,
+.command-input,
+input[type="text"].terminal-input {
+    border-color: var(--palette-border) !important;
+    color: var(--palette-text-primary) !important;
+}
+
+#command-input:focus,
+.command-input:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 3px var(--palette-primary-glow),
+                inset 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+}
+
+/* Terminal Lines */
+.log-success,
+.terminal-line.success,
+span[style*="color: #00ff88"],
+span[style*="color:#00ff88"] {
+    color: var(--palette-success) !important;
+}
+
+.log-info,
+.terminal-line.info,
+span[style*="color: #00d4ff"],
+span[style*="color:#00d4ff"] {
+    color: var(--palette-info) !important;
+}
+
+.log-warning,
+.terminal-line.warning,
+span[style*="color: yellow"],
+span[style*="color:#ffaa00"] {
+    color: var(--palette-warning) !important;
+}
+
+.log-error,
+.terminal-line.error,
+span[style*="color: red"],
+span[style*="color:#ff0000"] {
+    color: var(--palette-error) !important;
+}
+
+/* Buttons */
+.sidebar-button,
+.news-header-btn,
+.youtube-header-btn,
+.perps-header-btn,
+.spotify-header-btn,
+button {
+    border-color: var(--palette-border) !important;
+}
+
+.sidebar-button:hover,
+.news-header-btn:hover,
+.youtube-header-btn:hover,
+.perps-header-btn:hover,
+.spotify-header-btn:hover,
+button:hover {
+    border-color: var(--palette-border-hover) !important;
+    background: var(--palette-bg-hover) !important;
+    box-shadow: 0 0 15px var(--palette-primary-glow) !important;
+}
+
+/* Panels */
+.news-reader-panel,
+.youtube-player-panel,
+.perps-viewer-panel,
+.spotify-player-panel {
+    border-color: var(--palette-border) !important;
+}
+
+/* Panel Headers */
+.news-panel-header,
+.youtube-panel-header,
+.perps-panel-header,
+.spotify-panel-header {
+    border-bottom-color: var(--palette-border) !important;
+}
+
+.news-panel-title,
+.youtube-panel-title,
+.perps-panel-title,
+.spotify-panel-title,
+.news-panel-title svg,
+.youtube-panel-title svg,
+.perps-panel-title svg,
+.spotify-panel-title svg {
+    color: var(--palette-primary) !important;
+}
+
+/* Filter/Action Buttons */
+.news-filter-btn.active,
+.youtube-search-btn,
+.perps-header-btn,
+.sub-action-button:hover {
+    background: var(--palette-bg-overlay) !important;
+    border-color: var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Info Elements */
+.news-source,
+.youtube-channel,
+.perps-info-value,
+.spotify-track-artist {
+    color: var(--palette-primary) !important;
+}
+
+/* Success/Status Indicators */
+.news-sentiment.bullish,
+.sidebar-section-title,
+.palette-text-accent {
+    color: var(--palette-success) !important;
+}
+
+/* Borders and Dividers */
+.sidebar-section,
+.news-article,
+.youtube-search-result,
+.perps-info-bar,
+hr {
+    border-color: var(--palette-border) !important;
+}
+
+/* Gradients */
+button.sidebar-button:hover,
+.news-read-btn:hover,
+.youtube-play-btn:hover {
+    background: var(--palette-gradient) !important;
+}
+
+/* Input Fields */
+input:focus,
+textarea:focus,
+.command-input:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow) !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar-thumb {
+    background: var(--palette-primary) !important;
+    border: 2px solid transparent !important;
+    background-clip: padding-box !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--palette-primary-light) !important;
+    background-clip: padding-box !important;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 10px !important;
+}
+
+/* Loading Spinners */
+.news-spinner,
+.youtube-spinner,
+.perps-spinner,
+.spotify-spinner,
+.spinner,
+.loading-spinner {
+    border-top-color: var(--palette-primary) !important;
+    border-right-color: var(--palette-primary-dark) !important;
+    border-bottom-color: var(--palette-secondary) !important;
+}
+
+/* ============================================
+   ENHANCED TERMINAL STYLING
+   ============================================ */
+
+/* ASCII Art and Decorative Elements */
+.ascii-art,
+pre,
+code {
+    border-color: var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Dividers and Separators */
+hr,
+.divider,
+.separator,
+[style*="border-top"],
+[style*="border-bottom"] {
+    border-color: var(--palette-border) !important;
+}
+
+/* Status Badges */
+.status-connected,
+.status-online,
+.badge-success {
+    background: var(--palette-success) !important;
+    color: #000 !important;
+    box-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+.status-disconnected,
+.status-offline,
+.badge-error {
+    background: var(--palette-error) !important;
+    color: #000 !important;
+}
+
+.status-pending,
+.badge-warning {
+    background: var(--palette-warning) !important;
+    color: #000 !important;
+}
+
+/* Icons */
+.sidebar-icon,
+.panel-icon,
+svg {
+    color: var(--palette-primary) !important;
+    fill: var(--palette-primary) !important;
+}
+
+/* Hover Glow Effects */
+.sidebar-button:hover svg,
+button:hover svg {
+    filter: drop-shadow(0 0 8px var(--palette-primary-glow)) !important;
+}
+
+/* Terminal Background Accents */
+.omega-terminal::before,
+.terminal::before {
+    background: radial-gradient(
+        ellipse at top,
+        var(--palette-primary-glow) 0%,
+        transparent 50%
+    ) !important;
+}
+
+/* Section Headers */
+.sidebar-title,
+.panel-header,
+.section-title,
+h1, h2, h3, h4, h5, h6 {
+    color: var(--palette-primary) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+/* Table Elements */
+table {
+    border-color: var(--palette-border) !important;
+}
+
+th {
+    background: var(--palette-bg-overlay) !important;
+    color: var(--palette-primary) !important;
+    border-color: var(--palette-border) !important;
+}
+
+td {
+    border-color: var(--palette-border) !important;
+}
+
+tr:hover {
+    background: var(--palette-bg-hover) !important;
+}
+
+/* Form Elements */
+select,
+textarea {
+    border-color: var(--palette-border) !important;
+    color: var(--palette-text-primary) !important;
+}
+
+select:focus,
+textarea:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow) !important;
+}
+
+/* Wallet Address Display */
+.wallet-address,
+.address,
+.hash {
+    color: var(--palette-primary) !important;
+    background: var(--palette-bg-overlay) !important;
+    border: 1px solid var(--palette-border) !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+}
+
+/* Balance Display */
+.balance,
+.amount,
+.price {
+    color: var(--palette-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* Network Indicators */
+.network-indicator,
+.chain-badge {
+    background: var(--palette-bg-overlay) !important;
+    border: 1px solid var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Notification Badges */
+.notification,
+.alert,
+.badge {
+    background: var(--palette-primary) !important;
+    color: #000 !important;
+    box-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+/* Currency/Tag Pills */
+.news-currency-tag,
+.token-tag {
+    background: var(--palette-bg-overlay) !important;
+    border-color: var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Links */
+a {
+    color: var(--palette-primary) !important;
+}
+
+a:hover {
+    color: var(--palette-primary-light) !important;
+}
+
+/* Terminal Output Colors */
+.output-success,
+.log-success {
+    color: var(--palette-success) !important;
+}
+
+.output-info,
+.log-info {
+    color: var(--palette-info) !important;
+}
+
+.output-warning,
+.log-warning {
+    color: var(--palette-warning) !important;
+}
+
+.output-error,
+.log-error {
+    color: var(--palette-error) !important;
+}
+
+/* Sidebar Section Titles */
+.sidebar-title {
+    color: var(--palette-primary) !important;
+}
+
+/* Active/Selected States */
+.active,
+.selected,
+[aria-selected="true"] {
+    background: var(--palette-bg-overlay) !important;
+    border-color: var(--palette-border-hover) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Glow Effects */
+.glow,
+.highlight {
+    box-shadow: 0 0 20px var(--palette-primary-glow) !important;
+}
+
+/* Progress Bars */
+.progress-bar,
+.loading-bar {
+    background: var(--palette-gradient) !important;
+}
+
+/* Tooltips */
+[title]:hover::after,
+.tooltip {
+    background: var(--palette-primary) !important;
+    border-color: var(--palette-primary-dark) !important;
+}
+
+/* Code/Monospace Elements */
+code,
+pre,
+.code {
+    border-color: var(--palette-border) !important;
+}
+
+code:hover,
+pre:hover {
+    border-color: var(--palette-border-hover) !important;
+}
+
+/* Badges */
+.badge,
+.tag,
+.label {
+    background: var(--palette-bg-overlay) !important;
+    color: var(--palette-primary) !important;
+    border-color: var(--palette-border) !important;
+}
+
+/* Cards */
+.card,
+.panel,
+.box {
+    border-color: var(--palette-border) !important;
+}
+
+.card:hover,
+.panel:hover {
+    border-color: var(--palette-border-hover) !important;
+    box-shadow: 0 4px 12px var(--palette-primary-glow) !important;
+}
+
+/* Toggle Switches */
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--palette-gradient) !important;
+}
+
+/* Radio/Checkbox */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+    background: var(--palette-primary) !important;
+    border-color: var(--palette-primary-dark) !important;
+}
+
+/* Animations */
+@keyframes pulse-palette {
+    0%, 100% {
+        box-shadow: 0 0 0 0 var(--palette-primary-glow);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+}
+
+.pulse {
+    animation: pulse-palette 2s infinite !important;
+}
+
+/* ============================================
+   TERMINAL SPECIFIC COLOR OVERRIDES
+   ============================================ */
+
+/* Terminal Prompt */
+.terminal-prompt {
+    color: var(--palette-primary) !important;
+}
+
+/* Command Input */
+#command-input {
+    border-color: var(--palette-border) !important;
+    color: var(--palette-text-primary) !important;
+}
+
+#command-input:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow) !important;
+}
+
+/* Output Lines */
+.terminal-line.success {
+    color: var(--palette-success) !important;
+}
+
+.terminal-line.error {
+    color: var(--palette-error) !important;
+}
+
+.terminal-line.warning {
+    color: var(--palette-warning) !important;
+}
+
+.terminal-line.info {
+    color: var(--palette-info) !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Ensure colors remain visible on mobile */
+    .sidebar-button,
+    .news-article,
+    .youtube-search-result {
+        border-width: 2px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+    :root {
+        --palette-border: rgba(255, 255, 255, 0.5);
+        --palette-border-hover: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .pulse {
+        animation: none !important;
+    }
+}
+
+/* ============================================
+   COMPREHENSIVE ELEMENT COVERAGE
+   ============================================ */
+
+/* Modals and Popups */
+.modal,
+.popup,
+.dialog,
+.overlay {
+    border-color: var(--palette-border) !important;
+}
+
+.modal-header,
+.popup-header {
+    background: var(--palette-bg-overlay) !important;
+    border-bottom-color: var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Dashboard Elements */
+.omega-stats,
+.stats-panel,
+.dashboard-card {
+    border-color: var(--palette-border) !important;
+}
+
+.stat-value,
+.metric-value {
+    color: var(--palette-primary) !important;
+}
+
+/* Charts and Graphs */
+.chart-container,
+.graph-container {
+    border-color: var(--palette-border) !important;
+}
+
+/* Connection Status */
+.connection-status {
+    color: var(--palette-primary) !important;
+}
+
+.connected {
+    color: var(--palette-success) !important;
+}
+
+.disconnected {
+    color: var(--palette-error) !important;
+}
+
+/* Mining/Rewards Display */
+.mining-status,
+.reward-amount {
+    color: var(--palette-primary) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+/* Transaction Elements */
+.transaction,
+.tx-hash,
+.block-number {
+    color: var(--palette-primary) !important;
+}
+
+/* NFT Elements */
+.nft-card,
+.nft-item {
+    border-color: var(--palette-border) !important;
+}
+
+.nft-card:hover,
+.nft-item:hover {
+    border-color: var(--palette-border-hover) !important;
+    box-shadow: 0 0 20px var(--palette-primary-glow) !important;
+}
+
+/* Token Display */
+.token-symbol,
+.token-name {
+    color: var(--palette-primary) !important;
+}
+
+/* Price Display */
+.price-up,
+.positive-change {
+    color: var(--palette-success) !important;
+}
+
+.price-down,
+.negative-change {
+    color: var(--palette-error) !important;
+}
+
+/* Expandable Sections */
+.expandable-header,
+.collapsible-header {
+    border-color: var(--palette-border) !important;
+}
+
+.expand-icon,
+.collapse-icon {
+    color: var(--palette-primary) !important;
+}
+
+/* Search Results */
+.search-result,
+.result-item {
+    border-color: var(--palette-border) !important;
+}
+
+.search-result:hover,
+.result-item:hover {
+    background: var(--palette-bg-hover) !important;
+    border-color: var(--palette-border-hover) !important;
+}
+
+/* Pagination */
+.pagination button,
+.page-number {
+    border-color: var(--palette-border) !important;
+}
+
+.pagination button.active {
+    background: var(--palette-gradient) !important;
+    color: #000 !important;
+}
+
+/* Tabs */
+.tab,
+.tab-button {
+    border-color: var(--palette-border) !important;
+}
+
+.tab.active,
+.tab-button.active {
+    background: var(--palette-bg-overlay) !important;
+    border-bottom-color: var(--palette-primary) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Dropdown Menus */
+.dropdown,
+.dropdown-menu {
+    border-color: var(--palette-border) !important;
+}
+
+.dropdown-item:hover {
+    background: var(--palette-bg-hover) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Toast Notifications */
+.toast,
+.notification-toast {
+    border-color: var(--palette-border) !important;
+    box-shadow: 0 4px 12px var(--palette-primary-glow) !important;
+}
+
+/* Progress Indicators */
+.progress-bar-fill,
+.loading-bar-fill {
+    background: var(--palette-gradient) !important;
+}
+
+/* Copyable Elements */
+.copyable,
+[onclick*="clipboard"] {
+    color: var(--palette-primary) !important;
+    border-bottom: 1px dashed var(--palette-border) !important;
+}
+
+.copyable:hover {
+    color: var(--palette-primary-light) !important;
+    border-bottom-color: var(--palette-primary) !important;
+    text-shadow: 0 0 8px var(--palette-primary-glow) !important;
+}
+
+/* Connection Indicators in Header */
+.header-status,
+.status-bar {
+    color: var(--palette-primary) !important;
+}
+
+/* Game Elements */
+.game-container,
+.arcade-game {
+    border-color: var(--palette-border) !important;
+}
+
+.game-score,
+.high-score {
+    color: var(--palette-primary) !important;
+}
+
+/* Profile System */
+.profile-card,
+.user-profile {
+    border-color: var(--palette-border) !important;
+}
+
+.profile-badge {
+    background: var(--palette-gradient) !important;
+    color: #000 !important;
+}
+
+/* API Key Inputs */
+.api-key-input,
+input[placeholder*="API"],
+input[placeholder*="key"] {
+    border-color: var(--palette-border) !important;
+}
+
+.api-key-input:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow) !important;
+}
+
+/* Music/Video Players */
+.player-controls button,
+.playback-button {
+    border-color: var(--palette-border) !important;
+}
+
+.player-controls button:hover,
+.playback-button:hover {
+    background: var(--palette-bg-hover) !important;
+    border-color: var(--palette-primary) !important;
+}
+
+.now-playing,
+.current-track {
+    color: var(--palette-primary) !important;
+}
+
+/* Search Bars */
+.search-input,
+input[type="search"] {
+    border-color: var(--palette-border) !important;
+}
+
+.search-input:focus,
+input[type="search"]:focus {
+    border-color: var(--palette-primary) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow) !important;
+}
+
+/* Tooltips Enhanced */
+[data-tooltip]::after,
+.tooltip-text {
+    background: var(--palette-primary) !important;
+    color: #000 !important;
+    border: 1px solid var(--palette-primary-dark) !important;
+}
+
+/* Command History */
+.command-history-item {
+    color: var(--palette-text-secondary) !important;
+}
+
+.command-history-item:hover {
+    color: var(--palette-primary) !important;
+    background: var(--palette-bg-hover) !important;
+}
+
+/* Auto-complete Suggestions */
+.autocomplete-suggestion,
+.suggestion-item {
+    border-color: var(--palette-border) !important;
+}
+
+.autocomplete-suggestion:hover,
+.suggestion-item:hover,
+.autocomplete-suggestion.selected {
+    background: var(--palette-bg-hover) !important;
+    color: var(--palette-primary) !important;
+    border-color: var(--palette-border-hover) !important;
+}
+
+/* Checkbox and Radio Glow */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    box-shadow: 0 0 8px var(--palette-primary-glow) !important;
+}
+
+/* Slider/Range Inputs */
+input[type="range"]::-webkit-slider-thumb {
+    background: var(--palette-primary) !important;
+    box-shadow: 0 0 8px var(--palette-primary-glow) !important;
+}
+
+input[type="range"]::-webkit-slider-track {
+    background: var(--palette-bg-overlay) !important;
+}
+
+/* Window Controls */
+.window-controls button {
+    color: var(--palette-primary) !important;
+}
+
+.window-controls button:hover {
+    background: var(--palette-bg-hover) !important;
+}
+
+/* List Items */
+li,
+.list-item {
+    border-left-color: var(--palette-border) !important;
+}
+
+li:hover,
+.list-item:hover {
+    border-left-color: var(--palette-primary) !important;
+    background: var(--palette-bg-hover) !important;
+}
+
+/* Data Tables */
+.data-table th {
+    background: var(--palette-bg-overlay) !important;
+}
+
+.data-table tr:nth-child(even) {
+    background: var(--palette-bg-overlay) !important;
+}
+
+/* Inline Code */
+code {
+    background: var(--palette-bg-overlay) !important;
+    color: var(--palette-primary) !important;
+    border: 1px solid var(--palette-border) !important;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid var(--palette-primary) !important;
+    background: var(--palette-bg-overlay) !important;
+}
+
+/* Keyboard Shortcuts Display */
+kbd {
+    background: var(--palette-bg-overlay) !important;
+    border: 1px solid var(--palette-border) !important;
+    color: var(--palette-primary) !important;
+}
+
+/* Success/Error Messages in Panels */
+.success-message {
+    color: var(--palette-success) !important;
+    border-color: var(--palette-success) !important;
+}
+
+.error-message {
+    color: var(--palette-error) !important;
+    border-color: var(--palette-error) !important;
+}
+
+.info-message {
+    color: var(--palette-info) !important;
+    border-color: var(--palette-info) !important;
+}
+
+/* Accent Text Everywhere */
+.accent,
+.highlight-text,
+strong,
+b,
+.emphasized {
+    color: var(--palette-primary) !important;
+}
+
+/* All SVG Paths */
+svg path {
+    fill: currentColor !important;
+}
+
+/* Headers with Background */
+header,
+.header {
+    border-bottom-color: var(--palette-border) !important;
+}
+
+/* Footer Elements */
+footer,
+.footer {
+    border-top-color: var(--palette-border) !important;
+}
+
+.footer-link {
+    color: var(--palette-primary) !important;
+}
+
+.footer-link:hover {
+    color: var(--palette-primary-light) !important;
+}
+
+/* Loading States */
+.loading-text {
+    color: var(--palette-info) !important;
+}
+
+/* Empty States */
+.empty-state {
+    color: var(--palette-text-secondary) !important;
+}
+
+/* Quick Action Buttons */
+.quick-action,
+.action-button {
+    border-color: var(--palette-border) !important;
+}
+
+.quick-action:hover,
+.action-button:hover {
+    background: var(--palette-gradient) !important;
+    border-color: var(--palette-primary) !important;
+    color: #000 !important;
+}
+
+/* Stats Display */
+.stat-card {
+    border-color: var(--palette-border) !important;
+}
+
+.stat-label {
+    color: var(--palette-text-secondary) !important;
+}
+
+.stat-number {
+    color: var(--palette-primary) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow) !important;
+}
+
+/* All Text Links */
+a,
+.link {
+    color: var(--palette-primary) !important;
+    text-decoration: none !important;
+}
+
+a:hover,
+.link:hover {
+    color: var(--palette-primary-light) !important;
+    text-shadow: 0 0 8px var(--palette-primary-glow) !important;
+}
+
+/* Command Output Specific */
+.terminal-output .success {
+    color: var(--palette-success) !important;
+}
+
+.terminal-output .error {
+    color: var(--palette-error) !important;
+}
+
+.terminal-output .info {
+    color: var(--palette-info) !important;
+}
+
+.terminal-output .warning {
+    color: var(--palette-warning) !important;
+}
+

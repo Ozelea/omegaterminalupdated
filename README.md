@@ -53,7 +53,7 @@
 ## Quick Start
 
 ### 1. Open the Terminal
-Open `index.html` in your browser or visit the live demo at https://omeganetwork.co
+Open `terminal.html` in your browser or visit the live demo at https://omeganetwork.co
 
 ### 2. Connect a Wallet
 
@@ -158,7 +158,8 @@ help                         # View all available commands
 
 ```
 omega-terminal/
-├── index.html                          # Main terminal interface
+├── terminal.html                       # Main terminal interface
+├── index.html                          # Redirect to terminal.html
 ├── README.md                           # This file
 ├── package.json                        # NPM dependencies
 │

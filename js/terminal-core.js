@@ -448,9 +448,17 @@ class OmegaMinerTerminal {
                 case 'theme':
                     OmegaCommands.Basic.theme(this, args);
                     break;
-                            case 'gui':
-                OmegaCommands.Basic.gui(this, args);
-                break;
+                case 'color':
+                case 'palette':
+                    if (window.OmegaCommands && window.OmegaCommands.Color) {
+                        OmegaCommands.Color.color(this, args.slice(1));
+                    } else {
+                        this.log('❌ Color palette system not loaded. Please refresh.', 'error');
+                    }
+                    break;
+                case 'gui':
+                    OmegaCommands.Basic.gui(this, args);
+                    break;
             case 'ai':
                 OmegaCommands.Basic.ai(this, args);
                 break;
@@ -637,6 +645,16 @@ class OmegaMinerTerminal {
 
                 case 'eclipse':
                     await OmegaCommands.Eclipse.eclipse(this, args);
+                    break;
+                
+                case 'referral':
+                case 'refer':
+                case 'ambassador':
+                    if (window.OmegaCommands && window.OmegaCommands.Referral) {
+                        await OmegaCommands.Referral.referral(this, args);
+                    } else {
+                        this.log('❌ Referral system not loaded. Please refresh.', 'error');
+                    }
                     break;
                 case 'hyperliquid':
                     OmegaCommands.Remaining.hyperliquid(this, args);
