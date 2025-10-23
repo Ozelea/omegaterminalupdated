@@ -1,22 +1,5 @@
 {
   "version": 2,
-  "outputDirectory": ".",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/terminal.html",
-      "dest": "/terminal.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "env": {
     "CHAINGPT_API_KEY": "5e9305e6-7713-4216-9bed-e554e9bb8d08"
   }
