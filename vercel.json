@@ -14,10 +14,5 @@
   ],
   "env": {
     "CHAINGPT_API_KEY": "@chaingpt_api_key"
-  },
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
   }
 }
