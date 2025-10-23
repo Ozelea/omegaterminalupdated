@@ -11,10 +11,8 @@
     flex-direction: column;
     z-index: 10000;
     font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
-    overflow-y: auto !important;
-    overflow-x: hidden;
+    overflow: hidden;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    -webkit-overflow-scrolling: touch;
 }
 
 .omega-welcome-screen.welcome-exiting {
@@ -43,198 +41,6 @@ body.omega-initialized .omega-dashboard {
 /* Ensure terminal wrapper is visible when initialized */
 body.omega-initialized #terminal-wrapper {
     display: flex !important;
-}
-
-/* Mobile Welcome Screen Optimizations */
-@media only screen and (max-width: 768px) {
-    .omega-welcome-screen {
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        height: 100vh !important;
-        max-height: 100vh !important;
-    }
-    
-    .welcome-main-content {
-        min-height: auto !important;
-        padding: 20px 15px !important;
-        flex: 1 !important;
-        overflow-y: auto !important;
-    }
-    
-    .welcome-top-bar {
-        padding: 15px 20px !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .welcome-logo-section {
-        margin-bottom: 30px !important;
-        text-align: center !important;
-    }
-    
-    .welcome-brand-text {
-        font-size: 2.5rem !important;
-        line-height: 1.2 !important;
-    }
-    
-    .welcome-brand-subtitle {
-        font-size: 1rem !important;
-        margin-top: 5px !important;
-    }
-    
-    .welcome-tagline {
-        font-size: 0.9rem !important;
-        margin-top: 15px !important;
-        padding: 0 10px !important;
-    }
-    
-    .welcome-loading-section {
-        margin: 20px 0 !important;
-        padding: 20px 15px !important;
-    }
-    
-    .welcome-loading-spinner {
-        margin-bottom: 20px !important;
-    }
-    
-    .welcome-system-grid {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-        margin: 20px 0 !important;
-    }
-    
-    .system-status-card {
-        padding: 15px !important;
-        font-size: 0.9rem !important;
-    }
-    
-    .welcome-action-buttons {
-        flex-direction: column !important;
-        gap: 15px !important;
-        margin: 30px 0 !important;
-        padding: 0 15px !important;
-    }
-    
-    .welcome-action-btn {
-        width: 100% !important;
-        padding: 15px 20px !important;
-        font-size: 1rem !important;
-        min-height: 50px !important;
-    }
-    
-    .welcome-footer {
-        padding: 20px 15px !important;
-        margin-top: auto !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .welcome-footer-text {
-        font-size: 0.8rem !important;
-        text-align: center !important;
-    }
-    
-    /* Ensure content is not cut off */
-    .welcome-main-content > * {
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    /* Add padding for safe areas on iPhone */
-    .omega-welcome-screen {
-        padding-top: env(safe-area-inset-top, 0px) !important;
-        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
-        padding-left: env(safe-area-inset-left, 0px) !important;
-        padding-right: env(safe-area-inset-right, 0px) !important;
-    }
-}
-
-/* iPhone specific fixes */
-@media only screen and (max-width: 480px) {
-    .welcome-brand-text {
-        font-size: 2rem !important;
-    }
-    
-    .welcome-brand-subtitle {
-        font-size: 0.9rem !important;
-    }
-    
-    .welcome-tagline {
-        font-size: 0.8rem !important;
-    }
-    
-    .welcome-loading-section {
-        padding: 15px 10px !important;
-    }
-    
-    .welcome-action-btn {
-        padding: 12px 16px !important;
-        font-size: 0.9rem !important;
-    }
-    
-    .system-status-card {
-        padding: 12px !important;
-        font-size: 0.8rem !important;
-    }
-}
-
-/* Mobile Skip Button Styling */
-#mobile-skip-welcome {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    z-index: 10001 !important;
-    background: rgba(0, 255, 0, 0.2) !important;
-    border: 1px solid #00ff00 !important;
-    color: #00ff00 !important;
-    padding: 10px 15px !important;
-    border-radius: 5px !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    min-height: 44px !important;
-    min-width: 44px !important;
-}
-
-#mobile-skip-welcome:hover {
-    background: rgba(0, 255, 0, 0.3) !important;
-}
-
-#mobile-skip-welcome:active {
-    background: rgba(0, 255, 0, 0.4) !important;
-    transform: scale(0.95) !important;
-}
-
-/* Ensure welcome screen content is accessible */
-.mobile-welcome-screen .welcome-main-content {
-    padding-bottom: 100px !important; /* Space for skip button */
-}
-
-/* Fix for iOS Safari viewport issues */
-@supports (-webkit-touch-callout: none) {
-    .omega-welcome-screen {
-        height: -webkit-fill-available !important;
-        min-height: -webkit-fill-available !important;
-    }
-}
-
-/* Hide Dashboard option on mobile devices */
-@media only screen and (max-width: 768px) {
-    .desktop-only-option {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    /* Center the Basic Terminal option when Dashboard is hidden */
-    .interface-options {
-        justify-content: center !important;
-    }
-    
-    .interface-option {
-        max-width: 300px !important;
-        width: 100% !important;
-    }
 }
 
 /* Animated Background Grid */
@@ -803,5 +609,23 @@ body.omega-initialized #terminal-wrapper {
     
     .welcome-system-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Hide Dashboard option on mobile devices */
+@media only screen and (max-width: 768px) {
+    .desktop-only-option {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* Center the Basic Terminal option when Dashboard is hidden */
+    .interface-options {
+        justify-content: center !important;
+    }
+    
+    .interface-option {
+        max-width: 300px !important;
+        width: 100% !important;
     }
 }
