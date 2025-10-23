@@ -482,6 +482,90 @@
                             <span>→ ❓ NEAR Help</span>
                         </button>
                     </div>
+                    <!-- ROME Network Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'rome')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>ROME Network</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="rome" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome help')">
+                            <span>→ ❓ ROME Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome token create')">
+                            <span>→ 🪙 Create Token</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome network status')">
+                            <span>→ 📊 Network Status</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome validators')">
+                            <span>→ ✅ Validators</span>
+                        </button>
+                    </div>
+                    <!-- FAIR Blockchain Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'fair')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>FAIR Blockchain</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="fair" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair help')">
+                            <span>→ ❓ FAIR Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair generate')">
+                            <span>→ 🔑 Generate Wallet</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair connect')">
+                            <span>→ 🔗 Connect MetaMask</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair network')">
+                            <span>→ 🌐 Network Info</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                    </div>
+                    <!-- MONAD Network Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'monad')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>MONAD Network</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="monad" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad help')">
+                            <span>→ ❓ MONAD Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad connect')">
+                            <span>→ 🔗 Connect Wallet</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad network')">
+                            <span>→ 🌐 Network Info</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad validators')">
+                            <span>→ ✅ Validators</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad staking')">
+                            <span>→ 🏦 Staking</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad governance')">
+                            <span>→ 🗳️ Governance</span>
+                        </button>
+                    </div>
                     </div>
                 </div>
                 

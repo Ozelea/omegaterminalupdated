@@ -9280,6 +9280,9 @@
             case "rome":
               this.handleRomeCommand(args);
               break;
+            case "monad":
+              this.handleMonadCommand(args);
+              break;
             case "kalshi":
               await this.handleKalshiCommand(args);
               break;
@@ -21283,6 +21286,89 @@
             default:
               this.log(`Unknown Rome command: ${subcommand}`, "error");
               this.log('Type "rome help" for available commands', "info");
+          }
+        }
+
+        async handleMonadCommand(args) {
+          if (!args || args.length < 2) {
+            this.log("🔷 MONAD NETWORK COMMANDS", "info");
+            this.log("═══════════════════════════", "info");
+            this.log("", "info");
+            this.log("📋 AVAILABLE COMMANDS:", "info");
+            this.log("  monad connect     Connect to MONAD Network", "output");
+            this.log("  monad balance     Check MONAD Network balance", "output");
+            this.log("  monad network     Show MONAD Network information", "output");
+            this.log("  monad validators  View MONAD validators", "output");
+            this.log("  monad transactions View transaction history", "output");
+            this.log("  monad staking     MONAD staking operations", "output");
+            this.log("  monad governance  MONAD governance features", "output");
+            this.log("  monad help        Show this help message", "output");
+            this.log("", "info");
+            this.log("💡 MONAD is a high-performance EVM-compatible blockchain", "info");
+            this.log("   with advanced consensus and parallel execution", "info");
+            return;
+          }
+
+          const subcommand = args[1].toLowerCase();
+
+          switch (subcommand) {
+            case "connect":
+              this.log("🔷 Connecting to MONAD Network...", "info");
+              this.log("MONAD Network connection coming soon!", "info");
+              this.log("This will connect your wallet to the MONAD blockchain", "output");
+              break;
+
+            case "balance":
+              this.log("💰 Checking MONAD balance...", "info");
+              this.log("MONAD balance checking coming soon!", "info");
+              this.log("This will show your MONAD token balance", "output");
+              break;
+
+            case "network":
+              this.log("🌐 MONAD Network Information", "info");
+              this.log("════════════════════════════", "info");
+              this.log("", "info");
+              this.log("🔷 Network: MONAD", "output");
+              this.log("⚡ Consensus: MonadBFT", "output");
+              this.log("🚀 Parallel Execution: Yes", "output");
+              this.log("🔗 EVM Compatible: Yes", "output");
+              this.log("⛽ Gas Model: EIP-1559", "output");
+              this.log("", "info");
+              this.log("MONAD is a high-performance EVM-compatible blockchain", "info");
+              this.log("featuring parallel execution and advanced consensus", "info");
+              break;
+
+            case "validators":
+              this.log("✅ MONAD Validators", "info");
+              this.log("MONAD validator information coming soon!", "info");
+              this.log("This will show active validators and their status", "output");
+              break;
+
+            case "transactions":
+              this.log("📋 MONAD Transaction History", "info");
+              this.log("MONAD transaction history coming soon!", "info");
+              this.log("This will show your transaction history on MONAD", "output");
+              break;
+
+            case "staking":
+              this.log("🏦 MONAD Staking", "info");
+              this.log("MONAD staking features coming soon!", "info");
+              this.log("This will allow you to stake MONAD tokens", "output");
+              break;
+
+            case "governance":
+              this.log("🗳️ MONAD Governance", "info");
+              this.log("MONAD governance features coming soon!", "info");
+              this.log("This will show governance proposals and voting", "output");
+              break;
+
+            case "help":
+              this.handleMonadCommand(["monad"]);
+              break;
+
+            default:
+              this.log(`Unknown MONAD command: ${subcommand}`, "error");
+              this.log('Type "monad help" for available commands', "info");
           }
         }
 
