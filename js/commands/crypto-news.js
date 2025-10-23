@@ -406,8 +406,8 @@ const CryptoNewsCommands = {
         const filter = args[0] === 'hot' ? 'hot' : 'latest';
         const title = filter === 'hot' ? 'Trending Crypto News' : 'Latest Crypto News';
 
-        terminal.log(`📰 Fetching ${filter} crypto news from multiple sources...`, 'info');
-        terminal.log('🔄 Connecting to OMEGA Crypto News Network...', 'info');
+        terminal.log(`Fetching ${filter} crypto news from multiple sources...`, 'info');
+        terminal.log('Connecting to OMEGA Crypto News Network...', 'info');
         terminal.log('');
 
         try {
@@ -419,8 +419,8 @@ const CryptoNewsCommands = {
 
             this.displayNews(terminal, articles, `${title} (${articles.length} articles)`);
         } catch (error) {
-            terminal.log(`❌ Failed to fetch news: ${error.message}`, 'error');
-            terminal.log('💡 Try again in a moment or check your internet connection', 'info');
+            terminal.log(`[!] Failed to fetch news: ${error.message}`, 'error');
+            terminal.log('Try again in a moment or check your internet connection', 'info');
         }
     },
 
@@ -430,13 +430,13 @@ const CryptoNewsCommands = {
     handleSearch: async function(terminal, args) {
         const query = args.join(' ');
         if (!query.trim()) {
-            terminal.log('❌ Usage: news search "<query>"', 'error');
-            terminal.log('💡 Example: news search "bitcoin etf"', 'info');
+            terminal.log('[!] Usage: news search "<query>"', 'error');
+            terminal.log('Example: news search "bitcoin etf"', 'info');
             return;
         }
 
-        terminal.log(`🔍 Searching crypto news for: "${query}"`, 'info');
-        terminal.log('🔄 Scanning multiple news sources...', 'info');
+        terminal.log(`Searching crypto news for: "${query}"`, 'info');
+        terminal.log('Scanning multiple news sources...', 'info');
         terminal.log('');
 
         try {
@@ -449,8 +449,8 @@ const CryptoNewsCommands = {
 
             this.displayNews(terminal, filtered.slice(0, 15), `Search Results for "${query}" (${filtered.length} articles)`);
         } catch (error) {
-            terminal.log(`❌ Search failed: ${error.message}`, 'error');
-            terminal.log('💡 Try a different search term or check your connection', 'info');
+            terminal.log(`[!] Search failed: ${error.message}`, 'error');
+            terminal.log('Try a different search term or check your connection', 'info');
         }
     },
 
@@ -461,8 +461,8 @@ const CryptoNewsCommands = {
         const crypto = args[0].toUpperCase();
         const limit = this.parseLimit(args) || 10;
 
-        terminal.log(`🪙 Fetching ${crypto} news from crypto sources...`, 'info');
-        terminal.log(`🔄 Filtering for ${crypto} related content...`, 'info');
+        terminal.log(`Fetching ${crypto} news from crypto sources...`, 'info');
+        terminal.log(`Filtering for ${crypto} related content...`, 'info');
         terminal.log('');
 
         try {
@@ -474,8 +474,8 @@ const CryptoNewsCommands = {
 
             this.displayNews(terminal, articles, `${crypto} News (${articles.length} articles)`);
         } catch (error) {
-            terminal.log(`❌ Failed to fetch ${crypto} news: ${error.message}`, 'error');
-            terminal.log('💡 Try a different crypto symbol or check your connection', 'info');
+            terminal.log(`[!] Failed to fetch ${crypto} news: ${error.message}`, 'error');
+            terminal.log('Try a different crypto symbol or check your connection', 'info');
         }
     },
 
@@ -512,41 +512,41 @@ const CryptoNewsCommands = {
      * Show available sources
      */
     handleSources: function(terminal) {
-        terminal.log('📡 OMEGA CRYPTO NEWS NETWORK', 'success');
+        terminal.log('OMEGA CRYPTO NEWS NETWORK', 'success');
         terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
         terminal.log('');
-        terminal.log('🔥 PRIMARY SOURCES:', 'info');
+        terminal.log('PRIMARY SOURCES:', 'info');
         terminal.log('  [1] CryptoPanic     - Premium crypto news aggregation', 'output');
         terminal.log('  [2] CryptoCompare   - Free crypto news API (no key required)', 'output');
         terminal.log('  [3] NewsAPI         - General news with crypto filtering', 'output');
         terminal.log('  [4] Mock Data       - Development fallback system', 'output');
         terminal.log('');
-        terminal.log('⚡ SYSTEM FEATURES:', 'info');
+        terminal.log('SYSTEM FEATURES:', 'info');
         terminal.log('  • Real-time news updates with sentiment analysis', 'output');
         terminal.log('  • Multi-source aggregation with intelligent fallback', 'output');
         terminal.log('  • Professional terminal formatting', 'output');
         terminal.log('  • Smart filtering by crypto, category, and keywords', 'output');
         terminal.log('  • Rate limit management and error recovery', 'output');
         terminal.log('');
-        terminal.log('🎯 API RATE LIMITS:', 'info');
+        terminal.log('API RATE LIMITS:', 'info');
         terminal.log('  • CryptoPanic:     100 requests/hour (free tier)', 'output');
         terminal.log('  • CryptoCompare:   100,000 requests/month (free)', 'output');
         terminal.log('  • NewsAPI:         1,000 requests/day (free tier)', 'output');
         terminal.log('');
-        terminal.log('🔄 FALLBACK ORDER:', 'info');
+        terminal.log('FALLBACK ORDER:', 'info');
         terminal.log('  CryptoPanic → CryptoCompare → NewsAPI → Mock Data', 'output');
         terminal.log('');
-        terminal.log('💡 TIP: System automatically switches sources for maximum uptime', 'info');
+        terminal.log('TIP: System automatically switches sources for maximum uptime', 'info');
     },
 
     /**
      * Expand all articles
      */
     handleExpandAll: function(terminal) {
-        terminal.log('📖 Expanding all articles...', 'info');
+        terminal.log('Expanding all articles...', 'info');
         
         if (!this.articleData) {
-            terminal.log('❌ No articles to expand. Load news first with "news latest"', 'error');
+            terminal.log('[!] No articles to expand. Load news first with "news latest"', 'error');
             return;
         }
 
@@ -561,9 +561,9 @@ const CryptoNewsCommands = {
         });
 
         if (expandedCount > 0) {
-            terminal.log(`✅ Expanded ${expandedCount} articles`, 'success');
+            terminal.log(`[+] Expanded ${expandedCount} articles`, 'success');
         } else {
-            terminal.log('ℹ️ All articles are already expanded', 'info');
+            terminal.log('All articles are already expanded', 'info');
         }
     },
 
@@ -571,10 +571,10 @@ const CryptoNewsCommands = {
      * Collapse all articles
      */
     handleCollapseAll: function(terminal) {
-        terminal.log('📖 Collapsing all articles...', 'info');
+        terminal.log('Collapsing all articles...', 'info');
         
         if (!this.articleData) {
-            terminal.log('ℹ️ No articles loaded', 'info');
+            terminal.log('No articles loaded', 'info');
             return;
         }
 
@@ -589,9 +589,9 @@ const CryptoNewsCommands = {
         });
 
         if (collapsedCount > 0) {
-            terminal.log(`✅ Collapsed ${collapsedCount} articles`, 'success');
+            terminal.log(`[-] Collapsed ${collapsedCount} articles`, 'success');
         } else {
-            terminal.log('ℹ️ No articles are currently expanded', 'info');
+            terminal.log('No articles are currently expanded', 'info');
         }
     },
 
@@ -603,7 +603,7 @@ const CryptoNewsCommands = {
         console.log('[DEBUG] Looking for expansion marker: [EXPANDED-' + articleId + ']');
         
         if (!this.articleData || !this.articleData[articleId]) {
-            terminal.log('❌ Article not found or not loaded', 'error');
+            terminal.log('[!] Article not found or not loaded', 'error');
             return;
         }
 
@@ -611,7 +611,7 @@ const CryptoNewsCommands = {
         const terminalOutput = document.getElementById('terminalContent');
         
         if (!terminalOutput) {
-            terminal.log('❌ Terminal output not found', 'error');
+            terminal.log('[!] Terminal output not found', 'error');
             return;
         }
 
@@ -621,21 +621,21 @@ const CryptoNewsCommands = {
         console.log('[DEBUG] Terminal text length:', terminalText.length);
         
         if (!terminalText.includes(expansionMarker)) {
-            terminal.log('❌ Article is not currently expanded', 'error');
-            terminal.log('💡 Try "news clear-expansions" to clear all expansions', 'info');
+            terminal.log('[!] Article is not currently expanded', 'error');
+            terminal.log('Try "news clear-expansions" to clear all expansions', 'info');
             return;
         }
 
-        terminal.log('📖 Collapsing article...', 'info');
+        terminal.log('Collapsing article...', 'info');
         this.collapseArticle(articleId);
-        terminal.log('✅ Article collapsed successfully', 'success');
+        terminal.log('[+] Article collapsed successfully', 'success');
     },
 
     /**
      * Clear all expansions by clearing terminal and reloading news
      */
     handleClearExpansions: function(terminal) {
-        terminal.log('🧹 Clearing all expansions...', 'info');
+        terminal.log('Clearing all expansions...', 'info');
         
         // Clear the terminal
         const terminalOutput = document.getElementById('terminalContent');
@@ -645,7 +645,7 @@ const CryptoNewsCommands = {
         
         // Reload the last news command if we have article data
         if (this.articleData && Object.keys(this.articleData).length > 0) {
-            terminal.log('📰 Reloading news without expansions...', 'info');
+            terminal.log('Reloading news without expansions...', 'info');
             
             // Get the first article to determine the source
             const firstArticleId = Object.keys(this.articleData)[0];
@@ -661,8 +661,8 @@ const CryptoNewsCommands = {
                 domain: new URL(data.url).hostname,
                 kind: 'news',
                 votes: data.votes ? {
-                    positive: parseInt(data.votes.match(/👍(\d+)/)?.[1] || '0'),
-                    negative: parseInt(data.votes.match(/👎(\d+)/)?.[1] || '0'),
+                    positive: parseInt(data.votes.match(/Positive: (\d+)/)?.[1] || '0'),
+                    negative: parseInt(data.votes.match(/Negative: (\d+)/)?.[1] || '0'),
                     important: 0,
                     liked: 0,
                     disliked: 0,
@@ -679,7 +679,7 @@ const CryptoNewsCommands = {
             
             this.displayNews(terminal, articles, `Latest Crypto News (${articles.length} articles) - Clean View`);
         } else {
-            terminal.log('ℹ️ No articles loaded. Use "news latest" to load news.', 'info');
+            terminal.log('No articles loaded. Use "news latest" to load news.', 'info');
         }
     },
 
@@ -687,7 +687,7 @@ const CryptoNewsCommands = {
      * Clear terminal completely
      */
     handleClearTerminal: function(terminal) {
-        terminal.log('🧹 Clearing terminal completely...', 'info');
+        terminal.log('Clearing terminal completely...', 'info');
         
         // Clear the terminal
         const terminalOutput = document.getElementById('terminalContent');
@@ -695,15 +695,15 @@ const CryptoNewsCommands = {
             terminalOutput.innerHTML = '';
         }
         
-        terminal.log('✅ Terminal cleared successfully', 'success');
-        terminal.log('💡 Use "news latest" to reload news', 'info');
+        terminal.log('[+] Terminal cleared successfully', 'success');
+        terminal.log('Use "news latest" to reload news', 'info');
     },
 
     /**
      * Show clean view (reload news without expansions)
      */
     handleCleanView: function(terminal) {
-        terminal.log('🧹 Loading clean news view...', 'info');
+        terminal.log('Loading clean news view...', 'info');
         
         // Clear the terminal
         const terminalOutput = document.getElementById('terminalContent');
@@ -716,7 +716,7 @@ const CryptoNewsCommands = {
             const articles = Object.values(this.articleData);
             this.displayNews(terminal, articles, `Latest Crypto News (${articles.length} articles) - Clean View`);
         } else {
-            terminal.log('ℹ️ No articles loaded. Use "news latest" to load news.', 'info');
+            terminal.log('No articles loaded. Use "news latest" to load news.', 'info');
         }
     },
 
@@ -724,56 +724,56 @@ const CryptoNewsCommands = {
      * Test the expansion system
      */
     handleTest: function(terminal) {
-        terminal.log('🧪 Testing news expansion system...', 'info');
+        terminal.log('Testing news expansion system...', 'info');
         terminal.log('', 'output');
         
         // Test if the system is properly loaded
-        terminal.log('✅ CryptoNewsCommands loaded:', !!window.CryptoNewsCommands, 'info');
-        terminal.log('✅ toggleArticleExpansion function:', !!(window.CryptoNewsCommands && window.CryptoNewsCommands.toggleArticleExpansion), 'info');
-        terminal.log('✅ Article data storage:', !!(window.CryptoNewsCommands && window.CryptoNewsCommands.articleData), 'info');
+        terminal.log('[+] CryptoNewsCommands loaded:', !!window.CryptoNewsCommands, 'info');
+        terminal.log('[+] toggleArticleExpansion function:', !!(window.CryptoNewsCommands && window.CryptoNewsCommands.toggleArticleExpansion), 'info');
+        terminal.log('[+] Article data storage:', !!(window.CryptoNewsCommands && window.CryptoNewsCommands.articleData), 'info');
         
         if (window.CryptoNewsCommands && window.CryptoNewsCommands.articleData) {
             const articleCount = Object.keys(window.CryptoNewsCommands.articleData).length;
-            terminal.log(`✅ Articles in storage: ${articleCount}`, 'info');
+            terminal.log(`[+] Articles in storage: ${articleCount}`, 'info');
             if (articleCount > 0) {
-                terminal.log('📋 Available article IDs:', 'info');
+                terminal.log('Available article IDs:', 'info');
                 Object.keys(window.CryptoNewsCommands.articleData).forEach(id => {
                     const article = window.CryptoNewsCommands.articleData[id];
                     terminal.log(`   • ${id}: ${article.title}`, 'output');
                 });
             }
         } else {
-            terminal.log('❌ No articles loaded. Run "news latest" first.', 'error');
+            terminal.log('[!] No articles loaded. Run "news latest" first.', 'error');
         }
         
         terminal.log('', 'output');
-        terminal.log('💡 Run "news latest" to load articles, then click "📖 Read More" buttons', 'info');
+        terminal.log('Run "news latest" to load articles, then click "[+] Read Full Article" buttons', 'info');
     },
 
     /**
      * Show help
      */
     handleHelp: function(terminal) {
-        terminal.log('📰 OMEGA CRYPTO NEWS SYSTEM', 'success');
+        terminal.log('OMEGA CRYPTO NEWS SYSTEM', 'success');
         terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
         terminal.log('');
-        terminal.log('🔧 BASIC COMMANDS:', 'info');
+        terminal.log('BASIC COMMANDS:', 'info');
         terminal.log('  news latest [limit]            Show latest crypto news', 'output');
         terminal.log('  news hot [limit]               Show trending/hot news', 'output');
         terminal.log('  news search "<query>"          Search for specific topics', 'output');
         terminal.log('');
-        terminal.log('🪙 CRYPTO-SPECIFIC NEWS:', 'info');
+        terminal.log('CRYPTO-SPECIFIC NEWS:', 'info');
         terminal.log('  news btc [limit]               Bitcoin news', 'output');
         terminal.log('  news eth [limit]               Ethereum news', 'output');
         terminal.log('  news sol [limit]               Solana news', 'output');
         terminal.log('  news crypto <symbol> [limit]   Any crypto news', 'output');
         terminal.log('');
-        terminal.log('📂 CATEGORY FILTERING:', 'info');
+        terminal.log('CATEGORY FILTERING:', 'info');
         terminal.log('  news category news [limit]     News articles', 'output');
         terminal.log('  news category media [limit]    Media coverage', 'output');
         terminal.log('  news category blog [limit]     Blog posts', 'output');
         terminal.log('');
-        terminal.log('⚙️ SYSTEM INFORMATION:', 'info');
+        terminal.log('SYSTEM INFORMATION:', 'info');
         terminal.log('  news sources                   Show available sources', 'output');
         terminal.log('  news expand-all                Expand all articles in terminal', 'output');
         terminal.log('  news collapse-all              Collapse all expanded articles', 'output');
@@ -781,13 +781,13 @@ const CryptoNewsCommands = {
         terminal.log('  news test                      Test expansion system', 'output');
         terminal.log('  news help                      Show this help', 'output');
         terminal.log('');
-        terminal.log('⚡ QUICK EXAMPLES:', 'info');
+        terminal.log('QUICK EXAMPLES:', 'info');
         terminal.log('  news latest 20                 Latest 20 articles', 'output');
         terminal.log('  news search "bitcoin etf"      Search for Bitcoin ETF news', 'output');
         terminal.log('  news btc 5                     Top 5 Bitcoin news', 'output');
         terminal.log('  news category news 10          Top 10 news articles', 'output');
         terminal.log('');
-        terminal.log('🎯 SYSTEM FEATURES:', 'info');
+        terminal.log('SYSTEM FEATURES:', 'info');
         terminal.log('  • Multi-source aggregation (CryptoPanic, CryptoCompare, NewsAPI)', 'output');
         terminal.log('  • Real-time sentiment analysis with visual indicators', 'output');
         terminal.log('  • Automatic fallback system for 99.9% uptime', 'output');
@@ -795,8 +795,8 @@ const CryptoNewsCommands = {
         terminal.log('  • Smart filtering and full-text search', 'output');
         terminal.log('  • Rate limit management and error recovery', 'output');
         terminal.log('');
-        terminal.log('💡 TIP: Click article titles or URLs to open in new tab!', 'info');
-        terminal.log('💡 TIP: Use quick actions in the futuristic dashboard for one-click access!', 'info');
+        terminal.log('TIP: Click article titles or [LINK] to open in new tab!', 'info');
+        terminal.log('TIP: Use quick actions in the futuristic dashboard for one-click access!', 'info');
     },
 
     /**
@@ -813,48 +813,67 @@ const CryptoNewsCommands = {
     },
 
     /**
-     * Display news articles in clean terminal format with expand/collapse
+     * Display news articles in structured appendix format
      */
     displayNews: function(terminal, articles, title) {
         if (articles.length === 0) {
-            terminal.log('❌ No news articles found', 'error');
+            terminal.log('[!] No news articles found', 'error');
             return;
         }
 
         // Header with timestamp
         const timestamp = new Date().toLocaleString();
-        terminal.log(`📰 ${title}`, 'success');
-        terminal.log(`🕐 Last Updated: ${timestamp}`, 'info');
+        terminal.log(`NEWS APPENDIX: ${title}`, 'success');
+        terminal.log(`Last Updated: ${timestamp}`, 'info');
         terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
         terminal.log('');
 
+        // Table of Contents
+        terminal.log('TABLE OF CONTENTS', 'info');
+        terminal.log('────────────────────────────────────────────────────────', 'output');
         articles.forEach((article, index) => {
-            const sentimentEmoji = CryptoNews.getSentimentEmoji(article.sentiment);
+            const articleNumber = String(index + 1).padStart(2, '0');
+            const shortTitle = article.title.length > 60 ? article.title.substring(0, 60) + '...' : article.title;
+            terminal.log(`[${articleNumber}] ${shortTitle}`, 'output');
+        });
+        terminal.log('');
+
+        // Articles Section
+        terminal.log('ARTICLES', 'info');
+        terminal.log('────────────────────────────────────────────────────────', 'output');
+        terminal.log('');
+
+        articles.forEach((article, index) => {
             const timeAgo = CryptoNews.formatTimeAgo(article.published_at);
             const currencies = article.currencies.length > 0 ? article.currencies.join(', ') : 'General';
-            const votes = article.votes ? `👍${article.votes.positive || 0} 👎${article.votes.negative || 0}` : '';
-            const important = article.votes && article.votes.important > 0 ? '🔥 ' : '';
+            const votes = article.votes ? `Positive: ${article.votes.positive || 0} | Negative: ${article.votes.negative || 0}` : '';
+            const important = article.votes && article.votes.important > 0 ? '[IMPORTANT] ' : '';
             const articleId = `news-article-${Date.now()}-${index}`;
+            const articleNumber = String(index + 1).padStart(2, '0');
             
-            // Professional news format with clickable title
-            const clickableTitle = `<a href="${article.url}" target="_blank" style="color: #ffffff; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#00D4FF'" onmouseout="this.style.color='#ffffff'">${article.title}</a>`;
-            terminal.logHtml(`<div data-article-id="${articleId}">${important}[${String(index + 1).padStart(2, '0')}] ${sentimentEmoji} ${clickableTitle}</div>`, 'output');
-            terminal.log(`    📡 ${article.source} • ⏰ ${timeAgo} • 💰 ${currencies}`, 'info');
+            // Article header with number and title
+            const clickableTitle = `<a href="${article.url}" target="_blank" style="color: #00D4FF; text-decoration: none; cursor: pointer; font-weight: bold;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#00D4FF'">${article.title}</a>`;
+            terminal.logHtml(`<div data-article-id="${articleId}">[${articleNumber}] ${important}${clickableTitle}</div>`, 'output');
+            
+            // Article metadata
+            terminal.log(`    Source: ${article.source}`, 'info');
+            terminal.log(`    Published: ${timeAgo}`, 'info');
+            terminal.log(`    Currencies: ${currencies}`, 'info');
             
             if (article.description) {
                 // Smart text wrapping for terminal
-                const maxLength = 75;
+                const maxLength = 80;
                 const isLongDescription = article.description.length > maxLength;
                 const shortDescription = isLongDescription 
                     ? article.description.substring(0, maxLength) + '...'
                     : article.description;
                 
-                terminal.log(`    📝 ${shortDescription}`, 'output');
+                terminal.log(`    Summary: ${shortDescription}`, 'output');
                 
                 // Add expand/collapse functionality for long descriptions
                 if (isLongDescription) {
                     console.log('[DEBUG] Creating expand button for article:', article.title);
-                    const expandButton = `<button onclick="window.CryptoNewsCommands.toggleArticleExpansion('${articleId}')" style="background: linear-gradient(135deg, #007BFF, #00D4FF); color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; margin-left: 8px; font-weight: bold;">📖 Read More</button>`;
+                    const expandButton = `<button onclick="window.CryptoNewsCommands.toggleArticleExpansion('${articleId}')" style="background: linear-gradient(135deg, #007BFF, #00D4FF); color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; margin-left: 8px; font-weight: bold;">[+] Read Full Article</button>`;
                     terminal.logHtml(`    ${expandButton}`, 'info');
                     
                     // Store full article data for expansion
@@ -867,7 +886,7 @@ const CryptoNewsCommands = {
                         currencies: currencies,
                         votes: votes,
                         url: article.url,
-                        sentimentEmoji: sentimentEmoji,
+                        sentimentEmoji: '',
                         important: important,
                         index: index + 1
                     };
@@ -876,19 +895,19 @@ const CryptoNewsCommands = {
             }
             
             if (votes) {
-                terminal.log(`    📊 ${votes}`, 'info');
+                terminal.log(`    Votes: ${votes}`, 'info');
             }
             
             // Clickable URL display
             const domain = new URL(article.url).hostname;
-            const clickableUrl = `<a href="${article.url}" target="_blank" style="color: #00D4FF; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#00D4FF'">🔗 ${domain}</a>`;
+            const clickableUrl = `<a href="${article.url}" target="_blank" style="color: #ffffff; text-decoration: underline; cursor: pointer;" onmouseover="this.style.color='#00D4FF'" onmouseout="this.style.color='#ffffff'">[LINK] ${domain}</a>`;
             terminal.logHtml(`    ${clickableUrl}`, 'info');
             terminal.log('');
         });
 
         terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
-        terminal.log(`📊 ${articles.length} articles loaded • 💡 Use "news help" for more commands`, 'info');
-        terminal.log(`🔗 Click titles or URLs to open articles • 📖 Click "Read More" to expand in terminal`, 'info');
+        terminal.log(`Total Articles: ${articles.length} | Use "news help" for more commands`, 'info');
+        terminal.log('Click article titles or [LINK] to open articles | Click [+] to expand full content', 'info');
     },
 
     /**
@@ -919,19 +938,19 @@ const CryptoNewsCommands = {
             // Create expansion content as terminal text
             const expansionContent = `
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📖 FULL ARTICLE CONTENT ${expansionMarker}
+FULL ARTICLE CONTENT ${expansionMarker}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ${articleData.title}
 
 ${articleData.fullDescription}
 
-📡 Source: ${articleData.source}
-⏰ Published: ${articleData.timeAgo}
-💰 Currencies: ${articleData.currencies}
-${articleData.votes ? `📊 Votes: ${articleData.votes}` : ''}
+Source: ${articleData.source}
+Published: ${articleData.timeAgo}
+Currencies: ${articleData.currencies}
+${articleData.votes ? `Votes: ${articleData.votes}` : ''}
 
-🔗 Full Article: ${articleData.url}
+Full Article: ${articleData.url}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `;
@@ -940,7 +959,7 @@ ${articleData.votes ? `📊 Votes: ${articleData.votes}` : ''}
             window.terminal.log(expansionContent, 'output');
             
             // Add a collapse button that uses terminal command
-            const collapseButton = `<button onclick="window.terminal.executeCommand('news collapse-article ${articleId}')" style="background: #ff4444; color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; margin: 8px 0;">✕ Collapse Article</button>`;
+            const collapseButton = `<button onclick="window.terminal.executeCommand('news collapse-article ${articleId}')" style="background: #ff4444; color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; margin: 8px 0;">[-] Collapse Article</button>`;
             window.terminal.logHtml(collapseButton, 'info');
             
             console.log('[DEBUG] Article expanded successfully');

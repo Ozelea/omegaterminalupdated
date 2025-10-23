@@ -1,0 +1,109 @@
+/**
+ * Modern UI Command Input - Direct Fix
+ * Comprehensive solution for modern UI command input text styling
+ */
+
+/* ============================================
+   MODERN UI COMMAND INPUT - DIRECT FIX
+   ============================================ */
+
+/* Force white text for modern UI - Maximum specificity */
+body.modern-ui-futuristic .terminal-input-section input[type="text"],
+body.modern-ui-futuristic .terminal-input-section .input-field,
+body.modern-ui-futuristic .terminal-input-section #commandInput,
+body.modern-ui-futuristic .input-line input[type="text"],
+body.modern-ui-futuristic .input-line .input-field,
+body.modern-ui-futuristic .input-line #commandInput {
+    color: #ffffff !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    font-smooth: always !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    caret-color: #00d4ff !important;
+}
+
+/* Override any inline styles */
+body.modern-ui-futuristic input[style*="color"],
+body.modern-ui-futuristic .input-field[style*="color"],
+body.modern-ui-futuristic #commandInput[style*="color"] {
+    color: #ffffff !important;
+}
+
+/* Force placeholder color */
+body.modern-ui-futuristic .terminal-input-section input::placeholder,
+body.modern-ui-futuristic .terminal-input-section .input-field::placeholder,
+body.modern-ui-futuristic .terminal-input-section #commandInput::placeholder,
+body.modern-ui-futuristic .input-line input::placeholder,
+body.modern-ui-futuristic .input-line .input-field::placeholder,
+body.modern-ui-futuristic .input-line #commandInput::placeholder {
+    color: #ffffff !important;
+    opacity: 0.8 !important;
+}
+
+/* Force prompt color */
+body.modern-ui-futuristic .terminal-input-section .input-prompt,
+body.modern-ui-futuristic .input-line .input-prompt {
+    color: #00d4ff !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 600 !important;
+}
+
+/* Force input section styling */
+body.modern-ui-futuristic .terminal-input-section {
+    padding: 16px 24px !important;
+    background: transparent !important;
+    border-top: 1px solid #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+body.modern-ui-futuristic .input-line {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+/* Override any conflicting styles from other CSS files */
+body.modern-ui-futuristic .terminal-input-section *,
+body.modern-ui-futuristic .input-line * {
+    font-family: 'Courier New', monospace !important;
+}
+
+/* Ensure proper cursor visibility */
+body.modern-ui-futuristic .terminal-input-section input,
+body.modern-ui-futuristic .terminal-input-section .input-field,
+body.modern-ui-futuristic .terminal-input-section #commandInput {
+    caret-shape: block !important;
+    caret-width: 2px !important;
+}
+
+/* Focus states */
+body.modern-ui-futuristic .terminal-input-section input:focus,
+body.modern-ui-futuristic .terminal-input-section .input-field:focus,
+body.modern-ui-futuristic .terminal-input-section #commandInput:focus {
+    caret-color: #33ddff !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    body.modern-ui-futuristic .terminal-input-section {
+        padding: 12px 16px !important;
+    }
+    
+    body.modern-ui-futuristic .terminal-input-section input,
+    body.modern-ui-futuristic .terminal-input-section .input-field,
+    body.modern-ui-futuristic .terminal-input-section #commandInput {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+    }
+}
+

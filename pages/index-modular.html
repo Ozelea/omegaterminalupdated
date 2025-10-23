@@ -158,11 +158,10 @@
             id="aiProviderSelect"
             title="Select AI Provider"
             style="
-              background: rgba(0, 188, 242, 0.1);
-              border: 1px solid rgba(0, 188, 242, 0.3);
+              border: 1px solid #ff4757;
               border-radius: 6px;
               padding: 6px 10px;
-              color: #00bcf2;
+              color: #ff4757;
               font-family: 'Courier New', monospace;
               font-size: 11px;
               font-weight: 600;
@@ -175,9 +174,9 @@
               background-image: linear-gradient(
                   45deg,
                   transparent 50%,
-                  #00bcf2 50%
+                  #ff4757 50%
                 ),
-                linear-gradient(135deg, #00bcf2 50%, transparent 50%);
+                linear-gradient(135deg, #ff4757 50%, transparent 50%);
               background-position: calc(100% - 15px) calc(1em + 2px),
                 calc(100% - 10px) calc(1em + 2px);
               background-size: 5px 5px, 5px 5px;
@@ -266,5 +265,65 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // AI Dropdown Color Coding for index-modular.html
+      document.addEventListener('DOMContentLoaded', function() {
+        const aiDropdown = document.getElementById('aiProviderSelect');
+        const aiLabel = document.querySelector('label[for="aiProviderSelect"]');
+        
+        if (aiDropdown) {
+          // Initialize colors based on saved provider
+          const savedProvider = localStorage.getItem('omega-ai-provider') || 'off';
+          updateAIDropdownColors(aiDropdown, savedProvider);
+          
+          // Add change event listener
+          aiDropdown.addEventListener('change', function(e) {
+            updateAIDropdownColors(aiDropdown, e.target.value);
+          });
+        }
+        
+        function updateAIDropdownColors(dropdown, value) {
+          if (!dropdown) return;
+          
+          // Define colors for different AI states
+          const colors = {
+            off: {
+              border: '#ff4757',      // Red border
+              color: '#ff4757',       // Red text
+              label: '#ff4757'        // Red label
+            },
+            near: {
+              border: '#00ff88',      // Green border
+              color: '#00ff88',       // Green text
+              label: '#00ff88'        // Green label
+            },
+            openai: {
+              border: '#00ff88',      // Green border
+              color: '#00ff88',       // Green text
+              label: '#00ff88'        // Green label
+            }
+          };
+
+          const colorScheme = colors[value] || colors.off;
+          
+          // Update dropdown styles with !important to override CSS (border and text only)
+          dropdown.style.setProperty('border-color', colorScheme.border, 'important');
+          dropdown.style.setProperty('color', colorScheme.color, 'important');
+          
+          // Update dropdown arrow color
+          dropdown.style.setProperty('background-image', 
+            `linear-gradient(45deg, transparent 50%, ${colorScheme.color} 50%), linear-gradient(135deg, ${colorScheme.color} 50%, transparent 50%)`, 
+            'important');
+          
+          // Update label color
+          if (aiLabel) {
+            aiLabel.style.setProperty('color', colorScheme.label, 'important');
+          }
+          
+          console.log(`AI Dropdown colors updated: ${value} - ${colorScheme.color}`);
+        }
+      });
+    </script>
   </body>
 </html>

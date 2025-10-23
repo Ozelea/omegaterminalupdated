@@ -28,12 +28,14 @@
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
+    <script src="js/modern-ui-input-fix.js"></script>
+    <script src="js/core-modern-ui-integration.js"></script>
     <script src="js/utils.js"></script>
 
     <!-- Futuristic UI System -->
     <script src="js/futuristic/futuristic-customizer.js"></script>
     <script src="js/futuristic/terminal-theme-bridge.js"></script>
-    <script src="js/futuristic/futuristic-welcome-screen.js"></script>
+    <script src="js/futuristic/futuristic-welcome-screen-new.js"></script>
     <script src="js/futuristic/welcome-screen-fix.js"></script>
     <script src="js/futuristic/futuristic-dashboard-transform.js"></script>
 
@@ -52,7 +54,7 @@
     <link rel="stylesheet" href="styles/futuristic-mode.css" />
     <link rel="stylesheet" href="styles/futuristic-terminal-integration.css" />
     <link rel="stylesheet" href="styles/futuristic-font-override.css" />
-    <link rel="stylesheet" href="styles/futuristic-welcome-screen.css" />
+    <link rel="stylesheet" href="styles/futuristic-welcome-screen-new.css" />
     <link rel="stylesheet" href="styles/svg-icons-system.css" />
     <link rel="stylesheet" href="styles/omega-logos.css" />
     <link rel="stylesheet" href="styles/omega-symbol-logo.css" />
@@ -65,6 +67,7 @@
       href="styles/pgt-tracker-styles.css?v=layout-fix-2"
     />
     <link rel="stylesheet" href="styles/multi-network-connector.css" />
+    <link rel="stylesheet" href="styles/network-logo-styling.css" />
     <link rel="stylesheet" href="styles/chart-viewer.css" />
     <link rel="stylesheet" href="styles/spotify-player.css" />
     <link rel="stylesheet" href="styles/youtube-player.css" />
@@ -74,6 +77,12 @@
     <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
     <link rel="stylesheet" href="styles/command-input-unified.css" />
+    <link rel="stylesheet" href="styles/button-uniformity-fix.css" />
+    <link rel="stylesheet" href="styles/command-input-cursor-fix.css" />
+    <link rel="stylesheet" href="styles/modern-ui-futuristic-theme.css" />
+    <link rel="stylesheet" href="styles/core-modern-ui-terminal.css" />
+    <link rel="stylesheet" href="styles/modern-ui-command-input-fix.css" />
+    <link rel="stylesheet" href="styles/terminal-output-color-fix.css" />
     <script src="js/plugins/dexscreener-analytics-ultimate.js"></script>
     <script src="js/plugins/omega-spotify-player.js"></script>
     <script src="js/plugins/omega-youtube-player.js"></script>
@@ -122,6 +131,8 @@
     <script src="js/commands/remaining.js?v=1.0.1"></script>
     <script src="js/commands/wallet-commands.js?v=multi-network-3.0"></script>
     <script src="js/commands/chaingpt-nft.js?v=1.0.5"></script>
+    <script src="js/commands/chaingpt-smart-contract.js?v=1.0.0"></script>
+    <script src="js/commands/chaingpt-auditor.js?v=1.0.0"></script>
     <script src="js/commands/crypto-news.js?v=1.0.0"></script>
     <script src="js/commands/youtube.js"></script>
 
@@ -995,7 +1006,7 @@
       }
 
       .input-prompt {
-        color: #00bcf2;
+        color: #ffffff;
         font-weight: 600;
         margin-right: 0;
         font-size: 15px;
@@ -1026,22 +1037,34 @@
       }
 
       .input-field::placeholder {
-        color: #666666;
+        color: #ffffff;
       }
 
-      /* Custom cursor - DISABLED, using native browser caret */
+      /* Custom cursor - ENABLED with enhanced styling */
       .cursor {
-        display: none !important; /* Hide custom cursor */
+        display: inline-block !important; /* Show custom cursor */
+        color: var(--palette-primary, #00d4ff) !important;
+        font-family: 'Courier New', monospace !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        margin-left: 2px !important;
+        vertical-align: baseline !important;
+        position: relative !important;
+        z-index: 2 !important;
+        animation: cursorBlink 1.2s ease-in-out infinite !important;
+        text-shadow: 0 0 8px var(--palette-primary-glow, rgba(0, 212, 255, 0.4)) !important;
+        transition: all 0.2s ease !important;
       }
 
-      @keyframes cursor-blink {
-        0%,
-        49% {
+      @keyframes cursorBlink {
+        0%, 50% { 
           opacity: 1;
+          transform: scaleY(1);
         }
-        50%,
-        100% {
-          opacity: 0;
+        51%, 100% { 
+          opacity: 0.3; 
+          transform: scaleY(0.8);
         }
       }
 
@@ -1286,7 +1309,7 @@
       }
 
       .terminal.light-theme .input-field::placeholder {
-        color: #666666;
+        color: #ffffff;
       }
 
       .terminal.light-theme .cursor {
@@ -1992,6 +2015,87 @@
               margin: 0 4px;
             "
           ></div>
+           <button
+             class="header-control-btn"
+             title="Cycle Color Palette"
+             id="colorPaletteToggle"
+             onclick="window.cycleColorPalette()"
+             style="
+               background: rgba(0, 188, 242, 0.1);
+               border: 1px solid rgba(0, 188, 242, 0.3);
+               border-radius: 6px;
+               padding: 6px 12px;
+               color: #00bcf2;
+               font-family: 'Courier New', monospace;
+               font-size: 11px;
+               font-weight: 600;
+               cursor: pointer;
+               display: flex;
+               align-items: center;
+               gap: 6px;
+               text-transform: uppercase;
+               letter-spacing: 0.5px;
+             "
+           >
+             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+               <path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/>
+             </svg>
+             <span>PALETTE</span>
+           </button>
+           <button
+             class="header-control-btn"
+             title="Cycle Theme"
+             id="themeCycleToggle"
+             onclick="window.cycleTheme()"
+             style="
+               background: rgba(0, 188, 242, 0.1);
+               border: 1px solid rgba(0, 188, 242, 0.3);
+               border-radius: 6px;
+               padding: 6px 12px;
+               color: #00bcf2;
+               font-family: 'Courier New', monospace;
+               font-size: 11px;
+               font-weight: 600;
+               cursor: pointer;
+               display: flex;
+               align-items: center;
+               gap: 6px;
+               text-transform: uppercase;
+               letter-spacing: 0.5px;
+             "
+           >
+             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+               <path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/>
+             </svg>
+             <span>CYCLE</span>
+           </button>
+           <button
+             class="header-control-btn"
+             title="Cycle Theme"
+             id="themeSelectorToggle"
+             onclick="window.cycleTheme()"
+             style="
+               background: rgba(0, 188, 242, 0.1);
+               border: 1px solid rgba(0, 188, 242, 0.3);
+               border-radius: 6px;
+               padding: 6px 12px;
+               color: #00bcf2;
+               font-family: 'Courier New', monospace;
+               font-size: 11px;
+               font-weight: 600;
+               cursor: pointer;
+               display: flex;
+               align-items: center;
+               gap: 6px;
+               text-transform: uppercase;
+               letter-spacing: 0.5px;
+             "
+           >
+             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+               <path d="M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,4C16.4,4 20,7.6 20,12C20,16.4 16.4,20 12,20C7.6,20 4,16.4 4,12C4,7.6 7.6,4 12,4M12,6C8.7,6 6,8.7 6,12C6,15.3 8.7,18 12,18C15.3,18 18,15.3 18,12C18,8.7 15.3,6 12,6M12,8C14.2,8 16,9.8 16,12C16,14.2 14.2,16 12,16C9.8,16 8,14.2 8,12C8,9.8 9.8,8 12,8M12,10C10.9,10 10,10.9 10,12C10,13.1 10.9,14 12,14C13.1,14 14,13.1 14,12C14,10.9 13.1,10 12,10Z"/>
+             </svg>
+             <span>THEME</span>
+           </button>
           <button
             class="header-control-btn"
             title="Toggle Dark/Light Mode"
@@ -6620,6 +6724,65 @@
               }
               return;
 
+            case "referral":
+              // Omega Network Referral System
+              console.log("[DEBUG] Referral command detected:", args[1]);
+              console.log(
+                "[DEBUG] OmegaCommands.Referral available:",
+                !!window.OmegaCommands?.Referral
+              );
+
+              if (window.OmegaCommands && window.OmegaCommands.Referral) {
+                console.log("[DEBUG] Routing to Omega Network Referral commands");
+                await window.OmegaCommands.Referral.referral(this, args);
+              } else {
+                console.log("[DEBUG] Omega Network Referral commands not found");
+                this.log("❌ Referral commands not loaded. Please refresh the page.", "error");
+              }
+              return;
+
+            case "contract":
+              // ChainGPT AI Smart Contract Creator
+              console.log("[DEBUG] Contract command detected:", args[1]);
+              console.log(
+                "[DEBUG] ChainGPTSmartContractCommands available:",
+                !!window.ChainGPTSmartContractCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT contract function available:",
+                !!(window.ChainGPTSmartContractCommands && window.ChainGPTSmartContractCommands.contract)
+              );
+
+              if (window.ChainGPTSmartContractCommands && window.ChainGPTSmartContractCommands.contract) {
+                console.log("[DEBUG] Routing to ChainGPT Smart Contract Creator commands");
+                await window.ChainGPTSmartContractCommands.contract(this, args.slice(1));
+              } else {
+                console.log("[DEBUG] ChainGPT Smart Contract Creator commands not found");
+                this.log("❌ Smart Contract Creator commands not loaded. Please refresh the page.", "error");
+              }
+              return;
+
+            case "auditor":
+              // ChainGPT AI Smart Contract Auditor
+              console.log("[DEBUG] Auditor command detected:", args[1]);
+              console.log(
+                "[DEBUG] ChainGPTSmartContractAuditorCommands available:",
+                !!window.ChainGPTSmartContractAuditorCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT auditor function available:",
+                !!(window.ChainGPTSmartContractAuditorCommands && window.ChainGPTSmartContractAuditorCommands.auditor)
+              );
+
+              if (window.ChainGPTSmartContractAuditorCommands && window.ChainGPTSmartContractAuditorCommands.auditor) {
+                console.log("[DEBUG] Routing to ChainGPT Smart Contract Auditor commands");
+                await window.ChainGPTSmartContractAuditorCommands.auditor(this, args.slice(1));
+              } else {
+                console.log("[DEBUG] ChainGPT Smart Contract Auditor commands not found");
+                this.log("❌ Smart Contract Auditor commands not loaded. Please refresh the page.", "error");
+              }
+              return;
+
             case "nft":
             case "opensea":
               // Check if it's a ChainGPT AI NFT command
@@ -9116,6 +9279,9 @@
               break;
             case "rome":
               this.handleRomeCommand(args);
+              break;
+            case "monad":
+              this.handleMonadCommand(args);
               break;
             case "kalshi":
               await this.handleKalshiCommand(args);
@@ -21123,6 +21289,89 @@
           }
         }
 
+        async handleMonadCommand(args) {
+          if (!args || args.length < 2) {
+            this.log("🔷 MONAD NETWORK COMMANDS", "info");
+            this.log("═══════════════════════════", "info");
+            this.log("", "info");
+            this.log("📋 AVAILABLE COMMANDS:", "info");
+            this.log("  monad connect     Connect to MONAD Network", "output");
+            this.log("  monad balance     Check MONAD Network balance", "output");
+            this.log("  monad network     Show MONAD Network information", "output");
+            this.log("  monad validators  View MONAD validators", "output");
+            this.log("  monad transactions View transaction history", "output");
+            this.log("  monad staking     MONAD staking operations", "output");
+            this.log("  monad governance  MONAD governance features", "output");
+            this.log("  monad help        Show this help message", "output");
+            this.log("", "info");
+            this.log("💡 MONAD is a high-performance EVM-compatible blockchain", "info");
+            this.log("   with advanced consensus and parallel execution", "info");
+            return;
+          }
+
+          const subcommand = args[1].toLowerCase();
+
+          switch (subcommand) {
+            case "connect":
+              this.log("🔷 Connecting to MONAD Network...", "info");
+              this.log("MONAD Network connection coming soon!", "info");
+              this.log("This will connect your wallet to the MONAD blockchain", "output");
+              break;
+
+            case "balance":
+              this.log("💰 Checking MONAD balance...", "info");
+              this.log("MONAD balance checking coming soon!", "info");
+              this.log("This will show your MONAD token balance", "output");
+              break;
+
+            case "network":
+              this.log("🌐 MONAD Network Information", "info");
+              this.log("════════════════════════════", "info");
+              this.log("", "info");
+              this.log("🔷 Network: MONAD", "output");
+              this.log("⚡ Consensus: MonadBFT", "output");
+              this.log("🚀 Parallel Execution: Yes", "output");
+              this.log("🔗 EVM Compatible: Yes", "output");
+              this.log("⛽ Gas Model: EIP-1559", "output");
+              this.log("", "info");
+              this.log("MONAD is a high-performance EVM-compatible blockchain", "info");
+              this.log("featuring parallel execution and advanced consensus", "info");
+              break;
+
+            case "validators":
+              this.log("✅ MONAD Validators", "info");
+              this.log("MONAD validator information coming soon!", "info");
+              this.log("This will show active validators and their status", "output");
+              break;
+
+            case "transactions":
+              this.log("📋 MONAD Transaction History", "info");
+              this.log("MONAD transaction history coming soon!", "info");
+              this.log("This will show your transaction history on MONAD", "output");
+              break;
+
+            case "staking":
+              this.log("🏦 MONAD Staking", "info");
+              this.log("MONAD staking features coming soon!", "info");
+              this.log("This will allow you to stake MONAD tokens", "output");
+              break;
+
+            case "governance":
+              this.log("🗳️ MONAD Governance", "info");
+              this.log("MONAD governance features coming soon!", "info");
+              this.log("This will show governance proposals and voting", "output");
+              break;
+
+            case "help":
+              this.handleMonadCommand(["monad"]);
+              break;
+
+            default:
+              this.log(`Unknown MONAD command: ${subcommand}`, "error");
+              this.log('Type "monad help" for available commands', "info");
+          }
+        }
+
         async connectToRomeNetwork() {
           if (!window.ethereum) {
             this.log(
@@ -28772,6 +29021,102 @@
         window.terminal = new OmegaMinerTerminal();
         // init() is already called in the constructor, so we don't need to call it again
       });
+    </script>
+    <script src="js/ai-dropdown-fix.js"></script>
+    <script src="js/command-input-fix.js"></script>
+    <script src="js/welcome-screen-color-integration-new.js"></script>
+    <script src="js/terminal-output-color-integration.js"></script>
+    
+    <!-- Global Color Palette Cycle Function -->
+    <script>
+      // Global color palette cycle function for header button
+      window.cycleColorPalette = function() {
+        const palettes = [
+          'red', 'anime', 'ocean', 'forest', 'sunset', 'purple', 
+          'cyber', 'gold', 'ice', 'fire', 'mint', 'rose', 'amber', 'slate'
+        ];
+        
+        // Get current palette from localStorage or default to 'cyber'
+        const currentPalette = localStorage.getItem('omega-color-palette') || 'cyber';
+        const currentIndex = palettes.indexOf(currentPalette);
+        
+        // Get next palette (cycle back to start if at end)
+        const nextIndex = (currentIndex + 1) % palettes.length;
+        const nextPalette = palettes[nextIndex];
+        
+        // Execute the color command
+        if (window.terminal && window.terminal.executeCommand) {
+          window.terminal.executeCommand(`color ${nextPalette}`);
+        } else if (window.FuturisticDashboard && window.FuturisticDashboard.cycleColorPalette) {
+          window.FuturisticDashboard.cycleColorPalette();
+        } else {
+          // Fallback: directly set the palette
+          if (window.OmegaCommands && window.OmegaCommands.Color) {
+            window.OmegaCommands.Color.setColorPalette(nextPalette);
+          }
+        }
+        
+        // Show feedback
+        if (window.terminal && window.terminal.log) {
+          window.terminal.log(`Cycling to ${nextPalette} palette`, 'success');
+        }
+      };
+
+      // Global theme cycle function for header button
+      window.cycleTheme = function() {
+        const themes = [
+          'executive', 'modern', 'dark', 'light', 'matrix', 'retro', 'powershell'
+        ];
+        
+        // Get current theme from localStorage or detect from DOM
+        let currentTheme = localStorage.getItem('omega-terminal-theme') || 'dark';
+        
+        // Check if Modern UI is currently active
+        const terminal = document.getElementById('terminal') || document.querySelector('.terminal');
+        const isModernUIActive = terminal && terminal.classList.contains('apple-ui');
+        
+        if (isModernUIActive) {
+          // If Modern UI is active, we need to deactivate it first
+          if (window.terminal && window.terminal.deactivateAppleUI) {
+            window.terminal.deactivateAppleUI();
+          }
+          currentTheme = 'modern'; // Set as current for cycling
+        }
+        
+        const currentIndex = themes.indexOf(currentTheme);
+        
+        // Get next theme (cycle back to start if at end)
+        const nextIndex = (currentIndex + 1) % themes.length;
+        const nextTheme = themes[nextIndex];
+        
+        // Special handling for Modern UI theme
+        if (nextTheme === 'modern') {
+          // Activate Modern UI directly
+          if (window.terminal && window.terminal.activateAppleUI) {
+            window.terminal.activateAppleUI(false); // Light mode
+            localStorage.setItem('omega-terminal-theme', 'modern');
+          } else {
+            // Fallback to command execution
+            if (window.terminal && window.terminal.executeCommand) {
+              window.terminal.executeCommand(`theme ${nextTheme}`);
+            }
+          }
+        } else {
+          // For other themes, execute normally
+          if (window.terminal && window.terminal.executeCommand) {
+            window.terminal.executeCommand(`theme ${nextTheme}`);
+          } else if (window.FuturisticDashboard && window.FuturisticDashboard.cycleTheme) {
+            window.FuturisticDashboard.cycleTheme();
+          }
+        }
+        
+        // Show feedback
+        if (window.terminal && window.terminal.log) {
+          window.terminal.log(`Cycling to ${nextTheme} theme`, 'success');
+          console.log(`[Global Theme Cycle] Switched from ${currentTheme} to ${nextTheme}`);
+        }
+      };
+
     </script>
   </body>
 </html>

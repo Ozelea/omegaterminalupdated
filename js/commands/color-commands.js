@@ -67,7 +67,7 @@ window.OmegaCommands.Color = {
         const description = this.palettes[palette];
 
         if (!silent && window.terminal) {
-            window.terminal.log(`✅ Color palette changed to: ${palette}`, 'success');
+            window.terminal.log(`Color palette changed to: ${palette}`, 'success');
             window.terminal.log(`${description}`, 'info');
         }
 
@@ -92,7 +92,7 @@ window.OmegaCommands.Color = {
         if (savedPalette && this.palettes[savedPalette]) {
             document.body.setAttribute('data-color-palette', savedPalette);
             this.currentPalette = savedPalette;
-            console.log(`🎨 Loaded saved color palette: ${savedPalette}`);
+            console.log(`Loaded saved color palette: ${savedPalette}`);
         }
     },
 
@@ -103,7 +103,7 @@ window.OmegaCommands.Color = {
         this.currentPalette = null;
 
         if (terminal) {
-            terminal.log('✅ Color palette reset to default', 'success');
+            terminal.log('Color palette reset to default', 'success');
         }
 
         return { success: true };
@@ -172,10 +172,10 @@ window.OmegaCommands.Color = {
         const current = this.getCurrentPalette();
         
         if (current && current !== 'default' && this.palettes[current]) {
-            terminal.log(`✨ Current color palette: ${current}`, 'success');
+            terminal.log(`Current color palette: ${current}`, 'success');
             terminal.log(`${this.palettes[current]}`, 'info');
         } else {
-            terminal.log('✨ Current color palette: Default (Cyber Blue)', 'info');
+            terminal.log('Current color palette: Default (Cyber Blue)', 'info');
         }
     },
 
@@ -228,5 +228,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-console.log('🎨 Color Palette Commands loaded - 10 palettes available!');
+console.log('Color Palette Commands loaded - 10 palettes available!');
 
