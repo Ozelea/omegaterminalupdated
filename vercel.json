@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "CHAINGPT_API_KEY": "@chaingpt_api_key"
-  }
+  ]
 }
