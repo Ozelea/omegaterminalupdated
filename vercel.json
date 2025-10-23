@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": ".",
   "env": {
     "CHAINGPT_API_KEY": "5e9305e6-7713-4216-9bed-e554e9bb8d08"
   }
