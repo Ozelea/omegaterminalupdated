@@ -233,14 +233,21 @@ async function initializeProvider() {
             console.log(`[RPC] ✅ Connected - Block: ${blockNumber}`);
             
             provider = testProvider;
-            const relayerWallet = new ethers.Wallet(process.env.RELAYER_PRIVATE_KEY);
-            relayerSigner = relayerWallet.connect(provider);
             
-            // 🔧 CRITICAL: Sync nonce immediately
-            const currentNonce = await provider.getTransactionCount(relayerWallet.address, 'pending');
-            console.log(`[NONCE] 🔄 Synced to blockchain nonce: ${currentNonce}`);
+            // Only initialize wallet if RELAYER_PRIVATE_KEY is available
+            if (process.env.RELAYER_PRIVATE_KEY) {
+                const relayerWallet = new ethers.Wallet(process.env.RELAYER_PRIVATE_KEY);
+                relayerSigner = relayerWallet.connect(provider);
+                
+                // 🔧 CRITICAL: Sync nonce immediately
+                const currentNonce = await provider.getTransactionCount(relayerWallet.address, 'pending');
+                console.log(`[NONCE] 🔄 Synced to blockchain nonce: ${currentNonce}`);
+                
+                console.log(`[RPC] ✅ Relayer address: ${relayerWallet.address}`);
+            } else {
+                console.log('[RPC] ℹ️ Wallet initialization skipped (no RELAYER_PRIVATE_KEY)');
+            }
             
-            console.log(`[RPC] ✅ Relayer address: ${relayerWallet.address}`);
             return; // Success!
             
         } catch (error) {
@@ -2249,6 +2256,199 @@ app.get('/', (req, res) => {
     });
 });
 
+// ===================================
+// MAGIC EDEN API PROXY ENDPOINTS
+// ===================================
+
+// Get collection activities
+app.get('/magiceden/activities', async (req, res) => {
+    try {
+        const { symbol } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/activities?offset=0&limit=100`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Activities API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden activities' });
+    }
+});
+
+// Get collection stats
+app.get('/magiceden/stats', async (req, res) => {
+    try {
+        const { symbol } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/stats`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Stats API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden stats' });
+    }
+});
+
+// Get collection listings
+app.get('/magiceden/listings', async (req, res) => {
+    try {
+        const { symbol, limit = 20 } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        // Magic Eden API has a max limit, use 20 as default (their standard)
+        const apiLimit = Math.min(parseInt(limit) || 20, 20);
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/listings?offset=0&limit=${apiLimit}`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        if (!response.ok) {
+            console.error(`Magic Eden API error: ${response.status} ${response.statusText}`);
+            return res.status(response.status).json({ error: `Magic Eden API returned ${response.status}` });
+        }
+        
+        const data = await response.json();
+        console.log(`Magic Eden: Fetched ${Array.isArray(data) ? data.length : 'non-array'} listings for ${symbol} (requested ${apiLimit})`);
+        
+        // Ensure we return an array
+        if (!Array.isArray(data)) {
+            console.error('Magic Eden API returned non-array:', data);
+            return res.json([]);
+        }
+        
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Listings API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden listings' });
+    }
+});
+
+// Get holder stats
+app.get('/magiceden/holder_stats', async (req, res) => {
+    try {
+        const { symbol } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/holder_stats`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Holder Stats API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden holder stats' });
+    }
+});
+
+// Get collection attributes
+app.get('/magiceden/attributes', async (req, res) => {
+    try {
+        const { symbol } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/attributes`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Attributes API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden attributes' });
+    }
+});
+
+// Get popular/trending collections
+app.get('/magiceden/trending', async (req, res) => {
+    try {
+        const { timeRange = '1d' } = req.query;
+        
+        // Validate timeRange
+        const validRanges = ['1h', '1d', '7d', '30d'];
+        if (!validRanges.includes(timeRange)) {
+            return res.status(400).json({ error: 'Invalid timeRange. Use: 1h, 1d, 7d, or 30d' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/marketplace/popular_collections?timeRange=${timeRange}`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Trending API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden trending collections' });
+    }
+});
+
+// Get collection tokens (for viewing collection with images)
+app.get('/magiceden/tokens', async (req, res) => {
+    try {
+        const { symbol, offset = 0, limit = 20 } = req.query;
+        if (!symbol) {
+            return res.status(400).json({ error: 'Collection symbol is required' });
+        }
+        
+        const response = await fetch(`https://api-mainnet.magiceden.dev/v2/collections/${symbol}/listings?offset=${offset}&limit=${limit}`, {
+            headers: { 'accept': 'application/json' }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden Tokens API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Magic Eden tokens' });
+    }
+});
+
+// Get Ethereum collections from Magic Eden
+app.get('/magiceden/eth/collections', async (req, res) => {
+    try {
+        const { limit = 20, sortBy = 'allTimeVolume' } = req.query;
+        
+        const url = `https://api-mainnet.magiceden.dev/v3/rtp/ethereum/collections/v7?includeMintStages=false&includeSecurityConfigs=false&normalizeRoyalties=false&useNonFlaggedFloorAsk=false&sortBy=${sortBy}&limit=${limit}`;
+        
+        console.log(`Magic Eden ETH: Fetching Ethereum collections (limit: ${limit}, sortBy: ${sortBy})`);
+        
+        const response = await fetch(url, {
+            headers: { 
+                'accept': '*/*'
+            }
+        });
+        
+        if (!response.ok) {
+            console.error(`Magic Eden ETH API error: ${response.status} ${response.statusText}`);
+            return res.status(response.status).json({ error: `Magic Eden API returned ${response.status}` });
+        }
+        
+        const data = await response.json();
+        console.log(`Magic Eden ETH: Fetched ${data.collections?.length || 0} Ethereum collections`);
+        
+        res.json(data);
+    } catch (err) {
+        console.error('Magic Eden ETH Collections API Error:', err);
+        res.status(500).json({ error: 'Failed to fetch Ethereum collections' });
+    }
+});
+
 // Initialize and start server (RESILIENT STARTUP)
 async function startServer() {
     console.log('🚀 INITIALIZING NETWORK-RESILIENT RELAYER (COMPLETE VERSION)...');
@@ -2256,8 +2456,8 @@ async function startServer() {
     console.log('🔧 Fresh nonce management enabled for all blockchain transactions');
     
     if (!process.env.RELAYER_PRIVATE_KEY) {
-        console.error('❌ CRITICAL: RELAYER_PRIVATE_KEY not found in environment variables');
-        process.exit(1);
+        console.warn('⚠️ WARNING: RELAYER_PRIVATE_KEY not found in environment variables');
+        console.log('ℹ️ Server will run in API proxy mode only (blockchain features disabled)');
     }
     
     // Start server first, then initialize RPC

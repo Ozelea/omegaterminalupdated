@@ -25,7 +25,16 @@ window.OmegaWelcomeScreen = {
         
         this.createWelcomeScreen();
         this.updateViewModeSelection();
-        this.startLoadingSequence();
+        
+        // Skip loading sequence - make interface selector immediately available
+        setTimeout(() => {
+            const interfaceOptions = document.querySelectorAll('.interface-option');
+            interfaceOptions.forEach(option => {
+                option.style.pointerEvents = 'auto';
+                option.style.opacity = '1';
+            });
+            document.getElementById('omegaWelcomeScreen').classList.add('welcome-ready');
+        }, 100);
         
         this.initialized = true;
     },
@@ -41,108 +50,10 @@ window.OmegaWelcomeScreen = {
                 <!-- Animated Background Grid -->
                 <div class="welcome-bg-grid"></div>
                 
-                <!-- Top Status Bar -->
-                <div class="welcome-top-bar">
-                    <div class="welcome-system-info">
-                        <div class="welcome-status-indicator">
-                            <div class="status-dot"></div>
-                            <span class="status-text">OMEGA NETWORK</span>
-                        </div>
-                        <div class="welcome-version-badge">v2.0.1</div>
-                    </div>
-                    <div class="welcome-security-badge">
-                        <svg class="security-icon" viewBox="0 0 24 24">
-                            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.1 16,12.7V16.2C16,16.8 15.4,17.3 14.8,17.3H9.2C8.6,17.3 8,16.8 8,16.2V12.6C8,12.1 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/>
-                        </svg>
-                        <span>CLASSIFIED ACCESS</span>
-                    </div>
-                </div>
-                
                 <!-- Main Content Area -->
                 <div class="welcome-main-content">
-                    <!-- Logo Section -->
-                    <div class="welcome-logo-section">
-                        <div class="welcome-logo-container">
-                            <div class="welcome-brand-text">OMEGA</div>
-                            <div class="welcome-brand-subtitle">TERMINAL</div>
-                        </div>
-                        <div class="welcome-tagline">ADVANCED MULTI-CHAIN INTERFACE</div>
-                    </div>
-                    
-                    <!-- Loading Section -->
-                    <div class="welcome-loading-section">
-                        <div class="welcome-loading-spinner">
-                            <div class="spinner-ring"></div>
-                            <div class="spinner-ring"></div>
-                            <div class="spinner-ring"></div>
-                        </div>
-                        
-                        <div class="welcome-loading-text">
-                            <div class="loading-main-text" id="welcomeLoadingText">INITIALIZING OMEGA PROTOCOL...</div>
-                            <div class="loading-sub-text" id="welcomeLoadingSubText">Establishing secure connection...</div>
-                        </div>
-                        
-                        <div class="welcome-progress-container">
-                            <div class="progress-track">
-                                <div class="progress-fill" id="welcomeProgressFill"></div>
-                            </div>
-                            <div class="progress-percentage" id="welcomeProgressPercent">0%</div>
-                        </div>
-                    </div>
-                    
-                    <!-- System Status Grid -->
-                    <div class="welcome-system-grid">
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">SECURITY</div>
-                                <div class="status-value">LEVEL OMEGA</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">NETWORKS</div>
-                                <div class="status-value">MULTI-CHAIN</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">WALLET</div>
-                                <div class="status-value">READY</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">AI</div>
-                                <div class="status-value">ACTIVE</div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!-- Interface Selector -->
-                    <div class="welcome-interface-selector">
+                    <div class="welcome-interface-selector" style="margin-top: 0;">
                         <div class="selector-header">
                             <div class="selector-title">SELECT INTERFACE</div>
                             <div class="selector-subtitle">Choose your preferred workspace</div>
@@ -176,11 +87,6 @@ window.OmegaWelcomeScreen = {
                             </button>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Bottom Status -->
-                <div class="welcome-bottom-status">
-                    <div class="bottom-status-text">OMEGA PROTOCOL v2.0.1 - SYSTEM READY</div>
                 </div>
             </div>
         `;
@@ -293,18 +199,10 @@ window.OmegaWelcomeScreen = {
             }, 200);
         }
         
-        // Update loading text to show transition
-        const loadingText = document.getElementById('welcomeLoadingText');
-        const loadingSubText = document.getElementById('welcomeLoadingSubText');
-        if (loadingText && loadingSubText) {
-            loadingText.textContent = 'PREPARING INTERFACE...';
-            loadingSubText.textContent = `Initializing ${mode === 'basic' ? 'Basic Terminal' : 'Dashboard'} mode...`;
-        }
-        
-        // Transition to main interface with better timing
+        // Transition to main interface immediately
         setTimeout(() => {
             this.transitionToMainInterface();
-        }, 500);
+        }, 300);
     },
     
     transitionToMainInterface: function() {

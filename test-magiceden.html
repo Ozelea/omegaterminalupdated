@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Eden Plugin Test</title>
+    <style>
+        body {
+            background: #0a0a0f;
+            color: #00D4FF;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+        }
+        .test-button {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            color: #00D4FF;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .test-button:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            min-height: 200px;
+            max-height: 600px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+        .success { color: #00FF88; }
+        .error { color: #FF3366; }
+        .info { color: #FFB800; }
+    </style>
+</head>
+<body>
+    <h1>🔮 Magic Eden Plugin Test</h1>
+    <p>Test the Magic Eden API integration before adding to terminal.</p>
+
+    <div class="test-section">
+        <h3>Quick Tests</h3>
+        <button class="test-button" onclick="testActivities()">Test Activities (DeGods)</button>
+        <button class="test-button" onclick="testStats()">Test Stats (DeGods)</button>
+        <button class="test-button" onclick="testListings()">Test Listings (DeGods)</button>
+        <button class="test-button" onclick="testHolderStats()">Test Holder Stats (DeGods)</button>
+        <button class="test-button" onclick="testAttributes()">Test Attributes (DeGods)</button>
+        <button class="test-button" onclick="testTrending()">Test Trending (7d)</button>
+        <button class="test-button" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div class="test-section">
+        <h3>View Full Attributes Data</h3>
+        <p style="color: rgba(0, 212, 255, 0.7); font-size: 12px;">Click "Test Attributes (DeGods)" above to see ALL 163 attributes with NFT images!</p>
+        <p style="color: rgba(255, 255, 255, 0.5); font-size: 11px;">
+            ✨ Shows: Trait type → All values with thumbnails, count, and floor prices<br>
+            📊 Data includes: version, y00t, mouth, neck, specialty, eyes, background, skin, head, clothes
+        </p>
+    </div>
+
+    <div class="test-section">
+        <h3>Custom Test</h3>
+        <input type="text" id="customCollection" placeholder="Collection symbol (e.g., degods)" 
+               style="background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); 
+                      color: #00D4FF; padding: 8px; border-radius: 4px; font-family: 'Courier New', monospace;">
+        <button class="test-button" onclick="testCustom()">Test Custom Collection</button>
+    </div>
+
+    <div id="output">
+        <span class="info">Ready to test...</span>
+    </div>
+
+    <script src="js/plugins/magiceden-plugin.js"></script>
+    <script>
+        const output = document.getElementById('output');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += `\n[${timestamp}] <span class="${type}">${message}</span>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            output.innerHTML = '<span class="info">Output cleared...</span>';
+        }
+
+        async function testActivities() {
+            log('Testing activities API...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchActivities('degods', 5);
+                log(`✅ Success! Fetched ${data.length} activities`, 'success');
+                log(JSON.stringify(data[0], null, 2), 'info');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testStats() {
+            log('Testing stats API...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchStats('degods');
+                log(`✅ Success! Floor: ${window.MagicEdenAPI.formatSOL(data.floorPrice)}`, 'success');
+                log(JSON.stringify(data, null, 2), 'info');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testListings() {
+            log('Testing listings API...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchListings('degods', 5);
+                log(`✅ Success! Fetched ${data.length} listings`, 'success');
+                log(JSON.stringify(data[0], null, 2), 'info');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testHolderStats() {
+            log('Testing holder stats API...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchHolderStats('degods');
+                log(`✅ Success! Unique Holders: ${data.uniqueHolders || 'N/A'}`, 'success');
+                log(JSON.stringify(data, null, 2), 'info');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAttributes() {
+            log('Testing attributes API...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchAttributes('degods');
+                const attributes = data.results?.availableAttributes || data.availableAttributes || [];
+                
+                // Group by trait type
+                const grouped = {};
+                attributes.forEach(item => {
+                    const traitType = item.attribute.trait_type;
+                    if (!grouped[traitType]) {
+                        grouped[traitType] = [];
+                    }
+                    grouped[traitType].push({
+                        value: item.attribute.value,
+                        count: item.count,
+                        floor: item.floor,
+                        image: item.image
+                    });
+                });
+                
+                const traitTypeCount = Object.keys(grouped).length;
+                log(`✅ Success! Found ${attributes.length} total attributes across ${traitTypeCount} trait types`, 'success');
+                log(''); // Blank line
+                
+                // Display each trait type with images
+                Object.entries(grouped).forEach(([traitType, values]) => {
+                    log(`━━━━ ${traitType.toUpperCase()}: (${values.length} values) ━━━━`, 'info');
+                    
+                    // Sort by count descending
+                    values.sort((a, b) => b.count - a.count);
+                    
+                    values.forEach(attr => {
+                        const floor = attr.floor ? window.MagicEdenAPI.formatSOL(attr.floor) : 'N/A';
+                        const imageHtml = attr.image 
+                            ? `<img src="${attr.image}" style="width: 40px; height: 40px; border-radius: 4px; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0, 212, 255, 0.3);" />` 
+                            : '';
+                        
+                        const attrLine = `${imageHtml}<span class="success">${attr.value}</span> • <span class="info">${attr.count} items</span> • <span class="info">Floor: ${floor}</span>`;
+                        output.innerHTML += `\n${attrLine}`;
+                    });
+                    
+                    log(''); // Blank line between trait types
+                });
+                
+                log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'success');
+                log(`Displayed all ${attributes.length} attributes`, 'success');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testTrending() {
+            log('Testing trending collections API (7d)...', 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchTrending('7d');
+                log(`✅ Success! Found ${data.length} trending collections`, 'success');
+                log(''); // Blank line
+                
+                data.slice(0, 10).forEach((collection, index) => {
+                    const name = collection.name || collection.symbol;
+                    const volume = collection.volume ? `${(collection.volume / 1e9).toFixed(2)} SOL` : 'N/A';
+                    const floor = collection.floorPrice ? window.MagicEdenAPI.formatSOL(collection.floorPrice) : 'N/A';
+                    const change = collection.volumeChange ? `${collection.volumeChange > 0 ? '+' : ''}${collection.volumeChange.toFixed(2)}%` : 'N/A';
+                    const changeClass = collection.volumeChange > 0 ? 'success' : 'error';
+                    
+                    log(`#${index + 1} ${name}`, 'info');
+                    const line = `   Volume: <span class="info">${volume}</span> | Floor: <span class="info">${floor}</span> | Change: <span class="${changeClass}">${change}</span>`;
+                    output.innerHTML += `\n${line}`;
+                    log(''); // Blank line
+                });
+                
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testCustom() {
+            const collection = document.getElementById('customCollection').value.trim();
+            if (!collection) {
+                log('❌ Please enter a collection symbol', 'error');
+                return;
+            }
+            
+            log(`Testing custom collection: ${collection}...`, 'info');
+            try {
+                const data = await window.MagicEdenAPI.fetchStats(collection);
+                log(`✅ Success! ${collection} floor: ${window.MagicEdenAPI.formatSOL(data.floorPrice)}`, 'success');
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            log('Magic Eden Plugin loaded successfully!', 'success');
+            log('Click buttons above to test API endpoints.', 'info');
+        });
+    </script>
+</body>
+</html>
+

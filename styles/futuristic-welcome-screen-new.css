@@ -11,7 +11,8 @@
     flex-direction: column;
     z-index: 10000;
     font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
-    overflow: hidden;
+    overflow-y: auto !important;
+    overflow-x: hidden;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
