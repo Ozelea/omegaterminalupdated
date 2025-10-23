@@ -1,0 +1,359 @@
+/**
+ * Omega Terminal - Button Uniformity Fix
+ * Ensures all sidebar buttons and sub-action buttons have consistent sizing and styling
+ */
+
+/* ============================================
+   SIDEBAR BUTTON UNIFORMITY
+   ============================================ */
+
+/* Base sidebar button styling - ensures consistency */
+.sidebar-button {
+    /* Uniform sizing */
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 8px 12px !important;
+    
+    /* Uniform typography */
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    
+    /* Uniform spacing */
+    margin-bottom: 4px !important;
+    
+    /* Uniform border radius */
+    border-radius: 6px !important;
+    
+    /* Uniform display properties */
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    
+    /* Uniform transitions */
+    transition: all 0.2s ease !important;
+    
+    /* Ensure consistent width */
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Sub-action button uniformity */
+.sub-action-button {
+    /* Uniform sizing */
+    min-height: 28px !important;
+    max-height: 28px !important;
+    padding: 6px 10px !important;
+    
+    /* Uniform typography */
+    font-size: 9px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    
+    /* Uniform spacing */
+    margin-bottom: 3px !important;
+    
+    /* Uniform border radius */
+    border-radius: 4px !important;
+    
+    /* Uniform display properties */
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    
+    /* Uniform transitions */
+    transition: all 0.2s ease !important;
+    
+    /* Ensure text alignment */
+    text-align: left !important;
+}
+
+/* ============================================
+   THEME-SPECIFIC ADJUSTMENTS
+   ============================================ */
+
+/* Futuristic theme adjustments */
+body[data-theme="futuristic"] .sidebar-button,
+body.theme-futuristic .sidebar-button {
+    background: rgba(0, 212, 255, 0.08) !important;
+    border: 1px solid rgba(0, 212, 255, 0.15) !important;
+    color: var(--cyber-blue, #00d4ff) !important;
+}
+
+body[data-theme="futuristic"] .sidebar-button:hover,
+body.theme-futuristic .sidebar-button:hover {
+    background: rgba(0, 212, 255, 0.18) !important;
+    border-color: var(--cyber-blue, #00d4ff) !important;
+    color: var(--cyber-blue-bright, #33ddff) !important;
+}
+
+body[data-theme="futuristic"] .sub-action-button,
+body.theme-futuristic .sub-action-button {
+    background: rgba(0, 212, 255, 0.06) !important;
+    border: 1px solid rgba(0, 212, 255, 0.12) !important;
+    color: var(--cyber-blue-dim, #0099cc) !important;
+}
+
+body[data-theme="futuristic"] .sub-action-button:hover,
+body.theme-futuristic .sub-action-button:hover {
+    background: rgba(0, 212, 255, 0.18) !important;
+    color: var(--cyber-blue-bright, #33ddff) !important;
+    border-color: var(--cyber-blue, #00d4ff) !important;
+}
+
+/* Executive theme adjustments */
+body[data-theme="executive"] .sidebar-button,
+body.theme-executive .sidebar-button {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.08) 0%, 
+        rgba(74, 144, 226, 0.05) 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.15) !important;
+    color: var(--exec-platinum, #e8e8e8) !important;
+}
+
+body[data-theme="executive"] .sidebar-button:hover,
+body.theme-executive .sidebar-button:hover {
+    background: linear-gradient(135deg, 
+        rgba(212, 175, 55, 0.2) 0%, 
+        rgba(74, 144, 226, 0.15) 100%) !important;
+    border-color: var(--exec-gold, #d4af37) !important;
+    color: var(--exec-gold-bright, #f4d03f) !important;
+}
+
+body[data-theme="executive"] .sub-action-button,
+body.theme-executive .sub-action-button {
+    background: rgba(212, 175, 55, 0.05) !important;
+    border-left: 2px solid var(--exec-gold, #d4af37) !important;
+    color: var(--exec-silver, #c0c0c0) !important;
+}
+
+body[data-theme="executive"] .sub-action-button:hover,
+body.theme-executive .sub-action-button:hover {
+    background: rgba(212, 175, 55, 0.15) !important;
+    color: var(--exec-gold-bright, #f4d03f) !important;
+    border-left-color: var(--exec-gold-bright, #f4d03f) !important;
+}
+
+/* ============================================
+   COLOR PALETTE INTEGRATION
+   ============================================ */
+
+/* Apply color palette variables to buttons */
+.sidebar-button {
+    background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.08)) !important;
+    border-color: var(--palette-border, rgba(0, 212, 255, 0.15)) !important;
+    color: var(--palette-text-primary, #00d4ff) !important;
+}
+
+.sidebar-button:hover {
+    background: var(--palette-bg-hover, rgba(0, 212, 255, 0.18)) !important;
+    border-color: var(--palette-primary, #00d4ff) !important;
+    color: var(--palette-primary-light, #33ddff) !important;
+}
+
+.sub-action-button {
+    background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.06)) !important;
+    border-color: var(--palette-border, rgba(0, 212, 255, 0.12)) !important;
+    color: var(--palette-text-secondary, #0099cc) !important;
+}
+
+.sub-action-button:hover {
+    background: var(--palette-bg-hover, rgba(0, 212, 255, 0.18)) !important;
+    color: var(--palette-primary, #00d4ff) !important;
+    border-color: var(--palette-primary, #00d4ff) !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .sidebar-button {
+        min-height: 44px !important;
+        max-height: 44px !important;
+        padding: 12px !important;
+        font-size: 12px !important;
+    }
+    
+    .sub-action-button {
+        min-height: 36px !important;
+        max-height: 36px !important;
+        padding: 8px 10px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .sidebar-button,
+    .sub-action-button {
+        min-height: 48px !important;
+        padding: 14px !important;
+    }
+    
+    /* Remove hover effects that don't work on touch */
+    .sidebar-button:hover,
+    .sub-action-button:hover {
+        transform: none !important;
+    }
+    
+    /* Active state for touch feedback */
+    .sidebar-button:active,
+    .sub-action-button:active {
+        background: var(--palette-bg-hover, rgba(0, 212, 255, 0.2)) !important;
+        transform: scale(0.98) !important;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+
+/* Focus states for keyboard navigation */
+.sidebar-button:focus,
+.sub-action-button:focus {
+    outline: 2px solid var(--palette-primary, #00d4ff) !important;
+    outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .sidebar-button,
+    .sub-action-button {
+        border-width: 2px !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar-button,
+    .sub-action-button {
+        transition: none !important;
+    }
+    
+    .sidebar-button:hover,
+    .sub-action-button:hover {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   AI DROPDOWN OPTIONS STYLING - AGGRESSIVE FIX
+   ============================================ */
+
+/* Force AI dropdown visibility with specific colors */
+select#aiProviderSelect,
+select#headerAiProviderSelect,
+select#wrapperAiProviderSelect {
+    /* Base styling without color overrides to allow dynamic color coding */
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    min-width: 110px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Force dropdown options to be visible */
+select#aiProviderSelect option,
+select#headerAiProviderSelect option,
+select#wrapperAiProviderSelect option {
+    padding: 4px 8px !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Force focus state visibility */
+select#aiProviderSelect:focus,
+select#headerAiProviderSelect:focus,
+select#wrapperAiProviderSelect:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Force hover state visibility */
+select#aiProviderSelect:hover,
+select#headerAiProviderSelect:hover,
+select#wrapperAiProviderSelect:hover {
+    transform: scale(1.02) !important;
+    filter: brightness(1.1) !important;
+}
+
+/* Force AI label visibility */
+label[for="aiProviderSelect"],
+label[for="headerAiProviderSelect"],
+label[for="wrapperAiProviderSelect"] {
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Theme-specific overrides */
+body[data-theme="executive"] select#aiProviderSelect,
+body[data-theme="executive"] select#headerAiProviderSelect,
+body[data-theme="executive"] select#wrapperAiProviderSelect,
+body.theme-executive select#aiProviderSelect,
+body.theme-executive select#headerAiProviderSelect,
+body.theme-executive select#wrapperAiProviderSelect {
+    background-color: #0a0e27 !important;
+    background: #0a0e27 !important;
+    color: #d4af37 !important;
+    border-color: #d4af37 !important;
+}
+
+body[data-theme="executive"] select#aiProviderSelect option,
+body[data-theme="executive"] select#headerAiProviderSelect option,
+body[data-theme="executive"] select#wrapperAiProviderSelect option,
+body.theme-executive select#aiProviderSelect option,
+body.theme-executive select#headerAiProviderSelect option,
+body.theme-executive select#wrapperAiProviderSelect option {
+    background-color: #0a0e27 !important;
+    background: #0a0e27 !important;
+    color: #d4af37 !important;
+}
+
+body[data-theme="executive"] label[for="aiProviderSelect"],
+body[data-theme="executive"] label[for="headerAiProviderSelect"],
+body[data-theme="executive"] label[for="wrapperAiProviderSelect"],
+body.theme-executive label[for="aiProviderSelect"],
+body.theme-executive label[for="headerAiProviderSelect"],
+body.theme-executive label[for="wrapperAiProviderSelect"] {
+    color: #d4af37 !important;
+}
+
+/* Light mode overrides */
+body.light-mode select#aiProviderSelect,
+body.light-mode select#headerAiProviderSelect,
+body.light-mode select#wrapperAiProviderSelect {
+    background-color: #f5f5f7 !important;
+    background: #f5f5f7 !important;
+    color: #0051d5 !important;
+    border-color: #0051d5 !important;
+}
+
+body.light-mode select#aiProviderSelect option,
+body.light-mode select#headerAiProviderSelect option,
+body.light-mode select#wrapperAiProviderSelect option {
+    background-color: #f5f5f7 !important;
+    background: #f5f5f7 !important;
+    color: #0051d5 !important;
+}
+
+body.light-mode label[for="aiProviderSelect"],
+body.light-mode label[for="headerAiProviderSelect"],
+body.light-mode label[for="wrapperAiProviderSelect"] {
+    color: #0051d5 !important;
+}

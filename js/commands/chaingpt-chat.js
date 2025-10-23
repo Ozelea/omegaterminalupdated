@@ -9,22 +9,34 @@ const ChainGPTChat = {
     config: {
         baseUrl: 'https://api.chaingpt.org',
         endpoint: '/chat/stream',
-        model: 'general_assistant'
+        model: 'general_assistant',
+        currentKeyIndex: 0,
+        initialized: false
     },
 
     /**
-     * Initialize with API key
+     * Initialize with API key (optional - will use default if not provided)
      */
     init: function(apiKey) {
-        if (!apiKey) {
-            throw new Error('API key is required');
+        if (apiKey) {
+            // User provided their own API key
+            this.config.apiKey = apiKey;
+            localStorage.setItem('chaingpt-chat-api-key', apiKey);
+            localStorage.setItem('chaingpt-chat-initialized', 'true');
+            console.log('[DEBUG] ChainGPT Chat initialized with user API key');
+        } else {
+            // Use default API key from config
+            const defaultKey = this.getDefaultApiKey();
+            if (defaultKey) {
+                this.config.apiKey = defaultKey;
+                localStorage.setItem('chaingpt-chat-initialized', 'true');
+                console.log('[DEBUG] ChainGPT Chat initialized with default API key');
+            } else {
+                throw new Error('No API key available. Please provide one or check configuration.');
+            }
         }
         
-        this.config.apiKey = apiKey;
-        localStorage.setItem('chaingpt-chat-api-key', apiKey);
-        localStorage.setItem('chaingpt-chat-initialized', 'true');
-        
-        console.log('[DEBUG] ChainGPT Chat initialized with API key');
+        this.config.initialized = true;
         return true;
     },
 
@@ -42,19 +54,64 @@ const ChainGPTChat = {
     },
 
     /**
-     * Get API key
+     * Get default API key from config (production or fallback)
+     */
+    getDefaultApiKey: function() {
+        if (window.OmegaConfig && window.OmegaConfig.CHAINGPT) {
+            // Use the centralized API key getter
+            if (window.OmegaConfig.CHAINGPT.getApiKey) {
+                return window.OmegaConfig.CHAINGPT.getApiKey();
+            }
+            // Fallback to old method
+            if (window.OmegaConfig.CHAINGPT.DEFAULT_API_KEYS) {
+                return window.OmegaConfig.CHAINGPT.DEFAULT_API_KEYS[this.config.currentKeyIndex];
+            }
+        }
+        return null;
+    },
+
+    /**
+     * Get API key (user key takes priority, then default)
      */
     getApiKey: function() {
-        return this.config.apiKey || localStorage.getItem('chaingpt-chat-api-key');
+        // First try user's custom API key
+        const userKey = localStorage.getItem('chaingpt-chat-api-key');
+        if (userKey) {
+            return userKey;
+        }
+        
+        // Fall back to default API key
+        return this.getDefaultApiKey();
+    },
+
+    /**
+     * Try next API key if current one fails
+     */
+    tryNextApiKey: function() {
+        if (window.OmegaConfig && window.OmegaConfig.CHAINGPT && window.OmegaConfig.CHAINGPT.DEFAULT_API_KEYS) {
+            const defaultKeys = window.OmegaConfig.CHAINGPT.DEFAULT_API_KEYS;
+            if (defaultKeys.length > 1) {
+                this.config.currentKeyIndex = (this.config.currentKeyIndex + 1) % defaultKeys.length;
+                console.log(`[DEBUG] Trying next API key (index: ${this.config.currentKeyIndex})`);
+                return this.getDefaultApiKey();
+            }
+        }
+        return null;
     },
 
     /**
      * Create chat blob (single response)
      */
     createChatBlob: async function(options) {
-        const apiKey = this.getApiKey();
+        let apiKey = this.getApiKey();
         if (!apiKey) {
-            throw new Error('Not initialized. Use: chat init <api-key>');
+            // Try to auto-initialize with default key
+            try {
+                this.init();
+                apiKey = this.getApiKey();
+            } catch (error) {
+                throw new Error('Not initialized. Use: chat init [api-key] or chat init (for default key)');
+            }
         }
 
         const payload = {
@@ -88,6 +145,16 @@ const ChainGPTChat = {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
+            
+            // If it's an authentication error and we have fallback keys, try next key
+            if ((response.status === 401 || response.status === 403) && !localStorage.getItem('chaingpt-chat-api-key')) {
+                const nextKey = this.tryNextApiKey();
+                if (nextKey) {
+                    console.log('[DEBUG] Retrying with next API key...');
+                    return this.createChatBlob(options);
+                }
+            }
+            
             throw new Error(`API Error: ${response.status} - ${errorData.message || response.statusText}`);
         }
 
@@ -210,19 +277,13 @@ const ChainGPTChatCommands = {
     },
 
     /**
-     * Initialize with API key
+     * Initialize with API key (optional)
      */
     handleInit: async function(terminal, args) {
         console.log('[DEBUG] handleInit called with args:', args);
         
-        if (args.length < 2) {
-            terminal.log('❌ Usage: chat init <api-key>', 'error');
-            terminal.log('💡 Get your API key from: https://api.chaingpt.org', 'info');
-            return;
-        }
-
-        const apiKey = args[1];
-        console.log('[DEBUG] API Key received:', apiKey ? 'Present' : 'Missing');
+        const apiKey = args.length >= 2 ? args[1] : null;
+        console.log('[DEBUG] API Key received:', apiKey ? 'Present' : 'Using default');
         
         try {
             ChainGPTChat.init(apiKey);
@@ -233,9 +294,15 @@ const ChainGPTChatCommands = {
             console.log('[DEBUG] Is initialized after init:', isInit);
             console.log('[DEBUG] API key in localStorage:', localStorage.getItem('chaingpt-chat-api-key') ? 'Present' : 'Missing');
             
-            terminal.log('✅ ChainGPT Chat initialized successfully!', 'success');
-            terminal.log('🤖 Ready to chat with Web3 AI assistant', 'info');
-            terminal.log('💡 Try: chat ask "What is ChainGPT?"', 'info');
+            if (apiKey) {
+                terminal.log('[+] ChainGPT Chat initialized with your API key!', 'success');
+                terminal.log('[+] Ready to chat with Web3 AI assistant', 'info');
+            } else {
+                terminal.log('[+] ChainGPT Chat initialized with default API key!', 'success');
+                terminal.log('[+] Ready to chat with Web3 AI assistant', 'info');
+                terminal.log('[!] Using default key for testing. Use "chat init <your-api-key>" for your own key', 'info');
+            }
+            terminal.log('[+] Try: chat ask "What is ChainGPT?"', 'info');
         } catch (error) {
             console.log('[DEBUG] Initialization error:', error);
             terminal.log(`❌ Initialization failed: ${error.message}`, 'error');
@@ -626,11 +693,12 @@ const ChainGPTChatCommands = {
      * Show help
      */
     handleHelp: function(terminal) {
-        terminal.log('🤖 ChainGPT Web3 AI Chatbot & LLM', 'success');
+        terminal.log('[+] ChainGPT Web3 AI Chatbot & LLM', 'success');
         terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
         terminal.log('');
-        terminal.log('🔧 SETUP & CONFIGURATION:', 'info');
-        terminal.log('  chat init <api-key>           Initialize with your API key', 'output');
+        terminal.log('[!] SETUP & CONFIGURATION:', 'info');
+        terminal.log('  chat init                     Initialize with default API key (for testing)', 'output');
+        terminal.log('  chat init <api-key>           Initialize with your own API key', 'output');
         terminal.log('  chat test                     Test API connection', 'output');
         terminal.log('');
         terminal.log('💬 CHAT COMMANDS:', 'info');
@@ -660,3 +728,13 @@ const ChainGPTChatCommands = {
 window.ChainGPTChatCommands = ChainGPTChatCommands;
 
 console.log('[DEBUG] ✅ ChainGPT Web3 AI Chatbot loaded successfully');
+
+// Auto-initialize with default key if config is available
+if (window.OmegaConfig && window.OmegaConfig.CHAINGPT && window.OmegaConfig.CHAINGPT.AUTO_INITIALIZE) {
+    try {
+        ChainGPTChat.init();
+        console.log('[DEBUG] ChainGPT Chat auto-initialized with default key');
+    } catch (error) {
+        console.log('[DEBUG] ChainGPT Chat auto-initialization failed:', error.message);
+    }
+}

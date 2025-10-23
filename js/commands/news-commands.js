@@ -11,7 +11,7 @@ window.OmegaCommands.News = {
         if (window.OmegaNewsReader) {
             await window.OmegaNewsReader.openPanel();
         } else {
-            terminal.log('❌ News Reader not loaded. Please refresh.', 'error');
+            terminal.log('[!] News Reader not loaded. Please refresh.', 'error');
         }
     },
 
@@ -20,13 +20,13 @@ window.OmegaCommands.News = {
         if (window.OmegaNewsReader) {
             window.OmegaNewsReader.closePanel();
         } else {
-            terminal.log('❌ News Reader not loaded.', 'error');
+            terminal.log('[!] News Reader not loaded.', 'error');
         }
     },
 
     // Help command
     help: function(terminal) {
-        terminal.log('📰 News Reader Commands:', 'info');
+        terminal.log('News Reader Commands:', 'info');
         terminal.log('', 'output');
         terminal.log('  news open              Open news reader panel', 'info');
         terminal.log('  news close             Close news reader panel', 'info');
@@ -38,7 +38,7 @@ window.OmegaCommands.News = {
         terminal.log('  news eth               Ethereum news', 'info');
         terminal.log('  news sol               Solana news', 'info');
         terminal.log('', 'output');
-        terminal.log('💡 Use "news open" to view news in a modern sidebar panel!', 'success');
+        terminal.log('Use "news open" to view news in a modern sidebar panel!', 'success');
     },
 
     // Main news command router
@@ -71,13 +71,13 @@ window.OmegaCommands.News = {
                 if (window.CryptoNewsCommands && window.CryptoNewsCommands.news) {
                     await window.CryptoNewsCommands.news(terminal, args);
                 } else {
-                    terminal.log(`❌ Unknown news command: ${subCommand}`, 'error');
-                    terminal.log('💡 Type "news help" for available commands', 'info');
+                    terminal.log(`[!] Unknown news command: ${subCommand}`, 'error');
+                    terminal.log('Type "news help" for available commands', 'info');
                 }
                 break;
         }
     }
 };
 
-console.log('📰 News Commands Module loaded');
+console.log('[+] News Commands Module loaded');
 

@@ -336,16 +336,101 @@ window.OmegaConfig = {
         'spotify', 'spotify open', 'spotify connect', 'spotify disconnect', 'spotify play', 'spotify pause', 'spotify next', 'spotify prev', 'spotify search', 'spotify close', 'spotify help', 'music',
         'youtube', 'youtube open', 'youtube close', 'youtube search', 'youtube play', 'youtube pause', 'youtube next', 'youtube prev', 'youtube mute', 'youtube unmute', 'youtube help', 'yt', 'video',
         'referral', 'referral create', 'referral stats', 'referral share', 'referral leaderboard', 'referral dashboard', 'referral help', 'refer', 'ambassador',
-        'news', 'news open', 'news close', 'news latest', 'news hot', 'news help', 'perp', 'perps', 'perp open', 'perp close'
+        'news', 'news open', 'news close', 'news latest', 'news hot', 'news help', 'perp', 'perps', 'perp open', 'perp close',
+        'chat', 'chat init', 'chat ask', 'chat stream', 'chat context', 'chat history', 'chat test', 'chat help',
+        'contract', 'contract init', 'contract generate', 'contract create', 'contract templates', 'contract types', 'contract chains', 'contract test', 'contract help',
+        'auditor', 'auditor init', 'auditor audit', 'auditor check', 'auditor severity', 'auditor levels', 'auditor categories', 'auditor test', 'auditor help'
     ],
     
     // Theme Options
-    THEMES: ['dark', 'light', 'matrix', 'retro', 'powershell', 'executive'],
+    THEMES: ['dark', 'light', 'matrix', 'retro', 'powershell', 'executive', 'modern'],
     
     // Cache Busting URLs
-    CACHE_BUSTER_PARAMS: ['v=', 'v=1752771858262', 'v=20241219']
+    CACHE_BUSTER_PARAMS: ['v=', 'v=1752771858262', 'v=20241219'],
+    
+    // ChainGPT API Configuration
+    CHAINGPT: {
+        // Production API key from environment variable (Vercel)
+        PRODUCTION_API_KEY: null, // Will be loaded dynamically
+        
+        // Fallback API keys for testing (users can override with their own)
+        DEFAULT_API_KEYS: [
+            '5e9305e6-7713-4216-9bed-e554e9bb8d08',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzM2ZGQyZmRiMjk3NzdjMmM5MWE0MzciLCJpYXQiOjE3MzE2MjQyMzl9.vG8xW5tQVqPwJxqCqTqGQp_GiFWxqPKJPTqpR_1MrfI'
+        ],
+        BASE_URL: 'https://api.chaingpt.org',
+        CHAT_ENDPOINT: '/chat/stream',
+        NFT_ENDPOINT: '/nft/generate-nft',
+        SMART_CONTRACT_ENDPOINT: '/chat/stream',
+        AUDITOR_ENDPOINT: '/chat/stream',
+        DEFAULT_MODEL: 'general_assistant',
+        AUTO_INITIALIZE: true,  // Auto-initialize with available keys
+        
+        // Get the best available API key (production first, then defaults)
+        getApiKey: function() {
+            // Priority: Production API key > Default API keys
+            if (this.PRODUCTION_API_KEY) {
+                console.log('[DEBUG] Using production ChainGPT API key from environment');
+                return this.PRODUCTION_API_KEY;
+            }
+            
+            // Fallback to default keys
+            console.log('[DEBUG] Using default ChainGPT API keys');
+            return this.DEFAULT_API_KEYS[0];
+        },
+        
+        // Get all available API keys
+        getAllApiKeys: function() {
+            const keys = [];
+            if (this.PRODUCTION_API_KEY) {
+                keys.push(this.PRODUCTION_API_KEY);
+            }
+            keys.push(...this.DEFAULT_API_KEYS);
+            return keys;
+        },
+        
+        // Load environment variables from API endpoint
+        loadEnvVars: async function() {
+            try {
+                // Try to load from API endpoint (for Vercel deployment)
+                const response = await fetch('/api/env');
+                if (response.ok) {
+                    const envData = await response.json();
+                    if (envData.CHAINGPT_API_KEY) {
+                        this.PRODUCTION_API_KEY = envData.CHAINGPT_API_KEY;
+                        console.log('[DEBUG] Loaded production API key from Vercel environment');
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.log('[DEBUG] Could not load environment variables from API:', error.message);
+            }
+            
+            // Fallback: try to load from window.ENV (build-time injection)
+            if (typeof window !== 'undefined' && window.ENV && window.ENV.CHAINGPT_API_KEY) {
+                this.PRODUCTION_API_KEY = window.ENV.CHAINGPT_API_KEY;
+                console.log('[DEBUG] Loaded production API key from build-time injection');
+                return true;
+            }
+            
+            console.log('[DEBUG] No production API key found, using default keys');
+            return false;
+        }
+    }
 };
 
 // Debug config loading
 console.log('[DEBUG] ✅ Config loaded - RELAYER_URL:', window.OmegaConfig.RELAYER_URL);
-console.log('[DEBUG] ✅ Config loaded - VERSION:', window.OmegaConfig.VERSION); 
+console.log('[DEBUG] ✅ Config loaded - VERSION:', window.OmegaConfig.VERSION);
+
+// Load environment variables when page loads
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', async () => {
+        try {
+            await window.OmegaConfig.CHAINGPT.loadEnvVars();
+            console.log('[DEBUG] ✅ Environment variables loaded');
+        } catch (error) {
+            console.log('[DEBUG] ⚠️ Could not load environment variables:', error.message);
+        }
+    });
+} 

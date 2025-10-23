@@ -343,7 +343,7 @@ class OmegaMinerTerminal {
           const themeDescriptions = OmegaThemes.getThemeDescriptions();
           const description = themeDescriptions[newTheme] || newTheme;
 
-          this.log(`🎨 Theme cycled to: ${newTheme}`, "success");
+          this.log(`Theme cycled to: ${newTheme}`, "success");
           this.log(`   ${description}`, "info");
         }
       });
@@ -809,6 +809,32 @@ class OmegaMinerTerminal {
                 "error"
               );
             }
+          }
+          break;
+        case "contract":
+          // ChainGPT AI Smart Contract Creator
+          console.log("[DEBUG] Contract command called");
+          console.log("[DEBUG] args:", args);
+
+          if (window.ChainGPTSmartContractCommands && window.ChainGPTSmartContractCommands.contract) {
+            console.log("[DEBUG] Using ChainGPT Smart Contract Creator commands");
+            await window.ChainGPTSmartContractCommands.contract(this, args);
+          } else {
+            console.log("[DEBUG] ChainGPT Smart Contract Creator commands not found");
+            this.log("[-] Smart Contract Creator commands not loaded. Please refresh the page.", "error");
+          }
+          break;
+        case "auditor":
+          // ChainGPT AI Smart Contract Auditor
+          console.log("[DEBUG] Auditor command called");
+          console.log("[DEBUG] args:", args);
+
+          if (window.ChainGPTSmartContractAuditorCommands && window.ChainGPTSmartContractAuditorCommands.auditor) {
+            console.log("[DEBUG] Using ChainGPT Smart Contract Auditor commands");
+            await window.ChainGPTSmartContractAuditorCommands.auditor(this, args);
+          } else {
+            console.log("[DEBUG] ChainGPT Smart Contract Auditor commands not found");
+            this.log("[-] Smart Contract Auditor commands not loaded. Please refresh the page.", "error");
           }
           break;
         case "rome":

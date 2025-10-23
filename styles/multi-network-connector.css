@@ -160,30 +160,44 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 4px;
+    background: var(--palette-bg-primary, rgba(0, 0, 0, 0.8));
+    border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3));
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px var(--palette-shadow, rgba(0, 0, 0, 0.3));
+    transition: all var(--transition-fast);
+}
+
+.network-logo-wrapper:hover {
+    background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.9));
+    border-color: var(--palette-primary, #00d4ff);
+    box-shadow: 0 0 20px var(--palette-primary-glow, rgba(0, 212, 255, 0.3));
+    transform: scale(1.05);
 }
 
 .network-logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     object-fit: contain;
-    filter: drop-shadow(0 2px 8px rgba(0, 212, 255, 0.3));
+    filter: drop-shadow(0 2px 8px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)));
     transition: all var(--transition-fast);
 }
 
 .network-button:hover .network-logo {
-    filter: drop-shadow(0 4px 12px rgba(0, 212, 255, 0.6));
+    filter: drop-shadow(0 4px 12px var(--palette-primary-glow, rgba(0, 212, 255, 0.6)));
     transform: scale(1.1);
 }
 
 .network-icon {
     font-size: 32px;
-    filter: drop-shadow(0 0 10px currentColor);
+    filter: drop-shadow(0 0 10px var(--palette-primary-glow, currentColor));
+    color: var(--palette-primary, #00d4ff);
 }
 
 .network-name {
     font-size: 13px;
-    color: var(--cyber-blue-bright);
+    color: var(--palette-primary, #00d4ff);
     text-align: center;
     font-weight: 600;
     font-family: var(--font-tech);
@@ -191,7 +205,7 @@
 
 .network-symbol {
     font-size: 11px;
-    color: var(--cyber-blue-dim);
+    color: var(--palette-text-secondary, #888888);
     font-family: var(--font-mono);
     letter-spacing: 0.5px;
 }

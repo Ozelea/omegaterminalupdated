@@ -1,0 +1,323 @@
+/**
+ * Terminal Output Color Fix
+ * Ensures all terminal output text updates correctly with color palettes and themes
+ */
+
+/* ============================================
+   TERMINAL OUTPUT COLOR INTEGRATION
+   ============================================ */
+
+/* Base terminal output styling with palette variables */
+.terminal-output {
+    color: var(--palette-text-primary, #ffffff) !important;
+    background: transparent !important;
+}
+
+.terminal-line,
+.output-line,
+.log-line {
+    color: var(--palette-text-primary, #ffffff) !important;
+}
+
+/* ============================================
+   PROMPT STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.terminal-prompt,
+.prompt,
+.input-prompt {
+    color: var(--palette-primary, #00d4ff) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)) !important;
+}
+
+.prompt-user {
+    color: var(--palette-accent, #00ff88) !important;
+    text-shadow: 0 0 10px var(--palette-accent-glow, rgba(0, 255, 136, 0.3)) !important;
+}
+
+.prompt-host {
+    color: var(--palette-primary, #00d4ff) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)) !important;
+}
+
+.prompt-path {
+    color: var(--palette-secondary, #9d00ff) !important;
+    text-shadow: 0 0 10px var(--palette-secondary-glow, rgba(157, 0, 255, 0.3)) !important;
+}
+
+.prompt-separator {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.7)) !important;
+}
+
+/* ============================================
+   STATUS MESSAGE STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.text-success,
+.log-success,
+.terminal-line.success,
+.output.success {
+    color: var(--palette-success, #00ff88) !important;
+    background: var(--palette-success-bg, rgba(0, 255, 136, 0.1)) !important;
+    border-left: 3px solid var(--palette-success, #00ff88) !important;
+    padding-left: 8px !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.text-error,
+.log-error,
+.terminal-line.error,
+.output.error {
+    color: var(--palette-error, #ff3366) !important;
+    background: var(--palette-error-bg, rgba(255, 51, 102, 0.1)) !important;
+    border-left: 3px solid var(--palette-error, #ff3366) !important;
+    padding-left: 8px !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.text-warning,
+.log-warning,
+.terminal-line.warning,
+.output.warning {
+    color: var(--palette-warning, #ffaa00) !important;
+    background: var(--palette-warning-bg, rgba(255, 170, 0, 0.1)) !important;
+    border-left: 3px solid var(--palette-warning, #ffaa00) !important;
+    padding-left: 8px !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.text-info,
+.log-info,
+.terminal-line.info,
+.output.info {
+    color: var(--palette-info, #00d4ff) !important;
+    background: var(--palette-info-bg, rgba(0, 212, 255, 0.1)) !important;
+    border-left: 3px solid var(--palette-info, #00d4ff) !important;
+    padding-left: 8px !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+/* ============================================
+   COMMAND INPUT STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+#commandInput,
+.input-field {
+    color: var(--palette-text-primary, #ffffff) !important;
+    background: transparent !important;
+    caret-color: var(--palette-primary, #00d4ff) !important;
+}
+
+#commandInput::placeholder,
+.input-field::placeholder {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.7)) !important;
+    opacity: 0.8 !important;
+}
+
+.terminal-input-section,
+.input-line {
+    border-color: #ffffff !important;
+    background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.1)) !important;
+}
+
+.terminal-input-section:focus-within,
+.input-line:focus-within {
+    border-color: var(--palette-primary, #00d4ff) !important;
+    box-shadow: 0 0 0 2px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)) !important;
+}
+
+/* ============================================
+   SIDEBAR STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.omega-sidebar {
+    background: var(--palette-bg-secondary, rgba(0, 0, 0, 0.3)) !important;
+    border-right-color: var(--palette-border, rgba(255, 255, 255, 0.2)) !important;
+}
+
+.sidebar-title {
+    color: var(--palette-text-primary, #ffffff) !important;
+    border-bottom-color: var(--palette-border, rgba(255, 255, 255, 0.2)) !important;
+}
+
+.sidebar-button {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.8)) !important;
+    border-color: var(--palette-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+.sidebar-button:hover {
+    background: var(--palette-bg-hover, rgba(255, 255, 255, 0.1)) !important;
+    border-color: var(--palette-primary, #00d4ff) !important;
+    color: var(--palette-primary, #00d4ff) !important;
+}
+
+.sub-action-button {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.8)) !important;
+    background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.1)) !important;
+    border-color: var(--palette-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+.sub-action-button:hover {
+    background: var(--palette-bg-hover, rgba(255, 255, 255, 0.1)) !important;
+    border-color: var(--palette-primary, #00d4ff) !important;
+    color: var(--palette-primary, #00d4ff) !important;
+}
+
+/* ============================================
+   STATS PANEL STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.omega-stats {
+    background: var(--palette-bg-secondary, rgba(0, 0, 0, 0.3)) !important;
+    border-color: var(--palette-border, rgba(255, 255, 255, 0.2)) !important;
+}
+
+.stat-card {
+    background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.1)) !important;
+    border-color: var(--palette-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+.stat-label {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.7)) !important;
+}
+
+.stat-number {
+    color: var(--palette-primary, #00d4ff) !important;
+    text-shadow: 0 0 10px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)) !important;
+}
+
+/* ============================================
+   HEADER STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.terminal-header {
+    background: var(--palette-bg-secondary, rgba(0, 0, 0, 0.3)) !important;
+    border-bottom-color: var(--palette-border, rgba(255, 255, 255, 0.2)) !important;
+}
+
+.terminal-title {
+    color: var(--palette-text-primary, #ffffff) !important;
+}
+
+.header-control-btn {
+    color: var(--palette-text-secondary, rgba(255, 255, 255, 0.8)) !important;
+    background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.1)) !important;
+    border-color: var(--palette-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+.header-control-btn:hover {
+    background: var(--palette-bg-hover, rgba(255, 255, 255, 0.1)) !important;
+    border-color: var(--palette-primary, #00d4ff) !important;
+    color: var(--palette-primary, #00d4ff) !important;
+}
+
+/* ============================================
+   SCROLLBAR STYLING WITH PALETTE INTEGRATION
+   ============================================ */
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: var(--palette-primary, #00d4ff) !important;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: var(--palette-primary-light, #33d1ff) !important;
+}
+
+.omega-stats::-webkit-scrollbar-thumb {
+    background: var(--palette-primary, #00d4ff) !important;
+}
+
+.omega-stats::-webkit-scrollbar-thumb:hover {
+    background: var(--palette-primary-light, #33d1ff) !important;
+}
+
+/* ============================================
+   THEME-SPECIFIC OVERRIDES
+   ============================================ */
+
+/* Light mode overrides */
+body.light-mode .terminal-output,
+body.light-mode .terminal-line,
+body.light-mode .output-line {
+    color: var(--palette-text-primary, #1d1d1f) !important;
+}
+
+body.light-mode .terminal-prompt,
+body.light-mode .prompt,
+body.light-mode .input-prompt {
+    color: var(--palette-primary, #007AFF) !important;
+}
+
+body.light-mode #commandInput,
+body.light-mode .input-field {
+    color: var(--palette-text-primary, #1d1d1f) !important;
+}
+
+body.light-mode #commandInput::placeholder,
+body.light-mode .input-field::placeholder {
+    color: var(--palette-text-secondary, rgba(29, 29, 31, 0.6)) !important;
+}
+
+/* Modern UI overrides */
+body.modern-ui-futuristic .terminal-output,
+body.modern-ui-futuristic .terminal-line,
+body.modern-ui-futuristic .output-line {
+    color: var(--modern-text-primary, #ffffff) !important;
+}
+
+body.modern-ui-futuristic .terminal-prompt,
+body.modern-ui-futuristic .prompt,
+body.modern-ui-futuristic .input-prompt {
+    color: var(--modern-primary, #007AFF) !important;
+}
+
+body.modern-ui-futuristic #commandInput,
+body.modern-ui-futuristic .input-field {
+    color: #ffffff !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 400 !important;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Apple UI overrides */
+body.apple-ui .terminal-output,
+body.apple-ui .terminal-line,
+body.apple-ui .output-line {
+    color: var(--apple-text, #1D1D1F) !important;
+}
+
+body.apple-ui .terminal-prompt,
+body.apple-ui .prompt,
+body.apple-ui .input-prompt {
+    color: var(--apple-primary, #007AFF) !important;
+}
+
+body.apple-ui #commandInput,
+body.apple-ui .input-field {
+    color: var(--apple-text, #1D1D1F) !important;
+}
+
+/* ============================================
+   DYNAMIC COLOR UPDATES
+   ============================================ */
+
+/* Ensure all text elements update when palette changes */
+[data-color-palette] .terminal-output,
+[data-color-palette] .terminal-line,
+[data-color-palette] .output-line,
+[data-color-palette] .terminal-prompt,
+[data-color-palette] .prompt,
+[data-color-palette] .input-prompt,
+[data-color-palette] #commandInput,
+[data-color-palette] .input-field {
+    transition: color 0.3s ease, text-shadow 0.3s ease !important;
+}
+
+/* Force color updates on palette change */
+body[data-color-palette] .terminal-output *,
+body[data-color-palette] .terminal-line *,
+body[data-color-palette] .output-line * {
+    transition: color 0.3s ease !important;
+}
