@@ -2151,25 +2151,60 @@
 
     // Color palette cycling function
     cycleColorPalette: function() {
+      // Use the same palette list as color-commands.js
       const palettes = [
         'red', 'anime', 'ocean', 'forest', 'sunset', 'purple', 
-        'cyber', 'gold', 'ice', 'fire', 'mint', 'rose', 'amber', 'slate'
+        'cyber', 'gold', 'ice', 'fire', 'mint', 'rose', 'amber', 'slate',
+        'lavender', 'toxic'
       ];
       
       // Get current palette from localStorage or default to 'cyber'
       const currentPalette = localStorage.getItem('omega-color-palette') || 'cyber';
       const currentIndex = palettes.indexOf(currentPalette);
       
+      console.log('🎨 Color Palette Cycle Debug:', {
+        currentPalette: currentPalette,
+        currentIndex: currentIndex,
+        palettes: palettes
+      });
+      
+      // If current palette not found in list, start from beginning
+      const startIndex = currentIndex >= 0 ? currentIndex : 0;
+      
       // Get next palette (cycle back to start if at end)
-      const nextIndex = (currentIndex + 1) % palettes.length;
+      const nextIndex = (startIndex + 1) % palettes.length;
       const nextPalette = palettes[nextIndex];
+      
+      console.log('🎨 Next palette:', {
+        startIndex: startIndex,
+        nextIndex: nextIndex,
+        nextPalette: nextPalette
+      });
       
       // Execute the color command
       this.executeCommandDirect(`color ${nextPalette}`);
       
-      // Show feedback
+      // Fallback: Directly apply palette if command doesn't work
+      setTimeout(() => {
+        const currentAppliedPalette = document.body.getAttribute('data-color-palette');
+        if (currentAppliedPalette !== nextPalette) {
+          console.log('🎨 Fallback: Directly applying palette', nextPalette);
+          document.body.setAttribute('data-color-palette', nextPalette);
+          localStorage.setItem('omega-color-palette', nextPalette);
+        }
+      }, 500);
+      
+      // Show feedback with more detail
       if (window.terminal && window.terminal.log) {
-        window.terminal.log(`Cycling to ${nextPalette} palette`, 'success');
+        window.terminal.log(`🎨 Color Palette Changed!`, 'success');
+        window.terminal.log(`   From: ${currentPalette} → To: ${nextPalette}`, 'info');
+        window.terminal.log(`   Palette ${nextIndex + 1} of ${palettes.length}`, 'info');
+      }
+      
+      // Also update the palette toggle button if it exists
+      const paletteBtn = document.getElementById('palette-toggle-btn');
+      if (paletteBtn) {
+        paletteBtn.title = `Current: ${nextPalette} | Click to cycle`;
       }
     },
 
