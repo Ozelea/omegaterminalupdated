@@ -987,7 +987,7 @@ window.OmegaCommands.Basic = {
             <div id="faucetInfoBox" style="background: rgba(0, 153, 255, 0.10); border: 1px solid #99ccff; color: #99ccff; padding: 10px 16px; border-radius: 6px; margin: 0 0 12px 0; font-size: 15px;">
                 <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24 hours.<br>
                 If you try to claim again before the cooldown is over, the transaction will fail.<br><br>
-                <b>📱 Platform Notice:</b> Mobile experience is currently being optimized. For the best terminal experience with full features and optimal performance, we recommend using a desktop browser. Mobile support coming soon! 🚀
+                <b>📱 Mobile Optimized:</b> Full mobile support is now active! The terminal automatically adapts to your device for the best experience. Touch-friendly interface with all core features available. 🚀
             </div>
             <div class="terminal-content" id="terminalContent"></div>
             <div class="terminal-input-section">

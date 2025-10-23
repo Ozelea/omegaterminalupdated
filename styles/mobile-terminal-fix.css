@@ -29,6 +29,28 @@
         word-break: break-word !important;
         width: 100% !important;
         display: block !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Platform notice box mobile optimization */
+    #faucetInfoBox {
+        margin: 0 10px 12px 10px !important;
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure all text content fits properly */
+    #faucetInfoBox b {
+        display: block !important;
+        margin-bottom: 4px !important;
+    }
+    
+    #faucetInfoBox br {
+        margin: 4px 0 !important;
     }
     
     /* Terminal content container */
@@ -172,6 +194,89 @@
         word-break: break-all !important;
     }
     
+    /* Welcome message and quick start mobile optimization */
+    .terminal-output .welcome-message,
+    .terminal-output .quick-start {
+        padding: 10px !important;
+        margin: 8px 0 !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Binary code display mobile optimization */
+    .terminal-output .binary-code {
+        font-size: 12px !important;
+        word-break: break-all !important;
+        overflow-wrap: break-word !important;
+        padding: 8px !important;
+        margin: 8px 0 !important;
+    }
+    
+    /* Quick start list mobile optimization */
+    .terminal-output ul {
+        padding-left: 20px !important;
+        margin: 8px 0 !important;
+    }
+    
+    .terminal-output li {
+        margin: 4px 0 !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Access information mobile optimization */
+    .terminal-output .access-info {
+        font-size: 13px !important;
+        padding: 8px !important;
+        margin: 8px 0 !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Note output text mobile optimization */
+    .terminal-output .note,
+    .terminal-output .note-output,
+    .terminal-output [class*="note"],
+    .terminal-output [id*="note"] {
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+        padding: 8px !important;
+        margin: 6px 0 !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* All note-related text elements */
+    .terminal-output .note *,
+    .terminal-output .note-output *,
+    .terminal-output [class*="note"] *,
+    .terminal-output [id*="note"] * {
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Platform notice and info boxes mobile optimization */
+    .terminal-output .platform-notice,
+    .terminal-output .info-box,
+    .terminal-output .notice-box {
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+        padding: 8px 10px !important;
+        margin: 6px 0 !important;
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
     /* Tables */
     table {
         font-size: 12px !important;
@@ -240,6 +345,26 @@
         display: none !important;
         visibility: hidden !important;
         pointer-events: none !important;
+    }
+    
+    /* Force basic terminal mode on mobile */
+    body.mobile-basic-mode {
+        background: #000 !important;
+        color: #00ff00 !important;
+    }
+    
+    body.mobile-basic-mode .omega-dashboard {
+        display: none !important;
+    }
+    
+    body.mobile-basic-mode #terminal {
+        display: block !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 9999 !important;
     }
 }
 
@@ -317,6 +442,37 @@
     #basic-mode-toggle,
     .view-mode-toggle {
         display: none !important;
+    }
+    
+    /* iPhone specific optimizations */
+    @supports (-webkit-touch-callout: none) {
+        .terminal-container,
+        #terminal {
+            height: -webkit-fill-available !important;
+            min-height: -webkit-fill-available !important;
+        }
+        
+        .terminal-output,
+        #output {
+            max-height: calc(-webkit-fill-available - 120px) !important;
+        }
+        
+        /* Ensure proper text rendering on iOS */
+        .terminal-output,
+        #output,
+        #faucetInfoBox {
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+        }
+        
+        /* Note text optimization for iOS */
+        .terminal-output .note,
+        .terminal-output .note-output,
+        .terminal-output [class*="note"],
+        .terminal-output [id*="note"] {
+            font-size: 11px !important;
+            line-height: 1.2 !important;
+        }
     }
 }
 

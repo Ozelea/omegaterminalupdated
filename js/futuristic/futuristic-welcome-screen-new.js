@@ -23,6 +23,9 @@ window.OmegaWelcomeScreen = {
         
         console.log('[OMEGA] Initializing modern futuristic welcome screen...');
         
+        // Check if mobile and auto-select basic mode
+        this.checkMobileAndSetMode();
+        
         this.createWelcomeScreen();
         this.updateViewModeSelection();
         
@@ -60,7 +63,7 @@ window.OmegaWelcomeScreen = {
                         </div>
                         
                         <div class="interface-options">
-                            <button class="interface-option" id="welcomeViewBasic" onclick="window.OmegaWelcomeScreen.selectViewMode('basic')">
+                            <button class="interface-option ${this.selectedViewMode === 'basic' ? 'interface-option-active' : ''}" id="welcomeViewBasic" onclick="window.OmegaWelcomeScreen.selectViewMode('basic')">
                                 <div class="option-icon">
                                     <svg viewBox="0 0 24 24">
                                         <path d="M2,3H22V5H2V3M2,7H22V9H2V7M2,11H22V13H2V11M2,15H22V17H2V15M2,19H22V21H2V19Z"/>
@@ -73,7 +76,7 @@ window.OmegaWelcomeScreen = {
                                 <div class="option-indicator"></div>
                             </button>
                             
-                            <button class="interface-option interface-option-active" id="welcomeViewDashboard" onclick="window.OmegaWelcomeScreen.selectViewMode('futuristic')">
+                            <button class="interface-option ${this.selectedViewMode === 'futuristic' ? 'interface-option-active' : ''} desktop-only-option" id="welcomeViewDashboard" onclick="window.OmegaWelcomeScreen.selectViewMode('futuristic')">
                                 <div class="option-icon">
                                     <svg viewBox="0 0 24 24">
                                         <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
@@ -271,6 +274,41 @@ window.OmegaWelcomeScreen = {
     
     updateViewModeSelection: function() {
         // This will be handled by the new interface selector
+    },
+    
+    checkMobileAndSetMode: function() {
+        // Check if device is mobile
+        const isMobile = window.innerWidth <= 768 || 
+                        /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
+        
+        if (isMobile) {
+            console.log('[OMEGA] Mobile device detected - Auto-selecting Basic Terminal mode');
+            this.selectedViewMode = 'basic';
+            localStorage.setItem('omega-view-mode', 'basic');
+            localStorage.setItem('omega-mobile-mode', 'true');
+        }
+    },
+    
+    skipToTerminal: function() {
+        console.log('[OMEGA] Skipping welcome screen to terminal');
+        
+        // Force basic mode for mobile
+        if (window.MobileBasicMode && window.MobileBasicMode.isMobileMode()) {
+            this.selectedViewMode = 'basic';
+            localStorage.setItem('omega-view-mode', 'basic');
+        }
+        
+        // Hide welcome screen
+        const welcomeScreen = document.getElementById('omegaWelcomeScreen');
+        if (welcomeScreen) {
+            welcomeScreen.classList.add('welcome-exiting');
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 300);
+        }
+        
+        // Show terminal immediately
+        this.transitionToInterface();
     }
 };
 
