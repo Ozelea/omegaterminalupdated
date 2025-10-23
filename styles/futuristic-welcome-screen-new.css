@@ -77,7 +77,7 @@ body.omega-initialized #terminal-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
+    padding: 12px 20px;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--palette-border, rgba(0, 212, 255, 0.1));
@@ -155,8 +155,9 @@ body.omega-initialized #terminal-wrapper {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    gap: 60px;
+    padding: 20px;
+    gap: 30px;
+    overflow: hidden;
 }
 
 /* Logo Section */
@@ -166,7 +167,7 @@ body.omega-initialized #terminal-wrapper {
 }
 
 .welcome-logo-container {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .welcome-brand-text {
@@ -199,7 +200,7 @@ body.omega-initialized #terminal-wrapper {
     color: var(--palette-text-secondary, rgba(0, 212, 255, 0.6));
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 16px;
+    margin-top: 8px;
     opacity: 0.7;
 }
 
@@ -208,7 +209,7 @@ body.omega-initialized #terminal-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
     animation: fadeInUp 1s ease-out 0.3s both;
 }
 
@@ -378,7 +379,7 @@ body.omega-initialized #terminal-wrapper {
 
 .selector-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .selector-title {
@@ -400,7 +401,7 @@ body.omega-initialized #terminal-wrapper {
 
 .interface-options {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .interface-option {
@@ -408,11 +409,11 @@ body.omega-initialized #terminal-wrapper {
     background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.05));
     border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.1));
     border-radius: 12px;
-    padding: 24px 20px;
+    padding: 16px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -534,7 +535,7 @@ body.omega-initialized #terminal-wrapper {
 
 /* Bottom Status */
 .welcome-bottom-status {
-    padding: 20px 30px;
+    padding: 12px 20px;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--palette-border, rgba(0, 212, 255, 0.1));
@@ -564,8 +565,8 @@ body.omega-initialized #terminal-wrapper {
 /* Responsive Design */
 @media (max-width: 768px) {
     .welcome-main-content {
-        padding: 20px;
-        gap: 40px;
+        padding: 15px;
+        gap: 20px;
     }
     
     .welcome-brand-text {
@@ -584,7 +585,7 @@ body.omega-initialized #terminal-wrapper {
     
     .interface-options {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
     
     .welcome-progress-container {
