@@ -63,23 +63,17 @@ window.OmegaWelcomeScreen = {
                 
                 <!-- Main Content Area -->
                 <div class="welcome-main-content">
-                    <!-- Logo Section -->
-                    <div class="welcome-logo-section">
-                        <div class="welcome-logo-container">
-                            <div class="welcome-brand-text">OMEGA</div>
-                            <div class="welcome-brand-subtitle">TERMINAL</div>
-                        </div>
-                        <div class="welcome-tagline">ADVANCED MULTI-CHAIN INTERFACE</div>
-                    </div>
-                    
                     <!-- Loading Section -->
                     <div class="welcome-loading-section">
+                        <!-- Spinner Animation -->
                         <div class="welcome-loading-spinner">
                             <div class="spinner-ring"></div>
                             <div class="spinner-ring"></div>
                             <div class="spinner-ring"></div>
+                            <div class="omega-symbol-container" id="welcomeOmegaSymbol"></div>
                         </div>
                         
+                        <!-- Loading Text -->
                         <div class="welcome-loading-text">
                             <div class="loading-main-text" id="welcomeLoadingText">INITIALIZING OMEGA PROTOCOL...</div>
                             <div class="loading-sub-text" id="welcomeLoadingSubText">Establishing secure connection...</div>
@@ -98,6 +92,7 @@ window.OmegaWelcomeScreen = {
                         <div class="selector-header">
                             <div class="selector-title">SELECT INTERFACE</div>
                             <div class="selector-subtitle">Choose your preferred workspace</div>
+                            <div class="omega-terminal-branding">OMEGA TERMINAL</div>
                         </div>
                         
                         <div class="interface-options">
@@ -108,7 +103,7 @@ window.OmegaWelcomeScreen = {
                                     </svg>
                                 </div>
                                 <div class="option-content">
-                                    <div class="option-title">BASIC TERMINAL</div>
+                                    <div class="option-title">TERMINAL</div>
                                     <div class="option-description">Clean, focused command interface</div>
                                 </div>
                                 <div class="option-indicator"></div>
@@ -129,56 +124,6 @@ window.OmegaWelcomeScreen = {
                         </div>
                     </div>
                     
-                    <!-- System Status Grid -->
-                    <div class="welcome-system-grid">
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">SECURITY</div>
-                                <div class="status-value">LEVEL OMEGA</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">NETWORKS</div>
-                                <div class="status-value">MULTI-CHAIN</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">WALLET</div>
-                                <div class="status-value">READY</div>
-                            </div>
-                        </div>
-                        
-                        <div class="system-status-card">
-                            <div class="status-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                                </svg>
-                            </div>
-                            <div class="status-content">
-                                <div class="status-title">AI</div>
-                                <div class="status-value">ACTIVE</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- Bottom Status -->
@@ -190,11 +135,32 @@ window.OmegaWelcomeScreen = {
         
         document.body.insertAdjacentHTML('beforeend', welcomeHTML);
         
+        // Initialize Omega symbol
+        this.initializeOmegaSymbol();
+        
         // Initialize color integration
         if (window.updateWelcomeScreenColors) {
             setTimeout(() => {
                 window.updateWelcomeScreenColors();
             }, 100);
+        }
+    },
+    
+    initializeOmegaSymbol: function() {
+        const symbolContainer = document.getElementById('welcomeOmegaSymbol');
+        if (symbolContainer && window.OmegaSymbolLogo) {
+            // Create Omega symbol using the proper system
+            const omegaSVG = window.OmegaSymbolLogo.createOmegaSVG({
+                size: 40,
+                color: 'var(--palette-text-primary, #00d4ff)',
+                glowColor: 'var(--palette-primary-glow, rgba(0, 212, 255, 0.6))',
+                className: 'welcome-omega-symbol',
+                showGlow: true
+            });
+            symbolContainer.appendChild(omegaSVG);
+        } else if (symbolContainer) {
+            // Fallback to text if OmegaSymbolLogo is not available
+            symbolContainer.innerHTML = '<div class="omega-symbol-fallback">Ω</div>';
         }
     },
     
@@ -275,6 +241,21 @@ window.OmegaWelcomeScreen = {
     selectViewMode: function(mode) {
         this.selectedViewMode = mode;
         localStorage.setItem('omega-view-mode', mode);
+        
+        // Play different sound effects based on selection
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            if (mode === 'basic') {
+                // Play basic view sound for terminal selection
+                window.OmegaSoundEffects.playBasicViewSound({
+                    volume: 0.8
+                });
+            } else {
+                // Play wookie sound for dashboard selection
+                window.OmegaSoundEffects.playSound('interface-select', {
+                    volume: 0.8
+                });
+            }
+        }
         
         // Update visual selection with smooth animation
         document.querySelectorAll('.interface-option').forEach(option => {

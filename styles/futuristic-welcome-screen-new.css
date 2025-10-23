@@ -160,90 +160,83 @@ body.omega-initialized #terminal-wrapper {
     overflow: hidden;
 }
 
-/* Logo Section */
-.welcome-logo-section {
-    text-align: center;
-    animation: fadeInUp 1s ease-out;
-}
-
-.welcome-logo-container {
-    margin-bottom: 12px;
-}
-
-.welcome-brand-text {
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--palette-text-primary, #00d4ff);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-shadow: 0 0 20px var(--palette-primary-glow, rgba(0, 212, 255, 0.5));
-    animation: brand-glow 3s ease-in-out infinite alternate;
-    margin-bottom: 8px;
-}
-
-@keyframes brand-glow {
-    0% { text-shadow: 0 0 20px var(--palette-primary-glow, rgba(0, 212, 255, 0.5)); }
-    100% { text-shadow: 0 0 30px var(--palette-primary-glow, rgba(0, 212, 255, 0.8)), 0 0 40px var(--palette-primary-glow, rgba(0, 212, 255, 0.3)); }
-}
-
-.welcome-brand-subtitle {
-    font-size: 24px;
-    font-weight: 300;
-    color: var(--palette-text-secondary, rgba(0, 212, 255, 0.7));
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.8;
-}
-
-.welcome-tagline {
-    font-size: 14px;
-    color: var(--palette-text-secondary, rgba(0, 212, 255, 0.6));
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 8px;
-    opacity: 0.7;
-}
-
 /* Loading Section */
 .welcome-loading-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    animation: fadeInUp 1s ease-out 0.3s both;
+    gap: 30px;
+    animation: fadeInUp 1s ease-out;
 }
 
 .welcome-loading-spinner {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.omega-symbol-container {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.welcome-omega-symbol {
+    animation: omega-glow 2s ease-in-out infinite alternate;
+}
+
+.omega-symbol-fallback {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--palette-text-primary, #00d4ff);
+    text-shadow: 0 0 15px var(--palette-primary-glow, rgba(0, 212, 255, 0.6));
+    animation: omega-glow 2s ease-in-out infinite alternate;
+    font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+}
+
+@keyframes omega-glow {
+    0% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
 }
 
 .spinner-ring {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 2px solid transparent;
-    border-top: 2px solid var(--palette-primary, #00d4ff);
+    border: 3px solid transparent;
+    border-top: 3px solid var(--palette-primary, #00d4ff);
     border-radius: 50%;
     animation: spin 2s linear infinite;
 }
 
 .spinner-ring:nth-child(2) {
-    width: 60px;
-    height: 60px;
-    top: 10px;
-    left: 10px;
+    width: 90px;
+    height: 90px;
+    top: 15px;
+    left: 15px;
     border-top-color: var(--palette-secondary, #ff00ff);
     animation-duration: 1.5s;
     animation-direction: reverse;
 }
 
 .spinner-ring:nth-child(3) {
-    width: 40px;
-    height: 40px;
-    top: 20px;
-    left: 20px;
+    width: 60px;
+    height: 60px;
+    top: 30px;
+    left: 30px;
     border-top-color: var(--palette-accent, #00ff88);
     animation-duration: 1s;
 }
@@ -307,74 +300,12 @@ body.omega-initialized #terminal-wrapper {
     text-align: right;
 }
 
-/* System Status Grid */
-.welcome-system-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    width: 100%;
-    max-width: 500px;
-    animation: fadeInUp 1s ease-out 0.6s both;
-}
-
-.system-status-card {
-    background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.05));
-    border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.1));
-    border-radius: 6px;
-    padding: 12px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    min-height: 80px;
-}
-
-.system-status-card:hover {
-    border-color: var(--palette-primary, #00d4ff);
-    box-shadow: 0 0 20px var(--palette-primary-glow, rgba(0, 212, 255, 0.2));
-    transform: translateY(-2px);
-}
-
-.status-icon {
-    width: 20px;
-    height: 20px;
-    color: var(--palette-primary, #00d4ff);
-}
-
-.status-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-}
-
-.status-content {
-    text-align: center;
-}
-
-.status-title {
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--palette-text-secondary, rgba(0, 212, 255, 0.6));
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-}
-
-.status-value {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--palette-text-primary, #00d4ff);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-}
 
 /* Interface Selector */
 .welcome-interface-selector {
     width: 100%;
     max-width: 500px;
-    animation: fadeInUp 1s ease-out 0.9s both;
+    animation: fadeInUp 1s ease-out 0.6s both;
 }
 
 .selector-header {
@@ -397,6 +328,17 @@ body.omega-initialized #terminal-wrapper {
     color: var(--palette-text-secondary, rgba(0, 212, 255, 0.6));
     letter-spacing: 1px;
     opacity: 0.8;
+    margin-bottom: 8px;
+}
+
+.omega-terminal-branding {
+    font-size: 12px;
+    color: var(--palette-text-primary, #00d4ff);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-shadow: 0 0 8px var(--palette-primary-glow, rgba(0, 212, 255, 0.4));
+    opacity: 0.9;
 }
 
 .interface-options {
@@ -569,18 +511,27 @@ body.omega-initialized #terminal-wrapper {
         gap: 20px;
     }
     
-    .welcome-brand-text {
-        font-size: 36px;
-        letter-spacing: 2px;
+    .welcome-loading-spinner {
+        width: 100px;
+        height: 100px;
     }
     
-    .welcome-brand-subtitle {
-        font-size: 18px;
+    .omega-symbol-fallback {
+        font-size: 28px;
     }
     
-    .welcome-system-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+    .spinner-ring:nth-child(2) {
+        width: 75px;
+        height: 75px;
+        top: 12px;
+        left: 12px;
+    }
+    
+    .spinner-ring:nth-child(3) {
+        width: 50px;
+        height: 50px;
+        top: 25px;
+        left: 25px;
     }
     
     .interface-options {
@@ -605,12 +556,27 @@ body.omega-initialized #terminal-wrapper {
         gap: 10px;
     }
     
-    .welcome-brand-text {
-        font-size: 28px;
+    .welcome-loading-spinner {
+        width: 80px;
+        height: 80px;
     }
     
-    .welcome-system-grid {
-        grid-template-columns: 1fr;
+    .omega-symbol-fallback {
+        font-size: 24px;
+    }
+    
+    .spinner-ring:nth-child(2) {
+        width: 60px;
+        height: 60px;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .spinner-ring:nth-child(3) {
+        width: 40px;
+        height: 40px;
+        top: 20px;
+        left: 20px;
     }
 }
 

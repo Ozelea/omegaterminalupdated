@@ -27,6 +27,11 @@ window.OmegaThemes = {
         
         // Handle modern UI theme specially
         if (themeName === 'modern') {
+            // Play modern UI theme sound effect
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                window.OmegaSoundEffects.playModernUIThemeSound();
+            }
+            
             document.body.classList.add('modern-ui-futuristic', 'modern-terminal-ui');
             if (terminal) {
                 terminal.classList.add('modern-ui', 'futuristic-theme');

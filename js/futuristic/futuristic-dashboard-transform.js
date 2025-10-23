@@ -2126,6 +2126,11 @@
     showChart: function (symbol) {
       console.log("Showing chart for:", symbol);
 
+      // Play chart viewer sound effect
+      if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+        window.OmegaSoundEffects.playChartViewerSound();
+      }
+
       // Hide other panels
       const pgtPanel = document.getElementById("pgt-stats-panel");
       if (pgtPanel) pgtPanel.style.display = "none";
@@ -2283,6 +2288,11 @@
       
       // Special handling for Modern UI theme
       if (nextTheme === 'modern') {
+        // Play modern UI theme sound effect
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+          window.OmegaSoundEffects.playModernUIThemeSound();
+        }
+        
         // Activate Modern UI directly
         if (window.terminal && window.terminal.activateAppleUI) {
           window.terminal.activateAppleUI(false); // Light mode

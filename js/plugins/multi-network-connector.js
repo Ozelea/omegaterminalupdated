@@ -317,6 +317,11 @@ window.MultiNetworkConnector = {
             terminal.log(`👛 Address: ${this.formatAddress(accounts[0])}`, 'info');
             terminal.log('', 'info');
             
+            // Play wallet connection success sound
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                window.OmegaSoundEffects.playWalletConnectSound();
+            }
+            
             // CRITICAL FIX: Sync wallet state with OmegaWallet AND terminal
             // This ensures all commands (mine, balance, etc.) can access wallet
             if (window.ethers) {
