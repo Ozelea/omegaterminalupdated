@@ -93,6 +93,42 @@ window.OmegaWelcomeScreen = {
                         </div>
                     </div>
                     
+                    <!-- Interface Selector -->
+                    <div class="welcome-interface-selector">
+                        <div class="selector-header">
+                            <div class="selector-title">SELECT INTERFACE</div>
+                            <div class="selector-subtitle">Choose your preferred workspace</div>
+                        </div>
+                        
+                        <div class="interface-options">
+                            <button class="interface-option ${this.selectedViewMode === 'basic' ? 'interface-option-active' : ''}" id="welcomeViewBasic" onclick="window.OmegaWelcomeScreen.selectViewMode('basic')">
+                                <div class="option-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M2,3H22V5H2V3M2,7H22V9H2V7M2,11H22V13H2V11M2,15H22V17H2V15M2,19H22V21H2V19Z"/>
+                                    </svg>
+                                </div>
+                                <div class="option-content">
+                                    <div class="option-title">BASIC TERMINAL</div>
+                                    <div class="option-description">Clean, focused command interface</div>
+                                </div>
+                                <div class="option-indicator"></div>
+                            </button>
+                            
+                            <button class="interface-option ${this.selectedViewMode === 'futuristic' ? 'interface-option-active' : ''} desktop-only-option" id="welcomeViewDashboard" onclick="window.OmegaWelcomeScreen.selectViewMode('futuristic')">
+                                <div class="option-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
+                                    </svg>
+                                </div>
+                                <div class="option-content">
+                                    <div class="option-title">DASHBOARD</div>
+                                    <div class="option-description">Advanced multi-panel interface</div>
+                                </div>
+                                <div class="option-indicator"></div>
+                            </button>
+                        </div>
+                    </div>
+                    
                     <!-- System Status Grid -->
                     <div class="welcome-system-grid">
                         <div class="system-status-card">
@@ -141,42 +177,6 @@ window.OmegaWelcomeScreen = {
                                 <div class="status-title">AI</div>
                                 <div class="status-value">ACTIVE</div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Interface Selector -->
-                    <div class="welcome-interface-selector">
-                        <div class="selector-header">
-                            <div class="selector-title">SELECT INTERFACE</div>
-                            <div class="selector-subtitle">Choose your preferred workspace</div>
-                        </div>
-                        
-                        <div class="interface-options">
-                            <button class="interface-option ${this.selectedViewMode === 'basic' ? 'interface-option-active' : ''}" id="welcomeViewBasic" onclick="window.OmegaWelcomeScreen.selectViewMode('basic')">
-                                <div class="option-icon">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M2,3H22V5H2V3M2,7H22V9H2V7M2,11H22V13H2V11M2,15H22V17H2V15M2,19H22V21H2V19Z"/>
-                                    </svg>
-                                </div>
-                                <div class="option-content">
-                                    <div class="option-title">BASIC TERMINAL</div>
-                                    <div class="option-description">Clean, focused command interface</div>
-                                </div>
-                                <div class="option-indicator"></div>
-                            </button>
-                            
-                            <button class="interface-option ${this.selectedViewMode === 'futuristic' ? 'interface-option-active' : ''} desktop-only-option" id="welcomeViewDashboard" onclick="window.OmegaWelcomeScreen.selectViewMode('futuristic')">
-                                <div class="option-icon">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/>
-                                    </svg>
-                                </div>
-                                <div class="option-content">
-                                    <div class="option-title">DASHBOARD</div>
-                                    <div class="option-description">Advanced multi-panel interface</div>
-                                </div>
-                                <div class="option-indicator"></div>
-                            </button>
                         </div>
                     </div>
                 </div>
