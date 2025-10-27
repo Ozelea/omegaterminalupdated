@@ -27,11 +27,12 @@
 
     <!-- Mobile Detection - Load First -->
     <script src="js/mobile-basic-mode.js"></script>
-    
+
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
-    <script src="js/modern-ui-input-fix.js"></script>
+    <!-- <script src="js/modern-ui-input-fix.js"></script> -->
+    <!-- File doesn't exist - commented out -->
     <script src="js/core-modern-ui-integration.js"></script>
     <script src="js/utils.js"></script>
 
@@ -39,7 +40,8 @@
     <script src="js/futuristic/futuristic-customizer.js"></script>
     <script src="js/futuristic/terminal-theme-bridge.js"></script>
     <script src="js/futuristic/futuristic-welcome-screen-new.js"></script>
-    <script src="js/futuristic/welcome-screen-fix.js"></script>
+    <!-- <script src="js/futuristic/welcome-screen-fix.js"></script> -->
+    <!-- File doesn't exist - commented out -->
     <script src="js/futuristic/futuristic-dashboard-transform.js"></script>
 
     <!-- UI Components -->
@@ -105,11 +107,11 @@
     <script src="js/plugins/defillama-api-plugin.js"></script>
     <!-- <script src="opensea-nft-plugin.js"></script> REPLACED WITH ENHANCED VERSION -->
     <script src="js/plugins/opensea-enhanced-plugin.js"></script>
-    
+
     <!-- Magic Eden NFT Plugin -->
     <script src="js/plugins/magiceden-plugin.js?v=2.3.0"></script>
     <script src="js/commands/magiceden-commands.js?v=2.3.0"></script>
-    
+
     <!-- Ethereum Collections (Magic Eden) -->
     <script src="js/commands/ethereum-commands.js?v=1.0.0"></script>
 
@@ -128,7 +130,8 @@
     <script src="js/plugins/pgt-terminal-integration.js"></script>
     <script src="js/plugins/multi-network-connector.js"></script>
     <!-- Theme Input Field Fix -->
-    <script src="js/plugins/theme-input-fix.js"></script>
+    <!-- <script src="js/plugins/theme-input-fix.js"></script> -->
+    <!-- File doesn't exist - commented out -->
 
     <!-- Command Modules -->
     <script src="js/commands/basic.js"></script>
@@ -4922,10 +4925,13 @@
                 this.log("💡 Chart will appear in the right panel", "info");
               } else {
                 // Play chart viewer sound effect
-                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                if (
+                  window.OmegaSoundEffects &&
+                  window.OmegaSoundEffects.isSoundEnabled()
+                ) {
                   window.OmegaSoundEffects.playChartViewerSound();
                 }
-                
+
                 if (
                   window.FuturisticDashboard &&
                   window.FuturisticDashboard.showChart
@@ -8111,9 +8117,12 @@
                   }
 
                   this.log("🔍 Checking FAIR balance...", "info");
-                  
+
                   // Play balance/wealth sound effect
-                  if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                  if (
+                    window.OmegaSoundEffects &&
+                    window.OmegaSoundEffects.isSoundEnabled()
+                  ) {
                     window.OmegaSoundEffects.playBalanceWealthSound();
                   }
                   const balance = await provider.getBalance(address);
@@ -13005,7 +13014,11 @@
           this.applyAIProviderUI();
 
           // Play AI toggle sound effect when AI is turned on
-          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled() && provider !== "off") {
+          if (
+            window.OmegaSoundEffects &&
+            window.OmegaSoundEffects.isSoundEnabled() &&
+            provider !== "off"
+          ) {
             window.OmegaSoundEffects.playAIToggleSound();
           }
 
@@ -21481,12 +21494,15 @@
 
             case "balance":
               this.log("💰 Checking MONAD balance...", "info");
-              
+
               // Play balance/wealth sound effect
-              if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+              if (
+                window.OmegaSoundEffects &&
+                window.OmegaSoundEffects.isSoundEnabled()
+              ) {
                 window.OmegaSoundEffects.playBalanceWealthSound();
               }
-              
+
               this.log("MONAD balance checking coming soon!", "info");
               this.log("This will show your MONAD token balance", "output");
               break;
@@ -21672,9 +21688,12 @@
 
           try {
             this.log("💰 Checking Rome Network balance...", "info");
-            
+
             // Play balance/wealth sound effect
-            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            if (
+              window.OmegaSoundEffects &&
+              window.OmegaSoundEffects.isSoundEnabled()
+            ) {
               window.OmegaSoundEffects.playBalanceWealthSound();
             }
 
@@ -23589,7 +23608,7 @@
           );
           try {
             // Use unified server proxy to avoid browser restrictions
-            const proxyUrl = "http://localhost:4000";
+            const proxyUrl = "https://terminal-v1-5-9.onrender.com";
             const url = `${proxyUrl}/polymarket${endpoint}`;
             this.log(`🔧 DEBUG: Making request to: ${url}`, "info");
 
@@ -28369,8 +28388,10 @@
         // init() is already called in the constructor, so we don't need to call it again
       });
     </script>
-    <script src="js/ai-dropdown-fix.js"></script>
-    <script src="js/command-input-fix.js"></script>
+    <!-- <script src="js/ai-dropdown-fix.js"></script> -->
+    <!-- File doesn't exist - commented out -->
+    <!-- <script src="js/command-input-fix.js"></script> -->
+    <!-- File doesn't exist - commented out -->
     <script src="js/welcome-screen-color-integration-new.js"></script>
     <script src="js/terminal-output-color-integration.js"></script>
 
