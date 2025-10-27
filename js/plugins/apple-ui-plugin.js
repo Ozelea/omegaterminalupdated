@@ -45,6 +45,10 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
             
             // Handle Apple UI activation
             if (theme === 'modern' || theme === 'apple' || theme === 'modernui' || theme === 'modern-ui') {
+                // Play modern UI theme sound effect
+                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                    window.OmegaSoundEffects.playModernUIThemeSound();
+                }
                 this.activateAppleUI();
                 localStorage.setItem('omega-terminal-theme', 'modern');
                 return;

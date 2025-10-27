@@ -380,6 +380,11 @@ class OmegaMinerTerminal {
     this.isAIModeOn = provider !== "off";
     localStorage.setItem("omega-ai-provider", provider);
     this.applyAIProviderUI();
+    
+    // Play AI toggle sound effect when AI is turned on
+    if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled() && provider !== "off") {
+      window.OmegaSoundEffects.playAIToggleSound();
+    }
   }
 
   // Reflect provider choice in inputs and header select
@@ -533,14 +538,29 @@ class OmegaMinerTerminal {
 
     // AI Mode handles unknown/natural language commands in the default case below
 
+    // Play command execution sound effect
+    if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+      window.OmegaSoundEffects.playSound('command-execute', {
+        volume: 0.6
+      });
+    }
+
     // Route commands to appropriate modules
     try {
       switch (cmd) {
         // Basic commands
         case "help":
+          // Play help command sound effect
+          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            window.OmegaSoundEffects.playHelpCommandSound();
+          }
           OmegaCommands.Basic.help(this);
           break;
         case "clear":
+          // Play clear terminal sound effect
+          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            window.OmegaSoundEffects.playClearTerminalSound();
+          }
           OmegaCommands.Basic.clear(this);
           break;
         case "theme":

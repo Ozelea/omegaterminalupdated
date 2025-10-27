@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Sound Effects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        button {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00b8e6;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success { background: #2d5a2d; }
+        .error { background: #5a2d2d; }
+        .info { background: #2d4a5a; }
+    </style>
+</head>
+<body>
+    <h1>🔊 Omega Terminal Sound Effects Debug</h1>
+    
+    <div class="test-section">
+        <h2>System Status</h2>
+        <div id="systemStatus"></div>
+        <button onclick="checkSystemStatus()">Check System Status</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Balance Sound Test</h2>
+        <p>Test the balance/wealth sound effect:</p>
+        <button onclick="testBalanceSound()">Test Balance Sound</button>
+        <button onclick="testBalanceSoundDirect()">Test Direct Sound</button>
+        <div id="balanceStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Basic View Sound Test</h2>
+        <p>Test the basic view sound effect:</p>
+        <button onclick="testBasicViewSound()">Test Basic View Sound</button>
+        <button onclick="testBasicViewSoundDirect()">Test Direct Basic View Sound</button>
+        <div id="basicViewStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>All Sounds Test</h2>
+        <button onclick="testAllSounds()">Test All Registered Sounds</button>
+        <div id="allSoundsStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Console Logs</h2>
+        <p>Check browser console (F12) for detailed logs</p>
+        <button onclick="clearConsole()">Clear Console</button>
+    </div>
+
+    <!-- Load the sound effects system -->
+    <script src="js/plugins/omega-sound-effects.js"></script>
+    
+    <script>
+        function checkSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            let status = '';
+            
+            // Check if OmegaSoundEffects is loaded
+            if (window.OmegaSoundEffects) {
+                status += '<div class="status success">✅ OmegaSoundEffects loaded</div>';
+                
+                // Check if enabled
+                const enabled = window.OmegaSoundEffects.isSoundEnabled();
+                status += `<div class="status ${enabled ? 'success' : 'error'}">${enabled ? '✅' : '❌'} Sound effects ${enabled ? 'enabled' : 'disabled'}</div>`;
+                
+                // Check registered sounds
+                const sounds = window.OmegaSoundEffects.getRegisteredSounds();
+                status += `<div class="status info">📋 Registered sounds: ${sounds.length}</div>`;
+                
+                // Check if balance-wealth sound is registered
+                const hasBalanceSound = sounds.some(s => s.name === 'balance-wealth');
+                status += `<div class="status ${hasBalanceSound ? 'success' : 'error'}">${hasBalanceSound ? '✅' : '❌'} Balance-wealth sound ${hasBalanceSound ? 'registered' : 'not registered'}</div>`;
+                
+                // List all sounds
+                status += '<div class="status info"><strong>All sounds:</strong><br>';
+                sounds.forEach(sound => {
+                    status += `• ${sound.name}: ${sound.src}<br>`;
+                });
+                status += '</div>';
+                
+            } else {
+                status += '<div class="status error">❌ OmegaSoundEffects not loaded</div>';
+            }
+            
+            statusDiv.innerHTML = status;
+        }
+        
+        function testBalanceSound() {
+            const statusDiv = document.getElementById('balanceStatus');
+            statusDiv.innerHTML = '<div class="status info">🔄 Testing balance sound...</div>';
+            
+            console.log('[Debug] Testing balance sound...');
+            
+            if (window.OmegaSoundEffects) {
+                try {
+                    window.OmegaSoundEffects.playBalanceWealthSound();
+                    statusDiv.innerHTML = '<div class="status success">✅ Balance sound triggered</div>';
+                } catch (error) {
+                    statusDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                    console.error('[Debug] Error playing balance sound:', error);
+                }
+            } else {
+                statusDiv.innerHTML = '<div class="status error">❌ OmegaSoundEffects not available</div>';
+            }
+        }
+        
+        function testBalanceSoundDirect() {
+            const statusDiv = document.getElementById('balanceStatus');
+            statusDiv.innerHTML = '<div class="status info">🔄 Testing direct sound...</div>';
+            
+            console.log('[Debug] Testing direct sound...');
+            
+            if (window.OmegaSoundEffects) {
+                try {
+                    window.OmegaSoundEffects.playSound('balance-wealth');
+                    statusDiv.innerHTML = '<div class="status success">✅ Direct sound triggered</div>';
+                } catch (error) {
+                    statusDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                    console.error('[Debug] Error playing direct sound:', error);
+                }
+            } else {
+                statusDiv.innerHTML = '<div class="status error">❌ OmegaSoundEffects not available</div>';
+            }
+        }
+        
+        function testBasicViewSound() {
+            const statusDiv = document.getElementById('basicViewStatus');
+            statusDiv.innerHTML = '<div class="status info">🔄 Testing basic view sound...</div>';
+            
+            console.log('[Debug] Testing basic view sound...');
+            
+            if (window.OmegaSoundEffects) {
+                try {
+                    window.OmegaSoundEffects.playBasicViewSound();
+                    statusDiv.innerHTML = '<div class="status success">✅ Basic view sound triggered</div>';
+                } catch (error) {
+                    statusDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                    console.error('[Debug] Error playing basic view sound:', error);
+                }
+            } else {
+                statusDiv.innerHTML = '<div class="status error">❌ OmegaSoundEffects not available</div>';
+            }
+        }
+        
+        function testBasicViewSoundDirect() {
+            const statusDiv = document.getElementById('basicViewStatus');
+            statusDiv.innerHTML = '<div class="status info">🔄 Testing direct basic view sound...</div>';
+            
+            console.log('[Debug] Testing direct basic view sound...');
+            
+            if (window.OmegaSoundEffects) {
+                try {
+                    window.OmegaSoundEffects.playSound('basic-view');
+                    statusDiv.innerHTML = '<div class="status success">✅ Direct basic view sound triggered</div>';
+                } catch (error) {
+                    statusDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                    console.error('[Debug] Error playing direct basic view sound:', error);
+                }
+            } else {
+                statusDiv.innerHTML = '<div class="status error">❌ OmegaSoundEffects not available</div>';
+            }
+        }
+        
+        function testAllSounds() {
+            const statusDiv = document.getElementById('allSoundsStatus');
+            statusDiv.innerHTML = '<div class="status info">🔄 Testing all sounds...</div>';
+            
+            if (window.OmegaSoundEffects) {
+                const sounds = window.OmegaSoundEffects.getRegisteredSounds();
+                let results = '';
+                
+                sounds.forEach((sound, index) => {
+                    setTimeout(() => {
+                        try {
+                            window.OmegaSoundEffects.playSound(sound.name);
+                            results += `<div class="status success">✅ ${sound.name}</div>`;
+                        } catch (error) {
+                            results += `<div class="status error">❌ ${sound.name}: ${error.message}</div>`;
+                        }
+                        
+                        if (index === sounds.length - 1) {
+                            statusDiv.innerHTML = results;
+                        }
+                    }, index * 1000); // Play each sound 1 second apart
+                });
+            } else {
+                statusDiv.innerHTML = '<div class="status error">❌ OmegaSoundEffects not available</div>';
+            }
+        }
+        
+        function clearConsole() {
+            console.clear();
+            console.log('[Debug] Console cleared');
+        }
+        
+        // Auto-check system status on load
+        window.addEventListener('load', () => {
+            setTimeout(checkSystemStatus, 1000);
+        });
+    </script>
+</body>
+</html>

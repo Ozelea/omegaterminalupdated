@@ -258,21 +258,90 @@ const ChainGPTSmartContract = {
                 fullResponse += chunk;
             }
             
-            // Parse the complete response
+            console.log('[DEBUG] Full streaming response:', fullResponse.substring(0, 500) + '...');
+            
+            // Try to parse as JSON first (non-streaming response)
+            try {
+                const jsonResponse = JSON.parse(fullResponse);
+                console.log('[DEBUG] JSON response structure:', Object.keys(jsonResponse));
+                
+                // Handle different JSON response formats
+                if (jsonResponse.data && jsonResponse.data.contract) {
+                    return {
+                        success: true,
+                        data: {
+                            contract: jsonResponse.data.contract,
+                            fullResponse: fullResponse
+                        }
+                    };
+                } else if (jsonResponse.data && jsonResponse.data.bot) {
+                    return {
+                        success: true,
+                        data: {
+                            contract: jsonResponse.data.bot,
+                            fullResponse: fullResponse
+                        }
+                    };
+                } else if (jsonResponse.answer) {
+                    return {
+                        success: true,
+                        data: {
+                            contract: jsonResponse.answer,
+                            fullResponse: fullResponse
+                        }
+                    };
+                } else if (jsonResponse.contract) {
+                    return {
+                        success: true,
+                        data: {
+                            contract: jsonResponse.contract,
+                            fullResponse: fullResponse
+                        }
+                    };
+                }
+            } catch (jsonError) {
+                console.log('[DEBUG] Not JSON response, trying streaming format...');
+            }
+            
+            // Parse streaming response (line-by-line JSON)
             const lines = fullResponse.split('\n').filter(line => line.trim());
             let contractCode = '';
             
             for (const line of lines) {
                 try {
                     const data = JSON.parse(line);
+                    console.log('[DEBUG] Streaming line data:', Object.keys(data));
+                    
+                    // Handle different streaming response formats
                     if (data.content) {
                         contractCode += data.content;
+                    } else if (data.data && data.data.content) {
+                        contractCode += data.data.content;
+                    } else if (data.text) {
+                        contractCode += data.text;
+                    } else if (data.message) {
+                        contractCode += data.message;
+                    } else if (data.answer) {
+                        contractCode += data.answer;
+                    } else if (data.bot) {
+                        contractCode += data.bot;
+                    } else if (typeof data === 'string') {
+                        contractCode += data;
                     }
                 } catch (e) {
-                    // Skip invalid JSON lines
-                    continue;
+                    // If line is not JSON, treat as plain text
+                    if (line.trim()) {
+                        contractCode += line + '\n';
+                    }
                 }
             }
+            
+            // If we still don't have contract code, use the full response
+            if (!contractCode.trim()) {
+                contractCode = fullResponse;
+            }
+            
+            console.log('[DEBUG] Extracted contract code length:', contractCode.length);
             
             return {
                 success: true,
@@ -468,6 +537,8 @@ const ChainGPTSmartContractCommands = {
                 securityLevel: securityLevel
             });
 
+            console.log('[DEBUG] Generation result structure:', result);
+            
             if (result && result.data && result.data.contract) {
                 terminal.log('[+] Smart Contract Generated Successfully!', 'success');
                 terminal.log('');
@@ -511,8 +582,69 @@ const ChainGPTSmartContractCommands = {
                 
                 terminal.logHtml(contractHtml, 'output');
             } else {
-                terminal.log('[-] Unexpected response format', 'error');
-                console.log('[DEBUG] Result structure:', result);
+                // Try to extract contract from different possible locations
+                let contractCode = '';
+                
+                if (result && result.data) {
+                    if (result.data.bot) contractCode = result.data.bot;
+                    else if (result.data.answer) contractCode = result.data.answer;
+                    else if (result.data.text) contractCode = result.data.text;
+                    else if (result.data.message) contractCode = result.data.message;
+                } else if (result && result.answer) {
+                    contractCode = result.answer;
+                } else if (result && result.bot) {
+                    contractCode = result.bot;
+                } else if (typeof result === 'string') {
+                    contractCode = result;
+                }
+                
+                if (contractCode && contractCode.trim()) {
+                    terminal.log('[+] Smart Contract Generated Successfully!', 'success');
+                    terminal.log('');
+                    
+                    const contractHtml = `
+                        <div style="background: linear-gradient(135deg, rgba(0,123,255,0.1), rgba(255,255,255,0.95)); border: 2px solid rgba(0,123,255,0.3); border-radius: 20px; padding: 20px; margin: 20px 0; backdrop-filter: blur(30px); box-shadow: 0 12px 40px rgba(0,123,255,0.2);">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <h3 style="color: #007BFF; margin: 0 0 10px 0; font-size: 1.5em;">⚡ Smart Contract Generated</h3>
+                                <p style="color: #666; margin: 0;">Type: ${contractType} | Blockchain: ${blockchain}</p>
+                            </div>
+                            
+                            <div style="background: rgba(0,0,0,0.8); border-radius: 16px; padding: 20px; margin: 16px 0; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.4; color: #00ff00; overflow-x: auto; position: relative;">
+                                <pre style="margin: 0; white-space: pre-wrap;">${contractCode}</pre>
+                            </div>
+                            
+                            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 16px;">
+                                <button onclick="navigator.clipboard.writeText(\`${contractCode.replace(/`/g, '\\`')}\`); window.terminal && window.terminal.log('📋 Contract code copied to clipboard!', 'success');" style="
+                                    background: linear-gradient(135deg, rgba(0,123,255,0.12), rgba(0,123,255,0.06)); 
+                                    color: #007BFF; 
+                                    border: 1px solid rgba(0,123,255,0.3); 
+                                    padding: 12px 24px; 
+                                    border-radius: 8px; 
+                                    cursor: pointer; 
+                                    font-weight: 600; 
+                                    box-shadow: 0 4px 16px rgba(0,123,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1); 
+                                    transition: all 0.3s ease; 
+                                    font-family: var(--font-tech);
+                                    font-size: 0.9em;
+                                    letter-spacing: 0.5px;
+                                    text-transform: uppercase;
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,123,255,0.3), inset 0 1px 0 rgba(255,255,255,0.15)'; this.style.borderColor='rgba(0,123,255,0.5)'; this.style.background='linear-gradient(135deg, rgba(0,123,255,0.18), rgba(0,123,255,0.1))';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,123,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'; this.style.borderColor='rgba(0,123,255,0.3)'; this.style.background='linear-gradient(135deg, rgba(0,123,255,0.12), rgba(0,123,255,0.06))';">
+                                    <span style="margin-right: 8px; font-size: 1.1em;">📋</span>COPY CODE
+                                </button>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 16px; font-size: 0.9em; color: #666;">
+                                [*] Generated by ChainGPT Solidity LLM | Security Level: ${securityLevel}
+                            </div>
+                        </div>
+                    `;
+                    
+                    terminal.logHtml(contractHtml, 'output');
+                } else {
+                    terminal.log('[-] Unexpected response format', 'error');
+                    console.log('[DEBUG] Result structure:', result);
+                    console.log('[DEBUG] Available keys:', result ? Object.keys(result) : 'No result object');
+                }
             }
         } catch (error) {
             terminal.log(`[-] Contract generation failed: ${error.message}`, 'error');

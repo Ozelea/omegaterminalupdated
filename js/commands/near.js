@@ -349,6 +349,11 @@ window.OmegaCommands.Near = {
                     terminal.log(`🔗 Account: ${event.data.accountId}`, 'success');
                     terminal.log('💡 Try: near balance, near account', 'info');
                     
+                    // Play wallet connection success sound
+                    if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                        window.OmegaSoundEffects.playWalletConnectSound();
+                    }
+                    
                     // Update internal state
                     this.nearAccount = event.data.accountId;
                     
@@ -460,6 +465,11 @@ window.OmegaCommands.Near = {
         }
         
         terminal.log(`💰 Checking NEAR balance for: ${accountId}`, 'info');
+        
+        // Play balance/wealth sound effect
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            window.OmegaSoundEffects.playBalanceWealthSound();
+        }
         
         try {
             // Initialize connection if needed

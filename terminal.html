@@ -25,6 +25,9 @@
     <script src="https://cdn.jsdelivr.net/npm/eth-crypto@2.1.2/dist/lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
 
+    <!-- Mobile Detection - Load First -->
+    <script src="js/mobile-basic-mode.js"></script>
+    
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
@@ -42,6 +45,9 @@
     <!-- UI Components -->
     <script src="ui/svg-icons-replacement.js"></script>
     <script src="ui/omega-symbol-logo.js"></script>
+
+    <!-- Sound Effects System -->
+    <script src="js/plugins/omega-sound-effects.js"></script>
 
     <link rel="stylesheet" href="styles/gui-themes.css" />
     <link rel="stylesheet" href="styles/apple-ui-theme.css" />
@@ -73,6 +79,7 @@
     <link rel="stylesheet" href="styles/youtube-player.css" />
     <link rel="stylesheet" href="styles/news-reader.css" />
     <link rel="stylesheet" href="styles/perps-viewer.css" />
+    <link rel="stylesheet" href="styles/magiceden.css?v=2.0.0" />
     <link rel="stylesheet" href="styles/color-palettes.css" />
     <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
@@ -98,6 +105,13 @@
     <script src="js/plugins/defillama-api-plugin.js"></script>
     <!-- <script src="opensea-nft-plugin.js"></script> REPLACED WITH ENHANCED VERSION -->
     <script src="js/plugins/opensea-enhanced-plugin.js"></script>
+    
+    <!-- Magic Eden NFT Plugin -->
+    <script src="js/plugins/magiceden-plugin.js?v=2.3.0"></script>
+    <script src="js/commands/magiceden-commands.js?v=2.3.0"></script>
+    
+    <!-- Ethereum Collections (Magic Eden) -->
+    <script src="js/commands/ethereum-commands.js?v=1.0.0"></script>
 
     <script src="js/plugins/enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
     <script src="js/commands/chaingpt-chat.js?v=1.0.3"></script>
@@ -4907,6 +4921,11 @@
                 this.log("", "info");
                 this.log("💡 Chart will appear in the right panel", "info");
               } else {
+                // Play chart viewer sound effect
+                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                  window.OmegaSoundEffects.playChartViewerSound();
+                }
+                
                 if (
                   window.FuturisticDashboard &&
                   window.FuturisticDashboard.showChart
@@ -8092,6 +8111,11 @@
                   }
 
                   this.log("🔍 Checking FAIR balance...", "info");
+                  
+                  // Play balance/wealth sound effect
+                  if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                    window.OmegaSoundEffects.playBalanceWealthSound();
+                  }
                   const balance = await provider.getBalance(address);
                   const fairBalance = this.ethers.utils.formatEther(balance);
 
@@ -12979,6 +13003,11 @@
           this.isAIModeOn = provider !== "off";
           localStorage.setItem("omega-ai-provider", provider);
           this.applyAIProviderUI();
+
+          // Play AI toggle sound effect when AI is turned on
+          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled() && provider !== "off") {
+            window.OmegaSoundEffects.playAIToggleSound();
+          }
 
           // Sync futuristic dashboard labels if available
           if (
@@ -21452,6 +21481,12 @@
 
             case "balance":
               this.log("💰 Checking MONAD balance...", "info");
+              
+              // Play balance/wealth sound effect
+              if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                window.OmegaSoundEffects.playBalanceWealthSound();
+              }
+              
               this.log("MONAD balance checking coming soon!", "info");
               this.log("This will show your MONAD token balance", "output");
               break;
@@ -21637,6 +21672,11 @@
 
           try {
             this.log("💰 Checking Rome Network balance...", "info");
+            
+            // Play balance/wealth sound effect
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+              window.OmegaSoundEffects.playBalanceWealthSound();
+            }
 
             // Check if we're on Rome Network
             const chainId = await window.ethereum.request({

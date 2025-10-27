@@ -20,6 +20,24 @@
             // Call original log
             originalLog(message, type);
             
+            // Play sound effect based on message type
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                switch (type) {
+                    case 'error':
+                        window.OmegaSoundEffects.playSound('error', { volume: 0.6 });
+                        break;
+                    case 'success':
+                        window.OmegaSoundEffects.playSound('success', { volume: 0.7 });
+                        break;
+                    case 'warning':
+                        window.OmegaSoundEffects.playSound('system-notify', { volume: 0.5 });
+                        break;
+                    default:
+                        // No sound for info messages to avoid spam
+                        break;
+                }
+            }
+            
             // Add CSS class to last line added
             setTimeout(() => {
                 const output = document.getElementById('terminalOutput');
