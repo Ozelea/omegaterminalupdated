@@ -4,6 +4,43 @@ console.log("🚀 CACHE BUSTED - UPDATED MODULAR CODE SHOULD BE ACTIVE");
 console.log("🚀 MODULAR STRUCTURE IMPLEMENTED");
 console.log("🚀 TIMESTAMP: " + new Date().toISOString());
 
+// AI Dropdown Color Coding Function
+function updateAIDropdownColors(dropdown, value) {
+  if (!dropdown) return;
+  
+  // Define colors for different AI states
+  const colors = {
+    off: {
+      border: '#ff4757',      // Red border
+      color: '#ff4757',       // Red text
+      label: '#ff4757'        // Red label
+    },
+    near: {
+      border: '#00ff88',      // Green border
+      color: '#00ff88',       // Green text
+      label: '#00ff88'        // Green label
+    },
+    openai: {
+      border: '#00ff88',      // Green border
+      color: '#00ff88',       // Green text
+      label: '#00ff88'        // Green label
+    }
+  };
+
+  const colorScheme = colors[value] || colors.off;
+  
+  // Update dropdown styles with !important to override CSS (border and text only)
+  dropdown.style.setProperty('border-color', colorScheme.border, 'important');
+  dropdown.style.setProperty('color', colorScheme.color, 'important');
+  
+  // Update dropdown arrow color
+  dropdown.style.setProperty('background-image', 
+    `linear-gradient(45deg, transparent 50%, ${colorScheme.color} 50%), linear-gradient(135deg, ${colorScheme.color} 50%, transparent 50%)`, 
+    'important');
+  
+  console.log(`AI Dropdown colors updated: ${value} - ${colorScheme.color}`);
+}
+
 // Version check and cache busting
 console.log("🚀 Checking cache bust status...");
 OmegaUtils.checkCacheBust();
@@ -230,7 +267,13 @@ document.addEventListener("DOMContentLoaded", function () {
               } else {
                 localStorage.setItem("omega-ai-provider", e.target.value);
               }
+              // Update colors for this dropdown
+              updateAIDropdownColors(select, e.target.value);
             });
+            
+            // Initialize colors for this dropdown
+            const savedProvider = localStorage.getItem("omega-ai-provider") || "off";
+            updateAIDropdownColors(select, savedProvider);
           }
         }
       } catch (e) {

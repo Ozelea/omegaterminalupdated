@@ -98,8 +98,8 @@ window.OmegaSymbolLogo = {
     createHeaderLogo: function() {
         return this.createOmegaSVG({
             size: 32,
-            color: '#ffffff',
-            glowColor: 'rgba(255, 255, 255, 0.6)',
+            color: 'var(--palette-primary, #ffffff)',
+            glowColor: 'var(--palette-primary-glow, rgba(255, 255, 255, 0.6))',
             className: 'header-omega-svg',
             showOuterRing: false,
             showGlow: true
@@ -110,8 +110,8 @@ window.OmegaSymbolLogo = {
     createWelcomeLogo: function() {
         return this.createOmegaSVG({
             size: 120,
-            color: '#ffffff',
-            glowColor: 'rgba(255, 255, 255, 0.8)',
+            color: 'var(--palette-primary, #ffffff)',
+            glowColor: 'var(--palette-primary-glow, rgba(255, 255, 255, 0.8))',
             className: 'welcome-omega-svg',
             showOuterRing: false,
             showGlow: true
@@ -122,8 +122,8 @@ window.OmegaSymbolLogo = {
     createNetworkLogo: function() {
         return this.createOmegaSVG({
             size: 48,
-            color: 'var(--matrix-green, #00ff88)',
-            glowColor: 'rgba(0, 255, 136, 0.5)',
+            color: 'var(--palette-primary, #00d4ff)',
+            glowColor: 'var(--palette-primary-glow, rgba(0, 212, 255, 0.5))',
             className: 'network-omega-svg',
             showOuterRing: false,
             showGlow: true

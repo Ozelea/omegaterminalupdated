@@ -1,0 +1,164 @@
+/* Magic Eden Plugin Styles for Omega Terminal */
+
+/* Magic Eden Activity Cards */
+.me-activity-card {
+    margin: 6px 0;
+    line-height: 1.4;
+    font-size: 13px;
+    padding: 8px;
+    background: rgba(0, 212, 255, 0.03);
+    border-left: 2px solid rgba(0, 212, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.me-activity-card:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-left-color: rgba(0, 212, 255, 0.6);
+}
+
+/* Magic Eden Stats Container */
+.me-stats-container {
+    background: rgba(0, 212, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.me-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    font-size: 13px;
+}
+
+.me-stat-item {
+    padding: 8px;
+}
+
+.me-stat-label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.me-stat-value {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.me-stat-value.price {
+    color: #00FF88;
+}
+
+.me-stat-value.volume {
+    color: #00D4FF;
+}
+
+/* Magic Eden Headers */
+.me-header {
+    color: var(--cyber-blue, #00D4FF);
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Magic Eden Activity Types */
+.me-activity-type {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.me-activity-type.list {
+    color: #00D4FF;
+}
+
+.me-activity-type.buyNow {
+    color: #00FF88;
+}
+
+.me-activity-type.bid {
+    color: #FFB800;
+}
+
+.me-activity-type.acceptBid {
+    color: #00FF88;
+}
+
+.me-activity-type.delist,
+.me-activity-type.cancelBid {
+    color: #FF3366;
+}
+
+/* Magic Eden Listing Cards */
+.me-listing-card {
+    margin: 6px 0;
+    line-height: 1.4;
+    font-size: 13px;
+    padding: 8px;
+    background: rgba(0, 212, 255, 0.03);
+    border-left: 2px solid rgba(0, 212, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.me-listing-card:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-left-color: rgba(0, 212, 255, 0.6);
+}
+
+/* Magic Eden Price Display */
+.me-price {
+    color: #00FF88;
+    font-weight: bold;
+}
+
+.me-price-sol {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 4px;
+}
+
+/* Magic Eden Address/Signature Display */
+.me-address {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+}
+
+.me-signature {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+/* Magic Eden Index Numbers */
+.me-index {
+    color: rgba(0, 212, 255, 0.5);
+    font-size: 11px;
+}
+
+/* Magic Eden Emoji */
+.me-emoji {
+    font-size: 16px;
+    margin: 0 6px;
+}
+
+/* Magic Eden Separator */
+.me-separator {
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 8px;
+}
+
+/* Magic Eden Timestamp */
+.me-timestamp {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .me-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

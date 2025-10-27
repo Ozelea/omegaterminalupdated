@@ -25,21 +25,29 @@
     <script src="https://cdn.jsdelivr.net/npm/eth-crypto@2.1.2/dist/lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
 
+    <!-- Mobile Detection - Load First -->
+    <script src="js/mobile-basic-mode.js"></script>
+    
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
+    <script src="js/modern-ui-input-fix.js"></script>
+    <script src="js/core-modern-ui-integration.js"></script>
     <script src="js/utils.js"></script>
 
     <!-- Futuristic UI System -->
     <script src="js/futuristic/futuristic-customizer.js"></script>
     <script src="js/futuristic/terminal-theme-bridge.js"></script>
-    <script src="js/futuristic/futuristic-welcome-screen.js"></script>
+    <script src="js/futuristic/futuristic-welcome-screen-new.js"></script>
     <script src="js/futuristic/welcome-screen-fix.js"></script>
     <script src="js/futuristic/futuristic-dashboard-transform.js"></script>
 
     <!-- UI Components -->
     <script src="ui/svg-icons-replacement.js"></script>
     <script src="ui/omega-symbol-logo.js"></script>
+
+    <!-- Sound Effects System -->
+    <script src="js/plugins/omega-sound-effects.js"></script>
 
     <link rel="stylesheet" href="styles/gui-themes.css" />
     <link rel="stylesheet" href="styles/apple-ui-theme.css" />
@@ -52,7 +60,7 @@
     <link rel="stylesheet" href="styles/futuristic-mode.css" />
     <link rel="stylesheet" href="styles/futuristic-terminal-integration.css" />
     <link rel="stylesheet" href="styles/futuristic-font-override.css" />
-    <link rel="stylesheet" href="styles/futuristic-welcome-screen.css" />
+    <link rel="stylesheet" href="styles/futuristic-welcome-screen-new.css" />
     <link rel="stylesheet" href="styles/svg-icons-system.css" />
     <link rel="stylesheet" href="styles/omega-logos.css" />
     <link rel="stylesheet" href="styles/omega-symbol-logo.css" />
@@ -65,15 +73,23 @@
       href="styles/pgt-tracker-styles.css?v=layout-fix-2"
     />
     <link rel="stylesheet" href="styles/multi-network-connector.css" />
+    <link rel="stylesheet" href="styles/network-logo-styling.css" />
     <link rel="stylesheet" href="styles/chart-viewer.css" />
     <link rel="stylesheet" href="styles/spotify-player.css" />
     <link rel="stylesheet" href="styles/youtube-player.css" />
     <link rel="stylesheet" href="styles/news-reader.css" />
     <link rel="stylesheet" href="styles/perps-viewer.css" />
+    <link rel="stylesheet" href="styles/magiceden.css?v=2.0.0" />
     <link rel="stylesheet" href="styles/color-palettes.css" />
     <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
     <link rel="stylesheet" href="styles/command-input-unified.css" />
+    <link rel="stylesheet" href="styles/button-uniformity-fix.css" />
+    <link rel="stylesheet" href="styles/command-input-cursor-fix.css" />
+    <link rel="stylesheet" href="styles/modern-ui-futuristic-theme.css" />
+    <link rel="stylesheet" href="styles/core-modern-ui-terminal.css" />
+    <link rel="stylesheet" href="styles/modern-ui-command-input-fix.css" />
+    <link rel="stylesheet" href="styles/terminal-output-color-fix.css" />
     <script src="js/plugins/dexscreener-analytics-ultimate.js"></script>
     <script src="js/plugins/omega-spotify-player.js"></script>
     <script src="js/plugins/omega-youtube-player.js"></script>
@@ -89,6 +105,13 @@
     <script src="js/plugins/defillama-api-plugin.js"></script>
     <!-- <script src="opensea-nft-plugin.js"></script> REPLACED WITH ENHANCED VERSION -->
     <script src="js/plugins/opensea-enhanced-plugin.js"></script>
+    
+    <!-- Magic Eden NFT Plugin -->
+    <script src="js/plugins/magiceden-plugin.js?v=2.3.0"></script>
+    <script src="js/commands/magiceden-commands.js?v=2.3.0"></script>
+    
+    <!-- Ethereum Collections (Magic Eden) -->
+    <script src="js/commands/ethereum-commands.js?v=1.0.0"></script>
 
     <script src="js/plugins/enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
     <script src="js/commands/chaingpt-chat.js?v=1.0.3"></script>
@@ -122,6 +145,8 @@
     <script src="js/commands/remaining.js?v=1.0.1"></script>
     <script src="js/commands/wallet-commands.js?v=multi-network-3.0"></script>
     <script src="js/commands/chaingpt-nft.js?v=1.0.5"></script>
+    <script src="js/commands/chaingpt-smart-contract.js?v=1.0.0"></script>
+    <script src="js/commands/chaingpt-auditor.js?v=1.0.0"></script>
     <script src="js/commands/crypto-news.js?v=1.0.0"></script>
     <script src="js/commands/youtube.js"></script>
 
@@ -995,7 +1020,7 @@
       }
 
       .input-prompt {
-        color: #00bcf2;
+        color: #ffffff;
         font-weight: 600;
         margin-right: 0;
         font-size: 15px;
@@ -1026,22 +1051,36 @@
       }
 
       .input-field::placeholder {
-        color: #666666;
+        color: #ffffff;
       }
 
-      /* Custom cursor - DISABLED, using native browser caret */
+      /* Custom cursor - ENABLED with enhanced styling */
       .cursor {
-        display: none !important; /* Hide custom cursor */
+        display: inline-block !important; /* Show custom cursor */
+        color: var(--palette-primary, #00d4ff) !important;
+        font-family: "Courier New", monospace !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
+        margin-left: 2px !important;
+        vertical-align: baseline !important;
+        position: relative !important;
+        z-index: 2 !important;
+        animation: cursorBlink 1.2s ease-in-out infinite !important;
+        text-shadow: 0 0 8px var(--palette-primary-glow, rgba(0, 212, 255, 0.4)) !important;
+        transition: all 0.2s ease !important;
       }
 
-      @keyframes cursor-blink {
+      @keyframes cursorBlink {
         0%,
-        49% {
+        50% {
           opacity: 1;
+          transform: scaleY(1);
         }
-        50%,
+        51%,
         100% {
-          opacity: 0;
+          opacity: 0.3;
+          transform: scaleY(0.8);
         }
       }
 
@@ -1286,7 +1325,7 @@
       }
 
       .terminal.light-theme .input-field::placeholder {
-        color: #666666;
+        color: #ffffff;
       }
 
       .terminal.light-theme .cursor {
@@ -1992,6 +2031,93 @@
               margin: 0 4px;
             "
           ></div>
+          <button
+            class="header-control-btn"
+            title="Cycle Color Palette"
+            id="colorPaletteToggle"
+            onclick="window.cycleColorPalette()"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path
+                d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"
+              />
+            </svg>
+            <span>PALETTE</span>
+          </button>
+          <button
+            class="header-control-btn"
+            title="Cycle Theme"
+            id="themeCycleToggle"
+            onclick="window.cycleTheme()"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path
+                d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"
+              />
+            </svg>
+            <span>CYCLE</span>
+          </button>
+          <button
+            class="header-control-btn"
+            title="Cycle Theme"
+            id="themeSelectorToggle"
+            onclick="window.cycleTheme()"
+            style="
+              background: rgba(0, 188, 242, 0.1);
+              border: 1px solid rgba(0, 188, 242, 0.3);
+              border-radius: 6px;
+              padding: 6px 12px;
+              color: #00bcf2;
+              font-family: 'Courier New', monospace;
+              font-size: 11px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            "
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path
+                d="M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,4C16.4,4 20,7.6 20,12C20,16.4 16.4,20 12,20C7.6,20 4,16.4 4,12C4,7.6 7.6,4 12,4M12,6C8.7,6 6,8.7 6,12C6,15.3 8.7,18 12,18C15.3,18 18,15.3 18,12C18,8.7 15.3,6 12,6M12,8C14.2,8 16,9.8 16,12C16,14.2 14.2,16 12,16C9.8,16 8,14.2 8,12C8,9.8 9.8,8 12,8M12,10C10.9,10 10,10.9 10,12C10,13.1 10.9,14 12,14C13.1,14 14,13.1 14,12C14,10.9 13.1,10 12,10Z"
+              />
+            </svg>
+            <span>THEME</span>
+          </button>
           <button
             class="header-control-btn"
             title="Toggle Dark/Light Mode"
@@ -4795,6 +4921,11 @@
                 this.log("", "info");
                 this.log("💡 Chart will appear in the right panel", "info");
               } else {
+                // Play chart viewer sound effect
+                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                  window.OmegaSoundEffects.playChartViewerSound();
+                }
+                
                 if (
                   window.FuturisticDashboard &&
                   window.FuturisticDashboard.showChart
@@ -6620,6 +6751,104 @@
               }
               return;
 
+            case "referral":
+              // Omega Network Referral System
+              console.log("[DEBUG] Referral command detected:", args[1]);
+              console.log(
+                "[DEBUG] OmegaCommands.Referral available:",
+                !!window.OmegaCommands?.Referral
+              );
+
+              if (window.OmegaCommands && window.OmegaCommands.Referral) {
+                console.log(
+                  "[DEBUG] Routing to Omega Network Referral commands"
+                );
+                await window.OmegaCommands.Referral.referral(this, args);
+              } else {
+                console.log(
+                  "[DEBUG] Omega Network Referral commands not found"
+                );
+                this.log(
+                  "❌ Referral commands not loaded. Please refresh the page.",
+                  "error"
+                );
+              }
+              return;
+
+            case "contract":
+              // ChainGPT AI Smart Contract Creator
+              console.log("[DEBUG] Contract command detected:", args[1]);
+              console.log(
+                "[DEBUG] ChainGPTSmartContractCommands available:",
+                !!window.ChainGPTSmartContractCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT contract function available:",
+                !!(
+                  window.ChainGPTSmartContractCommands &&
+                  window.ChainGPTSmartContractCommands.contract
+                )
+              );
+
+              if (
+                window.ChainGPTSmartContractCommands &&
+                window.ChainGPTSmartContractCommands.contract
+              ) {
+                console.log(
+                  "[DEBUG] Routing to ChainGPT Smart Contract Creator commands"
+                );
+                await window.ChainGPTSmartContractCommands.contract(
+                  this,
+                  args.slice(1)
+                );
+              } else {
+                console.log(
+                  "[DEBUG] ChainGPT Smart Contract Creator commands not found"
+                );
+                this.log(
+                  "❌ Smart Contract Creator commands not loaded. Please refresh the page.",
+                  "error"
+                );
+              }
+              return;
+
+            case "auditor":
+              // ChainGPT AI Smart Contract Auditor
+              console.log("[DEBUG] Auditor command detected:", args[1]);
+              console.log(
+                "[DEBUG] ChainGPTSmartContractAuditorCommands available:",
+                !!window.ChainGPTSmartContractAuditorCommands
+              );
+              console.log(
+                "[DEBUG] ChainGPT auditor function available:",
+                !!(
+                  window.ChainGPTSmartContractAuditorCommands &&
+                  window.ChainGPTSmartContractAuditorCommands.auditor
+                )
+              );
+
+              if (
+                window.ChainGPTSmartContractAuditorCommands &&
+                window.ChainGPTSmartContractAuditorCommands.auditor
+              ) {
+                console.log(
+                  "[DEBUG] Routing to ChainGPT Smart Contract Auditor commands"
+                );
+                await window.ChainGPTSmartContractAuditorCommands.auditor(
+                  this,
+                  args.slice(1)
+                );
+              } else {
+                console.log(
+                  "[DEBUG] ChainGPT Smart Contract Auditor commands not found"
+                );
+                this.log(
+                  "❌ Smart Contract Auditor commands not loaded. Please refresh the page.",
+                  "error"
+                );
+              }
+              return;
+
             case "nft":
             case "opensea":
               // Check if it's a ChainGPT AI NFT command
@@ -7882,6 +8111,11 @@
                   }
 
                   this.log("🔍 Checking FAIR balance...", "info");
+                  
+                  // Play balance/wealth sound effect
+                  if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                    window.OmegaSoundEffects.playBalanceWealthSound();
+                  }
                   const balance = await provider.getBalance(address);
                   const fairBalance = this.ethers.utils.formatEther(balance);
 
@@ -9117,8 +9351,17 @@
             case "rome":
               this.handleRomeCommand(args);
               break;
+            case "monad":
+              this.handleMonadCommand(args);
+              break;
             case "kalshi":
-              await this.handleKalshiCommand(args);
+              // Use the kalshi.js implementation
+              if (window.handleKalshiCommand) {
+                await window.handleKalshiCommand(args.slice(1), this);
+              } else {
+                this.log("❌ Kalshi integration not loaded", "error");
+                this.log("💡 Make sure kalshi.js is included", "info");
+              }
               break;
             case "polymarket":
             case "poly":
@@ -11106,7 +11349,68 @@
 
         // Replace old showHelp with unified version
         showHelp() {
-          this.showUnifiedHelp();
+          this.log("╔════════════════════════════════════════╗", "info");
+          this.log("║     OMEGA TERMINAL - COMMAND LIST     ║", "success");
+          this.log("╚════════════════════════════════════════╝", "info");
+          this.log("", "output");
+
+          this.log("🎯 PREDICTION MARKETS", "info");
+          this.log(
+            "  polymarket | poly      Polymarket prediction markets",
+            "output"
+          );
+          this.log(
+            "  kalshi                 Kalshi prediction markets",
+            "output"
+          );
+          this.log("", "output");
+
+          this.log("💼 PORTFOLIO & WALLETS", "info");
+          this.log(
+            "  pgt                    Track wallet portfolios",
+            "output"
+          );
+          this.log("  wallet                 Wallet management", "output");
+          this.log("  connect                Connect wallets", "output");
+          this.log("", "output");
+
+          this.log("🎮 FEATURES & TOOLS", "info");
+          this.log(
+            "  profile                User profile & API keys",
+            "output"
+          );
+          this.log(
+            "  perps                  Perpetuals trading data",
+            "output"
+          );
+          this.log("  news                   Crypto news feed", "output");
+          this.log("  nft                    NFT marketplace data", "output");
+          this.log("  game                   Play terminal games", "output");
+          this.log("  spotify                Spotify player", "output");
+          this.log("  youtube | yt           YouTube player", "output");
+          this.log("", "output");
+
+          this.log("🔗 NETWORKS & CHAINS", "info");
+          this.log("  rome | romechain       Rome Protocol", "output");
+          this.log("  monad                  Monad network", "output");
+          this.log("  near                   NEAR Protocol", "output");
+          this.log("  eclipse                Eclipse network", "output");
+          this.log("", "output");
+
+          this.log("📊 DATA & ANALYTICS", "info");
+          this.log("  dex | dexscreener      DEX analytics", "output");
+          this.log("  defillama | llama      DeFi analytics", "output");
+          this.log("  crypto                 Crypto data", "output");
+          this.log("", "output");
+
+          this.log("⚙️  SYSTEM", "info");
+          this.log("  clear | cls            Clear terminal", "output");
+          this.log("  theme                  Change theme", "output");
+          this.log("  gui                    Switch to GUI mode", "output");
+          this.log("  help | ?               Show this help", "output");
+          this.log("", "output");
+
+          this.log("💡 TIP: Type any command name for detailed help", "info");
         }
 
         detectNetworkFromAddress(address) {
@@ -12699,6 +13003,11 @@
           this.isAIModeOn = provider !== "off";
           localStorage.setItem("omega-ai-provider", provider);
           this.applyAIProviderUI();
+
+          // Play AI toggle sound effect when AI is turned on
+          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled() && provider !== "off") {
+            window.OmegaSoundEffects.playAIToggleSound();
+          }
 
           // Sync futuristic dashboard labels if available
           if (
@@ -14442,21 +14751,24 @@
           );
           this.log("", "info");
           this.log("🎯 SUPPORTED SERVICES:", "info");
-          this.log("  • kalshi     - Kalshi prediction markets", "output");
           this.log("  • alpha      - Alpha Vantage stock data", "output");
           this.log("  • opensea    - OpenSea NFT marketplace", "output");
           this.log("  • magiceden  - Magic Eden NFT marketplace", "output");
           this.log("  • coingecko  - CoinGecko crypto data", "output");
           this.log("", "info");
+          this.log(
+            "💡 Note: Kalshi uses server-side authentication (no client keys needed)",
+            "info"
+          );
+          this.log("", "info");
           this.log("🎯 EXAMPLES:", "info");
           this.log("  profile apikeys list", "info");
-          this.log("  profile apikeys set kalshi YOUR_KALSHI_API_KEY", "info");
           this.log(
             "  profile apikeys set alpha YOUR_ALPHA_VANTAGE_KEY",
             "info"
           );
-          this.log("  profile apikeys show kalshi", "info");
-          this.log("  profile apikeys remove kalshi", "info");
+          this.log("  profile apikeys show alpha", "info");
+          this.log("  profile apikeys remove alpha", "info");
           this.log("", "info");
           this.log("💡 API keys are stored locally in your browser", "info");
         }
@@ -14534,7 +14846,7 @@
             this.log("❌ Please specify a service", "error");
             this.log("Usage: profile apikeys set <service> <key>", "info");
             this.log(
-              "Example: profile apikeys set kalshi YOUR_API_KEY_HERE",
+              "Example: profile apikeys set alpha YOUR_API_KEY_HERE",
               "info"
             );
             return;
@@ -21123,6 +21435,125 @@
           }
         }
 
+        async handleMonadCommand(args) {
+          if (!args || args.length < 2) {
+            this.log("🔷 MONAD NETWORK COMMANDS", "info");
+            this.log("═══════════════════════════", "info");
+            this.log("", "info");
+            this.log("📋 AVAILABLE COMMANDS:", "info");
+            this.log("  monad connect     Connect to MONAD Network", "output");
+            this.log(
+              "  monad balance     Check MONAD Network balance",
+              "output"
+            );
+            this.log(
+              "  monad network     Show MONAD Network information",
+              "output"
+            );
+            this.log("  monad validators  View MONAD validators", "output");
+            this.log("  monad transactions View transaction history", "output");
+            this.log("  monad staking     MONAD staking operations", "output");
+            this.log("  monad governance  MONAD governance features", "output");
+            this.log("  monad help        Show this help message", "output");
+            this.log("", "info");
+            this.log(
+              "💡 MONAD is a high-performance EVM-compatible blockchain",
+              "info"
+            );
+            this.log(
+              "   with advanced consensus and parallel execution",
+              "info"
+            );
+            return;
+          }
+
+          const subcommand = args[1].toLowerCase();
+
+          switch (subcommand) {
+            case "connect":
+              this.log("🔷 Connecting to MONAD Network...", "info");
+              this.log("MONAD Network connection coming soon!", "info");
+              this.log(
+                "This will connect your wallet to the MONAD blockchain",
+                "output"
+              );
+              break;
+
+            case "balance":
+              this.log("💰 Checking MONAD balance...", "info");
+              
+              // Play balance/wealth sound effect
+              if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                window.OmegaSoundEffects.playBalanceWealthSound();
+              }
+              
+              this.log("MONAD balance checking coming soon!", "info");
+              this.log("This will show your MONAD token balance", "output");
+              break;
+
+            case "network":
+              this.log("🌐 MONAD Network Information", "info");
+              this.log("════════════════════════════", "info");
+              this.log("", "info");
+              this.log("🔷 Network: MONAD", "output");
+              this.log("⚡ Consensus: MonadBFT", "output");
+              this.log("🚀 Parallel Execution: Yes", "output");
+              this.log("🔗 EVM Compatible: Yes", "output");
+              this.log("⛽ Gas Model: EIP-1559", "output");
+              this.log("", "info");
+              this.log(
+                "MONAD is a high-performance EVM-compatible blockchain",
+                "info"
+              );
+              this.log(
+                "featuring parallel execution and advanced consensus",
+                "info"
+              );
+              break;
+
+            case "validators":
+              this.log("✅ MONAD Validators", "info");
+              this.log("MONAD validator information coming soon!", "info");
+              this.log(
+                "This will show active validators and their status",
+                "output"
+              );
+              break;
+
+            case "transactions":
+              this.log("📋 MONAD Transaction History", "info");
+              this.log("MONAD transaction history coming soon!", "info");
+              this.log(
+                "This will show your transaction history on MONAD",
+                "output"
+              );
+              break;
+
+            case "staking":
+              this.log("🏦 MONAD Staking", "info");
+              this.log("MONAD staking features coming soon!", "info");
+              this.log("This will allow you to stake MONAD tokens", "output");
+              break;
+
+            case "governance":
+              this.log("🗳️ MONAD Governance", "info");
+              this.log("MONAD governance features coming soon!", "info");
+              this.log(
+                "This will show governance proposals and voting",
+                "output"
+              );
+              break;
+
+            case "help":
+              this.handleMonadCommand(["monad"]);
+              break;
+
+            default:
+              this.log(`Unknown MONAD command: ${subcommand}`, "error");
+              this.log('Type "monad help" for available commands', "info");
+          }
+        }
+
         async connectToRomeNetwork() {
           if (!window.ethereum) {
             this.log(
@@ -21241,6 +21672,11 @@
 
           try {
             this.log("💰 Checking Rome Network balance...", "info");
+            
+            // Play balance/wealth sound effect
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+              window.OmegaSoundEffects.playBalanceWealthSound();
+            }
 
             // Check if we're on Rome Network
             const chainId = await window.ethereum.request({
@@ -22793,851 +23229,6 @@
             }
           }
         }
-
-        // ═══════════════════════════════════════════════════════════════════
-        // KALSHI PREDICTION MARKETS INTEGRATION
-        // ═══════════════════════════════════════════════════════════════════
-
-        async handleKalshiCommand(args) {
-          if (!args || args.length < 2) {
-            this.showKalshiHelp();
-            return;
-          }
-
-          const subcommand = args[1];
-
-          switch (subcommand) {
-            case "help":
-              this.showKalshiHelp();
-              break;
-            case "set-api-key":
-              if (args.length < 3) {
-                this.log("Usage: kalshi set-api-key <api-key-id>", "error");
-                return;
-              }
-              await this.setKalshiApiKey(args[2]);
-              break;
-            case "set-key":
-              if (args.length < 3) {
-                this.log("Usage: kalshi set-key <rsa-private-key>", "error");
-                this.log(
-                  "💡 This stores your RSA private key for Kalshi authentication",
-                  "info"
-                );
-                return;
-              }
-              // Join all arguments after 'set-key' to handle multi-line private keys
-              const fullPrivateKey = args.slice(2).join(" ");
-              await this.setKalshiPrivateKey(fullPrivateKey);
-              break;
-            case "set-private-key":
-              await this.setKalshiPrivateKeyInteractive();
-              break;
-            case "test":
-              this.testKalshiSetup();
-              break;
-            case "markets":
-              await this.getKalshiMarkets(args.slice(2));
-              break;
-            case "events":
-              await this.getKalshiEvents(args.slice(2));
-              break;
-            case "balance":
-              await this.getKalshiBalance();
-              break;
-            case "search":
-              await this.searchKalshiMarkets(args.slice(2).join(" "));
-              break;
-            case "market":
-              await this.getKalshiMarketDetails(args[2]);
-              break;
-            default:
-              this.log(`Unknown Kalshi command: ${subcommand}`, "error");
-              this.showKalshiHelp();
-          }
-        }
-
-        showKalshiHelp() {
-          this.log("📊 KALSHI PREDICTION MARKETS", "info");
-          this.log("═══════════════════════════════════", "info");
-          this.log("", "info");
-          this.log("📋 AVAILABLE COMMANDS:", "info");
-          this.log(
-            "  kalshi help                    Show this help message",
-            "output"
-          );
-          this.log(
-            "  kalshi set-api-key <key-id>    Set your Kalshi API Key ID",
-            "output"
-          );
-          this.log(
-            "  kalshi set-key <private-key>   Set your RSA private key",
-            "output"
-          );
-          this.log(
-            "  kalshi set-private-key         Interactive private key setup",
-            "output"
-          );
-          this.log(
-            "  kalshi test                    Test your Kalshi setup",
-            "output"
-          );
-          this.log(
-            "  kalshi markets                 List available markets",
-            "output"
-          );
-          this.log(
-            "  kalshi events                  List available events",
-            "output"
-          );
-          this.log(
-            "  kalshi balance                 Show your account balance",
-            "output"
-          );
-          this.log(
-            "  kalshi search <query>          Search for markets",
-            "output"
-          );
-          this.log(
-            "  kalshi market <ticker>         Get market details",
-            "output"
-          );
-          this.log("", "info");
-          this.log("🔧 SETUP (Required):", "info");
-          this.log("  1. Get API key ID from Kalshi dashboard", "output");
-          this.log("  2. Set key ID: kalshi set-api-key YOUR_KEY_ID", "output");
-          this.log(
-            "  3. Set private key: kalshi set-private-key (interactive)",
-            "output"
-          );
-          this.log("", "info");
-          this.log("🎯 EXAMPLES:", "info");
-          this.log(
-            "  kalshi set-api-key ed60297a-477f-4857-8dd2-3ebeb4601c51",
-            "info"
-          );
-          this.log("  kalshi markets --status open --limit 10", "info");
-          this.log("  kalshi events --status open", "info");
-          this.log("  kalshi search election", "info");
-          this.log("  kalshi market KXELEC-24", "info");
-          this.log("", "info");
-          this.log(
-            "💡 Get your API key from: https://kalshi.com/developers",
-            "info"
-          );
-        }
-
-        async setKalshiApiKey(key) {
-          if (!key) {
-            this.log("❌ Please provide an API key", "error");
-            this.log("Usage: kalshi set-api-key <your-api-key>", "info");
-            this.log("", "info");
-            this.log(
-              '💡 Tip: Use "profile apikeys set kalshi <key>" to manage all API keys in one place',
-              "info"
-            );
-            return;
-          }
-
-          // Store in both locations for compatibility
-          localStorage.setItem("kalshi_api_key", key);
-
-          // Also store in unified profile API keys system
-          const keys = this.getAllApiKeys();
-          keys["kalshi"] = key;
-          this.saveAllApiKeys(keys);
-
-          this.log("✅ Kalshi API Key set successfully", "success");
-          this.log("💡 Your API key is stored locally and securely", "info");
-          this.log("", "info");
-          this.log(
-            '🎯 TIP: Use "profile apikeys list" to manage all your API keys',
-            "info"
-          );
-        }
-
-        async setKalshiPrivateKey(privateKey) {
-          if (!privateKey) {
-            this.log("❌ Please provide your RSA private key", "error");
-            return;
-          }
-
-          // Validate private key format and length
-          if (privateKey.length < 100) {
-            this.log("❌ Invalid RSA private key (too short)", "error");
-            this.log(
-              "💡 A valid RSA private key should be 1600+ characters long",
-              "info"
-            );
-            return;
-          }
-
-          // Validate PEM format
-          if (
-            !privateKey.includes("-----BEGIN RSA PRIVATE KEY-----") ||
-            !privateKey.includes("-----END RSA PRIVATE KEY-----")
-          ) {
-            this.log("❌ Invalid RSA private key format", "error");
-            this.log(
-              '💡 Key should start with "-----BEGIN RSA PRIVATE KEY-----" and end with "-----END RSA PRIVATE KEY-----"',
-              "info"
-            );
-            return;
-          }
-
-          // Store the RSA private key securely
-          localStorage.setItem("kalshi_private_key", privateKey);
-
-          this.log(
-            `✅ Kalshi RSA Private Key set successfully (${privateKey.length} characters)`,
-            "success"
-          );
-          this.log(
-            "🔐 Your private key is stored locally and securely",
-            "info"
-          );
-          this.log(
-            "💡 You can now use Kalshi commands for authenticated requests",
-            "info"
-          );
-        }
-
-        async setKalshiPrivateKeyInteractive() {
-          this.log("🔐 Kalshi RSA Private Key Setup", "info");
-          this.log("═══════════════════════════════════", "info");
-          this.log("", "info");
-          this.log("📋 Instructions:", "info");
-          this.log(
-            "1. Copy your complete RSA private key from Kalshi",
-            "output"
-          );
-          this.log(
-            "2. Paste it in the input below (include BEGIN and END lines)",
-            "output"
-          );
-          this.log("3. Press Ctrl+Enter when done", "output");
-          this.log("", "info");
-          this.log("💡 Your private key should look like:", "info");
-          this.log("-----BEGIN RSA PRIVATE KEY-----", "output");
-          this.log("MIIEpAIBAAKCAQEA...", "output");
-          this.log("...", "output");
-          this.log("-----END RSA PRIVATE KEY-----", "output");
-          this.log("", "info");
-          this.log("🔑 Paste your private key and press Enter twice:", "info");
-
-          // Create a simple input mechanism
-          const input = document.createElement("textarea");
-          input.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 80%;
-                    height: 300px;
-                    background: #1a1a1a;
-                    color: #ffffff;
-                    border: 2px solid #007AFF;
-                    border-radius: 8px;
-                    padding: 20px;
-                    font-family: 'Courier New', monospace;
-                    font-size: 12px;
-                    z-index: 10000;
-                    resize: vertical;
-                `;
-          input.placeholder =
-            "Paste your complete RSA private key here (including BEGIN and END lines)";
-
-          document.body.appendChild(input);
-          input.focus();
-
-          // Create submit button
-          const submitBtn = document.createElement("button");
-          submitBtn.textContent = "Submit Private Key";
-          submitBtn.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, 200px);
-                    padding: 10px 20px;
-                    background: #007AFF;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    font-size: 14px;
-                    cursor: pointer;
-                    z-index: 10002;
-                `;
-
-          // Handle submission via button or Ctrl+Enter
-          const submitKey = async () => {
-            const privateKey = input.value.trim();
-            document.body.removeChild(input);
-            document.body.removeChild(submitBtn);
-            if (document.body.contains(overlay)) {
-              document.body.removeChild(overlay);
-            }
-
-            if (privateKey) {
-              await this.setKalshiPrivateKey(privateKey);
-            } else {
-              this.log("❌ No private key provided", "error");
-            }
-          };
-
-          submitBtn.addEventListener("click", submitKey);
-          document.body.appendChild(submitBtn);
-
-          input.addEventListener("keydown", async (e) => {
-            if (e.key === "Enter" && e.ctrlKey) {
-              e.preventDefault();
-              await submitKey();
-            }
-          });
-
-          // Add instructions overlay
-          const overlay = document.createElement("div");
-          overlay.style.cssText = `
-                    position: fixed;
-                    top: 10px;
-                    left: 10px;
-                    background: rgba(0, 122, 255, 0.9);
-                    color: white;
-                    padding: 10px;
-                    border-radius: 5px;
-                    font-size: 12px;
-                    z-index: 10001;
-                `;
-          overlay.textContent =
-            "Press Ctrl+Enter or click Submit when done pasting your private key";
-          document.body.appendChild(overlay);
-
-          // Remove overlay when input is submitted
-          input.addEventListener("keydown", () => {
-            if (document.body.contains(overlay)) {
-              document.body.removeChild(overlay);
-            }
-          });
-        }
-
-        testKalshiSetup() {
-          this.log("🧪 Testing Kalshi Setup...", "info");
-
-          // Check API key ID
-          let apiKey = this.getApiKey("kalshi");
-          if (!apiKey) {
-            apiKey = localStorage.getItem("kalshi_api_key");
-          }
-
-          if (apiKey) {
-            this.log(
-              `✅ API Key ID: ${apiKey.substring(0, 8)}...${apiKey.substring(
-                apiKey.length - 8
-              )}`,
-              "success"
-            );
-          } else {
-            this.log("❌ API Key ID not set", "error");
-          }
-
-          // Check RSA private key
-          const privateKey = localStorage.getItem("kalshi_private_key");
-          if (privateKey) {
-            this.log(
-              `✅ RSA Private Key: ${privateKey.substring(0, 20)}...`,
-              "success"
-            );
-          } else {
-            this.log("❌ RSA Private Key not set", "error");
-          }
-
-          // Test connectivity
-          this.log("🌐 Testing API connectivity...", "info");
-          this.makeKalshiRequest("/markets").then((result) => {
-            if (result) {
-              this.log("✅ API connectivity test passed!", "success");
-            } else {
-              this.log("❌ API connectivity test failed", "error");
-            }
-          });
-        }
-
-        async makeKalshiRequest(endpoint, method = "GET", body = null) {
-          // Check profile API keys first, then fall back to legacy storage
-          let apiKey = this.getApiKey("kalshi");
-          if (!apiKey) {
-            apiKey = localStorage.getItem("kalshi_api_key");
-          }
-
-          if (!apiKey) {
-            this.log("❌ Kalshi API Key ID not set", "error");
-            this.log("💡 Set it with: kalshi set-api-key YOUR_KEY_ID", "info");
-            return null;
-          }
-
-          // Get the RSA private key
-          const privateKey = localStorage.getItem("kalshi_private_key");
-          if (!privateKey) {
-            this.log("❌ Kalshi RSA Private Key not set", "error");
-            this.log(
-              '💡 Set it with: kalshi set-key "YOUR_PRIVATE_KEY"',
-              "info"
-            );
-            return null;
-          }
-
-          try {
-            // Generate timestamp
-            const timestamp = Date.now().toString();
-
-            // Create message to sign: timestamp + method + path
-            const messageToSign = timestamp + method + endpoint;
-
-            // Sign the message using RSA-PSS
-            const signature = await this.signWithRSAPSS(
-              privateKey,
-              messageToSign
-            );
-
-            const baseUrl = "https://api.elections.kalshi.com/trade-api/v2";
-            const headers = {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "KALSHI-ACCESS-KEY": apiKey,
-              "KALSHI-ACCESS-TIMESTAMP": timestamp,
-              "KALSHI-ACCESS-SIGNATURE": signature,
-            };
-
-            const config = {
-              method: method,
-              headers: headers,
-            };
-
-            if (body) {
-              config.body = JSON.stringify(body);
-            }
-
-            this.log(
-              `🌐 Making authenticated ${method} request to Kalshi API...`,
-              "info"
-            );
-            const response = await fetch(`${baseUrl}${endpoint}`, config);
-
-            if (!response.ok) {
-              let errorMsg = `HTTP ${response.status}`;
-              try {
-                const errorData = await response.json();
-                errorMsg =
-                  errorData.error?.message || errorData.message || errorMsg;
-              } catch (e) {
-                // Ignore JSON parse errors
-              }
-              throw new Error(errorMsg);
-            }
-
-            return await response.json();
-          } catch (error) {
-            this.log(`❌ Kalshi API Error: ${error.message}`, "error");
-            if (error.message.includes("Failed to fetch")) {
-              this.log(
-                "💡 This is likely a CORS issue. Kalshi API requires server-side authentication.",
-                "info"
-              );
-              this.log(
-                "💡 Consider using a backend proxy or server-side implementation.",
-                "info"
-              );
-            } else if (error.message.includes("signWithRSAPSS")) {
-              this.log(
-                "💡 RSA signing failed. This requires a backend implementation for security.",
-                "info"
-              );
-            }
-            console.error("Kalshi API Error:", error);
-            return null;
-          }
-        }
-
-        async signWithRSAPSS(privateKeyPem, message) {
-          // Note: RSA-PSS signing in browser requires Web Crypto API or a library
-          // For security reasons, private keys should not be used directly in browsers
-          // This is a placeholder that would need proper implementation
-          throw new Error(
-            "RSA-PSS signing requires server-side implementation for security"
-          );
-        }
-
-        async makeKalshiRequestViaProxy(endpoint, method = "GET", body = null) {
-          // Check profile API keys first, then fall back to legacy storage
-          let apiKey = this.getApiKey("kalshi");
-          if (!apiKey) {
-            apiKey = localStorage.getItem("kalshi_api_key");
-          }
-
-          if (!apiKey) {
-            this.log("❌ Kalshi API Key ID not set", "error");
-            this.log("💡 Set it with: kalshi set-api-key YOUR_KEY_ID", "info");
-            return null;
-          }
-
-          // Get the RSA private key
-          const privateKey = localStorage.getItem("kalshi_private_key");
-          if (!privateKey) {
-            this.log("❌ Kalshi RSA Private Key not set", "error");
-            this.log(
-              '💡 Set it with: kalshi set-key "YOUR_PRIVATE_KEY"',
-              "info"
-            );
-            return null;
-          }
-
-          try {
-            const proxyUrl = "http://localhost:3001";
-
-            // Send credentials in request body instead of headers to avoid size limits
-            const requestBody = {
-              apiKey: apiKey,
-              privateKey: privateKey,
-              endpoint: endpoint,
-              method: method,
-              body: body,
-            };
-
-            const config = {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(requestBody),
-            };
-
-            this.log(`🌐 Making request via Kalshi CORS proxy...`, "info");
-            const response = await fetch(`${proxyUrl}/kalshi-proxy`, config);
-
-            if (!response.ok) {
-              let errorMsg = `HTTP ${response.status}`;
-              try {
-                const errorData = await response.json();
-                errorMsg =
-                  errorData.error?.message || errorData.message || errorMsg;
-              } catch (e) {
-                // Ignore JSON parse errors
-              }
-              throw new Error(errorMsg);
-            }
-
-            return await response.json();
-          } catch (error) {
-            this.log(`❌ Kalshi Proxy Error: ${error.message}`, "error");
-            console.error("Kalshi Proxy Error:", error);
-            return null;
-          }
-        }
-
-        async getKalshiMarkets(args) {
-          this.log("📊 Fetching Kalshi markets...", "info");
-
-          // Try proxy first, fall back to direct API
-          let result = await this.makeKalshiRequestViaProxy("/markets");
-          if (!result) {
-            this.log("💡 Proxy failed, trying direct API...", "info");
-            result = await this.makeKalshiRequest("/markets");
-          }
-
-          if (!result) {
-            this.log("❌ Failed to retrieve markets", "error");
-            this.log(
-              "💡 Make sure Kalshi CORS proxy is running on port 3001",
-              "info"
-            );
-            return;
-          }
-
-          this.log(
-            `✅ Found ${result.markets ? result.markets.length : 0} markets`,
-            "success"
-          );
-
-          // Build query parameters from args
-          const params = new URLSearchParams();
-          params.append("limit", "10"); // Default limit
-
-          for (let i = 0; i < args.length; i += 2) {
-            if (args[i].startsWith("--")) {
-              const key = args[i].substring(2);
-              const value = args[i + 1];
-              if (value) {
-                params.set(key, value);
-              }
-            }
-          }
-
-          const endpoint = `/markets?${params.toString()}`;
-          const data = await this.makeKalshiRequest(endpoint);
-
-          if (data && data.markets && Array.isArray(data.markets)) {
-            if (data.markets.length === 0) {
-              this.log("No markets found", "warning");
-              return;
-            }
-
-            this.log(`✅ Found ${data.markets.length} market(s):`, "success");
-            this.log("", "info");
-
-            data.markets.forEach((market, index) => {
-              this.log(`${index + 1}. ${market.title}`, "output");
-              this.log(`   Ticker: ${market.ticker}`, "info");
-              this.log(`   Status: ${market.status}`, "info");
-
-              if (
-                market.yes_ask !== undefined &&
-                market.yes_bid !== undefined
-              ) {
-                this.log(
-                  `   Yes: ${market.yes_bid}¢ / ${market.yes_ask}¢`,
-                  "info"
-                );
-              }
-
-              if (market.close_time) {
-                const closeDate = new Date(market.close_time);
-                this.log(`   Closes: ${closeDate.toLocaleString()}`, "info");
-              }
-
-              this.log("", "info");
-            });
-          } else {
-            this.log("Failed to retrieve markets", "error");
-          }
-        }
-
-        async getKalshiEvents(args) {
-          this.log("📅 Fetching Kalshi events...", "info");
-
-          // Build query parameters
-          const params = new URLSearchParams();
-          params.append("limit", "10"); // Default limit
-
-          for (let i = 0; i < args.length; i += 2) {
-            if (args[i].startsWith("--")) {
-              const key = args[i].substring(2);
-              const value = args[i + 1];
-              if (value) {
-                params.set(key, value);
-              }
-            }
-          }
-
-          const endpoint = `/events?${params.toString()}`;
-          const data = await this.makeKalshiRequest(endpoint);
-
-          if (data && data.events && Array.isArray(data.events)) {
-            if (data.events.length === 0) {
-              this.log("No events found", "warning");
-              return;
-            }
-
-            this.log(`✅ Found ${data.events.length} event(s):`, "success");
-            this.log("", "info");
-
-            data.events.forEach((event, index) => {
-              this.log(`${index + 1}. ${event.title}`, "output");
-              this.log(`   Ticker: ${event.event_ticker}`, "info");
-              this.log(`   Status: ${event.status}`, "info");
-              this.log(`   Category: ${event.category}`, "info");
-
-              if (event.strike_date) {
-                const strikeDate = new Date(event.strike_date);
-                this.log(
-                  `   Strike Date: ${strikeDate.toLocaleDateString()}`,
-                  "info"
-                );
-              }
-
-              if (event.mutually_exclusive !== undefined) {
-                this.log(
-                  `   Mutually Exclusive: ${
-                    event.mutually_exclusive ? "Yes" : "No"
-                  }`,
-                  "info"
-                );
-              }
-
-              this.log("", "info");
-            });
-          } else {
-            this.log("Failed to retrieve events", "error");
-          }
-        }
-
-        async getKalshiBalance() {
-          this.log("💰 Fetching Kalshi balance...", "info");
-
-          const data = await this.makeKalshiRequest("/portfolio/balance");
-
-          if (data && data.balance !== undefined) {
-            this.log("✅ KALSHI ACCOUNT BALANCE:", "success");
-            this.log("", "info");
-
-            // Convert cents to dollars
-            const balanceDollars = (data.balance / 100).toFixed(2);
-            const pnlDollars =
-              data.pnl !== undefined ? (data.pnl / 100).toFixed(2) : "N/A";
-
-            this.log(`💵 Available Balance: $${balanceDollars}`, "output");
-
-            if (data.portfolio_value !== undefined) {
-              const portfolioValueDollars = (
-                data.portfolio_value / 100
-              ).toFixed(2);
-              this.log(
-                `📊 Portfolio Value: $${portfolioValueDollars}`,
-                "output"
-              );
-            }
-
-            if (data.pnl !== undefined) {
-              const pnlColor = data.pnl >= 0 ? "success" : "error";
-              const pnlPrefix = data.pnl >= 0 ? "+" : "";
-              this.log(`${pnlPrefix}$${pnlDollars} PnL`, pnlColor);
-            }
-          } else {
-            this.log("Failed to retrieve balance", "error");
-          }
-        }
-
-        async searchKalshiMarkets(query) {
-          if (!query || query.trim() === "") {
-            this.log("❌ Please provide a search query", "error");
-            this.log("Usage: kalshi search <query>", "info");
-            return;
-          }
-
-          this.log(`🔍 Searching for: "${query}"...`, "info");
-
-          const params = new URLSearchParams();
-          params.append("search", query);
-          params.append("limit", "20");
-
-          const endpoint = `/markets?${params.toString()}`;
-          const data = await this.makeKalshiRequest(endpoint);
-
-          if (data && data.markets && Array.isArray(data.markets)) {
-            if (data.markets.length === 0) {
-              this.log(`No markets found for "${query}"`, "warning");
-              return;
-            }
-
-            this.log(
-              `✅ Found ${data.markets.length} market(s) matching "${query}":`,
-              "success"
-            );
-            this.log("", "info");
-
-            data.markets.forEach((market, index) => {
-              this.log(`${index + 1}. ${market.title}`, "output");
-              this.log(`   Ticker: ${market.ticker}`, "info");
-              this.log(`   Status: ${market.status}`, "info");
-
-              if (
-                market.yes_ask !== undefined &&
-                market.yes_bid !== undefined
-              ) {
-                this.log(
-                  `   Yes: ${market.yes_bid}¢ / ${market.yes_ask}¢`,
-                  "info"
-                );
-              }
-
-              this.log("", "info");
-            });
-          } else {
-            this.log("Search failed", "error");
-          }
-        }
-
-        async getKalshiMarketDetails(ticker) {
-          if (!ticker) {
-            this.log("❌ Please provide a market ticker", "error");
-            this.log("Usage: kalshi market <ticker>", "info");
-            return;
-          }
-
-          this.log(`📊 Fetching details for market: ${ticker}...`, "info");
-
-          const endpoint = `/markets/${ticker}`;
-          const data = await this.makeKalshiRequest(endpoint);
-
-          if (data && data.market) {
-            const market = data.market;
-
-            this.log("✅ MARKET DETAILS:", "success");
-            this.log("", "info");
-            this.log(`📋 Title: ${market.title}`, "output");
-            this.log(`🎫 Ticker: ${market.ticker}`, "info");
-            this.log(`📊 Status: ${market.status}`, "info");
-            this.log(`📂 Category: ${market.category}`, "info");
-
-            if (market.subtitle) {
-              this.log(`📝 Subtitle: ${market.subtitle}`, "info");
-            }
-
-            this.log("", "info");
-            this.log("💰 PRICING:", "info");
-
-            if (market.yes_bid !== undefined && market.yes_ask !== undefined) {
-              this.log(`  Yes Bid: ${market.yes_bid}¢`, "output");
-              this.log(`  Yes Ask: ${market.yes_ask}¢`, "output");
-            }
-
-            if (market.no_bid !== undefined && market.no_ask !== undefined) {
-              this.log(`  No Bid: ${market.no_bid}¢`, "output");
-              this.log(`  No Ask: ${market.no_ask}¢`, "output");
-            }
-
-            if (market.last_price !== undefined) {
-              this.log(`  Last Price: ${market.last_price}¢`, "output");
-            }
-
-            this.log("", "info");
-            this.log("📅 TIMING:", "info");
-
-            if (market.open_time) {
-              const openDate = new Date(market.open_time);
-              this.log(`  Opened: ${openDate.toLocaleString()}`, "info");
-            }
-
-            if (market.close_time) {
-              const closeDate = new Date(market.close_time);
-              this.log(`  Closes: ${closeDate.toLocaleString()}`, "info");
-            }
-
-            if (market.expected_expiration_time) {
-              const expDate = new Date(market.expected_expiration_time);
-              this.log(
-                `  Expected Expiration: ${expDate.toLocaleString()}`,
-                "info"
-              );
-            }
-
-            if (market.volume) {
-              this.log("", "info");
-              this.log(`📊 Volume: ${market.volume} contracts`, "info");
-            }
-
-            if (market.open_interest) {
-              this.log(
-                `📈 Open Interest: ${market.open_interest} contracts`,
-                "info"
-              );
-            }
-          } else {
-            this.log(
-              `Failed to retrieve details for market: ${ticker}`,
-              "error"
-            );
-          }
-        }
       }
 
       // Add this helper function to fund the Omega wallet via relayer
@@ -23997,8 +23588,8 @@
             "info"
           );
           try {
-            // Use CORS proxy to avoid browser restrictions
-            const proxyUrl = "https://polymarket-proxy.onrender.com";
+            // Use unified server proxy to avoid browser restrictions
+            const proxyUrl = "http://localhost:4000";
             const url = `${proxyUrl}/polymarket${endpoint}`;
             this.log(`🔧 DEBUG: Making request to: ${url}`, "info");
 
@@ -24139,7 +23730,7 @@
                                 } active markets found • Future end dates only</p>
                             </div>
                         </div>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px;">
                                 ${sortedMarkets
                                   .slice(0, 12)
                                   .map(
@@ -24149,14 +23740,15 @@
                                         border: 1px solid #333;
                                         border-radius: 12px;
                                         padding: 16px;
-                                        transition: all 0.3s ease;
+                                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                                         position: relative;
                                         cursor: pointer;
                                         height: 280px;
                                         display: flex;
                                         flex-direction: column;
                                         justify-content: space-between;
-                                    " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.3)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#333';">
+                                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                                    " onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 32px rgba(6, 182, 212, 0.4)'; this.style.borderColor='#06b6d4';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.2)'; this.style.borderColor='#333';">
                                         <div style="
                                             position: absolute;
                                             top: 0;
@@ -24245,7 +23837,7 @@
                                         ">
                                             <a href="https://polymarket.com/market/${
                                               market.slug || market.id
-                                            }" target="_blank" style="
+                                            }" target="_blank" title="Trade this market on Polymarket" style="
                                                 background: linear-gradient(135deg, #6b7280, #4b5563);
                                                 color: white;
                                                 padding: 8px 16px;
@@ -24792,7 +24384,7 @@
                                 } highest volume markets</p>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px;">
                             ${trendingMarkets
                               .map(
                                 (market, index) => `
@@ -24801,14 +24393,15 @@
                                     border: 1px solid #333;
                                     border-radius: 12px;
                                     padding: 16px;
-                                    transition: all 0.3s ease;
+                                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                                     position: relative;
                                     cursor: pointer;
                                     height: 280px;
                                     display: flex;
                                     flex-direction: column;
                                     justify-content: space-between;
-                                " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.3)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#333';">
+                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                                " onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 32px rgba(107, 114, 128, 0.4)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.2)'; this.style.borderColor='#333';">
                                     <div style="
                                         position: absolute;
                                         top: 0;
@@ -24878,7 +24471,7 @@
                                     ">
                                         <a href="https://polymarket.com/market/${
                                           market.slug || market.id
-                                        }" target="_blank" style="
+                                        }" target="_blank" title="Trade this market on Polymarket" style="
                                             background: linear-gradient(135deg, #6b7280, #4b5563);
                                             color: white;
                                             padding: 8px 16px;
@@ -25058,7 +24651,7 @@
                                 } events found • Last 6 months</p>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px;">
                             ${recentEvents
                               .slice(0, 12)
                               .map(
@@ -25068,14 +24661,15 @@
                                     border: 1px solid #333;
                                     border-radius: 12px;
                                     padding: 16px;
-                                    transition: all 0.3s ease;
+                                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                                     position: relative;
                                     cursor: pointer;
                                     height: 280px;
                                     display: flex;
                                     flex-direction: column;
                                     justify-content: space-between;
-                                    " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.3)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#333';">
+                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                                    " onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 32px rgba(107, 114, 128, 0.4)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.2)'; this.style.borderColor='#333';">
                                     <div style="
                                         position: absolute;
                                         top: 0;
@@ -25574,7 +25168,7 @@
                                 } events found • Last month</p>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px;">
                             ${recentEvents
                               .map(
                                 (event, index) => `
@@ -25583,14 +25177,15 @@
                                     border: 1px solid #333;
                                     border-radius: 12px;
                                     padding: 16px;
-                                    transition: all 0.3s ease;
+                                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                                     position: relative;
                                     cursor: pointer;
                                     height: 280px;
                                     display: flex;
                                     flex-direction: column;
                                     justify-content: space-between;
-                                    " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.3)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#333';">
+                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                                    " onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 32px rgba(107, 114, 128, 0.4)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.2)'; this.style.borderColor='#333';">
                                     <div style="
                                         position: absolute;
                                         top: 0;
@@ -26089,7 +25684,7 @@
                                     } markets found • Sorted by volume</p>
                                 </div>
                             </div>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px;">
                                 ${sortedMarkets
                                   .slice(0, 12)
                                   .map(
@@ -26099,14 +25694,15 @@
                                         border: 1px solid #333;
                                         border-radius: 12px;
                                         padding: 16px;
-                                        transition: all 0.3s ease;
+                                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                                         position: relative;
                                         cursor: pointer;
                                         height: 280px;
                                         display: flex;
                                         flex-direction: column;
                                         justify-content: space-between;
-                                    " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.3)'; this.style.borderColor='#6b7280';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#333';">
+                                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                                    " onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 32px rgba(6, 182, 212, 0.4)'; this.style.borderColor='#06b6d4';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.2)'; this.style.borderColor='#333';">
                                         <div style="
                                             position: absolute;
                                             top: 0;
@@ -28772,6 +28368,132 @@
         window.terminal = new OmegaMinerTerminal();
         // init() is already called in the constructor, so we don't need to call it again
       });
+    </script>
+    <script src="js/ai-dropdown-fix.js"></script>
+    <script src="js/command-input-fix.js"></script>
+    <script src="js/welcome-screen-color-integration-new.js"></script>
+    <script src="js/terminal-output-color-integration.js"></script>
+
+    <!-- Global Color Palette Cycle Function -->
+    <script>
+      // Global color palette cycle function for header button
+      window.cycleColorPalette = function () {
+        const palettes = [
+          "red",
+          "anime",
+          "ocean",
+          "forest",
+          "sunset",
+          "purple",
+          "cyber",
+          "gold",
+          "ice",
+          "fire",
+          "mint",
+          "rose",
+          "amber",
+          "slate",
+        ];
+
+        // Get current palette from localStorage or default to 'cyber'
+        const currentPalette =
+          localStorage.getItem("omega-color-palette") || "cyber";
+        const currentIndex = palettes.indexOf(currentPalette);
+
+        // Get next palette (cycle back to start if at end)
+        const nextIndex = (currentIndex + 1) % palettes.length;
+        const nextPalette = palettes[nextIndex];
+
+        // Execute the color command
+        if (window.terminal && window.terminal.executeCommand) {
+          window.terminal.executeCommand(`color ${nextPalette}`);
+        } else if (
+          window.FuturisticDashboard &&
+          window.FuturisticDashboard.cycleColorPalette
+        ) {
+          window.FuturisticDashboard.cycleColorPalette();
+        } else {
+          // Fallback: directly set the palette
+          if (window.OmegaCommands && window.OmegaCommands.Color) {
+            window.OmegaCommands.Color.setColorPalette(nextPalette);
+          }
+        }
+
+        // Show feedback
+        if (window.terminal && window.terminal.log) {
+          window.terminal.log(`Cycling to ${nextPalette} palette`, "success");
+        }
+      };
+
+      // Global theme cycle function for header button
+      window.cycleTheme = function () {
+        const themes = [
+          "executive",
+          "modern",
+          "dark",
+          "light",
+          "matrix",
+          "retro",
+          "powershell",
+        ];
+
+        // Get current theme from localStorage or detect from DOM
+        let currentTheme =
+          localStorage.getItem("omega-terminal-theme") || "dark";
+
+        // Check if Modern UI is currently active
+        const terminal =
+          document.getElementById("terminal") ||
+          document.querySelector(".terminal");
+        const isModernUIActive =
+          terminal && terminal.classList.contains("apple-ui");
+
+        if (isModernUIActive) {
+          // If Modern UI is active, we need to deactivate it first
+          if (window.terminal && window.terminal.deactivateAppleUI) {
+            window.terminal.deactivateAppleUI();
+          }
+          currentTheme = "modern"; // Set as current for cycling
+        }
+
+        const currentIndex = themes.indexOf(currentTheme);
+
+        // Get next theme (cycle back to start if at end)
+        const nextIndex = (currentIndex + 1) % themes.length;
+        const nextTheme = themes[nextIndex];
+
+        // Special handling for Modern UI theme
+        if (nextTheme === "modern") {
+          // Activate Modern UI directly
+          if (window.terminal && window.terminal.activateAppleUI) {
+            window.terminal.activateAppleUI(false); // Light mode
+            localStorage.setItem("omega-terminal-theme", "modern");
+          } else {
+            // Fallback to command execution
+            if (window.terminal && window.terminal.executeCommand) {
+              window.terminal.executeCommand(`theme ${nextTheme}`);
+            }
+          }
+        } else {
+          // For other themes, execute normally
+          if (window.terminal && window.terminal.executeCommand) {
+            window.terminal.executeCommand(`theme ${nextTheme}`);
+          } else if (
+            window.FuturisticDashboard &&
+            window.FuturisticDashboard.cycleTheme
+          ) {
+            window.FuturisticDashboard.cycleTheme();
+          }
+        }
+
+        // Show feedback
+        if (window.terminal && window.terminal.log) {
+          window.terminal.log(`Cycling to ${nextTheme} theme`, "success");
+          console.log(
+            `[Global Theme Cycle] Switched from ${currentTheme} to ${nextTheme}`
+          );
+        }
+      };
     </script>
   </body>
 </html>

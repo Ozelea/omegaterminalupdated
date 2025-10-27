@@ -1,0 +1,325 @@
+/**
+ * Core Modern UI Terminal - Main Terminal Integration
+ * Unified command input styling for modern UI theme
+ * Ensures consistency across all terminal views
+ */
+
+/* ============================================
+   CORE MODERN UI TERMINAL - MAIN INTEGRATION
+   ============================================ */
+
+/* Modern UI Terminal Container - Main Terminal */
+body.modern-ui-futuristic #terminal,
+body.modern-ui-futuristic .terminal {
+    background: var(--modern-bg-primary, #1C1C1E) !important;
+    border: 1px solid var(--modern-border, rgba(255, 255, 255, 0.1)) !important;
+    border-radius: var(--modern-radius-lg, 16px) !important;
+    box-shadow: 
+        0 20px 40px var(--modern-shadow, rgba(0, 0, 0, 0.3)),
+        0 8px 16px var(--modern-shadow, rgba(0, 0, 0, 0.3)),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    font-family: var(--modern-font, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Roboto', sans-serif) !important;
+    color: var(--modern-text-primary, #FFFFFF) !important;
+    overflow: hidden !important;
+}
+
+/* Modern UI Terminal Content */
+body.modern-ui-futuristic .terminal-content {
+    background: transparent !important;
+    color: var(--modern-text-primary, #FFFFFF) !important;
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    padding: var(--modern-spacing-lg, 24px) !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--modern-primary, #007AFF) transparent !important;
+}
+
+/* Modern UI Terminal Output */
+body.modern-ui-futuristic .terminal-output {
+    background: transparent !important;
+    color: var(--modern-text-primary, #FFFFFF) !important;
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Modern UI Terminal Lines */
+body.modern-ui-futuristic .terminal-line,
+body.modern-ui-futuristic .output-line,
+body.modern-ui-futuristic .log-line {
+    color: var(--modern-text-primary, #FFFFFF) !important;
+    margin-bottom: var(--modern-spacing-sm, 8px) !important;
+    padding: var(--modern-spacing-xs, 4px) 0 !important;
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+/* ============================================
+   MODERN UI COMMAND INPUT - CORE INTEGRATION
+   ============================================ */
+
+/* Modern UI Terminal Input Section */
+body.modern-ui-futuristic .terminal-input-section {
+    background: var(--modern-bg-secondary, #2C2C2E) !important;
+    border-top: 1px solid var(--modern-border, rgba(255, 255, 255, 0.1)) !important;
+    border-radius: 0 0 var(--modern-radius-lg, 16px) var(--modern-radius-lg, 16px) !important;
+    padding: var(--modern-spacing-md, 16px) var(--modern-spacing-lg, 24px) !important;
+    margin-top: auto !important;
+    position: relative !important;
+    z-index: 10 !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Modern UI Input Line */
+body.modern-ui-futuristic .input-line {
+    display: flex !important;
+    align-items: center !important;
+    background: var(--modern-bg-tertiary, #3A3A3C) !important;
+    border: 1px solid var(--modern-border, rgba(255, 255, 255, 0.1)) !important;
+    border-radius: var(--modern-radius-md, 12px) !important;
+    padding: var(--modern-spacing-sm, 8px) var(--modern-spacing-md, 16px) !important;
+    gap: var(--modern-spacing-sm, 8px) !important;
+    transition: var(--modern-transition, all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)) !important;
+    box-shadow: 0 2px 8px var(--modern-shadow, rgba(0, 0, 0, 0.3)) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+/* Modern UI Input Line Focus */
+body.modern-ui-futuristic .input-line:focus-within {
+    border-color: var(--modern-border-focus, rgba(0, 122, 255, 0.5)) !important;
+    box-shadow: 
+        0 0 0 3px var(--modern-glow, rgba(0, 122, 255, 0.2)),
+        0 4px 12px var(--modern-shadow-hover, rgba(0, 0, 0, 0.4)) !important;
+    background: var(--modern-bg-hover, rgba(28, 28, 30, 0.6)) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Modern UI Input Prompt */
+body.modern-ui-futuristic .input-prompt {
+    color: var(--modern-primary, #007AFF) !important;
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    text-shadow: 0 0 8px var(--modern-primary-glow, rgba(0, 122, 255, 0.3)) !important;
+    letter-spacing: 0.5px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Modern UI Input Field */
+body.modern-ui-futuristic .input-field,
+body.modern-ui-futuristic #commandInput {
+    flex: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--modern-text-primary, #FFFFFF) !important;
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+    outline: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    font-smooth: always !important;
+    caret-color: var(--modern-primary, #007AFF) !important;
+    caret-shape: block !important;
+    caret-width: 2px !important;
+}
+
+/* Modern UI Input Field Focus */
+body.modern-ui-futuristic .input-field:focus,
+body.modern-ui-futuristic #commandInput:focus {
+    caret-color: var(--modern-primary-light, #4A9EFF) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Modern UI Input Field Placeholder */
+body.modern-ui-futuristic .input-field::placeholder,
+body.modern-ui-futuristic #commandInput::placeholder {
+    color: var(--modern-text-tertiary, #8E8E93) !important;
+    opacity: 0.8 !important;
+    font-style: italic !important;
+}
+
+/* ============================================
+   MODERN UI STATUS MESSAGES
+   ============================================ */
+
+/* Success Messages */
+body.modern-ui-futuristic .text-success,
+body.modern-ui-futuristic .log-success,
+body.modern-ui-futuristic .terminal-line.success {
+    color: var(--modern-success, #34C759) !important;
+    background: rgba(52, 199, 89, 0.1) !important;
+    border-left: 3px solid var(--modern-success, #34C759) !important;
+    padding: var(--modern-spacing-xs, 4px) var(--modern-spacing-sm, 8px) !important;
+    border-radius: 0 var(--modern-radius-sm, 8px) var(--modern-radius-sm, 8px) 0 !important;
+}
+
+/* Error Messages */
+body.modern-ui-futuristic .text-error,
+body.modern-ui-futuristic .log-error,
+body.modern-ui-futuristic .terminal-line.error {
+    color: var(--modern-error, #FF3B30) !important;
+    background: rgba(255, 59, 48, 0.1) !important;
+    border-left: 3px solid var(--modern-error, #FF3B30) !important;
+    padding: var(--modern-spacing-xs, 4px) var(--modern-spacing-sm, 8px) !important;
+    border-radius: 0 var(--modern-radius-sm, 8px) var(--modern-radius-sm, 8px) 0 !important;
+}
+
+/* Warning Messages */
+body.modern-ui-futuristic .text-warning,
+body.modern-ui-futuristic .log-warning,
+body.modern-ui-futuristic .terminal-line.warning {
+    color: var(--modern-warning, #FF9500) !important;
+    background: rgba(255, 149, 0, 0.1) !important;
+    border-left: 3px solid var(--modern-warning, #FF9500) !important;
+    padding: var(--modern-spacing-xs, 4px) var(--modern-spacing-sm, 8px) !important;
+    border-radius: 0 var(--modern-radius-sm, 8px) var(--modern-radius-sm, 8px) 0 !important;
+}
+
+/* Info Messages */
+body.modern-ui-futuristic .text-info,
+body.modern-ui-futuristic .log-info,
+body.modern-ui-futuristic .terminal-line.info {
+    color: var(--modern-info, #5AC8FA) !important;
+    background: rgba(90, 200, 250, 0.1) !important;
+    border-left: 3px solid var(--modern-info, #5AC8FA) !important;
+    padding: var(--modern-spacing-xs, 4px) var(--modern-spacing-sm, 8px) !important;
+    border-radius: 0 var(--modern-radius-sm, 8px) var(--modern-radius-sm, 8px) 0 !important;
+}
+
+/* ============================================
+   MODERN UI SCROLLBARS
+   ============================================ */
+
+/* Terminal Content Scrollbar */
+body.modern-ui-futuristic .terminal-content::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+body.modern-ui-futuristic .terminal-content::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+body.modern-ui-futuristic .terminal-content::-webkit-scrollbar-thumb {
+    background: var(--modern-primary, #007AFF) !important;
+    border-radius: 3px !important;
+    transition: var(--modern-transition-fast, all 0.15s ease) !important;
+}
+
+body.modern-ui-futuristic .terminal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--modern-primary-light, #4A9EFF) !important;
+}
+
+/* Terminal Output Scrollbar */
+body.modern-ui-futuristic .terminal-output::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+body.modern-ui-futuristic .terminal-output::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+body.modern-ui-futuristic .terminal-output::-webkit-scrollbar-thumb {
+    background: var(--modern-primary, #007AFF) !important;
+    border-radius: 3px !important;
+    transition: var(--modern-transition-fast, all 0.15s ease) !important;
+}
+
+body.modern-ui-futuristic .terminal-output::-webkit-scrollbar-thumb:hover {
+    background: var(--modern-primary-light, #4A9EFF) !important;
+}
+
+/* ============================================
+   MODERN UI RESPONSIVE DESIGN
+   ============================================ */
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    body.modern-ui-futuristic .terminal-input-section {
+        padding: var(--modern-spacing-sm, 8px) var(--modern-spacing-md, 16px) !important;
+    }
+    
+    body.modern-ui-futuristic .input-line {
+        padding: var(--modern-spacing-xs, 4px) var(--modern-spacing-sm, 8px) !important;
+        gap: var(--modern-spacing-xs, 4px) !important;
+    }
+    
+    body.modern-ui-futuristic .input-field,
+    body.modern-ui-futuristic #commandInput {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+    }
+    
+    body.modern-ui-futuristic .input-prompt {
+        font-size: 14px !important;
+    }
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+    body.modern-ui-futuristic .terminal-input-section {
+        padding: var(--modern-spacing-md, 16px) var(--modern-spacing-lg, 24px) !important;
+    }
+    
+    body.modern-ui-futuristic .input-line {
+        padding: var(--modern-spacing-sm, 8px) var(--modern-spacing-md, 16px) !important;
+    }
+}
+
+/* ============================================
+   MODERN UI ANIMATIONS
+   ============================================ */
+
+/* Input Line Animation */
+@keyframes modern-input-glow {
+    0% { box-shadow: 0 2px 8px var(--modern-shadow, rgba(0, 0, 0, 0.3)); }
+    50% { box-shadow: 0 4px 16px var(--modern-shadow-hover, rgba(0, 0, 0, 0.4)), 0 0 0 3px var(--modern-glow, rgba(0, 122, 255, 0.2)); }
+    100% { box-shadow: 0 2px 8px var(--modern-shadow, rgba(0, 0, 0, 0.3)); }
+}
+
+/* Apply animation on focus */
+body.modern-ui-futuristic .input-line:focus-within {
+    animation: modern-input-glow 2s ease-in-out infinite !important;
+}
+
+/* ============================================
+   MODERN UI OVERRIDES
+   ============================================ */
+
+/* Override any conflicting styles */
+body.modern-ui-futuristic .terminal-input-section *,
+body.modern-ui-futuristic .input-line * {
+    font-family: var(--modern-font-mono, 'SF Mono', 'Monaco', 'Consolas', monospace) !important;
+}
+
+/* Force modern UI styling */
+body.modern-ui-futuristic input[style*="color"],
+body.modern-ui-futuristic .input-field[style*="color"],
+body.modern-ui-futuristic #commandInput[style*="color"] {
+    color: var(--modern-text-primary, #FFFFFF) !important;
+}
+
+/* Ensure proper text rendering */
+body.modern-ui-futuristic .terminal-input-section,
+body.modern-ui-futuristic .input-line {
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+

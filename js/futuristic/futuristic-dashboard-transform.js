@@ -23,59 +23,7 @@
     const dashboard = document.createElement("div");
     dashboard.className = "omega-dashboard";
     dashboard.innerHTML = `
-        <!-- Header -->
-        <header class="omega-header">
-             <div class="header-brand">
-                 <div class="header-logo-container">
-                     <!-- Logo will be replaced by omega-symbol-logo.js -->
-                 </div>
-                <div class="brand-text">OMEGA TERMINAL</div>
-                <div class="version-badge">v2.0.1 CLASSIFIED</div>
-            </div>
-                
-                <div class="header-status">
-                    <div class="status-indicator">
-                        <div class="status-dot" id="futuristic-connection-status"></div>
-                        <span id="futuristic-connection-text">INITIALIZING</span>
-                    </div>
-                    
-                    <div class="status-indicator">
-                        <span id="futuristic-wallet-info">NO WALLET</span>
-                    </div>
-                    
-                    <label for="headerAiProviderSelect" style="color: var(--cyber-blue-bright); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
-                    <select id="headerAiProviderSelect" title="Select AI Provider" style="
-                        background: rgba(0, 212, 255, 0.08);
-                        border: 1px solid rgba(0, 212, 255, 0.3);
-                        border-radius: 6px;
-                        padding: 6px 10px;
-                        color: var(--cyber-blue-bright);
-                        font-family: 'Courier New', monospace;
-                        font-size: 11px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        appearance: none;
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        background-image: linear-gradient(45deg, transparent 50%, var(--cyber-blue-bright) 50%), linear-gradient(135deg, var(--cyber-blue-bright) 50%, transparent 50%);
-                        background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
-                        background-size: 5px 5px, 5px 5px;
-                        background-repeat: no-repeat;
-                        min-width: 120px;
-                        margin-right: 8px;
-                    ">
-                        <option value="off">Off</option>
-                        <option value="near">NEAR AI</option>
-                        <option value="openai">OpenAI</option>
-                    </select>
-                    
-                    <button class="sidebar-button" onclick="if(window.FuturisticDashboard){window.FuturisticDashboard.cycleTheme()}" style="padding: 6px 12px;" title="Cycle Color Scheme">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
-                    </button>
-                </div>
-            </header>
+        <!-- Header removed - using terminal-wrapper header instead -->
             
             <!-- Sidebar -->
             <aside class="omega-sidebar">
@@ -120,12 +68,19 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
                         <span>Clear Terminal</span>
                     </button>
-                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'color-palettes')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A1.5,1.5 0 0,0 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/></svg>
-                        <span>Color Palettes</span>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'terminal-style')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Terminal Style</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
-                    <div class="sub-actions" data-parent="color-palettes" style="display: none;">
+                    <div class="sub-actions" data-parent="terminal-style" style="display: none;">
+                        <!-- Color Palettes Subsection -->
+                        <div class="sub-section-header">
+                            <span>Color Palettes</span>
+                        </div>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.cycleColorPalette()">
+                            <span>🔄 Cycle Palette</span>
+                        </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color red')">
                             <span>Crimson</span>
                         </button>
@@ -158,6 +113,35 @@
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('color reset')">
                             <span>Reset Default</span>
+                        </button>
+                        
+                        <!-- Themes Subsection -->
+                        <div class="sub-section-header">
+                            <span>Themes</span>
+                        </div>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.cycleTheme()">
+                            <span>🔄 Cycle Theme</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme executive')">
+                            <span>Executive</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme modern')">
+                            <span>Modern UI</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme dark')">
+                            <span>Dark</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme light')">
+                            <span>Light</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme matrix')">
+                            <span>Matrix</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme retro')">
+                            <span>Retro</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('theme powershell')">
+                            <span>PowerShell</span>
                         </button>
                     </div>
                     </div>
@@ -223,6 +207,52 @@
                     </div>
                 </div>
                 
+                <div class="sidebar-section" data-section="nft-explorer">
+                    <div class="sidebar-title">
+                        <span>NFT EXPLORER</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.toggleSection('nft-explorer')" title="Minimize/Expand Section">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="sidebar-section-content">
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'magiceden')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M21.71,8.71C22.68,7.74 23.5,6.67 24,5.5C22.8,5.56 21.65,6.03 20.68,6.79C19.69,7.56 18.9,8.58 18.4,9.75C17.9,10.92 17.7,12.19 17.84,13.44C18,14.69 18.5,15.87 19.27,16.87C18.32,17.78 17.18,18.46 15.95,18.87C14.72,19.27 13.42,19.39 12.15,19.21C10.88,19.03 9.67,18.56 8.63,17.84C7.6,17.12 6.74,16.16 6.13,15.06C6.53,15.93 7.11,16.7 7.81,17.33C8.5,17.95 9.31,18.42 10.18,18.72C11.05,19.03 11.97,19.16 12.89,19.11C13.8,19.06 14.7,18.83 15.53,18.44C16.36,18.05 17.09,17.5 17.69,16.84C18.29,16.17 18.76,15.4 19.06,14.56C19.37,13.72 19.51,12.83 19.47,11.94C19.44,11.05 19.22,10.18 18.84,9.38L18.85,9.35C19.19,8.94 19.57,8.56 20,8.22C20.65,7.73 21.17,8.21 21.71,8.71M12,2C10.69,2 9.39,2.3 8.18,2.86C6.97,3.42 5.88,4.23 4.95,5.22C3.03,7.2 2,9.88 2,12.67C2,15.47 3.03,18.15 4.95,20.13C5.88,21.12 6.97,21.93 8.18,22.49C9.39,23.05 10.69,23.35 12,23.35C14.78,23.35 17.43,22.25 19.39,20.26C21.35,18.27 22.42,15.56 22.42,12.72C22.42,9.88 21.35,7.17 19.39,5.18C17.43,3.19 14.78,2.09 12,2.09V2M12,4C14.12,4 16.16,4.84 17.66,6.36C19.16,7.89 20,9.96 20,12.11C20,14.27 19.16,16.34 17.66,17.86C16.16,19.39 14.12,20.23 12,20.23C9.88,20.23 7.84,19.39 6.34,17.86C4.84,16.34 4,14.27 4,12.11C4,9.96 4.84,7.89 6.34,6.36C7.84,4.84 9.88,4 12,4Z"/></svg>
+                        <span>Solana NFTs</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="magiceden" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden view', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 🖼️ View Collection</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('magiceden trending 7d')">
+                            <span>→ 🔥 Trending NFTs</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden activities', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 📊 Collection Activity</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden stats', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 📈 Collection Stats</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden listings', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 🏷️ Listings</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden holders', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 👥 Holder Stats</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('magiceden attributes', 'Enter collection symbol (e.g., degods) and press Enter:')">
+                            <span>→ 🎨 Attributes</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('magiceden help')">
+                            <span>→ ❓ Magic Eden Help</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button" style="opacity: 0.5; cursor: not-allowed;">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6C8.69,6 6,8.69 6,12C6,15.31 8.69,18 12,18C15.31,18 18,15.31 18,12C18,8.69 15.31,6 12,6Z"/></svg>
+                        <span>EVM (Coming Soon)</span>
+                    </button>
+                    </div>
+                </div>
+                
                 <div class="sidebar-section" data-section="trading-analytics">
                     <div class="sidebar-title">
                         <span>TRADING & ANALYTICS</span>
@@ -249,6 +279,12 @@
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.showChart('SOL')">
                             <span>→ Solana Chart</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.showChart('TVC:GOLD')">
+                            <span>→ Gold Chart</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.showChart('TVC:SILVER')">
+                            <span>→ Silver Chart</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chart', 'Enter symbol (BTC, ETH, SOL, etc.) and press Enter:')">
                             <span>→ Custom Chart</span>
@@ -322,31 +358,6 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/></svg>
                         <span>Check Balance</span>
                     </button>
-                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'ambassador')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5M19.5,9.5L18,10.5V12.5L19.5,13.5V9.5M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M4.5,9.5V13.5L6,12.5V10.5L4.5,9.5M12,6A1,1 0 0,1 13,7A1,1 0 0,1 12,8A1,1 0 0,1 11,7A1,1 0 0,1 12,6M12,22L9,19H15L12,22M12,2L15,5H9L12,2M3,12L0,9V15L3,12M21,12L24,15V9L21,12Z"/></svg>
-                        <span>Ambassador</span>
-                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-                    </button>
-                    <div class="sub-actions" data-parent="ambassador" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral create')">
-                            <span>→ Generate Referral Link</span>
-                        </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral stats')">
-                            <span>→ View My Stats</span>
-                        </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral share')">
-                            <span>→ Share Links</span>
-                        </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral leaderboard')">
-                            <span>→ View Leaderboard</span>
-                        </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral dashboard')">
-                            <span>→ Open Dashboard</span>
-                        </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral help')">
-                            <span>→ Help</span>
-                        </button>
-                    </div>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'pgt')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18M12,16H21V8H12M16,13.5A1.5,1.5 0 0,1 14.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,12A1.5,1.5 0 0,1 16,13.5Z"/></svg>
                         <span>Track Wallet</span>
@@ -407,30 +418,59 @@
                     <!-- Omega Network Subsection -->
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'omega')">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
-                        <span>Omega</span>
+                        <span>Omega Network</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="omega" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('mine')">
-                            <span>→ ⛏️ Start Mining</span>
+                        <!-- Ambassador Program Subsection -->
+                        <div class="sub-section-header">
+                            <span>Ambassador Program</span>
+                        </div>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral create')">
+                            <span>→ 🎯 Create Referral Code</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('claim')">
-                            <span>→ 💰 Claim Rewards</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral stats')">
+                            <span>→ 📊 View Stats</span>
                         </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral leaderboard')">
+                            <span>→ 🏆 Leaderboard</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral share twitter')">
+                            <span>→ 🐦 Share on Twitter</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral share discord')">
+                            <span>→ 💬 Share on Discord</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('referral dashboard')">
+                            <span>→ 📈 Open Dashboard</span>
+                        </button>
+                        
+                        <!-- Network Tools Subsection -->
+                        <div class="sub-section-header">
+                            <span>Network Tools</span>
+                        </div>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('faucet')">
-                            <span>→ 🚰 Omega Faucet</span>
+                            <span>→ 💧 Claim Faucet</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('create')">
-                            <span>→ 🪙 Create Token</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('balance')">
+                            <span>→ 💰 Check Balance</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft')">
-                            <span>→ 🎨 Create NFT Collection</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome help')">
+                            <span>→ 🏛️ Rome Commands</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('ens register', 'Enter ENS name and press Enter:')">
-                            <span>→ 🏷️ Register ENS Name</span>
+                        
+                        <!-- External Links Subsection -->
+                        <div class="sub-section-header">
+                            <span>External Links</span>
+                        </div>
+                        <button class="sub-action-button" onclick="window.open('https://omeganetwork.co/landing', '_blank')">
+                            <span>→ 🌐 Omega Network</span>
                         </button>
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('mixer')">
-                            <span>→ 🔒 Privacy Mixer</span>
+                        <button class="sub-action-button" onclick="window.open('https://discord.com/invite/omeganetwork', '_blank')">
+                            <span>→ 💬 Discord</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.open('https://x.com/omega_netw0rk', '_blank')">
+                            <span>→ 🐦 X (Twitter)</span>
                         </button>
                     </div>
                     <!-- Solana Network Subsection -->
@@ -488,6 +528,90 @@
                             <span>→ ❓ NEAR Help</span>
                         </button>
                     </div>
+                    <!-- ROME Network Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'rome')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>ROME Network</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="rome" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome help')">
+                            <span>→ ❓ ROME Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome token create')">
+                            <span>→ 🪙 Create Token</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome network status')">
+                            <span>→ 📊 Network Status</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('rome validators')">
+                            <span>→ ✅ Validators</span>
+                        </button>
+                    </div>
+                    <!-- FAIR Blockchain Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'fair')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>FAIR Blockchain</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="fair" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair help')">
+                            <span>→ ❓ FAIR Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair generate')">
+                            <span>→ 🔑 Generate Wallet</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair connect')">
+                            <span>→ 🔗 Connect MetaMask</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair network')">
+                            <span>→ 🌐 Network Info</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('fair transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                    </div>
+                    <!-- MONAD Network Subsection -->
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'monad')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>MONAD Network</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="monad" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad help')">
+                            <span>→ ❓ MONAD Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad connect')">
+                            <span>→ 🔗 Connect Wallet</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad balance')">
+                            <span>→ 💰 Check Balance</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad network')">
+                            <span>→ 🌐 Network Info</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad validators')">
+                            <span>→ ✅ Validators</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad transactions')">
+                            <span>→ 📋 View Transactions</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad staking')">
+                            <span>→ 🏦 Staking</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('monad governance')">
+                            <span>→ 🗳️ Governance</span>
+                        </button>
+                    </div>
                     </div>
                 </div>
                 
@@ -528,8 +652,8 @@
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="chaingpt-chat" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat init', 'Enter your ChainGPT API key and press Enter:')">
-                            <span>→ 🔑 ChainGPT Setup</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat init', 'Enter your ChainGPT API key (optional - uses default if empty):')">
+                            <span>→ 🔑 Custom API Key</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('chat ask', 'Enter your question and press Enter:')">
                             <span>→ 💬 Ask Question</span>
@@ -556,8 +680,8 @@
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
                     <div class="sub-actions" data-parent="nft" style="display: none;">
-                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft init', 'Enter your ChainGPT API key and press Enter:')">
-                            <span>→ 🔑 Initialize API</span>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft init', 'Enter your ChainGPT API key (optional - uses default if empty):')">
+                            <span>→ 🔑 Custom API Key</span>
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('nft generate', 'Enter your NFT prompt and press Enter:')">
                             <span>→ 🎨 Generate AI NFT</span>
@@ -582,6 +706,62 @@
                         </button>
                         <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('nft help')">
                             <span>→ ❓ NFT Help</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'smart-contract-creator')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+                        <span>Smart Contract Creator</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="smart-contract-creator" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('contract init', 'Enter your ChainGPT API key (optional - uses default if empty):')">
+                            <span>→ 🔑 Custom API Key</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('contract generate', 'Enter your smart contract description and press Enter:')">
+                            <span>→ 📜 Generate Contract</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('contract templates')">
+                            <span>→ 📋 Templates</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('contract chains')">
+                            <span>→ ⛓️ Supported Chains</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('contract types')">
+                            <span>→ 🏗️ Contract Types</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('contract test')">
+                            <span>→ 🧪 Test API</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('contract help')">
+                            <span>→ ❓ Creator Help</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'smart-contract-auditor')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/></svg>
+                        <span>Smart Contract Auditor</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="smart-contract-auditor" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('auditor init', 'Enter your ChainGPT API key (optional - uses default if empty):')">
+                            <span>→ 🔑 Custom API Key</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('auditor audit', 'Enter your smart contract code to audit and press Enter:')">
+                            <span>→ 🔍 Audit Contract</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('auditor severity')">
+                            <span>→ ⚠️ Severity Levels</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('auditor categories')">
+                            <span>→ 🛡️ Security Categories</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('auditor levels')">
+                            <span>→ 📊 Audit Levels</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('auditor test')">
+                            <span>→ 🧪 Test API</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('auditor help')">
+                            <span>→ ❓ Auditor Help</span>
                         </button>
                     </div>
                     </div>
@@ -667,10 +847,97 @@
             <main class="omega-terminal" id="terminal-wrapper">
                 <div class="terminal-header">
                     <div class="terminal-title">
-                        <span>▶</span>
-                        <span>COMMAND CENTER</span>
+                        <span id="omega-title-symbol"></span>
+                        <span>OMEGA TERMINAL v2.0.1</span>
                     </div>
                     <div class="terminal-controls">
+                        <!-- Status Indicators -->
+                        <div class="status-indicator">
+                            <div class="status-dot" id="futuristic-connection-status"></div>
+                            <span id="futuristic-connection-text">INITIALIZING</span>
+                        </div>
+                        
+                        <div class="status-indicator">
+                            <span id="futuristic-wallet-info">NO WALLET</span>
+                        </div>
+                        
+                        <div class="status-indicator" id="network-status-display" style="display: none;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div id="network-logo-container" style="
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 20px;
+                                    height: 20px;
+                                    background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
+                                    border-radius: 50%;
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    font-family: serif, 'Times New Roman';
+                                    color: var(--palette-primary, #ffffff);
+                                    box-shadow: 0 0 8px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
+                                    border: 1px solid var(--palette-primary, #ffffff);
+                                    backdrop-filter: blur(10px);
+                                ">Ω</div>
+                                <span id="network-name-display">Omega Network</span>
+                            </div>
+                            <span id="wallet-address-display">0x3d0e...133d</span>
+                        </div>
+                        
+                        <div class="terminal-divider"></div>
+                        
+                        <!-- AI Provider Select -->
+                        <label for="wrapperAiProviderSelect" style="color: var(--palette-text-primary, var(--cyber-blue-bright)); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
+                        <select id="wrapperAiProviderSelect" title="Select AI Provider" style="
+                            background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.08));
+                            border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3));
+                            border-radius: 6px;
+                            padding: 6px 10px;
+                            color: var(--palette-text-primary, var(--cyber-blue-bright));
+                            font-family: 'Courier New', monospace;
+                            font-size: 11px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            background-image: linear-gradient(45deg, transparent 50%, var(--palette-primary, var(--cyber-blue-bright)) 50%), linear-gradient(135deg, var(--palette-primary, var(--cyber-blue-bright)) 50%, transparent 50%);
+                            background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
+                            background-size: 5px 5px, 5px 5px;
+                            background-repeat: no-repeat;
+                            min-width: 120px;
+                            margin-right: 8px;
+                        ">
+                            <option value="off">Off</option>
+                            <option value="near">NEAR AI</option>
+                            <option value="openai">OpenAI</option>
+                        </select>
+                        
+                        <!-- Theme Toggle -->
+                        <button class="terminal-icon-btn" onclick="window.FuturisticDashboard.toggleThemeMode()" id="theme-toggle-btn" title="Toggle Dark/Light Mode">
+                            <svg viewBox="0 0 24 24"><path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
+                        </button>
+                        
+                        <!-- Color Palette Toggle -->
+                        <button class="terminal-icon-btn" onclick="window.FuturisticDashboard.cycleColorPalette()" id="palette-toggle-btn" title="Cycle Color Palette">
+                            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        </button>
+                        
+                        <!-- Theme Cycle Toggle -->
+                        <button class="terminal-icon-btn" onclick="window.FuturisticDashboard.cycleTheme()" id="theme-cycle-btn" title="Cycle Theme">
+                            <svg viewBox="0 0 24 24"><path d="M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,4C16.4,4 20,7.6 20,12C20,16.4 16.4,20 12,20C7.6,20 4,16.4 4,12C4,7.6 7.6,4 12,4M12,6C8.7,6 6,8.7 6,12C6,15.3 8.7,18 12,18C15.3,18 18,15.3 18,12C18,8.7 15.3,6 12,6M12,8C14.2,8 16,9.8 16,12C16,14.2 14.2,16 12,16C9.8,16 8,14.2 8,12C8,9.8 9.8,8 12,8M12,10C10.9,10 10,10.9 10,12C10,13.1 10.9,14 12,14C13.1,14 14,13.1 14,12C14,10.9 13.1,10 12,10Z"/></svg>
+                        </button>
+                        
+                        <!-- View Mode Toggle -->
+                        <button class="terminal-icon-btn" onclick="window.FuturisticDashboard.toggleViewMode()" id="view-toggle-btn" title="Toggle Basic/Dashboard View">
+                            <svg viewBox="0 0 24 24"><path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/></svg>
+                        </button>
+                        
+                        <div class="terminal-divider"></div>
+                        
+                        <!-- External Links -->
                         <a href="https://omeganetwork.co/landing" target="_blank" class="terminal-icon-btn" title="Omega Network">
                             <svg viewBox="0 0 24 24"><path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>
                         </a>
@@ -683,51 +950,21 @@
                         <a href="https://omega-6.gitbook.io/omega/" target="_blank" class="terminal-icon-btn" title="Documentation">
                             <svg viewBox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5Z"/></svg>
                         </a>
-                        <div class="terminal-divider"></div>
-                        <label for="wrapperAiProviderSelect" style="color: var(--cyber-blue-bright); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
-                        <select id="wrapperAiProviderSelect" title="Select AI Provider" style="
-                            background: rgba(0, 212, 255, 0.08);
-                            border: 1px solid rgba(0, 212, 255, 0.3);
-                            border-radius: 6px;
-                            padding: 6px 10px;
-                            color: var(--cyber-blue-bright);
-                            font-family: 'Courier New', monospace;
-                            font-size: 11px;
-                            font-weight: 600;
-                            cursor: pointer;
-                            text-transform: uppercase;
-                            letter-spacing: 0.5px;
-                            appearance: none;
-                            -webkit-appearance: none;
-                            -moz-appearance: none;
-                            background-image: linear-gradient(45deg, transparent 50%, var(--cyber-blue-bright) 50%), linear-gradient(135deg, var(--cyber-blue-bright) 50%, transparent 50%);
-                            background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
-                            background-size: 5px 5px, 5px 5px;
-                            background-repeat: no-repeat;
-                            min-width: 120px;
-                            margin-right: 8px;
-                        ">
-                            <option value="off">Off</option>
-                            <option value="near">NEAR AI</option>
-                            <option value="openai">OpenAI</option>
-                        </select>
-                        <button class="terminal-action-btn" onclick="window.FuturisticDashboard.toggleThemeMode()" id="theme-toggle-btn" title="Toggle Dark/Light Mode">
-                            <svg viewBox="0 0 24 24"><path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
-                            <span id="theme-mode-label">Light</span>
-                        </button>
-                        <button class="terminal-action-btn" onclick="window.FuturisticDashboard.toggleViewMode()" id="view-toggle-btn" title="Toggle Basic/Dashboard View">
-                            <svg viewBox="0 0 24 24"><path d="M3,3H9V7H3V3M15,10H21V14H15V10M15,17H21V21H15V17M13,13H7V18H13V13Z"/></svg>
-                            <span id="view-mode-header-label">Basic</span>
-                        </button>
                     </div>
                 </div>
                 <!-- Original terminal will be inserted here -->
             </main>
             
             <!-- Stats Panel -->
-            <aside class="omega-stats">
-                <div class="stats-panel" id="pgt-stats-panel" style="display: none;">
-                    <div class="stats-title">PORTFOLIO TRACKER</div>
+            <aside class="omega-sidebar omega-stats">
+                <div class="sidebar-section" data-section="portfolio-tracker" id="pgt-stats-panel" style="display: none;">
+                    <div class="sidebar-title">
+                        <span>PORTFOLIO TRACKER</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.toggleSection('portfolio-tracker')" title="Minimize/Expand Section">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="sidebar-section-content">
                     <div class="stat-item">
                         <span class="stat-label">Total Value</span>
                         <span class="stat-value" id="pgt-total-value">$0.00</span>
@@ -739,19 +976,24 @@
                     <div class="stat-item">
                         <span class="stat-label">Wallets</span>
                         <span class="stat-value" id="pgt-wallet-count">0</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="stats-panel" id="chart-panel" style="display: none;">
-                    <div class="stats-title">
-                        CHART
-                        <button onclick="window.FuturisticDashboard.closeChart()" style="background: none; border: none; color: var(--cyber-blue-dim); cursor: pointer; float: right; font-size: 16px; padding: 0;" title="Close Chart">✕</button>
+                <div class="sidebar-section" data-section="chart-viewer" id="chart-panel" style="display: none;">
+                    <div class="sidebar-title">
+                        <span>CHART VIEWER</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.closeChart()" title="Close Chart">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+                        </button>
                     </div>
-                    <div id="chart-symbol-display" style="font-size: 11px; color: var(--cyber-blue-bright); margin-bottom: 8px; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
+                    <div class="sidebar-section-content">
+                        <div id="chart-symbol-display" style="font-size: 11px; color: var(--palette-text-primary, var(--cyber-blue-bright)); margin-bottom: 8px; text-align: center; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono);">
                         BTC/USD
                     </div>
-                    <div id="chart-container" style="width: 100%; height: 280px; position: relative; background: rgba(0, 0, 0, 0.3); border-radius: 8px; overflow: hidden;">
+                        <div id="chart-container" style="width: 100%; height: 280px; position: relative; background: var(--palette-bg-overlay, rgba(0, 0, 0, 0.3)); border-radius: 8px; overflow: hidden; border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.2));">
                         <!-- TradingView widget will be inserted here -->
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -764,9 +1006,8 @@
     const terminalWrapper = document.getElementById("terminal-wrapper");
     terminalWrapper.appendChild(terminal);
 
-    // Initialize header AI provider dropdown(s)
+    // Initialize header AI provider dropdown
     setTimeout(() => {
-      const sel = document.getElementById("headerAiProviderSelect");
       const selWrapper = document.getElementById("wrapperAiProviderSelect");
       const applyInit = (control) => {
         if (!control) return;
@@ -778,6 +1019,8 @@
         }
         try {
           control.value = provider;
+          // Initialize colors based on current provider
+          window.FuturisticDashboard.updateAIDropdownColors(control, provider);
         } catch (e) {}
         control.addEventListener("change", (e) => {
           const val = e.target.value;
@@ -796,9 +1039,10 @@
           ) {
             window.FuturisticDashboard.syncAIToggleState();
           }
+          // Update AI dropdown colors based on state
+          window.FuturisticDashboard.updateAIDropdownColors(control, val);
         });
       };
-      applyInit(sel);
       applyInit(selWrapper);
     }, 0);
 
@@ -841,6 +1085,23 @@
       if (window.OmegaSymbolLogo && window.OmegaSymbolLogo.replaceHeaderLogo) {
         window.OmegaSymbolLogo.replaceHeaderLogo();
         console.log("✅ Header logo initialized");
+      }
+    }, 100);
+
+    // Initialize Omega symbol in title
+    setTimeout(() => {
+      const titleSymbol = document.getElementById('omega-title-symbol');
+      if (titleSymbol && window.OmegaSymbolLogo && window.OmegaSymbolLogo.createOmegaSVG) {
+        const omegaSymbol = window.OmegaSymbolLogo.createOmegaSVG({
+          size: 24,
+          color: 'var(--palette-primary, #ffffff)',
+          glowColor: 'var(--palette-primary-glow, rgba(255, 255, 255, 0.6))',
+          className: 'title-omega-svg',
+          showOuterRing: false,
+          showGlow: true
+        });
+        titleSymbol.appendChild(omegaSymbol);
+        console.log("✅ Title Omega symbol initialized");
       }
     }, 100);
 
@@ -1205,7 +1466,7 @@
 
           // Show notification in terminal
           if (window.terminal && typeof window.terminal.log === "function") {
-            window.terminal.log(`🎨 Theme cycled to: ${newTheme}`, "success");
+            window.terminal.log(`Theme cycled to: ${newTheme}`, "success");
             window.terminal.log(`   ${description}`, "info");
           }
 
@@ -1465,8 +1726,17 @@
       const terminalWrapper = document.getElementById("terminal-wrapper");
 
       if (dashboard && terminalWrapper) {
-        // Hide dashboard (keep terminal wrapper structure)
+        // Smooth transition - fade out dashboard first
+        dashboard.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out";
+        dashboard.style.opacity = "0";
+        dashboard.style.transform = "scale(0.98)";
+        
+        setTimeout(() => {
         dashboard.style.display = "none";
+          dashboard.style.transition = "";
+          dashboard.style.opacity = "";
+          dashboard.style.transform = "";
+        }, 300);
 
         // Move terminal wrapper to body (not just terminal)
         if (terminalWrapper.parentElement !== document.body) {
@@ -1544,10 +1814,19 @@
 
         // Make sure terminal wrapper is visible
         terminalWrapper.style.display = "flex";
+        
+        // Ensure terminal is properly initialized
+        this.ensureTerminalInitialization();
       }
     },
 
     enableFuturisticMode: function () {
+      // Set body classes IMMEDIATELY to prevent flash
+      document.body.classList.add("futuristic-mode");
+      document.body.classList.remove("basic-terminal-mode");
+      document.body.classList.add("modern-terminal-ui");
+      localStorage.setItem("omega-view-mode", "futuristic");
+      
       const dashboard = document.querySelector(".omega-dashboard");
       const terminal = document.getElementById("terminal");
       const terminalWrapper = document.getElementById("terminal-wrapper");
@@ -1605,12 +1884,11 @@
         // Don't remove floating toggle - using header button instead
         // this.removeBasicModeToggle();
 
-        // Show dashboard
+        // Show dashboard immediately (no transition during welcome screen exit)
         dashboard.style.display = "grid";
-        document.body.classList.add("futuristic-mode");
-        document.body.classList.remove("basic-terminal-mode");
-        document.body.classList.add("modern-terminal-ui");
-        localStorage.setItem("omega-view-mode", "futuristic");
+        dashboard.style.opacity = "1";
+        dashboard.style.transform = "scale(1)";
+        dashboard.style.transition = "";
         console.log("🚀 Futuristic dashboard mode enabled");
         if (window.terminal) {
           window.terminal.log(
@@ -1620,15 +1898,63 @@
         }
         this.updateViewModeButton();
         this.updateThemeModeButton();
+        
+        // Ensure terminal is properly initialized
+        this.ensureTerminalInitialization();
+        
+        // Force a layout update to ensure everything renders correctly
+        setTimeout(() => {
+          if (window.terminal && window.terminal.resize) {
+            window.terminal.resize();
+          }
+        }, 100);
       } else {
         // Create dashboard if it doesn't exist
+        console.log("🚀 Creating new futuristic dashboard...");
         transformToDashboard();
+        
+        // Wait for dashboard to be created
+        setTimeout(() => {
         document.body.classList.add("futuristic-mode");
         document.body.classList.remove("basic-terminal-mode");
         document.body.classList.add("modern-terminal-ui");
         localStorage.setItem("omega-view-mode", "futuristic");
+          
         this.updateViewModeButton();
         this.updateThemeModeButton();
+          
+          // Ensure terminal is properly initialized
+          this.ensureTerminalInitialization();
+          
+          console.log("🚀 New futuristic dashboard created and enabled");
+          if (window.terminal) {
+            window.terminal.log(
+              "✅ Futuristic dashboard mode enabled",
+              "success"
+            );
+          }
+        }, 100);
+      }
+    },
+    
+    ensureTerminalInitialization: function() {
+      // Ensure terminal is properly sized and positioned
+      const terminal = document.getElementById("terminal");
+      const terminalWrapper = document.getElementById("terminal-wrapper");
+      
+      if (terminal && terminalWrapper) {
+        // Force a resize to ensure proper layout
+        setTimeout(() => {
+          if (window.terminal && window.terminal.resize) {
+            window.terminal.resize();
+          }
+          
+          // Ensure terminal output is visible
+          const terminalOutput = terminal.querySelector('.terminal-output');
+          if (terminalOutput) {
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+          }
+        }, 100);
       }
     },
 
@@ -1800,6 +2126,11 @@
     showChart: function (symbol) {
       console.log("Showing chart for:", symbol);
 
+      // Play chart viewer sound effect
+      if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+        window.OmegaSoundEffects.playChartViewerSound();
+      }
+
       // Hide other panels
       const pgtPanel = document.getElementById("pgt-stats-panel");
       if (pgtPanel) pgtPanel.style.display = "none";
@@ -1868,6 +2199,247 @@
 
       container.appendChild(iframe);
     },
+
+    // Color palette cycling function
+    cycleColorPalette: function() {
+      // Use the same palette list as color-commands.js
+      const palettes = [
+        'red', 'anime', 'ocean', 'forest', 'sunset', 'purple', 
+        'cyber', 'gold', 'ice', 'fire', 'mint', 'rose', 'amber', 'slate',
+        'lavender', 'toxic'
+      ];
+      
+      // Get current palette from localStorage or default to 'cyber'
+      const currentPalette = localStorage.getItem('omega-color-palette') || 'cyber';
+      const currentIndex = palettes.indexOf(currentPalette);
+      
+      console.log('🎨 Color Palette Cycle Debug:', {
+        currentPalette: currentPalette,
+        currentIndex: currentIndex,
+        palettes: palettes
+      });
+      
+      // If current palette not found in list, start from beginning
+      const startIndex = currentIndex >= 0 ? currentIndex : 0;
+      
+      // Get next palette (cycle back to start if at end)
+      const nextIndex = (startIndex + 1) % palettes.length;
+      const nextPalette = palettes[nextIndex];
+      
+      console.log('🎨 Next palette:', {
+        startIndex: startIndex,
+        nextIndex: nextIndex,
+        nextPalette: nextPalette
+      });
+      
+      // Execute the color command
+      this.executeCommandDirect(`color ${nextPalette}`);
+      
+      // Fallback: Directly apply palette if command doesn't work
+      setTimeout(() => {
+        const currentAppliedPalette = document.body.getAttribute('data-color-palette');
+        if (currentAppliedPalette !== nextPalette) {
+          console.log('🎨 Fallback: Directly applying palette', nextPalette);
+          document.body.setAttribute('data-color-palette', nextPalette);
+          localStorage.setItem('omega-color-palette', nextPalette);
+        }
+      }, 500);
+      
+      // Show feedback with more detail
+      if (window.terminal && window.terminal.log) {
+        window.terminal.log(`🎨 Color Palette Changed!`, 'success');
+        window.terminal.log(`   From: ${currentPalette} → To: ${nextPalette}`, 'info');
+        window.terminal.log(`   Palette ${nextIndex + 1} of ${palettes.length}`, 'info');
+      }
+      
+      // Also update the palette toggle button if it exists
+      const paletteBtn = document.getElementById('palette-toggle-btn');
+      if (paletteBtn) {
+        paletteBtn.title = `Current: ${nextPalette} | Click to cycle`;
+      }
+    },
+
+    // Theme cycling function - Enhanced to handle Modern UI properly
+    cycleTheme: function() {
+      const themes = [
+        'executive', 'modern', 'dark', 'light', 'matrix', 'retro', 'powershell'
+      ];
+      
+      // Get current theme from localStorage or detect from DOM
+      let currentTheme = localStorage.getItem('omega-terminal-theme') || 'dark';
+      
+      // Check if Modern UI is currently active
+      const terminal = document.getElementById('terminal') || document.querySelector('.terminal');
+      const isModernUIActive = terminal && terminal.classList.contains('apple-ui');
+      
+      if (isModernUIActive) {
+        // If Modern UI is active, we need to deactivate it first
+        if (window.terminal && window.terminal.deactivateAppleUI) {
+          window.terminal.deactivateAppleUI();
+        }
+        currentTheme = 'modern'; // Set as current for cycling
+      }
+      
+      const currentIndex = themes.indexOf(currentTheme);
+      
+      // Get next theme (cycle back to start if at end)
+      const nextIndex = (currentIndex + 1) % themes.length;
+      const nextTheme = themes[nextIndex];
+      
+      // Special handling for Modern UI theme
+      if (nextTheme === 'modern') {
+        // Play modern UI theme sound effect
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+          window.OmegaSoundEffects.playModernUIThemeSound();
+        }
+        
+        // Activate Modern UI directly
+        if (window.terminal && window.terminal.activateAppleUI) {
+          window.terminal.activateAppleUI(false); // Light mode
+          localStorage.setItem('omega-terminal-theme', 'modern');
+        } else {
+          // Fallback to command execution
+          this.executeCommandDirect(`theme ${nextTheme}`);
+        }
+      } else {
+        // For other themes, execute normally
+        this.executeCommandDirect(`theme ${nextTheme}`);
+      }
+      
+      // Show feedback
+      if (window.terminal && window.terminal.log) {
+        window.terminal.log(`Cycling to ${nextTheme} theme`, 'success');
+        console.log(`[Theme Cycle] Switched from ${currentTheme} to ${nextTheme}`);
+      }
+    },
+
+    // Update connection status
+    updateConnectionStatus: function(status, address = null) {
+      const statusElement = document.getElementById('futuristic-connection-status');
+      const textElement = document.getElementById('futuristic-connection-text');
+      const walletElement = document.getElementById('futuristic-wallet-info');
+      const networkDisplay = document.getElementById('network-status-display');
+      const networkName = document.getElementById('network-name-display');
+      const walletAddress = document.getElementById('wallet-address-display');
+      
+      if (statusElement && textElement) {
+        if (status === 'connected') {
+          statusElement.style.background = '#00ff88';
+          textElement.textContent = 'CONNECTED';
+          textElement.style.color = '#00ff88';
+          
+          // Show network status display
+          if (networkDisplay && networkName && walletAddress) {
+            networkDisplay.style.display = 'flex';
+            networkName.textContent = 'Omega Network';
+            if (address) {
+              const shortAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+              walletAddress.textContent = shortAddress;
+            }
+          }
+          
+          if (walletElement && address) {
+            const shortAddress = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+            walletElement.innerHTML = `
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 16px;
+                  height: 16px;
+                  background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
+                  border-radius: 50%;
+                  font-size: 12px;
+                  font-weight: bold;
+                  font-family: serif, 'Times New Roman';
+                  color: var(--palette-primary, #ffffff);
+                  box-shadow: 0 0 6px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
+                  border: 1px solid var(--palette-primary, #ffffff);
+                  backdrop-filter: blur(8px);
+                ">Ω</div>
+                <span style="color: var(--palette-primary, #00d4ff);">${shortAddress}</span>
+              </div>
+            `;
+          }
+        } else {
+          statusElement.style.background = '#ff3366';
+          textElement.textContent = 'DISCONNECTED';
+          textElement.style.color = '#ff3366';
+          
+          // Hide network status display
+          if (networkDisplay) {
+            networkDisplay.style.display = 'none';
+          }
+          
+          if (walletElement) {
+            walletElement.textContent = 'NO WALLET';
+            walletElement.style.color = '#666';
+          }
+        }
+      }
+    },
+
+    // Update AI dropdown colors based on state
+    updateAIDropdownColors: function(dropdown, value) {
+      if (!dropdown) return;
+      
+      // Define colors for different AI states
+      const colors = {
+        off: {
+          border: '#ff4757',      // Red border
+          color: '#ff4757',       // Red text
+          label: '#ff4757'        // Red label
+        },
+        near: {
+          border: '#00ff88',      // Green border
+          color: '#00ff88',       // Green text
+          label: '#00ff88'        // Green label
+        },
+        openai: {
+          border: '#00ff88',      // Green border
+          color: '#00ff88',       // Green text
+          label: '#00ff88'        // Green label
+        }
+      };
+
+      const colorScheme = colors[value] || colors.off;
+      
+      // Update dropdown styles with !important to override CSS (border and text only)
+      dropdown.style.setProperty('border-color', colorScheme.border, 'important');
+      dropdown.style.setProperty('color', colorScheme.color, 'important');
+      
+      // Update dropdown arrow color
+      dropdown.style.setProperty('background-image', 
+        `linear-gradient(45deg, transparent 50%, ${colorScheme.color} 50%), linear-gradient(135deg, ${colorScheme.color} 50%, transparent 50%)`, 
+        'important');
+      
+      // Update the AI label color
+      const label = document.querySelector('label[for="wrapperAiProviderSelect"]');
+      if (label) {
+        label.style.setProperty('color', colorScheme.label, 'important');
+      }
+      
+      // Also update any other AI dropdowns on the page
+      const allAIDropdowns = document.querySelectorAll('#aiProviderSelect, #headerAiProviderSelect, #wrapperAiProviderSelect');
+      allAIDropdowns.forEach(dropdownEl => {
+        if (dropdownEl !== dropdown) {
+          dropdownEl.style.setProperty('border-color', colorScheme.border, 'important');
+          dropdownEl.style.setProperty('color', colorScheme.color, 'important');
+          dropdownEl.style.setProperty('background-image', 
+            `linear-gradient(45deg, transparent 50%, ${colorScheme.color} 50%), linear-gradient(135deg, ${colorScheme.color} 50%, transparent 50%)`, 
+            'important');
+        }
+      });
+      
+      // Update all AI labels
+      const allAILabels = document.querySelectorAll('label[for="aiProviderSelect"], label[for="headerAiProviderSelect"], label[for="wrapperAiProviderSelect"]');
+      allAILabels.forEach(labelEl => {
+        labelEl.style.setProperty('color', colorScheme.label, 'important');
+      });
+      
+      console.log(`AI Dropdown colors updated: ${value} - ${colorScheme.color}`);
+    },
   };
 
   // Mobile detection function
@@ -1934,3 +2506,4 @@
     }
   }
 })();
+

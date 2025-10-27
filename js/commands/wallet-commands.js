@@ -42,6 +42,16 @@ window.OmegaCommands.Wallet = {
     // Enhanced Multi-Wallet Balance Command
     balance: async function(terminal) {
         terminal.log('💰 Checking all connected wallets...', 'info');
+        
+        // Play balance/wealth sound effect
+        console.log('[Balance Command] Attempting to play balance sound effect');
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            console.log('[Balance Command] Sound effects available and enabled, playing sound');
+            window.OmegaSoundEffects.playBalanceWealthSound();
+        } else {
+            console.log('[Balance Command] Sound effects not available or disabled');
+        }
+        
         let hasAnyWallet = false;
         let totalBalances = [];
         
@@ -255,6 +265,11 @@ window.OmegaCommands.Wallet = {
                         terminal.log('  • help - Show all commands', 'info');
                         terminal.log('', 'info');
                         terminal.log('🚀 Your multi-chain AI wallet is ready!', 'success');
+                        
+                        // Play wallet connection success sound
+                        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                            window.OmegaSoundEffects.playWalletConnectSound();
+                        }
                         
                         // Update terminal connection status
                         terminal.updateConnectionStatus('CONNECTED (Shade Agent)');

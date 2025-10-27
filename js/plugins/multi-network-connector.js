@@ -168,14 +168,15 @@ window.MultiNetworkConnector = {
                             justify-content: center;
                             width: 48px;
                             height: 48px;
-                            background: #000000;
+                            background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
                             border-radius: 50%;
                             font-size: 32px;
                             font-weight: bold;
                             font-family: serif, 'Times New Roman';
-                            color: #ffffff;
-                            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-                            border: 2px solid #ffffff;
+                            color: var(--palette-primary, #ffffff);
+                            box-shadow: 0 0 12px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
+                            border: 2px solid var(--palette-primary, #ffffff);
+                            backdrop-filter: blur(10px);
                         ">Ω</div>
                     </div>
                     <div class="network-name">${network.name}</div>
@@ -315,6 +316,11 @@ window.MultiNetworkConnector = {
             terminal.log(`💰 Currency: ${network.currency.symbol}`, 'info');
             terminal.log(`👛 Address: ${this.formatAddress(accounts[0])}`, 'info');
             terminal.log('', 'info');
+            
+            // Play wallet connection success sound
+            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                window.OmegaSoundEffects.playWalletConnectSound();
+            }
             
             // CRITICAL FIX: Sync wallet state with OmegaWallet AND terminal
             // This ensures all commands (mine, balance, etc.) can access wallet
@@ -483,13 +489,39 @@ window.MultiNetworkConnector = {
         const walletInfo = document.getElementById('futuristic-wallet-info');
         if (walletInfo) {
             const shortAddress = this.formatAddress(address);
-            walletInfo.innerHTML = `
-                <img src="${network.logo}" 
-                     alt="${network.name}" 
-                     style="width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; margin-right: 4px;"
-                     onerror="this.style.display='none';">
-                ${shortAddress}
-            `;
+            
+            // Special handling for Omega Network - use Omega symbol instead of image
+            if (network.chainId === '0x4e454228' || network.name === 'Omega Network') {
+                walletInfo.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 16px;
+                            height: 16px;
+                            background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
+                            border-radius: 50%;
+                            font-size: 12px;
+                            font-weight: bold;
+                            font-family: serif, 'Times New Roman';
+                            color: var(--palette-primary, #ffffff);
+                            box-shadow: 0 0 6px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
+                            border: 1px solid var(--palette-primary, #ffffff);
+                            backdrop-filter: blur(8px);
+                        ">Ω</div>
+                        <span style="color: var(--palette-primary, #00d4ff);">${shortAddress}</span>
+                    </div>
+                `;
+            } else {
+                walletInfo.innerHTML = `
+                    <img src="${network.logo}" 
+                         alt="${network.name}" 
+                         style="width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; margin-right: 4px;"
+                         onerror="this.style.display='none';">
+                    ${shortAddress}
+                `;
+            }
         }
     },
     

@@ -731,6 +731,11 @@ window.OmegaCommands.API = {
         const symbol = args[1].toUpperCase();
         terminal.log(`📈 Loading chart for ${symbol}...`, 'info');
         
+        // Play chart viewer sound effect
+        if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+            window.OmegaSoundEffects.playChartViewerSound();
+        }
+        
         // Trigger the chart display in the futuristic dashboard
         if (window.FuturisticDashboard && window.FuturisticDashboard.showChart) {
             window.FuturisticDashboard.showChart(symbol);
@@ -766,6 +771,16 @@ window.OmegaCommands.API = {
                 }
                 const address = args[2];
                 terminal.log(`📊 Tracking wallet: ${address}`, 'info');
+                
+                // Play balance/wealth sound effect
+                console.log('[PGT Track Command] Attempting to play balance sound effect');
+                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                    console.log('[PGT Track Command] Sound effects available and enabled, playing sound');
+                    window.OmegaSoundEffects.playBalanceWealthSound();
+                } else {
+                    console.log('[PGT Track Command] Sound effects not available or disabled');
+                }
+                
                 terminal.log('🚧 Portfolio tracking is being implemented', 'warning');
                 terminal.log('💡 This will track token balances and portfolio value', 'info');
                 break;

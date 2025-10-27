@@ -60,10 +60,14 @@ window.OmegaCommands.Basic = {
       "output"
     );
     terminal.log("Professional NFT analytics & trading", "output");
-    terminal.log(
-      "• Search collections • Floor price tracking • Portfolio management",
-      "output"
-    );
+    terminal.log("", "output");
+    terminal.log("🤖 ChainGPT AI:", "info");
+    terminal.log("chat init | chat ask | nft init | nft generate", "output");
+    terminal.log("AI chatbot & NFT generator (default keys included!)", "output");
+    terminal.log("", "output");
+    terminal.log("📜 Smart Contracts:", "info");
+    terminal.log("contract init | contract generate | auditor init | auditor audit", "output");
+    terminal.log("AI smart contract creator & auditor (default keys included!)", "output");
     terminal.log("");
 
     // Core Wallet Functions
@@ -365,7 +369,7 @@ window.OmegaCommands.Basic = {
   // Theme command
   theme: function (terminal, args) {
     if (!args[1] || args[1] === "help" || args[1] === "list") {
-      terminal.log("🎨 Omega Terminal Theme System", "info");
+      terminal.log("Omega Terminal Theme System", "info");
       terminal.log("═══════════════════════════════════════", "output");
       terminal.log("");
 
@@ -383,7 +387,7 @@ window.OmegaCommands.Basic = {
         localStorage.getItem("omega-terminal-theme") ||
         "dark";
 
-      terminal.log("💎 PREMIUM THEMES:", "success");
+      terminal.log("PREMIUM THEMES:", "success");
       terminal.log(
         "  theme executive        ⭐ Premium professional with gold accents",
         "output"
@@ -398,7 +402,7 @@ window.OmegaCommands.Basic = {
       terminal.log("  theme apple-dark       Same as modern-dark", "output");
       terminal.log("");
 
-      terminal.log("🎨 CLASSIC THEMES:", "success");
+      terminal.log("CLASSIC THEMES:", "success");
       terminal.log(
         "  theme dark             Default dark terminal theme",
         "output"
@@ -418,7 +422,7 @@ window.OmegaCommands.Basic = {
       );
       terminal.log("");
 
-      terminal.log("🎮 GUI INTERFACE STYLES:", "success");
+      terminal.log("GUI INTERFACE STYLES:", "success");
       terminal.log(
         "  gui chatgpt            ChatGPT-style interface",
         "output"
@@ -439,7 +443,7 @@ window.OmegaCommands.Basic = {
       );
       terminal.log("");
 
-      terminal.log("📊 VIEW MODES:", "success");
+      terminal.log("VIEW MODES:", "success");
       terminal.log("  view basic             Minimal terminal view", "output");
       terminal.log(
         "  view futuristic        Full dashboard view (recommended with Executive)",
@@ -448,7 +452,7 @@ window.OmegaCommands.Basic = {
       terminal.log("  view toggle            Toggle between views", "output");
       terminal.log("");
 
-      terminal.log("💡 RECOMMENDED COMBINATIONS:", "info");
+      terminal.log("RECOMMENDED COMBINATIONS:", "info");
       terminal.log(
         "  theme executive + view futuristic  → Premium dashboard experience",
         "output"
@@ -463,7 +467,7 @@ window.OmegaCommands.Basic = {
       );
       terminal.log("");
 
-      terminal.log("🎯 CURRENT SETTINGS:", "info");
+      terminal.log("CURRENT SETTINGS:", "info");
       terminal.log(
         `  Theme: ${currentTheme}${
           currentTheme === "executive" ? " ⭐ (Premium)" : ""
@@ -477,15 +481,15 @@ window.OmegaCommands.Basic = {
       terminal.log(
         `  View: ${
           currentView === "basic"
-            ? "⌨️  Basic Terminal"
-            : "📊 Futuristic Dashboard"
+            ? "Basic Terminal"
+            : "Futuristic Dashboard"
         }`,
         "output"
       );
       terminal.log(`  GUI Style: ${currentGUI}`, "output");
       terminal.log("");
 
-      terminal.log("✨ Your preferences are saved automatically", "success");
+      terminal.log("Your preferences are saved automatically", "success");
       return;
     }
 
@@ -556,7 +560,7 @@ window.OmegaCommands.Basic = {
 
     terminal.log(`❌ Unknown theme: ${themeName}`, "error");
     terminal.log(
-      '💡 Type "theme" or "theme help" for available options',
+      'Type "theme" or "theme help" for available options',
       "info"
     );
   },
@@ -966,8 +970,8 @@ window.OmegaCommands.Basic = {
             <div class="terminal-header">
                 <div class="terminal-title">Omega Terminal v2.0.1</div>
                 <div style="display: flex; align-items: center; gap: 18px; margin-left: auto;">
-                    <label for="aiProviderSelect" style="color:#00bcf2; font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI:</label>
-                    <select id="aiProviderSelect" title="Select AI Provider" style="background: rgba(0, 188, 242, 0.1); border: 1px solid rgba(0, 188, 242, 0.3); border-radius: 6px; padding: 6px 10px; color: #00bcf2; font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #00bcf2 50%), linear-gradient(135deg, #00bcf2 50%, transparent 50%); background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; min-width: 110px;">
+                    <label for="aiProviderSelect" style="color: var(--palette-text-primary, #00d4ff); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">AI:</label>
+                    <select id="aiProviderSelect" title="Select AI Provider" style="background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.1)); border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3)); border-radius: 6px; padding: 6px 10px; color: var(--palette-text-primary, #00d4ff); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--palette-primary, #00d4ff) 50%), linear-gradient(135deg, var(--palette-primary, #00d4ff) 50%, transparent 50%); background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; min-width: 110px;">
                         <option value="off">Off</option>
                         <option value="near">NEAR AI</option>
                         <option value="openai">OpenAI</option>
@@ -983,7 +987,7 @@ window.OmegaCommands.Basic = {
             <div id="faucetInfoBox" style="background: rgba(0, 153, 255, 0.10); border: 1px solid #99ccff; color: #99ccff; padding: 10px 16px; border-radius: 6px; margin: 0 0 12px 0; font-size: 15px;">
                 <b>⚡ Faucet Cooldown:</b> Each wallet can only claim once every 24 hours.<br>
                 If you try to claim again before the cooldown is over, the transaction will fail.<br><br>
-                <b>📱 Platform Notice:</b> Mobile experience is currently being optimized. For the best terminal experience with full features and optimal performance, we recommend using a desktop browser. Mobile support coming soon! 🚀
+                <b>📱 Mobile Optimized:</b> Full mobile support is now active! The terminal automatically adapts to your device for the best experience. Touch-friendly interface with all core features available. 🚀
             </div>
             <div class="terminal-content" id="terminalContent"></div>
             <div class="terminal-input-section">

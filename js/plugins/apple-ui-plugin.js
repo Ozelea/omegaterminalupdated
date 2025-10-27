@@ -45,13 +45,19 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
             
             // Handle Apple UI activation
             if (theme === 'modern' || theme === 'apple' || theme === 'modernui' || theme === 'modern-ui') {
+                // Play modern UI theme sound effect
+                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
+                    window.OmegaSoundEffects.playModernUIThemeSound();
+                }
                 this.activateAppleUI();
+                localStorage.setItem('omega-terminal-theme', 'modern');
                 return;
             }
             
             // Handle Apple Dark mode
             if (theme === 'modern-dark' || theme === 'apple-dark' || theme === 'dark-modern') {
                 this.activateAppleUI(true); // Dark mode
+                localStorage.setItem('omega-terminal-theme', 'modern-dark');
                 return;
             }
             
@@ -70,9 +76,11 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
         // Activate Apple UI with smooth animation
         window.terminal.activateAppleUI = function(darkMode = false) {
             const modeText = darkMode ? 'Dark' : 'Light';
-            this.log(`🍎 Activating Modern Apple UI (${modeText} Mode)...`, 'info');
+            this.log(`Activating Modern Apple UI (${modeText} Mode)...`, 'info');
             
             const terminal = document.getElementById('terminal') || document.querySelector('.terminal');
+            const body = document.body;
+            
             if (!terminal) {
                 this.log('❌ Terminal element not found', 'error');
                 return;
@@ -82,15 +90,19 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
             setTimeout(() => {
                 // Remove existing theme classes
                 terminal.classList.remove('dark-theme', 'light-theme', 'matrix-theme', 'retro-theme');
+                body.classList.remove('modern-ui-futuristic', 'executive-theme', 'futuristic-theme');
                 
                 // Add Apple UI classes
                 terminal.classList.add('apple-ui');
+                body.classList.add('modern-ui-futuristic');
                 
                 // Handle dark mode properly
                 if (darkMode) {
                     terminal.classList.add('dark');
+                    body.classList.add('dark-mode');
                 } else {
                     terminal.classList.remove('dark');
+                    body.classList.remove('dark-mode');
                 }
                 
                 // Clean the theme toggle button immediately
@@ -130,8 +142,7 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
                     terminal.style.opacity = '1';
                     
                     // Success message with mode indicator
-                    const emoji = darkMode ? '🌙' : '🌅';
-                    this.log(`${emoji} Modern Apple UI activated (${modeText} Mode)`, 'success');
+                    this.log(`Modern Apple UI activated (${modeText} Mode)`, 'success');
                     
                     // Set up theme toggle functionality
                     this.setupAppleUIToggle();
@@ -143,10 +154,16 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
         // Deactivate Apple UI
         window.terminal.deactivateAppleUI = function() {
             const terminal = document.getElementById('terminal') || document.querySelector('.terminal');
+            const body = document.body;
+            
             if (terminal) {
                 terminal.classList.remove('apple-ui', 'dark');
                 terminal.style.transform = '';
                 terminal.style.opacity = '';
+            }
+            
+            if (body) {
+                body.classList.remove('modern-ui-futuristic', 'dark-mode');
             }
             
             // Reset input field styling when deactivating
@@ -157,6 +174,12 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
                 inputField.style.removeProperty('opacity');
                 inputField.style.removeProperty('visibility');
                 inputField.style.removeProperty('-webkit-text-fill-color');
+            }
+            
+            // Clear Modern UI theme from localStorage when deactivating
+            const currentTheme = localStorage.getItem('omega-terminal-theme');
+            if (currentTheme === 'modern' || currentTheme === 'modern-dark') {
+                localStorage.removeItem('omega-terminal-theme');
             }
         };
         
@@ -303,7 +326,7 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
                 event.preventDefault();
                 if (window.terminal && window.terminal.activateAppleUI) {
                     window.terminal.activateAppleUI();
-                    window.terminal.log('🍎 Apple UI activated via keyboard shortcut!', 'success');
+                    window.terminal.log('Apple UI activated via keyboard shortcut!', 'success');
                 }
             }
             
@@ -312,7 +335,7 @@ console.log('🍎 Loading Apple UI Plugin v1.0 - Modern UI');
                 event.preventDefault();
                 if (window.terminal && window.terminal.activateAppleUI) {
                     window.terminal.activateAppleUI(true);
-                    window.terminal.log('🍎 Apple UI Dark activated via keyboard shortcut!', 'success');
+                    window.terminal.log('Apple UI Dark activated via keyboard shortcut!', 'success');
                 }
             }
         });
