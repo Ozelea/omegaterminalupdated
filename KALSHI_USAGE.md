@@ -118,7 +118,7 @@ The proxy automatically routes requests to: `https://demo-api.kalshi.co/trade-ap
 
 ```bash
 # Test via curl
-curl 'http://localhost:4000/kalshi/markets?limit=5'
+curl 'https://terminal-v1-5-9.onrender.com/kalshi (or http://localhost:4000/kalshi in development)/markets?limit=5'
 
 # Test in terminal
 kalshi markets 5 open

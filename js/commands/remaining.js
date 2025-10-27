@@ -330,7 +330,9 @@ window.OmegaCommands.Remaining = {
       endpoint
     );
 
-    const baseUrl = "http://localhost:4000";
+    // Use proxy to avoid CORS issues - automatically uses Render URL in production
+    const baseUrl =
+      window.OmegaConfig?.RELAYER_URL || "https://terminal-v1-5-9.onrender.com";
     const fullUrl = `${baseUrl}/polymarket${endpoint}`;
     console.log("🔧 DEBUG: Making request to:", fullUrl);
 
@@ -367,7 +369,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -388,7 +390,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -409,7 +411,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -430,7 +432,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -447,7 +449,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -464,7 +466,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -481,7 +483,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -498,7 +500,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -515,7 +517,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -532,7 +534,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -549,7 +551,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -566,7 +568,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -583,7 +585,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -600,7 +602,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -617,7 +619,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -634,7 +636,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -651,7 +653,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }
@@ -678,7 +680,7 @@ window.OmegaCommands.Remaining = {
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
-        "💡 Make sure the Polymarket proxy is running: npm run start:polymarket",
+        "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
     }

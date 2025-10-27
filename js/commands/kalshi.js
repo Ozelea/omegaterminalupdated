@@ -5,8 +5,12 @@
 
 class KalshiAPI {
   constructor() {
-    // Use local proxy to avoid CORS issues and handle authentication server-side
-    this.baseURL = "http://localhost:4000/kalshi";
+    // Use proxy to avoid CORS issues and handle authentication server-side
+    // Automatically uses Render URL in production, localhost in development
+    const relayerURL =
+      window.OmegaConfig?.RELAYER_URL || "https://terminal-v1-5-9.onrender.com";
+    this.baseURL = `${relayerURL}/kalshi`;
+    console.log(`[Kalshi] Using proxy URL: ${this.baseURL}`);
   }
 
   /**
