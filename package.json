@@ -27,5 +27,13 @@
     "type": "git",
     "url": "https://github.com/your-username/omega-terminal.git"
   },
-  "homepage": "https://omega-terminal.vercel.app"
+  "homepage": "https://omega-terminal.vercel.app",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.15.0",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  }
 }

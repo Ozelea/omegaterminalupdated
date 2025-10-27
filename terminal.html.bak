@@ -25,9 +25,6 @@
     <script src="https://cdn.jsdelivr.net/npm/eth-crypto@2.1.2/dist/lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.93.1/lib/index.iife.min.js"></script>
 
-    <!-- Mobile Detection - Load First -->
-    <script src="js/mobile-basic-mode.js"></script>
-    
     <!-- Core Terminal Scripts -->
     <script src="js/config.js"></script>
     <script src="js/themes.js"></script>
@@ -45,9 +42,6 @@
     <!-- UI Components -->
     <script src="ui/svg-icons-replacement.js"></script>
     <script src="ui/omega-symbol-logo.js"></script>
-
-    <!-- Sound Effects System -->
-    <script src="js/plugins/omega-sound-effects.js"></script>
 
     <link rel="stylesheet" href="styles/gui-themes.css" />
     <link rel="stylesheet" href="styles/apple-ui-theme.css" />
@@ -79,7 +73,6 @@
     <link rel="stylesheet" href="styles/youtube-player.css" />
     <link rel="stylesheet" href="styles/news-reader.css" />
     <link rel="stylesheet" href="styles/perps-viewer.css" />
-    <link rel="stylesheet" href="styles/magiceden.css?v=2.0.0" />
     <link rel="stylesheet" href="styles/color-palettes.css" />
     <link rel="stylesheet" href="styles/unified-theme-system.css" />
     <link rel="stylesheet" href="styles/layout-fixes.css" />
@@ -105,13 +98,6 @@
     <script src="js/plugins/defillama-api-plugin.js"></script>
     <!-- <script src="opensea-nft-plugin.js"></script> REPLACED WITH ENHANCED VERSION -->
     <script src="js/plugins/opensea-enhanced-plugin.js"></script>
-    
-    <!-- Magic Eden NFT Plugin -->
-    <script src="js/plugins/magiceden-plugin.js?v=2.3.0"></script>
-    <script src="js/commands/magiceden-commands.js?v=2.3.0"></script>
-    
-    <!-- Ethereum Collections (Magic Eden) -->
-    <script src="js/commands/ethereum-commands.js?v=1.0.0"></script>
 
     <script src="js/plugins/enhanced-profile-system.js?v=kalshi-fixed-20251009"></script>
     <script src="js/commands/chaingpt-chat.js?v=1.0.3"></script>
@@ -4921,11 +4907,6 @@
                 this.log("", "info");
                 this.log("💡 Chart will appear in the right panel", "info");
               } else {
-                // Play chart viewer sound effect
-                if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
-                  window.OmegaSoundEffects.playChartViewerSound();
-                }
-                
                 if (
                   window.FuturisticDashboard &&
                   window.FuturisticDashboard.showChart
@@ -8111,11 +8092,6 @@
                   }
 
                   this.log("🔍 Checking FAIR balance...", "info");
-                  
-                  // Play balance/wealth sound effect
-                  if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
-                    window.OmegaSoundEffects.playBalanceWealthSound();
-                  }
                   const balance = await provider.getBalance(address);
                   const fairBalance = this.ethers.utils.formatEther(balance);
 
@@ -13004,11 +12980,6 @@
           localStorage.setItem("omega-ai-provider", provider);
           this.applyAIProviderUI();
 
-          // Play AI toggle sound effect when AI is turned on
-          if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled() && provider !== "off") {
-            window.OmegaSoundEffects.playAIToggleSound();
-          }
-
           // Sync futuristic dashboard labels if available
           if (
             window.FuturisticDashboard &&
@@ -14751,24 +14722,21 @@
           );
           this.log("", "info");
           this.log("🎯 SUPPORTED SERVICES:", "info");
+          this.log("  • kalshi     - Kalshi prediction markets", "output");
           this.log("  • alpha      - Alpha Vantage stock data", "output");
           this.log("  • opensea    - OpenSea NFT marketplace", "output");
           this.log("  • magiceden  - Magic Eden NFT marketplace", "output");
           this.log("  • coingecko  - CoinGecko crypto data", "output");
           this.log("", "info");
-          this.log(
-            "💡 Note: Kalshi uses server-side authentication (no client keys needed)",
-            "info"
-          );
-          this.log("", "info");
           this.log("🎯 EXAMPLES:", "info");
           this.log("  profile apikeys list", "info");
+          this.log("  profile apikeys set kalshi YOUR_KALSHI_API_KEY", "info");
           this.log(
             "  profile apikeys set alpha YOUR_ALPHA_VANTAGE_KEY",
             "info"
           );
-          this.log("  profile apikeys show alpha", "info");
-          this.log("  profile apikeys remove alpha", "info");
+          this.log("  profile apikeys show kalshi", "info");
+          this.log("  profile apikeys remove kalshi", "info");
           this.log("", "info");
           this.log("💡 API keys are stored locally in your browser", "info");
         }
@@ -14846,7 +14814,7 @@
             this.log("❌ Please specify a service", "error");
             this.log("Usage: profile apikeys set <service> <key>", "info");
             this.log(
-              "Example: profile apikeys set alpha YOUR_API_KEY_HERE",
+              "Example: profile apikeys set kalshi YOUR_API_KEY_HERE",
               "info"
             );
             return;
@@ -21481,12 +21449,6 @@
 
             case "balance":
               this.log("💰 Checking MONAD balance...", "info");
-              
-              // Play balance/wealth sound effect
-              if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
-                window.OmegaSoundEffects.playBalanceWealthSound();
-              }
-              
               this.log("MONAD balance checking coming soon!", "info");
               this.log("This will show your MONAD token balance", "output");
               break;
@@ -21672,11 +21634,6 @@
 
           try {
             this.log("💰 Checking Rome Network balance...", "info");
-            
-            // Play balance/wealth sound effect
-            if (window.OmegaSoundEffects && window.OmegaSoundEffects.isSoundEnabled()) {
-              window.OmegaSoundEffects.playBalanceWealthSound();
-            }
 
             // Check if we're on Rome Network
             const chainId = await window.ethereum.request({
@@ -23227,6 +23184,939 @@
               this.log("💡 Network connection issue", "info");
               this.log("🔗 Make sure you're connected to Rome Devnet", "info");
             }
+          }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // KALSHI PREDICTION MARKETS INTEGRATION
+        // ═══════════════════════════════════════════════════════════════════
+
+        async handleKalshiCommand(args) {
+          if (!args || args.length < 2) {
+            this.showKalshiHelp();
+            return;
+          }
+
+          const subcommand = args[1];
+
+          switch (subcommand) {
+            case "help":
+              this.showKalshiHelp();
+              break;
+            case "set-api-key":
+              if (args.length < 3) {
+                this.log("Usage: kalshi set-api-key <api-key-id>", "error");
+                return;
+              }
+              await this.setKalshiApiKey(args[2]);
+              break;
+            case "set-key":
+              if (args.length < 3) {
+                this.log("Usage: kalshi set-key <rsa-private-key>", "error");
+                this.log(
+                  "💡 This stores your RSA private key for Kalshi authentication",
+                  "info"
+                );
+                return;
+              }
+              // Join all arguments after 'set-key' to handle multi-line private keys
+              const fullPrivateKey = args.slice(2).join(" ");
+              await this.setKalshiPrivateKey(fullPrivateKey);
+              break;
+            case "set-private-key":
+              await this.setKalshiPrivateKeyInteractive();
+              break;
+            case "test":
+              this.testKalshiSetup();
+              break;
+            case "markets":
+              await this.getKalshiMarkets(args.slice(2));
+              break;
+            case "events":
+              await this.getKalshiEvents(args.slice(2));
+              break;
+            case "balance":
+              await this.getKalshiBalance();
+              break;
+            case "search":
+              await this.searchKalshiMarkets(args.slice(2).join(" "));
+              break;
+            case "market":
+              await this.getKalshiMarketDetails(args[2]);
+              break;
+            default:
+              this.log(`Unknown Kalshi command: ${subcommand}`, "error");
+              this.showKalshiHelp();
+          }
+        }
+
+        showKalshiHelp() {
+          this.log("📊 KALSHI PREDICTION MARKETS", "info");
+          this.log("═══════════════════════════════════", "info");
+          this.log("", "info");
+          this.log("📋 AVAILABLE COMMANDS:", "info");
+          this.log(
+            "  kalshi help                    Show this help message",
+            "output"
+          );
+          this.log(
+            "  kalshi set-api-key <key-id>    Set your Kalshi API Key ID",
+            "output"
+          );
+          this.log(
+            "  kalshi set-key <private-key>   Set your RSA private key",
+            "output"
+          );
+          this.log(
+            "  kalshi set-private-key         Interactive private key setup",
+            "output"
+          );
+          this.log(
+            "  kalshi test                    Test your Kalshi setup",
+            "output"
+          );
+          this.log(
+            "  kalshi markets                 List available markets",
+            "output"
+          );
+          this.log(
+            "  kalshi events                  List available events",
+            "output"
+          );
+          this.log(
+            "  kalshi balance                 Show your account balance",
+            "output"
+          );
+          this.log(
+            "  kalshi search <query>          Search for markets",
+            "output"
+          );
+          this.log(
+            "  kalshi market <ticker>         Get market details",
+            "output"
+          );
+          this.log("", "info");
+          this.log("🔧 SETUP (Required):", "info");
+          this.log("  1. Get API key ID from Kalshi dashboard", "output");
+          this.log("  2. Set key ID: kalshi set-api-key YOUR_KEY_ID", "output");
+          this.log(
+            "  3. Set private key: kalshi set-private-key (interactive)",
+            "output"
+          );
+          this.log("", "info");
+          this.log("🎯 EXAMPLES:", "info");
+          this.log(
+            "  kalshi set-api-key ed60297a-477f-4857-8dd2-3ebeb4601c51",
+            "info"
+          );
+          this.log("  kalshi markets --status open --limit 10", "info");
+          this.log("  kalshi events --status open", "info");
+          this.log("  kalshi search election", "info");
+          this.log("  kalshi market KXELEC-24", "info");
+          this.log("", "info");
+          this.log(
+            "💡 Get your API key from: https://kalshi.com/developers",
+            "info"
+          );
+        }
+
+        async setKalshiApiKey(key) {
+          if (!key) {
+            this.log("❌ Please provide an API key", "error");
+            this.log("Usage: kalshi set-api-key <your-api-key>", "info");
+            this.log("", "info");
+            this.log(
+              '💡 Tip: Use "profile apikeys set kalshi <key>" to manage all API keys in one place',
+              "info"
+            );
+            return;
+          }
+
+          // Store in both locations for compatibility
+          localStorage.setItem("kalshi_api_key", key);
+
+          // Also store in unified profile API keys system
+          const keys = this.getAllApiKeys();
+          keys["kalshi"] = key;
+          this.saveAllApiKeys(keys);
+
+          this.log("✅ Kalshi API Key set successfully", "success");
+          this.log("💡 Your API key is stored locally and securely", "info");
+          this.log("", "info");
+          this.log(
+            '🎯 TIP: Use "profile apikeys list" to manage all your API keys',
+            "info"
+          );
+        }
+
+        async setKalshiPrivateKey(privateKey) {
+          if (!privateKey) {
+            this.log("❌ Please provide your RSA private key", "error");
+            return;
+          }
+
+          // Validate private key format and length
+          if (privateKey.length < 100) {
+            this.log("❌ Invalid RSA private key (too short)", "error");
+            this.log(
+              "💡 A valid RSA private key should be 1600+ characters long",
+              "info"
+            );
+            return;
+          }
+
+          // Validate PEM format
+          if (
+            !privateKey.includes("-----BEGIN RSA PRIVATE KEY-----") ||
+            !privateKey.includes("-----END RSA PRIVATE KEY-----")
+          ) {
+            this.log("❌ Invalid RSA private key format", "error");
+            this.log(
+              '💡 Key should start with "-----BEGIN RSA PRIVATE KEY-----" and end with "-----END RSA PRIVATE KEY-----"',
+              "info"
+            );
+            return;
+          }
+
+          // Store the RSA private key securely
+          localStorage.setItem("kalshi_private_key", privateKey);
+
+          this.log(
+            `✅ Kalshi RSA Private Key set successfully (${privateKey.length} characters)`,
+            "success"
+          );
+          this.log(
+            "🔐 Your private key is stored locally and securely",
+            "info"
+          );
+          this.log(
+            "💡 You can now use Kalshi commands for authenticated requests",
+            "info"
+          );
+        }
+
+        async setKalshiPrivateKeyInteractive() {
+          this.log("🔐 Kalshi RSA Private Key Setup", "info");
+          this.log("═══════════════════════════════════", "info");
+          this.log("", "info");
+          this.log("📋 Instructions:", "info");
+          this.log(
+            "1. Copy your complete RSA private key from Kalshi",
+            "output"
+          );
+          this.log(
+            "2. Paste it in the input below (include BEGIN and END lines)",
+            "output"
+          );
+          this.log("3. Press Ctrl+Enter when done", "output");
+          this.log("", "info");
+          this.log("💡 Your private key should look like:", "info");
+          this.log("-----BEGIN RSA PRIVATE KEY-----", "output");
+          this.log("MIIEpAIBAAKCAQEA...", "output");
+          this.log("...", "output");
+          this.log("-----END RSA PRIVATE KEY-----", "output");
+          this.log("", "info");
+          this.log("🔑 Paste your private key and press Enter twice:", "info");
+
+          // Create a simple input mechanism
+          const input = document.createElement("textarea");
+          input.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 80%;
+                    height: 300px;
+                    background: #1a1a1a;
+                    color: #ffffff;
+                    border: 2px solid #007AFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 12px;
+                    z-index: 10000;
+                    resize: vertical;
+                `;
+          input.placeholder =
+            "Paste your complete RSA private key here (including BEGIN and END lines)";
+
+          document.body.appendChild(input);
+          input.focus();
+
+          // Create submit button
+          const submitBtn = document.createElement("button");
+          submitBtn.textContent = "Submit Private Key";
+          submitBtn.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, 200px);
+                    padding: 10px 20px;
+                    background: #007AFF;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    z-index: 10002;
+                `;
+
+          // Handle submission via button or Ctrl+Enter
+          const submitKey = async () => {
+            const privateKey = input.value.trim();
+            document.body.removeChild(input);
+            document.body.removeChild(submitBtn);
+            if (document.body.contains(overlay)) {
+              document.body.removeChild(overlay);
+            }
+
+            if (privateKey) {
+              await this.setKalshiPrivateKey(privateKey);
+            } else {
+              this.log("❌ No private key provided", "error");
+            }
+          };
+
+          submitBtn.addEventListener("click", submitKey);
+          document.body.appendChild(submitBtn);
+
+          input.addEventListener("keydown", async (e) => {
+            if (e.key === "Enter" && e.ctrlKey) {
+              e.preventDefault();
+              await submitKey();
+            }
+          });
+
+          // Add instructions overlay
+          const overlay = document.createElement("div");
+          overlay.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    left: 10px;
+                    background: rgba(0, 122, 255, 0.9);
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    z-index: 10001;
+                `;
+          overlay.textContent =
+            "Press Ctrl+Enter or click Submit when done pasting your private key";
+          document.body.appendChild(overlay);
+
+          // Remove overlay when input is submitted
+          input.addEventListener("keydown", () => {
+            if (document.body.contains(overlay)) {
+              document.body.removeChild(overlay);
+            }
+          });
+        }
+
+        testKalshiSetup() {
+          this.log("🧪 Testing Kalshi Setup...", "info");
+
+          // Check API key ID
+          let apiKey = this.getApiKey("kalshi");
+          if (!apiKey) {
+            apiKey = localStorage.getItem("kalshi_api_key");
+          }
+
+          if (apiKey) {
+            this.log(
+              `✅ API Key ID: ${apiKey.substring(0, 8)}...${apiKey.substring(
+                apiKey.length - 8
+              )}`,
+              "success"
+            );
+          } else {
+            this.log("❌ API Key ID not set", "error");
+          }
+
+          // Check RSA private key
+          const privateKey = localStorage.getItem("kalshi_private_key");
+          if (privateKey) {
+            this.log(
+              `✅ RSA Private Key: ${privateKey.substring(0, 20)}...`,
+              "success"
+            );
+          } else {
+            this.log("❌ RSA Private Key not set", "error");
+          }
+
+          // Test connectivity
+          this.log("🌐 Testing API connectivity...", "info");
+          this.makeKalshiRequest("/markets").then((result) => {
+            if (result) {
+              this.log("✅ API connectivity test passed!", "success");
+            } else {
+              this.log("❌ API connectivity test failed", "error");
+            }
+          });
+        }
+
+        async makeKalshiRequest(endpoint, method = "GET", body = null) {
+          // Check profile API keys first, then fall back to legacy storage
+          let apiKey = this.getApiKey("kalshi");
+          if (!apiKey) {
+            apiKey = localStorage.getItem("kalshi_api_key");
+          }
+
+          if (!apiKey) {
+            this.log("❌ Kalshi API Key ID not set", "error");
+            this.log("💡 Set it with: kalshi set-api-key YOUR_KEY_ID", "info");
+            return null;
+          }
+
+          // Get the RSA private key
+          const privateKey = localStorage.getItem("kalshi_private_key");
+          if (!privateKey) {
+            this.log("❌ Kalshi RSA Private Key not set", "error");
+            this.log(
+              '💡 Set it with: kalshi set-key "YOUR_PRIVATE_KEY"',
+              "info"
+            );
+            return null;
+          }
+
+          try {
+            // Generate timestamp
+            const timestamp = Date.now().toString();
+
+            // Strip query parameters from path for signing (per Kalshi docs)
+            const pathWithoutQuery = endpoint.split("?")[0];
+
+            // Create message to sign: timestamp + method + path (without query)
+            const messageToSign = timestamp + method + pathWithoutQuery;
+
+            // Sign the message using RSA-PSS
+            const signature = await this.signWithRSAPSS(
+              privateKey,
+              messageToSign
+            );
+
+            const baseUrl = "https://demo-api.kalshi.co/trade-api/v2";
+            const headers = {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "KALSHI-ACCESS-KEY": apiKey,
+              "KALSHI-ACCESS-TIMESTAMP": timestamp,
+              "KALSHI-ACCESS-SIGNATURE": signature,
+            };
+
+            const config = {
+              method: method,
+              headers: headers,
+            };
+
+            if (body) {
+              config.body = JSON.stringify(body);
+            }
+
+            this.log(
+              `🌐 Making authenticated ${method} request to Kalshi API...`,
+              "info"
+            );
+            const response = await fetch(`${baseUrl}${endpoint}`, config);
+
+            if (!response.ok) {
+              let errorMsg = `HTTP ${response.status}`;
+              try {
+                const errorData = await response.json();
+                errorMsg =
+                  errorData.error?.message || errorData.message || errorMsg;
+              } catch (e) {
+                // Ignore JSON parse errors
+              }
+              throw new Error(errorMsg);
+            }
+
+            return await response.json();
+          } catch (error) {
+            this.log(`❌ Kalshi API Error: ${error.message}`, "error");
+            if (error.message.includes("Failed to fetch")) {
+              this.log(
+                "💡 This is likely a CORS issue. Kalshi API requires server-side authentication.",
+                "info"
+              );
+              this.log(
+                "💡 Consider using a backend proxy or server-side implementation.",
+                "info"
+              );
+            } else if (error.message.includes("signWithRSAPSS")) {
+              this.log(
+                "💡 RSA signing failed. This requires a backend implementation for security.",
+                "info"
+              );
+            }
+            console.error("Kalshi API Error:", error);
+            return null;
+          }
+        }
+
+        async signWithRSAPSS(privateKeyPem, message) {
+          // Use the implementation from kalshi.js
+          if (window.kalshiAPI && window.kalshiAPI.signMessage) {
+            // Temporarily set the private key
+            const originalKey = window.kalshiAPI.privateKey;
+            window.kalshiAPI.privateKey = privateKeyPem;
+            try {
+              const signature = await window.kalshiAPI.signMessage(message);
+              return signature;
+            } finally {
+              window.kalshiAPI.privateKey = originalKey;
+            }
+          }
+
+          // Fallback: Implement RSA-PSS signing using Web Crypto API
+          try {
+            const pemHeader = "-----BEGIN PRIVATE KEY-----";
+            const pemFooter = "-----END PRIVATE KEY-----";
+            const pemContents = privateKeyPem
+              .replace(pemHeader, "")
+              .replace(pemFooter, "")
+              .replace(/\s/g, "");
+
+            const binaryDer = Uint8Array.from(atob(pemContents), (c) =>
+              c.charCodeAt(0)
+            );
+
+            const privateKey = await window.crypto.subtle.importKey(
+              "pkcs8",
+              binaryDer,
+              {
+                name: "RSA-PSS",
+                hash: "SHA-256",
+              },
+              false,
+              ["sign"]
+            );
+
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            const signature = await window.crypto.subtle.sign(
+              {
+                name: "RSA-PSS",
+                saltLength: 32, // SHA-256 digest length
+              },
+              privateKey,
+              data
+            );
+
+            return btoa(String.fromCharCode(...new Uint8Array(signature)));
+          } catch (error) {
+            console.error("Failed to sign message:", error);
+            throw new Error(
+              "Failed to sign request. Check your private key format."
+            );
+          }
+        }
+
+        async makeKalshiRequestViaProxy(endpoint, method = "GET", body = null) {
+          // Use window.kalshiAPI if available (preferred method)
+          if (window.kalshiAPI) {
+            try {
+              return await window.kalshiAPI.makeRequest(endpoint, {
+                method,
+                body: body ? JSON.stringify(body) : undefined,
+              });
+            } catch (error) {
+              this.log(`❌ Kalshi API Error: ${error.message}`, "error");
+              return null;
+            }
+          }
+
+          // Fallback: manual implementation
+          // Check profile API keys first, then fall back to legacy storage
+          let apiKey = this.getApiKey("kalshi");
+          if (!apiKey) {
+            apiKey = localStorage.getItem("kalshi_api_key");
+          }
+
+          if (!apiKey) {
+            this.log("❌ Kalshi API Key ID not set", "error");
+            this.log(
+              "💡 Set it with: kalshi auth YOUR_KEY_ID 'YOUR_PRIVATE_KEY'",
+              "info"
+            );
+            return null;
+          }
+
+          // Get the RSA private key
+          const privateKey = localStorage.getItem("kalshi_private_key");
+          if (!privateKey) {
+            this.log("❌ Kalshi RSA Private Key not set", "error");
+            this.log(
+              '💡 Set it with: kalshi auth YOUR_KEY_ID "YOUR_PRIVATE_KEY"',
+              "info"
+            );
+            return null;
+          }
+
+          try {
+            // Use the proxy at port 3002
+            const proxyUrl = "http://localhost:3002";
+
+            // Generate timestamp
+            const timestamp = Date.now().toString();
+
+            // Strip query parameters from path for signing (per Kalshi docs)
+            const pathWithoutQuery = endpoint.split("?")[0];
+
+            // Create message to sign: timestamp + method + path (without query)
+            const messageToSign = timestamp + method + pathWithoutQuery;
+
+            // Sign the message using RSA-PSS
+            const signature = await this.signWithRSAPSS(
+              privateKey,
+              messageToSign
+            );
+
+            // Prepare headers with Kalshi authentication
+            const headers = {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "KALSHI-ACCESS-KEY": apiKey,
+              "KALSHI-ACCESS-TIMESTAMP": timestamp,
+              "KALSHI-ACCESS-SIGNATURE": signature,
+            };
+
+            const config = {
+              method: method,
+              headers: headers,
+            };
+
+            if (body) {
+              config.body = JSON.stringify(body);
+            }
+
+            this.log(`🌐 Making request via Kalshi CORS proxy...`, "info");
+            const response = await fetch(
+              `${proxyUrl}/kalshi${endpoint}`,
+              config
+            );
+
+            if (!response.ok) {
+              let errorMsg = `HTTP ${response.status}`;
+              try {
+                const errorData = await response.json();
+                errorMsg =
+                  errorData.error?.message || errorData.message || errorMsg;
+              } catch (e) {
+                // Ignore JSON parse errors
+              }
+              throw new Error(errorMsg);
+            }
+
+            return await response.json();
+          } catch (error) {
+            this.log(`❌ Kalshi Proxy Error: ${error.message}`, "error");
+            console.error("Kalshi Proxy Error:", error);
+            return null;
+          }
+        }
+
+        async getKalshiMarkets(args) {
+          this.log("📊 Fetching Kalshi markets...", "info");
+
+          // Try proxy first, fall back to direct API
+          let result = await this.makeKalshiRequestViaProxy("/markets");
+          if (!result) {
+            this.log("💡 Proxy failed, trying direct API...", "info");
+            result = await this.makeKalshiRequest("/markets");
+          }
+
+          if (!result) {
+            this.log("❌ Failed to retrieve markets", "error");
+            this.log(
+              "💡 Make sure Kalshi CORS proxy is running on port 3001",
+              "info"
+            );
+            return;
+          }
+
+          this.log(
+            `✅ Found ${result.markets ? result.markets.length : 0} markets`,
+            "success"
+          );
+
+          // Build query parameters from args
+          const params = new URLSearchParams();
+          params.append("limit", "10"); // Default limit
+
+          for (let i = 0; i < args.length; i += 2) {
+            if (args[i].startsWith("--")) {
+              const key = args[i].substring(2);
+              const value = args[i + 1];
+              if (value) {
+                params.set(key, value);
+              }
+            }
+          }
+
+          const endpoint = `/markets?${params.toString()}`;
+          const data = await this.makeKalshiRequest(endpoint);
+
+          if (data && data.markets && Array.isArray(data.markets)) {
+            if (data.markets.length === 0) {
+              this.log("No markets found", "warning");
+              return;
+            }
+
+            this.log(`✅ Found ${data.markets.length} market(s):`, "success");
+            this.log("", "info");
+
+            data.markets.forEach((market, index) => {
+              this.log(`${index + 1}. ${market.title}`, "output");
+              this.log(`   Ticker: ${market.ticker}`, "info");
+              this.log(`   Status: ${market.status}`, "info");
+
+              if (
+                market.yes_ask !== undefined &&
+                market.yes_bid !== undefined
+              ) {
+                this.log(
+                  `   Yes: ${market.yes_bid}¢ / ${market.yes_ask}¢`,
+                  "info"
+                );
+              }
+
+              if (market.close_time) {
+                const closeDate = new Date(market.close_time);
+                this.log(`   Closes: ${closeDate.toLocaleString()}`, "info");
+              }
+
+              this.log("", "info");
+            });
+          } else {
+            this.log("Failed to retrieve markets", "error");
+          }
+        }
+
+        async getKalshiEvents(args) {
+          this.log("📅 Fetching Kalshi events...", "info");
+
+          // Build query parameters
+          const params = new URLSearchParams();
+          params.append("limit", "10"); // Default limit
+
+          for (let i = 0; i < args.length; i += 2) {
+            if (args[i].startsWith("--")) {
+              const key = args[i].substring(2);
+              const value = args[i + 1];
+              if (value) {
+                params.set(key, value);
+              }
+            }
+          }
+
+          const endpoint = `/events?${params.toString()}`;
+          const data = await this.makeKalshiRequest(endpoint);
+
+          if (data && data.events && Array.isArray(data.events)) {
+            if (data.events.length === 0) {
+              this.log("No events found", "warning");
+              return;
+            }
+
+            this.log(`✅ Found ${data.events.length} event(s):`, "success");
+            this.log("", "info");
+
+            data.events.forEach((event, index) => {
+              this.log(`${index + 1}. ${event.title}`, "output");
+              this.log(`   Ticker: ${event.event_ticker}`, "info");
+              this.log(`   Status: ${event.status}`, "info");
+              this.log(`   Category: ${event.category}`, "info");
+
+              if (event.strike_date) {
+                const strikeDate = new Date(event.strike_date);
+                this.log(
+                  `   Strike Date: ${strikeDate.toLocaleDateString()}`,
+                  "info"
+                );
+              }
+
+              if (event.mutually_exclusive !== undefined) {
+                this.log(
+                  `   Mutually Exclusive: ${
+                    event.mutually_exclusive ? "Yes" : "No"
+                  }`,
+                  "info"
+                );
+              }
+
+              this.log("", "info");
+            });
+          } else {
+            this.log("Failed to retrieve events", "error");
+          }
+        }
+
+        async getKalshiBalance() {
+          this.log("💰 Fetching Kalshi balance...", "info");
+
+          const data = await this.makeKalshiRequest("/portfolio/balance");
+
+          if (data && data.balance !== undefined) {
+            this.log("✅ KALSHI ACCOUNT BALANCE:", "success");
+            this.log("", "info");
+
+            // Convert cents to dollars
+            const balanceDollars = (data.balance / 100).toFixed(2);
+            const pnlDollars =
+              data.pnl !== undefined ? (data.pnl / 100).toFixed(2) : "N/A";
+
+            this.log(`💵 Available Balance: $${balanceDollars}`, "output");
+
+            if (data.portfolio_value !== undefined) {
+              const portfolioValueDollars = (
+                data.portfolio_value / 100
+              ).toFixed(2);
+              this.log(
+                `📊 Portfolio Value: $${portfolioValueDollars}`,
+                "output"
+              );
+            }
+
+            if (data.pnl !== undefined) {
+              const pnlColor = data.pnl >= 0 ? "success" : "error";
+              const pnlPrefix = data.pnl >= 0 ? "+" : "";
+              this.log(`${pnlPrefix}$${pnlDollars} PnL`, pnlColor);
+            }
+          } else {
+            this.log("Failed to retrieve balance", "error");
+          }
+        }
+
+        async searchKalshiMarkets(query) {
+          if (!query || query.trim() === "") {
+            this.log("❌ Please provide a search query", "error");
+            this.log("Usage: kalshi search <query>", "info");
+            return;
+          }
+
+          this.log(`🔍 Searching for: "${query}"...`, "info");
+
+          const params = new URLSearchParams();
+          params.append("search", query);
+          params.append("limit", "20");
+
+          const endpoint = `/markets?${params.toString()}`;
+          const data = await this.makeKalshiRequest(endpoint);
+
+          if (data && data.markets && Array.isArray(data.markets)) {
+            if (data.markets.length === 0) {
+              this.log(`No markets found for "${query}"`, "warning");
+              return;
+            }
+
+            this.log(
+              `✅ Found ${data.markets.length} market(s) matching "${query}":`,
+              "success"
+            );
+            this.log("", "info");
+
+            data.markets.forEach((market, index) => {
+              this.log(`${index + 1}. ${market.title}`, "output");
+              this.log(`   Ticker: ${market.ticker}`, "info");
+              this.log(`   Status: ${market.status}`, "info");
+
+              if (
+                market.yes_ask !== undefined &&
+                market.yes_bid !== undefined
+              ) {
+                this.log(
+                  `   Yes: ${market.yes_bid}¢ / ${market.yes_ask}¢`,
+                  "info"
+                );
+              }
+
+              this.log("", "info");
+            });
+          } else {
+            this.log("Search failed", "error");
+          }
+        }
+
+        async getKalshiMarketDetails(ticker) {
+          if (!ticker) {
+            this.log("❌ Please provide a market ticker", "error");
+            this.log("Usage: kalshi market <ticker>", "info");
+            return;
+          }
+
+          this.log(`📊 Fetching details for market: ${ticker}...`, "info");
+
+          const endpoint = `/markets/${ticker}`;
+          const data = await this.makeKalshiRequest(endpoint);
+
+          if (data && data.market) {
+            const market = data.market;
+
+            this.log("✅ MARKET DETAILS:", "success");
+            this.log("", "info");
+            this.log(`📋 Title: ${market.title}`, "output");
+            this.log(`🎫 Ticker: ${market.ticker}`, "info");
+            this.log(`📊 Status: ${market.status}`, "info");
+            this.log(`📂 Category: ${market.category}`, "info");
+
+            if (market.subtitle) {
+              this.log(`📝 Subtitle: ${market.subtitle}`, "info");
+            }
+
+            this.log("", "info");
+            this.log("💰 PRICING:", "info");
+
+            if (market.yes_bid !== undefined && market.yes_ask !== undefined) {
+              this.log(`  Yes Bid: ${market.yes_bid}¢`, "output");
+              this.log(`  Yes Ask: ${market.yes_ask}¢`, "output");
+            }
+
+            if (market.no_bid !== undefined && market.no_ask !== undefined) {
+              this.log(`  No Bid: ${market.no_bid}¢`, "output");
+              this.log(`  No Ask: ${market.no_ask}¢`, "output");
+            }
+
+            if (market.last_price !== undefined) {
+              this.log(`  Last Price: ${market.last_price}¢`, "output");
+            }
+
+            this.log("", "info");
+            this.log("📅 TIMING:", "info");
+
+            if (market.open_time) {
+              const openDate = new Date(market.open_time);
+              this.log(`  Opened: ${openDate.toLocaleString()}`, "info");
+            }
+
+            if (market.close_time) {
+              const closeDate = new Date(market.close_time);
+              this.log(`  Closes: ${closeDate.toLocaleString()}`, "info");
+            }
+
+            if (market.expected_expiration_time) {
+              const expDate = new Date(market.expected_expiration_time);
+              this.log(
+                `  Expected Expiration: ${expDate.toLocaleString()}`,
+                "info"
+              );
+            }
+
+            if (market.volume) {
+              this.log("", "info");
+              this.log(`📊 Volume: ${market.volume} contracts`, "info");
+            }
+
+            if (market.open_interest) {
+              this.log(
+                `📈 Open Interest: ${market.open_interest} contracts`,
+                "info"
+              );
+            }
+          } else {
+            this.log(
+              `Failed to retrieve details for market: ${ticker}`,
+              "error"
+            );
           }
         }
       }
