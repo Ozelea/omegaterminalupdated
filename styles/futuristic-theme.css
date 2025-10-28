@@ -745,6 +745,14 @@ body::after {
     position: relative;
 }
 
+/* Ensure independent sections are not indented */
+.sidebar-section[data-section="mining-rewards"],
+.sidebar-section[data-section="advanced-trading"],
+.sidebar-section[data-section="entertainment"] {
+    margin-left: 0 !important;
+    padding-left: var(--gap-sm) !important;
+}
+
 @keyframes slideDown {
     from {
         opacity: 0;

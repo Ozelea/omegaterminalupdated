@@ -414,6 +414,8 @@ class OmegaMinerTerminal {
   async executeCommand(command) {
     // DEBUG: Add logging to trace execution
     console.log(`[DEBUG] executeCommand called with: "${command}"`);
+    console.log(`[DEBUG] Command type: ${typeof command}`);
+    console.log(`[DEBUG] Command length: ${command ? command.length : 'null'}`);
     console.log(`[DEBUG] awaitingWalletChoice: ${this.awaitingWalletChoice}`);
 
     // Parse command args early for special input states
@@ -535,6 +537,8 @@ class OmegaMinerTerminal {
     console.log(`[DEBUG] Command executed: "${command}"`);
     console.log(`[DEBUG] Parsed command: "${cmd}"`);
     console.log(`[DEBUG] Arguments:`, args);
+    console.log(`[DEBUG] Command length: ${cmd ? cmd.length : 'null'}`);
+    console.log(`[DEBUG] Command === 'blues': ${cmd === 'blues'}`);
 
     // AI Mode handles unknown/natural language commands in the default case below
 
@@ -547,6 +551,7 @@ class OmegaMinerTerminal {
 
     // Route commands to appropriate modules
     try {
+      console.log(`[DEBUG] About to enter switch statement with cmd: "${cmd}"`);
       switch (cmd) {
         // Basic commands
         case "help":
@@ -686,6 +691,25 @@ class OmegaMinerTerminal {
         case "yt":
         case "video":
           await OmegaCommands.YouTube.youtube(this, args);
+          break;
+
+        case "blues":
+          console.log('🎵 Blues command called in terminal core');
+          if (window.OmegaCommands && window.OmegaCommands.Blues) {
+            console.log('✅ OmegaCommands.Blues found, calling blues function');
+            await OmegaCommands.Blues.blues(this, args);
+          } else {
+            console.log('❌ OmegaCommands.Blues not found');
+            this.log("❌ Blues commands not loaded. Please refresh the page.", "error");
+          }
+          break;
+
+        case "kalshi":
+          if (window.handleKalshiCommand) {
+            await window.handleKalshiCommand(args.slice(1), this);
+          } else {
+            this.log("❌ Kalshi commands not loaded. Please refresh the page.", "error");
+          }
           break;
 
         // Network/Stress Testing commands

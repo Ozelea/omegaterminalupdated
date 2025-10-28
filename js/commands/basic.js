@@ -1164,6 +1164,10 @@ window.OmegaCommands.Basic = {
     }
 
     // Check if it's a terminal command using the comprehensive command list
+    console.log('🔍 Checking available commands...');
+    console.log('window.OmegaConfig:', window.OmegaConfig);
+    console.log('window.OmegaConfig?.AVAILABLE_COMMANDS:', window.OmegaConfig?.AVAILABLE_COMMANDS);
+    
     const availableCommands = window.OmegaConfig?.AVAILABLE_COMMANDS || [
       "help",
       "clear",
@@ -1213,6 +1217,7 @@ window.OmegaCommands.Basic = {
       "ascii",
       "ambassador",
       "referral",
+      "blues",
     ];
 
     // Check if message starts with any available command or contains command patterns
@@ -1222,6 +1227,12 @@ window.OmegaCommands.Basic = {
         lowerMsg.startsWith(cmd + " ") ||
         lowerMsg.startsWith(cmd)
       );
+    });
+
+    console.log('🔍 Command check:', {
+      lowerMsg,
+      availableCommands: availableCommands.slice(0, 10), // Show first 10 commands
+      isTerminalCommand
     });
 
     if (isTerminalCommand) {

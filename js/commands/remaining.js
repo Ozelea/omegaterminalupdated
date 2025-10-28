@@ -207,6 +207,11 @@ window.OmegaCommands.Remaining = {
   polymarket: async function (terminal, args) {
     console.log("🔧 DEBUG: handlePolymarketCommand called with args:", args);
 
+    // Add futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('polymarket', '📊 INITIALIZING POLYMARKET PREDICTION MARKETS...');
+    }
+
     if (args.length === 0) {
       this.showPolymarketHelp(terminal);
       return;
@@ -284,44 +289,50 @@ window.OmegaCommands.Remaining = {
   },
 
   showPolymarketHelp: function (terminal) {
-    terminal.log("🎯 POLYMARKET PREDICTION MARKETS", "info");
-    terminal.log("════════════════════════════════════", "output");
-    terminal.log("📋 MAIN COMMANDS:", "info");
-    terminal.log("polymarket help        Show this help", "output");
-    terminal.log("polymarket markets     Get current active markets", "output");
-    terminal.log("polymarket trending    Get top volume markets", "output");
-    terminal.log(
-      "polymarket events      Get recent events (last 6 months)",
-      "output"
-    );
-    terminal.log(
-      "polymarket recent      Get very recent events (last month)",
-      "output"
-    );
-    terminal.log("polymarket search <q>  Search markets", "output");
+    // Clear terminal and show clean intro
+    terminal.log('', '');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('📊 POLYMARKET PREDICTION MARKETS', 'info');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('', 'output');
+    terminal.log("📋 Main Commands:", "info");
+    terminal.log("  polymarket help        Show this help", "output");
+    terminal.log("  polymarket markets     Get current active markets", "output");
+    terminal.log("  polymarket trending    Get top volume markets", "output");
+    terminal.log("  polymarket events      Get recent events (last 6 months)", "output");
+    terminal.log("  polymarket recent      Get very recent events (last month)", "output");
+    terminal.log("  polymarket search <q>  Search markets", "output");
     terminal.log("", "output");
-    terminal.log("🔥 CATEGORY COMMANDS:", "info");
-    terminal.log("polymarket breaking    Breaking news markets", "output");
-    terminal.log("polymarket new         Newest markets", "output");
-    terminal.log("polymarket politics    Political markets", "output");
-    terminal.log("polymarket sports      Sports markets", "output");
-    terminal.log("polymarket crypto      Crypto markets", "output");
-    terminal.log("polymarket earnings    Earnings markets", "output");
-    terminal.log("polymarket geopolitics Geopolitical markets", "output");
-    terminal.log("polymarket tech        Technology markets", "output");
-    terminal.log("polymarket culture     Culture markets", "output");
-    terminal.log("polymarket world       World events", "output");
-    terminal.log("polymarket economy     Economic markets", "output");
-    terminal.log("polymarket trump       Trump-related markets", "output");
-    terminal.log("polymarket elections   Election markets", "output");
+    terminal.log("🔥 Category Commands:", "info");
+    terminal.log("  polymarket breaking    Breaking news markets", "output");
+    terminal.log("  polymarket new         Newest markets", "output");
+    terminal.log("  polymarket politics    Political markets", "output");
+    terminal.log("  polymarket sports      Sports markets", "output");
+    terminal.log("  polymarket crypto      Crypto markets", "output");
+    terminal.log("  polymarket earnings    Earnings markets", "output");
+    terminal.log("  polymarket geopolitics Geopolitical markets", "output");
+    terminal.log("  polymarket tech        Technology markets", "output");
+    terminal.log("  polymarket culture     Culture markets", "output");
+    terminal.log("  polymarket world       World events", "output");
+    terminal.log("  polymarket economy     Economic markets", "output");
+    terminal.log("  polymarket trump       Trump-related markets", "output");
+    terminal.log("  polymarket elections   Election markets", "output");
     terminal.log("", "output");
-    terminal.log("🎯 EXAMPLES:", "info");
-    terminal.log("polymarket markets     # Current active markets", "output");
-    terminal.log("polymarket trending    # Highest volume markets", "output");
-    terminal.log("polymarket politics    # Political predictions", "output");
-    terminal.log("polymarket crypto      # Crypto predictions", "output");
-    terminal.log("polymarket breaking    # Breaking news markets", "output");
-    terminal.log('polymarket search "AI" # Search for AI markets', "output");
+    terminal.log("🎯 Examples:", "info");
+    terminal.log("  polymarket markets     # Current active markets", "output");
+    terminal.log("  polymarket trending    # Highest volume markets", "output");
+    terminal.log("  polymarket politics    # Political predictions", "output");
+    terminal.log("  polymarket crypto      # Crypto predictions", "output");
+    terminal.log("  polymarket breaking    # Breaking news markets", "output");
+    terminal.log('  polymarket search "AI" # Search for AI markets', "output");
+    terminal.log("", "output");
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('Visit https://polymarket.com for more information', 'info');
+    
+    // Update futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('polymarket', '✅ POLYMARKET HELP DISPLAYED!');
+    }
   },
 
   makePolymarketRequest: async function (endpoint) {
@@ -359,24 +370,52 @@ window.OmegaCommands.Remaining = {
   },
 
   getPolymarketMarkets: async function (terminal) {
-    terminal.log("📊 Fetching comprehensive Polymarket markets...", "info");
+    // Add futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('polymarket', '📊 FETCHING POLYMARKET MARKETS...');
+    }
+
+    terminal.log('', '');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('📊 POLYMARKET PREDICTION MARKETS', 'info');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('', 'output');
 
     try {
       const data = await this.makePolymarketRequest(
         "/events?order=id&ascending=false&closed=false&limit=100"
       );
       this.displayPolymarketMarkets(terminal, data, "Current Active Markets");
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '✅ POLYMARKET MARKETS LOADED!');
+      }
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
         "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '❌ POLYMARKET MARKETS FAILED!');
+      }
     }
   },
 
   getPolymarketTrending: async function (terminal) {
-    terminal.log("🔥 Fetching trending Polymarket markets...", "info");
+    // Add futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('polymarket', '📊 FETCHING TRENDING MARKETS...');
+    }
+
+    terminal.log('', '');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('📊 POLYMARKET TRENDING MARKETS', 'info');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('', 'output');
 
     try {
       const data = await this.makePolymarketRequest(
@@ -387,17 +426,36 @@ window.OmegaCommands.Remaining = {
         data,
         "Trending Markets (Highest Volume)"
       );
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '✅ TRENDING MARKETS LOADED!');
+      }
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
         "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '❌ TRENDING MARKETS FAILED!');
+      }
     }
   },
 
   getPolymarketEvents: async function (terminal) {
-    terminal.log("📅 Fetching recent Polymarket events...", "info");
+    // Add futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('polymarket', '📊 FETCHING RECENT EVENTS...');
+    }
+
+    terminal.log('', '');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('📊 POLYMARKET RECENT EVENTS', 'info');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('', 'output');
 
     try {
       const data = await this.makePolymarketRequest(
@@ -408,12 +466,22 @@ window.OmegaCommands.Remaining = {
         data,
         "Recent Events (Last 6 Months)"
       );
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '✅ RECENT EVENTS LOADED!');
+      }
     } catch (error) {
       terminal.log(`❌ ${error.message}`, "error");
       terminal.log(
         "💡 Make sure the relayer server is running: npm run start:relayer (or node server/relayer-faucet.js)",
         "info"
       );
+      
+      // Update futuristic UI feedback
+      if (window.FuturisticDashboard) {
+        window.FuturisticDashboard.showCommandFeedback('polymarket', '❌ RECENT EVENTS FAILED!');
+      }
     }
   },
 
@@ -692,47 +760,56 @@ window.OmegaCommands.Remaining = {
       return;
     }
 
-    terminal.log(`📊 ${title}`, "info");
-    terminal.log(
-      "════════════════════════════════════════════════════════════════════════════════",
-      "output"
-    );
-    terminal.log("");
-
-    data.slice(0, 20).forEach((market, index) => {
-      const num = (index + 1).toString().padStart(2, " ");
-      const question = market.question || "No question available";
-      const volume = market.volume
-        ? `$${parseFloat(market.volume).toLocaleString()}`
-        : "N/A";
-      const endDate = market.end_date_iso
-        ? new Date(market.end_date_iso).toLocaleDateString()
-        : "N/A";
-      const status = market.closed ? "🔒 Closed" : "🟢 Active";
-
-      terminal.log(`${num}. ${question}`, "output");
-      terminal.log(
-        `    💰 Volume: ${volume} | 📅 End: ${endDate} | ${status}`,
-        "info"
-      );
-
-      if (market.outcomes && market.outcomes.length > 0) {
-        market.outcomes.forEach((outcome) => {
-          const price = outcome.price
-            ? `$${parseFloat(outcome.price).toFixed(2)}`
-            : "N/A";
-          terminal.log(`    📊 ${outcome.name}: ${price}`, "output");
-        });
-      }
-
-      terminal.log("", "output");
-    });
-
-    if (data.length > 20) {
-      terminal.log(`... and ${data.length - 20} more markets`, "info");
+    // De-duplicate by id to avoid repeated events/markets
+    const seenIds = new Set();
+    const uniqueMarkets = [];
+    for (const market of data) {
+      const id = market.id || market.slug || market.question;
+      if (!id) continue;
+      if (seenIds.has(id)) continue;
+      seenIds.add(id);
+      uniqueMarkets.push(market);
     }
 
-    terminal.log('💡 Use "polymarket help" for more commands', "info");
+    uniqueMarkets.slice(0, 20).forEach((market, index) => {
+      const marketNumber = String(index + 1).padStart(2, '0');
+      const question = market.question || "No question available";
+      const volume = market.volume ? `$${parseFloat(market.volume).toLocaleString()}` : "N/A";
+      const endDate = market.end_date_iso ? new Date(market.end_date_iso).toLocaleDateString() : "N/A";
+      const status = market.closed ? "CLOSED" : "ACTIVE";
+      
+      // Create clickable link to Polymarket
+      const marketUrl = market.slug 
+        ? `https://polymarket.com/event/${encodeURIComponent(market.slug)}`
+        : market.id 
+        ? `https://polymarket.com/event/${encodeURIComponent(market.id)}`
+        : 'https://polymarket.com';
+      
+      const clickableTitle = `<a href="${marketUrl}" target="_blank" style="color: #00D4FF; text-decoration: none; cursor: pointer; font-weight: bold;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#00D4FF'">${question}</a>`;
+      
+      terminal.logHtml(`[${marketNumber}] ${clickableTitle}`, 'output');
+      
+      terminal.log(`    Status: ${status}`, 'info');
+      terminal.log(`    End Date: ${endDate}`, 'info');
+      terminal.log(`    Volume: ${volume}`, 'output');
+      
+      if (market.outcomes && market.outcomes.length > 0) {
+        terminal.log(`    Outcomes:`, 'info');
+        market.outcomes.forEach((outcome) => {
+          const price = outcome.price ? `$${parseFloat(outcome.price).toFixed(2)}` : "N/A";
+          terminal.log(`      ${outcome.name}: ${price}`, 'output');
+        });
+      }
+      
+      const domain = 'polymarket.com';
+      const clickableUrl = `<a href="${marketUrl}" target="_blank" style="color: #ffffff; text-decoration: underline; cursor: pointer;" onmouseover="this.style.color='#00D4FF'" onmouseout="this.style.color='#ffffff'">[LINK] ${domain}/event/${market.slug || market.id || 'unknown'}</a>`;
+      terminal.logHtml(`    ${clickableUrl}`, 'info');
+      terminal.log('');
+    });
+
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log(`Total Markets: ${uniqueMarkets.length} | Use "polymarket help" for more commands`, 'info');
+    terminal.log('Click market titles or [LINK] to view on Polymarket.com', 'info');
   },
 
   magiceden: function (terminal, args) {
