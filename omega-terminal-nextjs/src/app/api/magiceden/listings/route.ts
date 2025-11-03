@@ -7,7 +7,8 @@
  * GET /api/magiceden/listings?symbol={collectionSymbol}&limit={limit}
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { RELAYER_URL } from "@/lib/config";
 
 /**
@@ -21,9 +22,11 @@ export async function GET(request: NextRequest) {
 
     // Validate required parameters
     if (!symbol) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Collection symbol is required" },
-        { status: 400 }
+        400,
+        undefined,
+        { maxAge: 0 }
       );
     }
 
@@ -41,19 +44,26 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
 
-    return NextResponse.json({
-      listings: data || [],
-      success: true,
-    });
+    return createSecureResponse(
+      {
+        listings: data || [],
+        success: true,
+      },
+      200,
+      undefined,
+      { maxAge: 60, staleWhileRevalidate: 120 }
+    );
   } catch (error) {
     console.error("Magic Eden listings error:", error);
-    return NextResponse.json(
+    return createSecureResponse(
       {
         error:
           error instanceof Error ? error.message : "Failed to fetch listings",
         success: false,
       },
-      { status: 500 }
+      500,
+      undefined,
+      { maxAge: 0 }
     );
   }
 }

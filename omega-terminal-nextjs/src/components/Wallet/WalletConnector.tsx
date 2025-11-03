@@ -14,16 +14,13 @@
 import React, { useState, useCallback } from "react";
 import { useWallet } from "@/hooks/useWallet";
 import { shortenAddress } from "@/lib/utils";
+import { openNetworkSelector } from "@/lib/wallet/networkSelector";
 import styles from "./WalletConnector.module.css";
 
 export function WalletConnector() {
-  const {
-    state,
-    connectMetaMask,
-    createSessionWallet,
-    importSessionWallet,
-    disconnect,
-  } = useWallet();
+  const wallet = useWallet();
+  const { state, createSessionWallet, importSessionWallet, disconnect } =
+    wallet;
 
   // Local state
   const [showImport, setShowImport] = useState(false);
@@ -37,22 +34,31 @@ export function WalletConnector() {
   /**
    * Handle MetaMask connection
    */
-  const handleConnectMetaMask = useCallback(async () => {
+  const handleConnectMetaMask = useCallback(() => {
     setIsProcessing(true);
-    setStatusMessage(null);
+    setStatusMessage("Loading network selector…");
+    setMessageType("info");
 
-    const success = await connectMetaMask();
-
-    if (success) {
-      setStatusMessage("Successfully connected to MetaMask!");
-      setMessageType("success");
-    } else {
-      setStatusMessage(state.error || "Failed to connect to MetaMask");
-      setMessageType("error");
-    }
+    openNetworkSelector({
+      log: (message, type) => {
+        setStatusMessage(message);
+        if (type === "success" || type === "error" || type === "warning") {
+          setMessageType(type);
+        } else {
+          setMessageType("info");
+        }
+      },
+      wallet: {
+        initializeExternalConnection: wallet.initializeExternalConnection,
+        addOmegaNetwork: wallet.addOmegaNetwork,
+        getBalance: wallet.getBalance,
+        state,
+      },
+      source: "ui",
+    });
 
     setIsProcessing(false);
-  }, [connectMetaMask, state.error]);
+  }, [state, wallet]);
 
   /**
    * Handle session wallet creation

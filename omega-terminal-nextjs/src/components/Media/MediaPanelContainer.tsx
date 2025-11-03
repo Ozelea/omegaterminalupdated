@@ -12,16 +12,23 @@
  * - NewsReaderPanel (crypto news)
  */
 
-import React from "react";
+import type { ComponentType } from "react";
 import { useSpotify } from "@/hooks/useSpotify";
 import { useYouTube } from "@/hooks/useYouTube";
 import { useNewsReader } from "@/hooks/useNewsReader";
-import { SpotifyPanel } from "./SpotifyPanel";
-import { YouTubePanel } from "./YouTubePanel";
-import { NewsReaderPanel } from "./NewsReaderPanel";
 import styles from "./MediaPanelContainer.module.css";
 
-export function MediaPanelContainer() {
+export interface MediaPanelContainerProps {
+  SpotifyPanel: ComponentType;
+  YouTubePanel: ComponentType;
+  NewsReaderPanel: ComponentType;
+}
+
+export function MediaPanelContainer({
+  SpotifyPanel,
+  YouTubePanel,
+  NewsReaderPanel,
+}: MediaPanelContainerProps) {
   const spotify = useSpotify();
   const youtube = useYouTube();
   const newsReader = useNewsReader();

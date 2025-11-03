@@ -1,158 +1,274 @@
 /**
  * TransactionModal Component Styles
- * Styles for transaction confirmation modal with glass-morphism design
+ * Theme-aware transaction confirmation modal with status, gas, and network indicators.
  */
 
-/* Modal Overlay */
+/* -----------------------------------------------------------------------------
+   Overlay & Modal Container
+   ----------------------------------------------------------------------------- */
+
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease-out;
+  z-index: 2600;
+  animation: fadeIn 0.25s ease-out;
+  padding: 32px;
 }
 
-/* Modal Content */
 .modal {
-  background: rgba(10, 10, 15, 0.95);
-  border: 2px solid rgba(0, 188, 242, 0.5);
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 0 30px rgba(0, 188, 242, 0.3);
+  background: rgba(12, 16, 26, 0.9);
+  border: 1px solid rgba(0, 188, 242, 0.45);
+  border-radius: 28px;
+  padding: 32px;
+  max-width: 520px;
+  width: 92vw;
+  box-shadow: 0 32px 64px rgba(0, 188, 242, 0.28);
   animation: slideIn 0.3s ease-out;
+  position: relative;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-/* Header */
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0, 188, 242, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------------------------
+   Header & Network Badge
+   ----------------------------------------------------------------------------- */
+
 .header {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   color: #00bcf2;
   margin-bottom: 20px;
   text-align: center;
-  font-family: "Courier New", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-/* Transaction Details Section */
+.networkBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0, 188, 242, 0.18);
+  border: 1px solid rgba(0, 188, 242, 0.35);
+  color: #00bcf2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+   Transaction Details
+   ----------------------------------------------------------------------------- */
+
 .details {
-  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
 .detailRow {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: flex-start;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 18px;
 }
 
 .detailRow:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .detailLabel {
-  color: #cccccc;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
-  font-family: "Courier New", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-width: 120px;
 }
 
 .detailValue {
-  color: #ffffff;
-  font-weight: bold;
-  word-break: break-all;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  word-break: break-word;
   text-align: right;
-  max-width: 65%;
-  font-family: "Courier New", monospace;
+  flex: 1;
 }
 
-/* Warning Message */
-.warning {
-  background: rgba(255, 170, 0, 0.1);
-  border: 1px solid rgba(255, 170, 0, 0.3);
-  border-radius: 6px;
-  padding: 15px;
-  margin-bottom: 25px;
-  color: #ffaa00;
-  font-size: 14px;
-  line-height: 1.5;
-  font-family: "Courier New", monospace;
-}
-
-/* Button Group */
-.buttonGroup {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-
-/* Base Button Styles */
-.button {
-  padding: 12px 30px;
-  border-radius: 6px;
-  font-family: "Courier New", monospace;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
+.gasFee {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+}
+
+.gasFeeHigh {
+  background: rgba(255, 68, 68, 0.18);
+  color: #ff5252;
+  border: 1px solid rgba(255, 68, 68, 0.35);
+}
+
+.gasFeeLow {
+  background: rgba(0, 255, 136, 0.18);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.32);
+}
+
+/* -----------------------------------------------------------------------------
+   Status Indicators
+   ----------------------------------------------------------------------------- */
+
+.statusBar {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statusPending {
+  border-color: rgba(255, 170, 0, 0.35);
+  background: rgba(255, 170, 0, 0.12);
+  color: #ffaa00;
+}
+
+.statusConfirmed {
+  border-color: rgba(0, 255, 136, 0.35);
+  background: rgba(0, 255, 136, 0.12);
+  color: #00ff88;
+}
+
+.statusFailed {
+  border-color: rgba(255, 68, 68, 0.35);
+  background: rgba(255, 68, 68, 0.12);
+  color: #ff5252;
+}
+
+/* -----------------------------------------------------------------------------
+   Warning Copy
+   ----------------------------------------------------------------------------- */
+
+.warning {
+  background: rgba(255, 170, 0, 0.14);
+  border: 1px solid rgba(255, 170, 0, 0.35);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 24px;
+  color: #ffbf40;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* -----------------------------------------------------------------------------
+   Button Group
+   ----------------------------------------------------------------------------- */
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.button {
+  padding: 12px 30px;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
+  min-height: 46px;
 }
 
 .button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-/* Cancel Button */
 .cancelButton {
-  background: rgba(255, 51, 51, 0.2);
-  border: 1px solid rgba(255, 51, 51, 0.5);
-  color: #ff3333;
+  background: rgba(255, 68, 68, 0.16);
+  color: #ff5252;
+  border: 1px solid rgba(255, 68, 68, 0.36);
 }
 
 .cancelButton:hover:not(:disabled) {
-  background: rgba(255, 51, 51, 0.3);
-  border-color: #ff3333;
-  box-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(255, 68, 68, 0.26);
 }
 
-/* Confirm Button */
 .confirmButton {
-  background: rgba(0, 188, 242, 0.2);
-  border: 1px solid rgba(0, 188, 242, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 188, 242, 0.28) 0%,
+    rgba(0, 136, 255, 0.32) 100%
+  );
   color: #00bcf2;
+  border: 1px solid rgba(0, 188, 242, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 188, 242, 0.28);
 }
 
 .confirmButton:hover:not(:disabled) {
-  background: rgba(0, 188, 242, 0.3);
-  border-color: #00bcf2;
-  box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 188, 242, 0.32);
 }
 
-/* Loading Spinner */
+/* -----------------------------------------------------------------------------
+   Loading Spinner
+   ----------------------------------------------------------------------------- */
+
 .loading {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border: 2px solid rgba(0, 188, 242, 0.3);
   border-top-color: #00bcf2;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.85s linear infinite;
 }
 
-/* Animations */
+/* -----------------------------------------------------------------------------
+   Animations
+   ----------------------------------------------------------------------------- */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -164,7 +280,7 @@
 
 @keyframes slideIn {
   from {
-    transform: translateY(-20px);
+    transform: translateY(-24px);
     opacity: 0;
   }
   to {
@@ -182,40 +298,134 @@
   }
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .modal {
-    padding: 20px;
-    max-width: 95%;
+/* -----------------------------------------------------------------------------
+   Theme Variants
+   ----------------------------------------------------------------------------- */
+
+:global(body.theme-executive) .modal {
+  background: rgba(18, 14, 6, 0.92);
+  border-color: rgba(255, 215, 0, 0.42);
+  box-shadow: 0 32px 70px rgba(255, 215, 0, 0.28);
+}
+
+:global(body.theme-executive) .header {
+  color: #ffd700;
+}
+
+:global(body.theme-modern) .modal {
+  background: rgba(14, 10, 36, 0.92);
+  border-color: rgba(102, 51, 255, 0.42);
+  box-shadow: 0 32px 70px rgba(102, 51, 255, 0.3);
+}
+
+:global(body.theme-modern) .header {
+  color: #a88cff;
+}
+
+:global(body.theme-matrix) .modal {
+  background: rgba(0, 22, 10, 0.92);
+  border-color: rgba(57, 255, 20, 0.42);
+  box-shadow: 0 32px 70px rgba(57, 255, 20, 0.28);
+}
+
+:global(body.theme-matrix) .header {
+  color: #39ff14;
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive Breakpoints
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 1400px) {
+  .overlay {
+    padding: 28px;
   }
 
-  .header {
-    font-size: 20px;
-    margin-bottom: 15px;
+  .modal {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .modal {
+    max-width: 440px;
+    padding: 28px;
+  }
+
+  .detailLabel {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 20px;
+  }
+
+  .modal {
+    width: 95vw;
+    border-radius: 24px;
+    padding: 24px;
   }
 
   .detailRow {
     flex-direction: column;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 8px;
   }
 
+  .detailLabel,
   .detailValue {
     text-align: left;
-    max-width: 100%;
   }
 
   .buttonGroup {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .button {
     width: 100%;
-    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .header {
+    font-size: 20px;
   }
 
   .warning {
     font-size: 13px;
-    padding: 12px;
+    padding: 16px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Safe Area & iOS Enhancements
+   ----------------------------------------------------------------------------- */
+
+@supports (-webkit-touch-callout: none) {
+  .overlay {
+    min-height: -webkit-fill-available;
+  }
+}
+
+@supports (padding: max(0px)) {
+  .overlay {
+    padding-top: max(32px, env(safe-area-inset-top));
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+    padding-left: max(32px, env(safe-area-inset-left));
+    padding-right: max(32px, env(safe-area-inset-right));
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .button {
+    min-height: 48px;
   }
 }

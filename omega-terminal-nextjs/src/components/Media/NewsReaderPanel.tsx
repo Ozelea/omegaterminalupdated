@@ -7,7 +7,7 @@
  * sentiment analysis, and article cards. Integrates with NewsReaderProvider.
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNewsReader } from "@/hooks/useNewsReader";
 import type { NewsFilter } from "@/types/media";
 import styles from "./NewsReaderPanel.module.css";
@@ -15,6 +15,15 @@ import styles from "./NewsReaderPanel.module.css";
 export function NewsReaderPanel() {
   const { readerState, loadNews, refreshNews, setFilter, closePanel } =
     useNewsReader();
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  useEffect(() => {
+    const updateTime = () => setCurrentTime(Date.now());
+    updateTime();
+    const interval = setInterval(updateTime, 60_000);
+    return () => clearInterval(interval);
+  }, []);
 
   const filters: { key: NewsFilter; label: string; emoji: string }[] = [
     { key: "hot", label: "Hot", emoji: "🔥" },
@@ -32,9 +41,10 @@ export function NewsReaderPanel() {
   };
 
   const formatTimeAgo = (timestamp: string) => {
-    const now = Date.now();
+    if (!currentTime) return "just now";
+
     const published = new Date(timestamp).getTime();
-    const diff = now - published;
+    const diff = Math.max(0, currentTime - published);
 
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);

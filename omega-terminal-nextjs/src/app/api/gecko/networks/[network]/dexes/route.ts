@@ -4,22 +4,23 @@
  * TTL: 3600 seconds (1 hour)
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { config } from "@/lib/config";
 
 const RELAYER_URL = config.relayerUrl;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { network: string } }
+  { params }: { params: Promise<{ network: string }> }
 ) {
   try {
-    const { network } = params;
+    const { network } = await params;
 
     if (!network) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Network parameter is required" },
-        { status: 400 }
+        400
       );
     }
 
@@ -31,9 +32,9 @@ export async function GET(
     );
 
     if (!response.ok) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: `GeckoTerminal API error: ${response.statusText}` },
-        { status: response.status }
+        response.status
       );
     }
 
@@ -42,18 +43,18 @@ export async function GET(
     // Normalize response format
     const dexes = data.data || data.dexes || [];
 
-    return NextResponse.json({
+    return createSecureResponse({
       dexes,
       success: true,
     });
   } catch (error) {
-    return NextResponse.json(
+    return createSecureResponse(
       {
         dexes: [],
         success: false,
         error: error instanceof Error ? error.message : "Failed to fetch DEXes",
       },
-      { status: 500 }
+      500
     );
   }
 }

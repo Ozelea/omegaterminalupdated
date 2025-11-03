@@ -7,5 +7,6 @@
 export { BootAnimation } from "./BootAnimation";
 export { TerminalContainer } from "./TerminalContainer";
 export { TerminalHeader } from "./TerminalHeader";
+export { DashboardTerminalHeader } from "./DashboardTerminalHeader";
 export { TerminalOutput } from "./TerminalOutput";
 export { TerminalInput } from "./TerminalInput";

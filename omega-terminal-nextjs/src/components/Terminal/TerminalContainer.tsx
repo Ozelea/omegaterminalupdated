@@ -9,24 +9,29 @@
  * with theme and wallet contexts.
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { BootAnimation } from "./BootAnimation";
 import { TerminalHeader } from "./TerminalHeader";
+import { DashboardTerminalHeader } from "./DashboardTerminalHeader";
 import { TerminalOutput } from "./TerminalOutput";
 import { TerminalInput } from "./TerminalInput";
 import { MiningStatus, StressTestStats } from "@/components/Mining";
 import { useTheme } from "@/hooks/useTheme";
 import { useWallet } from "@/hooks/useWallet";
-import { useCommandExecution } from "@/hooks/useCommandExecution";
+import { useTerminal } from "@/providers/TerminalProvider";
 import { registerAllCommands } from "@/lib/commands";
+import type { CommandRegistrationResult } from "@/lib/commands";
 import { shortenAddress } from "@/lib/utils";
 import { APP_VERSION } from "@/lib/constants";
 import type { ConnectionStatus } from "@/types";
 import styles from "./TerminalContainer.module.css";
+import { useViewMode } from "@/hooks/useViewMode";
+import { useCustomizer } from "@/hooks/useCustomizer";
 
 export function TerminalContainer() {
   // State management
   const [showBoot, setShowBoot] = useState(true);
+  const [commandsReady, setCommandsReady] = useState(false);
   const [connectionStatus, setConnectionStatus] =
     useState<ConnectionStatus>("disconnected");
 
@@ -35,24 +40,97 @@ export function TerminalContainer() {
 
   // Get wallet context
   const { state: walletState } = useWallet();
+  const { isBasicMode, toggleViewMode } = useViewMode();
+  const { cycleColorPalette } = useCustomizer();
 
   // Get command execution context
   const {
     executeCommand,
     terminalLines,
-    clearTerminal,
     navigateHistory,
     autocomplete,
     aiProvider,
     setAiProvider,
     miningState,
     stressTestState,
-  } = useCommandExecution();
+    commandsInitialized,
+    commandSystemErrors,
+    setCommandSystemStatus,
+  } = useTerminal();
 
   // Register all commands on mount
+  const registrationPromiseRef =
+    useRef<Promise<CommandRegistrationResult> | null>(null);
+
   useEffect(() => {
-    registerAllCommands();
-  }, []);
+    let isMounted = true;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const runRegistration = async () => {
+      try {
+        if (!registrationPromiseRef.current) {
+          registrationPromiseRef.current = registerAllCommands();
+        }
+
+        const result = await registrationPromiseRef.current;
+        if (!isMounted) {
+          return;
+        }
+
+        const diagnostics: string[] = [];
+
+        if (result.failedGroups.length > 0) {
+          diagnostics.push(
+            ...result.failedGroups.map(
+              (group) => `Group '${group}' failed to register.`
+            )
+          );
+        }
+
+        if (result.failedCommands.length > 0) {
+          diagnostics.push(
+            ...result.failedCommands.map(({ group, command, reason }) =>
+              reason
+                ? `${group} > ${command}: ${reason}`
+                : `${group} > ${command}: failed`
+            )
+          );
+        }
+
+        const success = result.registeredGroups.length > 0;
+        setCommandSystemStatus(success, diagnostics);
+      } catch (error) {
+        console.error("[Command System] Failed to register commands", error);
+        if (isMounted) {
+          setCommandSystemStatus(false, ["core"]);
+        }
+      } finally {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        if (isMounted) {
+          setCommandsReady(true);
+        }
+      }
+    };
+
+    timeoutId = setTimeout(() => {
+      if (!isMounted) {
+        return;
+      }
+      setCommandSystemStatus(false, ["timeout"]);
+      setCommandsReady(true);
+    }, 4500);
+
+    void runRegistration();
+
+    return () => {
+      isMounted = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [setCommandSystemStatus]);
 
   // Update connection status based on wallet state
   useEffect(() => {
@@ -73,11 +151,10 @@ export function TerminalContainer() {
     toggleTheme();
   }, [toggleTheme]);
 
-  // Palette cycle handler (placeholder)
+  // Palette cycle handler
   const handlePaletteCycle = useCallback(() => {
-    console.log("Palette cycle not implemented yet");
-    executeCommand(""); // Could add a palette cycle command in future
-  }, [executeCommand]);
+    cycleColorPalette();
+  }, [cycleColorPalette]);
 
   // Light/dark toggle handler (placeholder)
   const handleLightDarkToggle = useCallback(() => {
@@ -85,11 +162,10 @@ export function TerminalContainer() {
     executeCommand(""); // Could add a light/dark toggle command in future
   }, [executeCommand]);
 
-  // Dashboard toggle handler (placeholder)
+  // Dashboard toggle handler
   const handleDashboardToggle = useCallback(() => {
-    console.log("Dashboard toggle not implemented yet");
-    executeCommand("view toggle");
-  }, [executeCommand]);
+    toggleViewMode();
+  }, [toggleViewMode]);
 
   // AI provider change handler
   const handleAiProviderChange = useCallback(
@@ -100,28 +176,47 @@ export function TerminalContainer() {
   );
 
   // Render boot animation
-  if (showBoot) {
+  if (isBasicMode && showBoot) {
     return <BootAnimation onComplete={handleBootComplete} />;
   }
 
   // Render main terminal interface
   return (
-    <div className={styles.container}>
-      {/* Terminal Header */}
-      <TerminalHeader
-        onThemeCycle={handleThemeCycle}
-        onPaletteCycle={handlePaletteCycle}
-        onLightDarkToggle={handleLightDarkToggle}
-        onDashboardToggle={handleDashboardToggle}
-        aiProvider={aiProvider}
-        onAiProviderChange={handleAiProviderChange}
-        connectionStatus={connectionStatus}
-        walletAddress={
-          walletState.isConnected && walletState.address
-            ? shortenAddress(walletState.address)
-            : undefined
-        }
-      />
+    <div
+      className={`${styles.container} ${!isBasicMode ? styles.embedded : ""}`}
+    >
+      {/* Terminal Header - different for basic vs dashboard view */}
+      {isBasicMode ? (
+        <TerminalHeader
+          onThemeCycle={handleThemeCycle}
+          onPaletteCycle={handlePaletteCycle}
+          onLightDarkToggle={handleLightDarkToggle}
+          onDashboardToggle={handleDashboardToggle}
+          aiProvider={aiProvider}
+          onAiProviderChange={handleAiProviderChange}
+          connectionStatus={connectionStatus}
+          walletAddress={
+            walletState.isConnected && walletState.address
+              ? shortenAddress(walletState.address)
+              : undefined
+          }
+        />
+      ) : (
+        <DashboardTerminalHeader
+          onThemeCycle={handleThemeCycle}
+          onPaletteCycle={handlePaletteCycle}
+          onLightDarkToggle={handleLightDarkToggle}
+          onDashboardToggle={handleDashboardToggle}
+          aiProvider={aiProvider}
+          onAiProviderChange={handleAiProviderChange}
+          connectionStatus={connectionStatus}
+          walletAddress={
+            walletState.isConnected && walletState.address
+              ? shortenAddress(walletState.address)
+              : undefined
+          }
+        />
+      )}
 
       {/* Mining Status Widget - Shows when mining is active */}
       {miningState.isMining && (
@@ -150,6 +245,33 @@ export function TerminalContainer() {
         </button>
       </div>
 
+      {!commandsReady && (
+        <div className={styles.commandInitBanner}>
+          Initializing command system…
+        </div>
+      )}
+
+      {commandsReady && !commandsInitialized && (
+        <div className={styles.commandErrorBanner}>
+          <strong>Command system fallback active.</strong>
+          <p>
+            Some command modules failed to load. Fallback commands available:
+            <code>help</code>, <code>clear</code>, <code>connect</code>.
+          </p>
+          {commandSystemErrors.length > 0 && (
+            <ul>
+              {commandSystemErrors.map((group) => (
+                <li key={group}>{group}</li>
+              ))}
+            </ul>
+          )}
+          <p>
+            Check the browser console or recovery plan for guidance on restoring
+            missing modules.
+          </p>
+        </div>
+      )}
+
       {/* Info Box */}
       <div className={styles.infoBox}>
         <div>⏳ Faucet cooldown: 24 hours between requests</div>
@@ -165,6 +287,16 @@ export function TerminalContainer() {
         onHistoryUp={() => navigateHistory("up")}
         onHistoryDown={() => navigateHistory("down")}
         onAutocomplete={autocomplete}
+        placeholder={
+          !commandsReady
+            ? "Initializing command system…"
+            : !commandsInitialized
+            ? "Fallback mode active: try help, clear, connect"
+            : aiProvider !== "off"
+            ? "Enter command or ask me anything..."
+            : "Enter command..."
+        }
+        disabled={!commandsReady}
       />
     </div>
   );

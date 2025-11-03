@@ -7,7 +7,7 @@
 
 "use client";
 
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./NFTCard.module.css";
 
 interface NFTCardProps {
@@ -46,8 +46,51 @@ export function NFTCard({
   onBuy,
   onBid,
 }: NFTCardProps) {
-  // Get best image URL
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const imageUrl = nft.display_image_url || nft.image_url || nft.animation_url;
+  const [hasImageError, setHasImageError] = useState(false);
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setHasImageError(false);
+  }, [imageUrl]);
+
+  useEffect(() => {
+    const element = cardRef.current;
+    if (!element) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "250px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || !imageRef.current) {
+      return;
+    }
+
+    if (imageRef.current.complete && imageRef.current.naturalHeight > 0) {
+      setImageLoaded(true);
+    }
+  }, [isVisible]);
 
   // Check if NFT has active listing
   const hasPrice = nft.listing?.price?.current?.value;
@@ -58,25 +101,35 @@ export function NFTCard({
       ).toFixed(4)} ${nft.listing!.price!.current!.currency}`
     : null;
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.style.display = "none";
-    e.currentTarget.nextElementSibling?.classList.add(styles.visible);
+  const handleImageError = () => {
+    setHasImageError(true);
+    setImageLoaded(false);
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} ref={cardRef}>
       <div className={styles.imageContainer}>
-        {imageUrl ? (
-          <>
-            <img
-              src={imageUrl}
-              alt={nft.name || nft.identifier}
-              className={styles.image}
-              onError={handleImageError}
-            />
-            <div className={styles.imagePlaceholder}>🖼️</div>
-          </>
-        ) : (
+        {isVisible && imageUrl && !hasImageError ? (
+          <img
+            ref={imageRef}
+            src={imageUrl}
+            alt={nft.name || nft.identifier}
+            className={`${styles.image} ${
+              imageLoaded ? styles.imageVisible : styles.imageHidden
+            }`}
+            loading="lazy"
+            onLoad={() => setImageLoaded(true)}
+            onError={handleImageError}
+          />
+        ) : null}
+
+        {!imageLoaded && !hasImageError && (
+          <div className={styles.imageSkeleton}>
+            <div className={styles.skeletonPulse} />
+          </div>
+        )}
+
+        {(!imageUrl || hasImageError) && (
           <div className={`${styles.imagePlaceholder} ${styles.visible}`}>
             🖼️
           </div>

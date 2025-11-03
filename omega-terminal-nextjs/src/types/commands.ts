@@ -10,6 +10,7 @@ import type {
   WalletState,
   OmegaConfig,
 } from "@/types";
+import type { ViewMode, GUITheme, ColorPalette } from "@/types/ui";
 import type {
   SolanaWalletState,
   NEARWalletState,
@@ -22,6 +23,21 @@ import type {
   NewsReaderState,
   NewsFilter,
 } from "@/types/media";
+import type {
+  GamesState,
+  GameScore,
+  LeaderboardEntry,
+  GameType,
+} from "@/types/games";
+import type {
+  SoundEffectsState,
+  SoundName,
+  SoundPlayOptions,
+} from "@/types/sound";
+import type {
+  WalletConnectResult,
+  InitializeExternalWalletParams,
+} from "@/types/wallet";
 
 /**
  * Command context provided to all command handlers
@@ -68,13 +84,39 @@ export interface CommandContext {
   };
 
   /**
+   * View mode management context
+   */
+  viewMode?: {
+    /** Current view mode */
+    viewMode: ViewMode;
+    /** Set view mode */
+    setViewMode: (mode: ViewMode) => void;
+    /** Toggle view mode */
+    toggleViewMode: () => void;
+    /** Whether in basic mode */
+    isBasicMode: boolean;
+    /** Whether in futuristic mode */
+    isFuturisticMode: boolean;
+  };
+
+  /**
    * Wallet management context
    */
   wallet: {
     /** Current wallet state */
     state: WalletState;
+    /** EVM wallet address (for AI context) */
+    address?: string | null;
+    /** Solana wallet state (for AI context) */
+    solana?: {
+      /** Solana wallet address */
+      address?: string | null;
+    };
     /** Connect to MetaMask wallet */
-    connect: () => Promise<boolean>;
+    connect: () => Promise<WalletConnectResult>;
+    initializeExternalConnection: (
+      params: InitializeExternalWalletParams
+    ) => Promise<void>;
     /** Disconnect current wallet */
     disconnect: () => Promise<void>;
     /**
@@ -128,6 +170,22 @@ export interface CommandContext {
    * @param provider - The AI provider to use
    */
   setAiProvider: (provider: AIProvider) => void;
+
+  /**
+   * Chat history for AI context (matches vanilla terminal.html line 2704)
+   * Array of chat messages with type "user", "ai", or "command"
+   */
+  chatHistory?: Array<{
+    type: "user" | "ai" | "command";
+    message?: string;
+    command?: string | string[];
+  }>;
+
+  /**
+   * Flag to prevent recursive AI calls during command execution
+   * Set to true when AI is executing commands to prevent infinite loops
+   */
+  executingAICommands?: boolean;
 
   /**
    * Mining state management
@@ -301,6 +359,94 @@ export interface CommandContext {
       /** Hide news reader panel */
       closePanel: () => void;
     };
+  };
+
+  /**
+   * Games system operations
+   * Enables commands to launch games, manage leaderboards, and submit scores to blockchain
+   */
+  games?: {
+    /** Current games state */
+    state: GamesState;
+    /** Open a game modal */
+    openGame: (gameId: string) => void;
+    /** Close the current game modal */
+    closeGame: () => void;
+    /** Submit a score to local leaderboard (localStorage) */
+    submitLocalScore: (gameId: string, score: GameScore) => void;
+    /** Get local leaderboard for a game */
+    getLocalLeaderboard: (gameId: string, limit?: number) => GameScore[];
+    /** Submit a score to on-chain leaderboard (blockchain) */
+    submitOnChainScore: (
+      gameType: GameType,
+      score: number,
+      username: string,
+      gameData?: Record<string, any>
+    ) => Promise<{
+      success: boolean;
+      transactionHash?: string;
+      error?: string;
+    }>;
+    /** Fetch on-chain leaderboard for a game from blockchain */
+    fetchOnChainLeaderboard: (
+      gameType: GameType,
+      limit?: number
+    ) => Promise<LeaderboardEntry[]>;
+  };
+
+  /**
+   * UI system context for view mode, GUI themes, and color palettes.
+   * Enables commands to control layout transformations and appearance.
+   */
+  ui?: {
+    /** Current view mode */
+    viewMode: ViewMode;
+    /** Set a specific view mode */
+    setViewMode: (mode: ViewMode) => void;
+    /** Toggle between basic and futuristic */
+    toggleViewMode: () => void;
+    /** Convenience flags */
+    isBasicMode: boolean;
+    isFuturisticMode: boolean;
+
+    /** Current GUI theme */
+    guiTheme: GUITheme;
+    /** Set GUI theme */
+    setGUITheme: (theme: GUITheme) => void;
+    /** Whether default terminal mode is active */
+    isTerminalMode: boolean;
+
+    /** Current color palette */
+    colorPalette: ColorPalette | null;
+    /** Set color palette */
+    setColorPalette: (palette: ColorPalette) => void;
+    /** Cycle through palettes */
+    cycleColorPalette: () => void;
+    /** Reset palette to default (null removes attribute) */
+    resetColorPalette: () => void;
+  };
+
+  /**
+   * Sound effects context for audio feedback on user actions.
+   * Commands can trigger sounds such as wallet connection, balance check,
+   * chart viewer activation, clearing terminal, help command, etc.
+   * Playback is best-effort and may fail silently due to browser autoplay policies.
+   */
+  sound?: {
+    state: SoundEffectsState;
+    playSound: (name: SoundName, options?: SoundPlayOptions) => Promise<void>;
+    stopSound: (name: string) => void;
+    stopAllSounds: () => void;
+    setVolume: (volume: number) => void;
+    setEnabled: (enabled: boolean) => void;
+    playWalletConnectSound: (options?: SoundPlayOptions) => Promise<void>;
+    playAIToggleSound: (options?: SoundPlayOptions) => Promise<void>;
+    playBalanceWealthSound: (options?: SoundPlayOptions) => Promise<void>;
+    playChartViewerSound: (options?: SoundPlayOptions) => Promise<void>;
+    playBasicViewSound: (options?: SoundPlayOptions) => Promise<void>;
+    playClearTerminalSound: (options?: SoundPlayOptions) => Promise<void>;
+    playModernUIThemeSound: (options?: SoundPlayOptions) => Promise<void>;
+    playHelpCommandSound: (options?: SoundPlayOptions) => Promise<void>;
   };
 }
 

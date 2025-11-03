@@ -10,15 +10,18 @@
  * Note: PINATA_JWT should be added to .env.local for production
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 
 /**
  * GET handler - not supported
  */
 export async function GET() {
-  return NextResponse.json(
+  return createSecureResponse(
     { error: "Method not allowed. Use POST to upload images." },
-    { status: 405 }
+    405,
+    undefined,
+    { maxAge: 0 }
   );
 }
 
@@ -31,13 +34,15 @@ export async function POST(request: NextRequest) {
     const PINATA_JWT = process.env.PINATA_JWT;
     if (!PINATA_JWT) {
       console.error("PINATA_JWT environment variable is not set");
-      return NextResponse.json(
+      return createSecureResponse(
         {
           error:
             "Server configuration error: PINATA_JWT is not configured. Please set the PINATA_JWT environment variable.",
           success: false,
         },
-        { status: 500 }
+        500,
+        undefined,
+        { maxAge: 0 }
       );
     }
     // Extract FormData from request
@@ -46,9 +51,11 @@ export async function POST(request: NextRequest) {
 
     // Validate file exists and is File type
     if (!file || !(file instanceof File)) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "No file provided or invalid file type" },
-        { status: 400 }
+        400,
+        undefined,
+        { maxAge: 0 }
       );
     }
 
@@ -76,15 +83,20 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     const ipfsHash = data.IpfsHash;
 
-    return NextResponse.json({
-      ipfsHash,
-      ipfsUrl: `ipfs://${ipfsHash}`,
-      gatewayUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
-      success: true,
-    });
+    return createSecureResponse(
+      {
+        ipfsHash,
+        ipfsUrl: `ipfs://${ipfsHash}`,
+        gatewayUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
+        success: true,
+      },
+      200,
+      undefined,
+      { maxAge: 0 }
+    );
   } catch (error) {
     console.error("Pinata image upload error:", error);
-    return NextResponse.json(
+    return createSecureResponse(
       {
         error:
           error instanceof Error
@@ -92,7 +104,9 @@ export async function POST(request: NextRequest) {
             : "Failed to upload image to IPFS",
         success: false,
       },
-      { status: 500 }
+      500,
+      undefined,
+      { maxAge: 0 }
     );
   }
 }

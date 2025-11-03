@@ -40,6 +40,8 @@ import {
   WalletState,
   WalletContextValue,
   WalletProviderProps,
+  WalletConnectResult,
+  InitializeExternalWalletParams,
 } from "@/types/wallet";
 import {
   connectMetaMask as connectMetaMaskModule,
@@ -47,8 +49,8 @@ import {
   importSessionWallet as importSessionWalletModule,
   getBalance as getBalanceModule,
   addOmegaNetwork as addOmegaNetworkModule,
-  getEthereumProvider,
 } from "@/lib/wallet";
+import { getEthereumProvider } from "@/lib/wallet/detection";
 
 // Create wallet context
 export const WalletContext = createContext<WalletContextValue | undefined>(
@@ -86,87 +88,218 @@ export function WalletProvider({ children }: WalletProviderProps) {
   const chainChangedHandlerRef = useRef<(chainIdHex: string) => void>(() => {});
 
   /**
+   * Debug helper: Log ethereum provider availability on mount
+   */
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      const checkEthereum = () => {
+        const eth = (window as typeof window & { ethereum?: any }).ethereum;
+        // eslint-disable-next-line no-console
+        console.debug("[WalletProvider] Ethereum provider check on mount:", {
+          exists: Boolean(eth),
+          isMetaMask: eth?.isMetaMask,
+          isPhantom: eth?.isPhantom,
+          hasRequest: typeof eth?.request === "function",
+          providers: eth?.providers,
+        });
+      };
+
+      // Check immediately and after a delay (MetaMask might inject late)
+      checkEthereum();
+      const timer = setTimeout(checkEthereum, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const onAccountsChanged = useCallback((accounts: string[]) => {
+    accountsChangedHandlerRef.current(accounts);
+  }, []);
+
+  const onChainChanged = useCallback((chainIdHex: string) => {
+    chainChangedHandlerRef.current(chainIdHex);
+  }, []);
+
+  const handleGetBalance = useCallback(
+    async (
+      overrideProvider?: BrowserProvider | JsonRpcProvider,
+      overrideAddress?: string
+    ): Promise<string | null> => {
+      try {
+        const targetProvider = overrideProvider || provider;
+        const targetAddress = overrideAddress || walletState.address;
+
+        if (!targetProvider || !targetAddress) {
+          return null;
+        }
+
+        if (typeof getBalanceModule !== "function") {
+          console.error("[WalletProvider] getBalance module unavailable");
+          setWalletState((prev) => ({
+            ...prev,
+            error: "Wallet module not available",
+          }));
+          return null;
+        }
+
+        const balance = await getBalanceModule(targetProvider, targetAddress);
+
+        setWalletState((prev) => ({
+          ...prev,
+          balance,
+        }));
+
+        return balance;
+      } catch (error: any) {
+        console.error("Failed to get balance:", error);
+        return null;
+      }
+    },
+    [provider, walletState.address]
+  );
+
+  /**
    * Connect to MetaMask wallet
    */
-  const handleConnectMetaMask = useCallback(async (): Promise<boolean> => {
-    try {
-      // Set connecting state
-      setWalletState((prev) => ({
-        ...prev,
-        isConnecting: true,
-        error: null,
-      }));
+  const handleConnectMetaMask =
+    useCallback(async (): Promise<WalletConnectResult> => {
+      try {
+        // Set connecting state
+        setWalletState((prev) => ({
+          ...prev,
+          isConnecting: true,
+          error: null,
+        }));
 
-      // Call connection module
-      const result = await connectMetaMaskModule();
+        if (typeof connectMetaMaskModule !== "function") {
+          console.error("[WalletProvider] connectMetaMask module unavailable");
+          setWalletState((prev) => ({
+            ...prev,
+            isConnecting: false,
+            error: "Wallet module not available",
+          }));
+          return { success: false, error: "Wallet module not available" };
+        }
 
-      if (!result.success) {
+        // Call connection module
+        const result = await connectMetaMaskModule();
+
+        if (!result.success) {
+          setWalletState((prev) => ({
+            ...prev,
+            isConnecting: false,
+            error: result.error || "Failed to connect to MetaMask",
+          }));
+          return {
+            success: false,
+            error: result.error || "Failed to connect to MetaMask",
+          };
+        }
+
+        // Store provider
+        if (result.provider) {
+          setProvider(result.provider);
+
+          // Get signer (async in v6)
+          const newSigner = await result.provider.getSigner();
+          setSigner(newSigner);
+
+          // Get network info
+          const network = await result.provider.getNetwork();
+
+          // Update state
+          setWalletState({
+            type: "metamask",
+            address: result.address || null,
+            isConnected: true,
+            isConnecting: false,
+            balance: null,
+            chainId: Number(network.chainId),
+            error: null,
+          });
+
+          // Fetch balance (Comment 2: pass provider and address directly to avoid race condition)
+          if (result.address) {
+            handleGetBalance(result.provider, result.address);
+          }
+
+          // Set up event listeners (Comment 1: using stable wrapper functions)
+          const ethereumProvider = getEthereumProvider();
+          if (ethereumProvider) {
+            ethereumProvider.on("accountsChanged", onAccountsChanged);
+            ethereumProvider.on("chainChanged", onChainChanged);
+          }
+
+          // Save to localStorage
+          if (typeof window !== "undefined") {
+            localStorage.setItem("walletType", "metamask");
+          }
+
+          return {
+            success: true,
+            address: result.address || null,
+          };
+        }
+
+        return {
+          success: false,
+          error: result.error || "MetaMask provider unavailable",
+        };
+      } catch (error: any) {
+        console.error("MetaMask connection error:", error);
         setWalletState((prev) => ({
           ...prev,
           isConnecting: false,
-          error: result.error || "Failed to connect to MetaMask",
+          error: error.message || "Failed to connect to MetaMask",
         }));
-        return false;
+        return {
+          success: false,
+          error: error.message || "Failed to connect to MetaMask",
+        };
       }
+    }, [onAccountsChanged, onChainChanged]);
 
-      // Store provider
-      if (result.provider) {
-        setProvider(result.provider);
+  const handleInitializeExternalConnection = useCallback(
+    async ({
+      provider: externalProvider,
+      address,
+      chainId,
+      walletType = "metamask",
+      networkName,
+    }: InitializeExternalWalletParams): Promise<void> => {
+      setProvider(externalProvider);
+      const newSigner = await externalProvider.getSigner();
+      setSigner(newSigner);
 
-        // Get signer (async in v6)
-        const newSigner = await result.provider.getSigner();
-        setSigner(newSigner);
-
-        // Get network info
-        const network = await result.provider.getNetwork();
-
-        // Update state
-        setWalletState({
-          type: "metamask",
-          address: result.address || null,
-          isConnected: true,
-          isConnecting: false,
-          balance: null,
-          chainId: Number(network.chainId),
-          error: null,
-        });
-
-        // Fetch balance (Comment 2: pass provider and address directly to avoid race condition)
-        if (result.address) {
-          handleGetBalance(result.provider, result.address);
-        }
-
-        // Set up event listeners (Comment 1: using stable wrapper functions)
-        const ethereumProvider = getEthereumProvider();
-        if (ethereumProvider) {
-          // Account changed
-          ethereumProvider.on(
-            "accountsChanged",
-            accountsChangedHandlerRef.current
-          );
-          // Chain changed
-          ethereumProvider.on("chainChanged", chainChangedHandlerRef.current);
-        }
-
-        // Save to localStorage
-        if (typeof window !== "undefined") {
-          localStorage.setItem("walletType", "metamask");
-        }
-
-        return true;
-      }
-
-      return false;
-    } catch (error: any) {
-      console.error("MetaMask connection error:", error);
-      setWalletState((prev) => ({
-        ...prev,
+      setWalletState({
+        type: walletType,
+        address,
+        isConnected: true,
         isConnecting: false,
-        error: error.message || "Failed to connect to MetaMask",
-      }));
-      return false;
-    }
-  }, []);
+        balance: null,
+        chainId,
+        error: null,
+      });
+
+      if (address) {
+        handleGetBalance(externalProvider, address);
+      }
+
+      const ethereumProvider = getEthereumProvider();
+      if (ethereumProvider) {
+        ethereumProvider.on("accountsChanged", onAccountsChanged);
+        ethereumProvider.on("chainChanged", onChainChanged);
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("walletType", walletType ?? "metamask");
+        if (networkName) {
+          localStorage.setItem("walletNetworkName", networkName);
+        }
+      }
+    },
+    [handleGetBalance, onAccountsChanged, onChainChanged]
+  );
 
   /**
    * Create new session wallet
@@ -179,6 +312,18 @@ export function WalletProvider({ children }: WalletProviderProps) {
         isConnecting: true,
         error: null,
       }));
+
+      if (typeof createSessionWalletModule !== "function") {
+        console.error(
+          "[WalletProvider] createSessionWallet module unavailable"
+        );
+        setWalletState((prev) => ({
+          ...prev,
+          isConnecting: false,
+          error: "Wallet module not available",
+        }));
+        return false;
+      }
 
       // Call session wallet module
       const result = await createSessionWalletModule();
@@ -231,6 +376,18 @@ export function WalletProvider({ children }: WalletProviderProps) {
           isConnecting: true,
           error: null,
         }));
+
+        if (typeof importSessionWalletModule !== "function") {
+          console.error(
+            "[WalletProvider] importSessionWallet module unavailable"
+          );
+          setWalletState((prev) => ({
+            ...prev,
+            isConnecting: false,
+            error: "Wallet module not available",
+          }));
+          return false;
+        }
 
         // Call import wallet module
         const result = await importSessionWalletModule(privateKey);
@@ -291,14 +448,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
       if (walletState.type === "metamask") {
         const ethereumProvider = getEthereumProvider();
         if (ethereumProvider) {
-          ethereumProvider.removeListener(
-            "accountsChanged",
-            accountsChangedHandlerRef.current
-          );
-          ethereumProvider.removeListener(
-            "chainChanged",
-            chainChangedHandlerRef.current
-          );
+          ethereumProvider.removeListener("accountsChanged", onAccountsChanged);
+          ethereumProvider.removeListener("chainChanged", onChainChanged);
         }
       }
 
@@ -320,45 +471,12 @@ export function WalletProvider({ children }: WalletProviderProps) {
       if (typeof window !== "undefined") {
         localStorage.removeItem("walletType");
         sessionStorage.removeItem("omega-session-wallet-key");
+        localStorage.removeItem("walletNetworkName");
       }
     } catch (error: any) {
       console.error("Disconnect error:", error);
     }
-  }, [walletState.type]);
-
-  /**
-   * Get wallet balance (Comment 2: accepts optional provider and address to avoid race conditions)
-   */
-  const handleGetBalance = useCallback(
-    async (
-      overrideProvider?: BrowserProvider | JsonRpcProvider,
-      overrideAddress?: string
-    ): Promise<string | null> => {
-      try {
-        const targetProvider = overrideProvider || provider;
-        const targetAddress = overrideAddress || walletState.address;
-
-        if (!targetProvider || !targetAddress) {
-          return null;
-        }
-
-        // Fetch balance
-        const balance = await getBalanceModule(targetProvider, targetAddress);
-
-        // Update state
-        setWalletState((prev) => ({
-          ...prev,
-          balance,
-        }));
-
-        return balance;
-      } catch (error: any) {
-        console.error("Failed to get balance:", error);
-        return null;
-      }
-    },
-    [provider, walletState.address]
-  );
+  }, [walletState.type, onAccountsChanged, onChainChanged]);
 
   /**
    * Add Omega Network to MetaMask
@@ -367,6 +485,11 @@ export function WalletProvider({ children }: WalletProviderProps) {
     try {
       const ethereumProvider = getEthereumProvider();
       if (!ethereumProvider) {
+        return false;
+      }
+
+      if (typeof addOmegaNetworkModule !== "function") {
+        console.error("[WalletProvider] addOmegaNetwork module unavailable");
         return false;
       }
 
@@ -414,7 +537,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
         // Account changed
         setWalletState((prev) => ({
           ...prev,
-          address: accounts[0],
+          address: accounts[0] ?? null,
         }));
         // Refresh balance
         handleGetBalance();
@@ -451,32 +574,20 @@ export function WalletProvider({ children }: WalletProviderProps) {
       const savedWalletType = localStorage.getItem("walletType");
 
       if (savedWalletType === "metamask") {
-        // Try to reconnect to MetaMask
-        const ethereumProvider = getEthereumProvider();
-        if (ethereumProvider) {
-          try {
-            // Check if already connected
-            const accounts = await ethereumProvider.request({
-              method: "eth_accounts",
-            });
-            if (accounts && accounts.length > 0) {
-              // Reconnect
-              await handleConnectMetaMask();
-            }
-          } catch (error) {
-            console.error("Auto-reconnect failed:", error);
-          }
-        }
+        // Skip automatic reconnection to avoid triggering MetaMask errors on load.
+        // The user can reconnect manually via the network selector.
+        return;
       }
     };
 
     reconnect();
-  }, [handleConnectMetaMask]);
+  }, [handleInitializeExternalConnection]);
 
   // Context value
   const value: WalletContextValue = {
     state: walletState,
     connectMetaMask: handleConnectMetaMask,
+    initializeExternalConnection: handleInitializeExternalConnection,
     createSessionWallet: handleCreateSessionWallet,
     importSessionWallet: handleImportSessionWallet,
     disconnect: handleDisconnect,

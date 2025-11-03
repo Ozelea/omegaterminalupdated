@@ -7,7 +7,8 @@
  * GET /api/magiceden/stats?symbol={collectionSymbol}
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { RELAYER_URL } from "@/lib/config";
 
 /**
@@ -20,9 +21,11 @@ export async function GET(request: NextRequest) {
 
     // Validate required parameters
     if (!symbol) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Collection symbol is required" },
-        { status: 400 }
+        400,
+        undefined,
+        { maxAge: 0 }
       );
     }
 
@@ -40,18 +43,25 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
 
-    return NextResponse.json({
-      stats: data,
-      success: true,
-    });
+    return createSecureResponse(
+      {
+        stats: data,
+        success: true,
+      },
+      200,
+      undefined,
+      { maxAge: 120, staleWhileRevalidate: 240 }
+    );
   } catch (error) {
     console.error("Magic Eden stats error:", error);
-    return NextResponse.json(
+    return createSecureResponse(
       {
         error: error instanceof Error ? error.message : "Failed to fetch stats",
         success: false,
       },
-      { status: 500 }
+      500,
+      undefined,
+      { maxAge: 0 }
     );
   }
 }

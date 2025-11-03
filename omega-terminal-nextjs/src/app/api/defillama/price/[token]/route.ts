@@ -27,10 +27,10 @@ const TOKEN_MAPPINGS: Record<string, string> = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { token: string } }
+  { params }: { params: Promise<{ token: string }> }
 ) {
   try {
-    const { token } = params;
+    const { token } = await params;
     const normalizedSymbol = token.toLowerCase();
     const mappedToken =
       TOKEN_MAPPINGS[normalizedSymbol] || `coingecko:${normalizedSymbol}`;

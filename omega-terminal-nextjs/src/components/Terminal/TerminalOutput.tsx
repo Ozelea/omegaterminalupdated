@@ -72,13 +72,19 @@ export function TerminalOutput({ lines, isScrolling }: TerminalOutputProps) {
     <div
       ref={contentRef}
       className={styles.container}
+      data-testid="terminal-container"
       onScroll={handleScroll}
       onClick={handleClick}
     >
       {lines.map((line) => {
         if (line.type === "command") {
           return (
-            <div key={line.id} className={`${styles.line} ${styles.command}`}>
+            <div
+              key={line.id}
+              className={`${styles.line} ${styles.command}`}
+              data-testid="terminal-line"
+              data-line-type={line.type}
+            >
               <span className={styles.prompt}>{TERMINAL_PROMPT}</span>
               {line.content}
             </div>
@@ -91,13 +97,27 @@ export function TerminalOutput({ lines, isScrolling }: TerminalOutputProps) {
             <div
               key={line.id}
               className={`${styles.line} ${styles.html}`}
+              data-testid="terminal-line"
+              data-line-type={line.type}
               dangerouslySetInnerHTML={{ __html: line.htmlContent }}
             />
           );
         }
 
+        const variantClasses = [styles.line, styles.output];
+        const variantStyle = styles[line.type as keyof typeof styles];
+
+        if (line.type !== "output" && typeof variantStyle === "string") {
+          variantClasses.push(variantStyle);
+        }
+
         return (
-          <div key={line.id} className={`${styles.line} ${styles[line.type]}`}>
+          <div
+            key={line.id}
+            className={variantClasses.join(" ")}
+            data-testid="terminal-line"
+            data-line-type={line.type}
+          >
             {line.content}
           </div>
         );

@@ -16,10 +16,10 @@ const VALID_INDICATORS = ["inflation", "cpi", "gdp"];
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { indicator: string } }
+  { params }: { params: Promise<{ indicator: string }> }
 ) {
   try {
-    const { indicator } = params;
+    const { indicator } = await params;
 
     if (!indicator) {
       return NextResponse.json(

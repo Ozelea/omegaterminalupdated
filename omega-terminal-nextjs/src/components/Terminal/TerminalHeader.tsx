@@ -5,10 +5,12 @@
  * Displays terminal header with title, social links, theme controls, AI selector, and connection status
  */
 
+import Link from "next/link";
 import type { TerminalHeaderProps } from "@/types/terminal";
 import type { AIProvider } from "@/types";
 import { APP_VERSION, SOCIAL_LINKS } from "@/lib/constants";
 import styles from "./TerminalHeader.module.css";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 export function TerminalHeader({
   onThemeCycle,
@@ -20,11 +22,29 @@ export function TerminalHeader({
   connectionStatus,
   walletAddress,
 }: TerminalHeaderProps) {
+  const soundEffects = useSoundEffects();
   return (
     <header className={styles.header}>
       {/* Left Section: Title */}
       <div className={styles.headerLeft}>
         <h1 className={styles.title}>Ω Terminal v{APP_VERSION}</h1>
+        <nav className={styles.routeNav} aria-label="Primary navigation">
+          <Link href="/" className={styles.routeLink}>
+            Terminal
+          </Link>
+          <Link href="/dashboard" className={styles.routeLink}>
+            Dashboard
+          </Link>
+          <Link href="/games" className={styles.routeLink}>
+            Games
+          </Link>
+          <Link href="/nft" className={styles.routeLink}>
+            NFT
+          </Link>
+          <Link href="/media" className={styles.routeLink}>
+            Media
+          </Link>
+        </nav>
       </div>
 
       {/* Center Section: Social Links */}
@@ -168,7 +188,12 @@ export function TerminalHeader({
         <span className={styles.aiLabel}>AI:</span>
         <select
           value={aiProvider}
-          onChange={(e) => onAiProviderChange(e.target.value as AIProvider)}
+          onChange={async (e) => {
+            onAiProviderChange(e.target.value as AIProvider);
+            try {
+              await soundEffects.playAIToggleSound();
+            } catch {}
+          }}
           className={styles.aiSelect}
         >
           <option value="off">Off</option>

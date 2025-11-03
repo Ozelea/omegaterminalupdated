@@ -10,13 +10,18 @@
  * - MediaPanelContainer: Container that manages panel visibility
  *
  * Usage:
- *   import { MediaPanelContainer } from '@/components/Media';
+ *   import { MediaPanelContainer, MediaPanelContainerProps } from '@/components/Media';
  *
- *   // In your app layout or page:
- *   <MediaPanelContainer />
+ *   // In your app layout or page dynamically load heavy panels:
+ *   <MediaPanelContainer
+ *     SpotifyPanel={SpotifyPanel}
+ *     YouTubePanel={YouTubePanel}
+ *     NewsReaderPanel={NewsReaderPanel}
+ *   />
  */
 
 export { SpotifyPanel } from "./SpotifyPanel";
 export { YouTubePanel } from "./YouTubePanel";
 export { NewsReaderPanel } from "./NewsReaderPanel";
 export { MediaPanelContainer } from "./MediaPanelContainer";
+export type { MediaPanelContainerProps } from "./MediaPanelContainer";

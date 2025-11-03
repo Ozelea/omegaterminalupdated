@@ -307,7 +307,10 @@ export function YouTubeProvider({ children }: { children: ReactNode }) {
 
   const openPanel = useCallback(() => {
     setPlayerState((prev) => ({ ...prev, isPanelOpen: true }));
-  }, []);
+    if (!apiReadyRef.current) {
+      void initializeAPI();
+    }
+  }, [initializeAPI]);
 
   const closePanel = useCallback(() => {
     setPlayerState((prev) => ({ ...prev, isPanelOpen: false }));
@@ -318,9 +321,10 @@ export function YouTubeProvider({ children }: { children: ReactNode }) {
   // ==========================================================================
 
   useEffect(() => {
-    // Initialize YouTube API on mount
-    initializeAPI();
-  }, [initializeAPI]);
+    return () => {
+      window.onYouTubeIframeAPIReady = undefined as any;
+    };
+  }, []);
 
   // ==========================================================================
   // Context Value

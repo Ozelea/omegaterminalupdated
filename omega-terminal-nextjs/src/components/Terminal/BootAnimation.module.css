@@ -30,6 +30,18 @@
   animation: glow 2s infinite;
 }
 
+.logoFloat {
+  animation: float 4s ease-in-out infinite;
+}
+
+.logoPulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.logoGlow {
+  animation: glow 2s ease-in-out infinite;
+}
+
 .title {
   font-size: 48px;
   font-weight: bold;
@@ -66,6 +78,17 @@
   box-shadow: 0 0 10px #00bcf2;
 }
 
+.loadingBarGradient {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 188, 242, 0.2),
+    rgba(0, 255, 136, 0.5),
+    rgba(0, 188, 242, 0.2)
+  );
+  background-size: 200% 100%;
+  animation: gradientFlow 1.8s linear infinite;
+}
+
 .loadingText {
   font-size: 14px;
   color: #cccccc;
@@ -76,6 +99,7 @@
   display: flex;
   gap: 20px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .badge {
@@ -93,6 +117,26 @@
   font-size: 14px;
   color: #cccccc;
 }
+
+/* -----------------------------------------------------------------------------
+   Theme Variants
+   ----------------------------------------------------------------------------- */
+
+:global(body.theme-executive) .container {
+  background: linear-gradient(135deg, #100c06 0%, #0a0a0f 100%);
+}
+
+:global(body.theme-modern) .container {
+  background: linear-gradient(135deg, #030314 0%, #090921 100%);
+}
+
+:global(body.theme-matrix) .container {
+  background: linear-gradient(135deg, #000000 0%, #012d12 100%);
+}
+
+/* -----------------------------------------------------------------------------
+   Animations
+   ----------------------------------------------------------------------------- */
 
 /* Animations */
 @keyframes fadeIn {
@@ -114,7 +158,54 @@
   }
 }
 
-/* Mobile Responsive */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive Breakpoints
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 1400px) {
+  .logo {
+    font-size: 110px;
+  }
+
+  .title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .logo {
+    font-size: 96px;
+  }
+
+  .title {
+    font-size: 36px;
+    letter-spacing: 3px;
+  }
+
+  .loadingBarContainer {
+    width: 320px;
+  }
+}
+
 @media (max-width: 768px) {
   .logo {
     font-size: 80px;
@@ -148,5 +239,45 @@
 
   .featureBadges {
     gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 64px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .version {
+    font-size: 16px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .loadingBarContainer {
+    width: 240px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Safe Area & Touch Enhancements
+   ----------------------------------------------------------------------------- */
+
+@supports (padding: max(0px)) {
+  .container {
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    padding-top: max(24px, env(safe-area-inset-top));
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .badge {
+    min-height: 44px;
   }
 }

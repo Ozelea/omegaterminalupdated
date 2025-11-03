@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { APP_FULL_TITLE, APP_DESCRIPTION } from "@/lib/constants";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { CustomizerProvider } from "@/providers/CustomizerProvider";
+import { ViewModeProvider } from "@/providers/ViewModeProvider";
+import { GUIThemeProvider } from "@/providers/GUIThemeProvider";
+import { SoundEffectsProvider } from "@/providers/SoundEffectsProvider";
 import { WalletProvider } from "@/providers/WalletProvider";
 import { MultiChainProvider } from "@/providers/MultiChainProvider";
-import { SpotifyProvider } from "@/providers/SpotifyProvider";
-import { YouTubeProvider } from "@/providers/YouTubeProvider";
-import { NewsReaderProvider } from "@/providers/NewsReaderProvider";
+import { ProviderShell } from "@/providers/ProviderShell";
+import { MultiNetworkConnectorHost } from "@/components/Wallet/MultiNetworkConnectorHost";
+import WebVitals from "./_components/WebVitals";
 
 /**
  * Metadata configuration for the application
@@ -65,33 +68,25 @@ export default function RootLayout({
         />
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
-
-        {/* Preload fonts */}
-        <link
-          rel="preload"
-          href="/fonts/CourierNew.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        {/* External SDK Scripts */}
-        <Script
-          src="https://sdk.scdn.co/spotify-player.js"
-          strategy="afterInteractive"
-        />
       </head>
-      <body>
-        <ThemeProvider>
-          <WalletProvider>
-            <MultiChainProvider>
-              <SpotifyProvider>
-                <YouTubeProvider>
-                  <NewsReaderProvider>{children}</NewsReaderProvider>
-                </YouTubeProvider>
-              </SpotifyProvider>
-            </MultiChainProvider>
-          </WalletProvider>
-        </ThemeProvider>
+      <body suppressHydrationWarning data-omega-hydrated="true">
+        <WebVitals />
+        <SoundEffectsProvider>
+          <ThemeProvider>
+            <CustomizerProvider>
+              <ViewModeProvider>
+                <GUIThemeProvider>
+                  <WalletProvider>
+                    <MultiNetworkConnectorHost />
+                    <MultiChainProvider>
+                      <ProviderShell>{children}</ProviderShell>
+                    </MultiChainProvider>
+                  </WalletProvider>
+                </GUIThemeProvider>
+              </ViewModeProvider>
+            </CustomizerProvider>
+          </ThemeProvider>
+        </SoundEffectsProvider>
       </body>
     </html>
   );

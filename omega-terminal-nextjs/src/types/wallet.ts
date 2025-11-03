@@ -6,6 +6,7 @@
  */
 
 import { ReactNode } from "react";
+import type { BrowserProvider, JsonRpcProvider } from "ethers";
 
 /**
  * Type of wallet connection
@@ -37,6 +38,23 @@ export interface WalletState {
 }
 
 /**
+ * Result of attempting to connect a wallet provider (MetaMask, etc.)
+ */
+export interface WalletConnectResult {
+  success: boolean;
+  error?: string;
+  address?: string | null;
+}
+
+export interface InitializeExternalWalletParams {
+  provider: BrowserProvider | JsonRpcProvider;
+  address: string;
+  chainId: number;
+  walletType?: WalletType;
+  networkName?: string;
+}
+
+/**
  * Session wallet information including sensitive data
  *
  * WARNING: Session wallets are ephemeral and should not be used for large amounts.
@@ -61,7 +79,12 @@ export interface WalletContextValue {
   state: WalletState;
 
   /** Connect to MetaMask wallet */
-  connectMetaMask: () => Promise<boolean>;
+  connectMetaMask: () => Promise<WalletConnectResult>;
+
+  /** Initialize wallet state using an existing provider connection */
+  initializeExternalConnection: (
+    params: InitializeExternalWalletParams
+  ) => Promise<void>;
 
   /** Create a new ephemeral session wallet */
   createSessionWallet: () => Promise<boolean>;

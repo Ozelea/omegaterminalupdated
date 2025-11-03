@@ -5,22 +5,23 @@
  * Note: Prevents API key exposure by handling requests server-side
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { config } from "@/lib/config";
 
 const RELAYER_URL = config.relayerUrl;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { symbol: string } }
+  { params }: { params: Promise<{ symbol: string }> }
 ) {
   try {
-    const { symbol } = params;
+    const { symbol } = await params;
 
     if (!symbol) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Symbol parameter is required" },
-        { status: 400 }
+        400
       );
     }
 
@@ -29,20 +30,20 @@ export async function GET(
     });
 
     if (!response.ok) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: `Alpha Vantage API error: ${response.statusText}` },
-        { status: response.status }
+        response.status
       );
     }
 
     const overview = await response.json();
 
-    return NextResponse.json({
+    return createSecureResponse({
       overview,
       success: true,
     });
   } catch (error) {
-    return NextResponse.json(
+    return createSecureResponse(
       {
         overview: null,
         success: false,
@@ -51,7 +52,7 @@ export async function GET(
             ? error.message
             : "Failed to fetch company overview",
       },
-      { status: 500 }
+      500
     );
   }
 }

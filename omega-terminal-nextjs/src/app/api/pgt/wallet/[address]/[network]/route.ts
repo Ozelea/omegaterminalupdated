@@ -11,10 +11,10 @@ const PGT_BASE_URL = "https://www.pgtools.tech/api";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { address: string; network: string } }
+  { params }: { params: Promise<{ address: string; network: string }> }
 ) {
   try {
-    const { address, network } = params;
+    const { address, network } = await params;
 
     const response = await fetch(
       `${PGT_BASE_URL}/wallet/${address}/${network}`,

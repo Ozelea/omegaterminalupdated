@@ -8,16 +8,17 @@
  * Body: JSON with NFT metadata (name, description, image, attributes)
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { NFTMetadata } from "@/types/nft";
 
 /**
  * GET handler - not supported
  */
 export async function GET() {
-  return NextResponse.json(
+  return createSecureResponse(
     { error: "Method not allowed. Use POST to upload metadata." },
-    { status: 405 }
+    405
   );
 }
 
@@ -30,13 +31,13 @@ export async function POST(request: NextRequest) {
     const PINATA_JWT = process.env.PINATA_JWT;
     if (!PINATA_JWT) {
       console.error("PINATA_JWT environment variable is not set");
-      return NextResponse.json(
+      return createSecureResponse(
         {
           error:
             "Server configuration error: PINATA_JWT is not configured. Please set the PINATA_JWT environment variable.",
           success: false,
         },
-        { status: 500 }
+        500
       );
     }
     // Parse JSON body
@@ -44,9 +45,9 @@ export async function POST(request: NextRequest) {
 
     // Validate metadata has required fields
     if (!metadata.name || !metadata.image) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Metadata must include name and image fields" },
-        { status: 400 }
+        400
       );
     }
 
@@ -84,14 +85,14 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     const ipfsHash = data.IpfsHash;
 
-    return NextResponse.json({
+    return createSecureResponse({
       ipfsHash,
       ipfsUrl: `ipfs://${ipfsHash}`,
       success: true,
     });
   } catch (error) {
     console.error("Pinata metadata upload error:", error);
-    return NextResponse.json(
+    return createSecureResponse(
       {
         error:
           error instanceof Error
@@ -99,7 +100,7 @@ export async function POST(request: NextRequest) {
             : "Failed to upload metadata to IPFS",
         success: false,
       },
-      { status: 500 }
+      500
     );
   }
 }

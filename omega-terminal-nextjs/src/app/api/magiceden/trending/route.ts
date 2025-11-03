@@ -7,7 +7,8 @@
  * GET /api/magiceden/trending?timeRange={1h|1d|7d|30d}
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createSecureResponse } from "@/lib/middleware";
 import { RELAYER_URL } from "@/lib/config";
 
 /**
@@ -21,9 +22,11 @@ export async function GET(request: NextRequest) {
     // Validate timeRange
     const validTimeRanges = ["1h", "1d", "7d", "30d"];
     if (!validTimeRanges.includes(timeRange)) {
-      return NextResponse.json(
+      return createSecureResponse(
         { error: "Invalid timeRange. Must be one of: 1h, 1d, 7d, 30d" },
-        { status: 400 }
+        400,
+        undefined,
+        { maxAge: 0 }
       );
     }
 
@@ -41,13 +44,18 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
 
-    return NextResponse.json({
-      collections: data || [],
-      success: true,
-    });
+    return createSecureResponse(
+      {
+        collections: data || [],
+        success: true,
+      },
+      200,
+      undefined,
+      { maxAge: 300, staleWhileRevalidate: 600 }
+    );
   } catch (error) {
     console.error("Magic Eden trending error:", error);
-    return NextResponse.json(
+    return createSecureResponse(
       {
         error:
           error instanceof Error
@@ -55,7 +63,9 @@ export async function GET(request: NextRequest) {
             : "Failed to fetch trending collections",
         success: false,
       },
-      { status: 500 }
+      500,
+      undefined,
+      { maxAge: 0 }
     );
   }
 }

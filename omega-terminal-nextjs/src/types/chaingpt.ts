@@ -181,13 +181,26 @@ export interface ChainGPTStreamChunk {
 }
 
 /**
- * API key configuration
+ * ChainGPT capability flags exposed to the client
  */
-export interface ChainGPTApiKeyConfig {
-  /** User's custom API key */
-  userKey: string | null;
-  /** Default fallback API keys */
-  defaultKeys: string[];
-  /** Current key index for rotation */
-  currentKeyIndex: number;
+export interface ChainGPTCapabilities {
+  /** Whether the ChainGPT integration is enabled */
+  enabled: boolean;
+  /** True when the server-side has a configured API key */
+  hasServerKey: boolean;
+  /** Feature availability map */
+  features: {
+    /** Chat and general Q&A support */
+    chat: boolean;
+    /** Streaming chat responses */
+    stream: boolean;
+    /** Smart contract generation support */
+    contract: boolean;
+    /** Contract auditing support */
+    auditor: boolean;
+    /** NFT generation support */
+    nft: boolean;
+  };
+  /** Optional status or diagnostic message */
+  message?: string;
 }

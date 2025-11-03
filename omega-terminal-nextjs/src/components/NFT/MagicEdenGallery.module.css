@@ -1,47 +1,148 @@
 /**
  * MagicEdenGallery Component Styles
- * Compact grid layout for Magic Eden NFT cards
+ * Compact grid layout for Magic Eden NFT cards with responsive breakpoints and loading states
  */
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
   margin: 0;
+  align-items: stretch;
+}
+
+.galleryCompact {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.galleryDense {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.galleryLoading {
+  display: grid;
+  gap: 12px;
+}
+
+.galleryLoadingItem {
+  height: 220px;
+  border-radius: 16px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 0.1) 0%,
+    rgba(0, 212, 255, 0.25) 50%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.galleryEmpty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 16px;
+  border-radius: 16px;
+  border: 1px dashed rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.08);
+  color: rgba(0, 212, 255, 0.9);
+  text-align: center;
 }
 
 .loadMoreContainer {
   display: flex;
   justify-content: center;
-  margin: 8px 0 0 0;
+  margin: 16px 0 0 0;
 }
 
 .loadMoreButton {
-  padding: 6px 20px;
-  background: rgba(0, 212, 255, 0.08);
+  padding: 8px 20px;
+  background: rgba(0, 212, 255, 0.12);
   color: #00d4ff;
-  border: 1px solid rgba(0, 212, 255, 0.25);
-  border-radius: 3px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 10px;
-  font-weight: 500;
-  transition: all 0.2s;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .loadMoreButton:hover {
-  background: rgba(0, 212, 255, 0.15);
-  border-color: #00d4ff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(0, 212, 255, 0.2);
 }
 
-/* Mobile responsive */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Responsive Breakpoints
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 1400px) {
+  .gallery {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .galleryDense {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 6px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
   }
 
   .loadMoreButton {
-    font-size: 9px;
-    padding: 5px 16px;
+    min-height: 44px;
+    width: 90%;
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+  }
+
+  .loadMoreButton {
+    width: 100%;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Safe Area & Touch Enhancements
+   ----------------------------------------------------------------------------- */
+
+@supports (padding: max(0px)) {
+  .gallery {
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .loadMoreButton {
+    min-height: 48px;
   }
 }

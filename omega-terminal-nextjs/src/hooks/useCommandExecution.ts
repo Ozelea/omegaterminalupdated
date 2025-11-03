@@ -26,9 +26,16 @@ import { useMultiChain } from "@/hooks/useMultiChain";
 import { useSpotify } from "@/hooks/useSpotify";
 import { useYouTube } from "@/hooks/useYouTube";
 import { useNewsReader } from "@/hooks/useNewsReader";
+import { useGames } from "@/hooks/useGames";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { commandRegistry } from "@/lib/commands";
+import { openNetworkSelector } from "@/lib/wallet/networkSelector";
+import { useViewMode } from "@/hooks/useViewMode";
+import { useGUITheme } from "@/hooks/useGUITheme";
+import { useCustomizer } from "@/hooks/useCustomizer";
 import { config } from "@/lib/config";
 import { Contract } from "ethers";
+import { parseCommandArgs } from "@/lib/utils";
 import type { TerminalLine, CommandContext, AIProvider } from "@/types";
 
 /**
@@ -70,6 +77,14 @@ export interface UseCommandExecutionReturn {
       startTime: number;
     };
   };
+  /** Whether the command registry initialized successfully */
+  commandsInitialized: boolean;
+  /** Names of command groups that failed to register */
+  commandSystemErrors: string[];
+  /** Update command system status (used by TerminalContainer) */
+  setCommandSystemStatus: (ready: boolean, errors?: string[]) => void;
+  /** Determine if a command is registered and available */
+  isCommandAvailable: (command: string) => boolean;
 }
 
 /**
@@ -88,6 +103,11 @@ export function useCommandExecution(): UseCommandExecutionReturn {
   const spotify = useSpotify();
   const youtube = useYouTube();
   const newsReader = useNewsReader();
+  const games = useGames();
+  const soundEffects = useSoundEffects();
+  const viewModeCtx = useViewMode();
+  const guiThemeCtx = useGUITheme();
+  const customizerCtx = useCustomizer();
 
   // Terminal output state (start with welcome messages)
   const [terminalLines, setTerminalLines] = useState<TerminalLine[]>([
@@ -95,20 +115,20 @@ export function useCommandExecution(): UseCommandExecutionReturn {
       id: "welcome-1",
       type: "success",
       content: "Welcome to Omega Terminal v2.0.1",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
     {
       id: "welcome-2",
       type: "info",
       content: "Type 'help' to see available commands",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
     {
       id: "welcome-3",
       type: "info",
       content:
         "Type 'connect' to connect your wallet or 'create' for a session wallet",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
   ]);
 
@@ -117,15 +137,41 @@ export function useCommandExecution(): UseCommandExecutionReturn {
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
 
   // AI provider state (persisted in localStorage)
-  const [aiProvider, setAiProviderState] = useState<AIProvider>(() => {
-    if (typeof window !== "undefined") {
+  const [aiProvider, setAiProviderState] = useState<AIProvider>("off");
+  const [commandsInitialized, setCommandsInitialized] = useState<boolean>(true);
+  const [commandSystemErrors, setCommandSystemErrors] = useState<string[]>([]);
+  const commandFailureLoggedRef = useRef<boolean>(false);
+
+  // AI state object - use object so mutations work (matches vanilla terminal.html)
+  // This object is mutable and shared across all command executions
+  const aiStateRef = useRef<{
+    chatHistory: Array<{
+      type: "user" | "ai" | "command";
+      message?: string;
+      command?: string | string[];
+    }>;
+    executingAICommands: boolean;
+  }>({
+    chatHistory: [],
+    executingAICommands: false,
+  });
+
+  useEffect(() => {
+    try {
       const saved = localStorage.getItem("omega-ai-mode");
       if (saved === "near" || saved === "openai" || saved === "off") {
-        return saved;
+        setAiProviderState(saved);
       }
-    }
-    return "off";
-  });
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    setTerminalLines((prev) =>
+      prev.map((line, idx) =>
+        line.timestamp === 0 ? { ...line, timestamp: Date.now() + idx } : line
+      )
+    );
+  }, []);
 
   // Mining state management
   const [miningState, setMiningState] = useState({
@@ -153,9 +199,44 @@ export function useCommandExecution(): UseCommandExecutionReturn {
   const stressActiveRef = useRef<boolean>(false);
   const stressWallet = useRef<any>(null);
 
-  // Command queue for sequential execution (FIFO)
-  const commandQueue = useRef<string[]>([]);
+  // Track whether we've observed a real user gesture (pointer/touch/keyboard)
+  const hasUserGestureRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const markGesture = () => {
+      hasUserGestureRef.current = true;
+    };
+
+    window.addEventListener("pointerdown", markGesture, { once: true });
+    window.addEventListener("touchstart", markGesture, { once: true });
+    window.addEventListener("keydown", markGesture, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", markGesture);
+      window.removeEventListener("touchstart", markGesture);
+      window.removeEventListener("keydown", markGesture);
+    };
+  }, []);
+
+  const autoConnectBlockedRef = useRef<boolean>(false);
+
+  // Command queue for sequential execution (FIFO) - stores command with metadata
+  const commandQueue = useRef<Array<{ command: string; fromAI: boolean }>>([]);
   const isProcessingQueue = useRef<boolean>(false);
+
+  const isCommandAvailable = useCallback((commandString: string): boolean => {
+    const args = parseCommandArgs(commandString);
+    if (args.length === 0) {
+      return false;
+    }
+
+    const commandName = args[0]!.toLowerCase();
+    return Boolean(commandRegistry.getCommand(commandName));
+  }, []);
 
   /**
    * Add a line to terminal output
@@ -356,6 +437,68 @@ export function useCommandExecution(): UseCommandExecutionReturn {
     []
   );
 
+  const executeFallbackCommand = useCallback(
+    async (commandString: string, context: CommandContext): Promise<void> => {
+      const args = parseCommandArgs(commandString);
+      if (args.length === 0) {
+        return;
+      }
+
+      const commandName = args[0]!.toLowerCase();
+
+      switch (commandName) {
+        case "help": {
+          context.log(
+            "Command system initialization failed. Fallback commands available:",
+            "error"
+          );
+          context.log(" • help — show fallback commands", "output");
+          context.log(" • clear — clear terminal output", "output");
+          context.log(" • connect — attempt MetaMask connection", "output");
+          if (commandSystemErrors.length > 0) {
+            context.log(
+              `Missing command modules: ${commandSystemErrors.join(", ")}`,
+              "warning"
+            );
+          }
+          break;
+        }
+        case "clear": {
+          context.clearTerminal();
+          context.log("Terminal cleared (fallback handler).", "info");
+          break;
+        }
+        case "connect": {
+          context.log("🌐 Opening multi-network selector…", "info");
+          if (typeof window === "undefined") {
+            context.log(
+              "Environment does not support wallet connection (SSR).",
+              "error"
+            );
+            break;
+          }
+
+          openNetworkSelector({
+            log: context.log,
+            logHtml: context.logHtml,
+            wallet: context.wallet,
+            sound: context.sound,
+            source: "command",
+          });
+          break;
+        }
+        default: {
+          context.log(
+            `Command system offline. '${commandName}' is unavailable.`,
+            "error"
+          );
+          context.log("Fallback commands: help, clear, connect", "info");
+        }
+      }
+    },
+    [commandSystemErrors]
+  );
+
   /**
    * Process the command queue sequentially
    */
@@ -371,190 +514,308 @@ export function useCommandExecution(): UseCommandExecutionReturn {
     try {
       // Process commands while queue is not empty
       while (commandQueue.current.length > 0) {
-        // Dequeue the next command
-        const trimmedCommand = commandQueue.current.shift()!;
+        // Dequeue the next command with metadata
+        const { command: trimmedCommand, fromAI } =
+          commandQueue.current.shift()!;
 
+        if (process.env.NODE_ENV !== "production") {
+          try {
+            // eslint-disable-next-line no-console
+            console.warn("[CommandQueue][debug] executing command", {
+              command: trimmedCommand,
+              fromAI,
+              stack: new Error().stack,
+            });
+          } catch {
+            // ignore logging errors
+          }
+        }
+
+        // Add command to terminal output
+        addLine("command", trimmedCommand);
+
+        // Emit chart open event when relevant to update dashboard stats panel
         try {
-          // Add command to terminal output
-          addLine("command", trimmedCommand);
+          if (typeof window !== "undefined") {
+            const lc = trimmedCommand.toLowerCase();
+            if (lc.startsWith("chart ") || lc === "chart") {
+              const symbol =
+                trimmedCommand.split(" ").slice(1).join(" ").trim() || "BTC";
+              window.dispatchEvent(
+                new CustomEvent("omega:openChart", {
+                  detail: { symbol: symbol.toUpperCase() },
+                })
+              );
+            }
+          }
+        } catch {}
 
-          // Add to command history
-          setCommandHistory((prev) => [...prev, trimmedCommand]);
-          setHistoryIndex(-1);
+        // Add to command history
+        setCommandHistory((prev) => [...prev, trimmedCommand]);
+        setHistoryIndex(-1);
 
-          // Create command context
-          const context: CommandContext = {
-            log,
-            logHtml,
-            clearTerminal,
-            executeCommand, // Allow nested command execution (for AI)
-            theme: {
-              currentTheme: theme.currentTheme,
-              setTheme: theme.setTheme,
-              toggleTheme: theme.toggleTheme,
+        // Play command execution sound (non-blocking)
+        if (soundEffects.state.isEnabled) {
+          soundEffects.playSound("command-execute").catch(() => {});
+        }
+
+        // Create command context
+        const context: CommandContext = {
+          log,
+          logHtml,
+          clearTerminal,
+          executeCommand, // Allow nested command execution (for AI)
+          theme: {
+            currentTheme: theme.currentTheme,
+            setTheme: theme.setTheme,
+            toggleTheme: theme.toggleTheme,
+          },
+          viewMode: {
+            viewMode: viewModeCtx.viewMode,
+            setViewMode: viewModeCtx.setViewMode,
+            toggleViewMode: viewModeCtx.toggleViewMode,
+            isBasicMode: viewModeCtx.isBasicMode,
+            isFuturisticMode: viewModeCtx.isFuturisticMode,
+          },
+          wallet: {
+            state: wallet.state,
+            address: wallet.state.address,
+            solana: {
+              address: multichain.solanaState.publicKey,
             },
-            wallet: {
-              state: wallet.state,
-              connect: async () => {
-                return await wallet.connectMetaMask();
-              },
-              disconnect: async () => {
-                await wallet.disconnect();
-              },
-              createSessionWallet: async () => {
-                try {
-                  // Call the wallet provider method to create and connect
-                  const success = await wallet.createSessionWallet();
-                  if (!success) {
-                    return null;
-                  }
-
-                  // Get the private key from session storage (where WalletProvider stores it)
-                  const privateKey =
-                    typeof window !== "undefined"
-                      ? sessionStorage.getItem("omega-session-wallet-key")
-                      : null;
-
-                  if (!privateKey || !wallet.state.address) {
-                    return null;
-                  }
-
-                  return {
-                    address: wallet.state.address,
-                    privateKey: privateKey,
-                  };
-                } catch (error) {
-                  console.error("Error creating session wallet:", error);
-                  return null;
-                }
-              },
-              importSessionWallet: async (privateKey: string) => {
-                try {
-                  return await wallet.importSessionWallet(privateKey);
-                } catch (error) {
-                  console.error("Error importing session wallet:", error);
-                  return false;
-                }
-              },
-              getBalance: async () => {
-                try {
-                  return await wallet.getBalance();
-                } catch (error) {
-                  console.error("Error getting balance:", error);
-                  return null;
-                }
-              },
-              getSigner: async () => {
-                try {
-                  return await wallet.getSigner();
-                } catch (error) {
-                  console.error("Error getting signer:", error);
-                  return null;
-                }
-              },
-              getProvider: () => {
-                try {
-                  return wallet.getProvider();
-                } catch (error) {
-                  console.error("Error getting provider:", error);
-                  return null;
-                }
-              },
-              addOmegaNetwork: async () => {
-                try {
-                  return await wallet.addOmegaNetwork();
-                } catch (error) {
-                  console.error("Error adding Omega network:", error);
-                  return false;
-                }
-              },
+            connect: async () => {
+              return await wallet.connectMetaMask();
             },
-            config,
-            aiProvider,
-            setAiProvider: (provider: AIProvider) => {
-              setAiProviderState(provider);
-              if (typeof window !== "undefined") {
-                localStorage.setItem("omega-ai-mode", provider);
+            disconnect: async () => {
+              await wallet.disconnect();
+            },
+            createSessionWallet: async () => {
+              try {
+                // Call the wallet provider method to create and connect
+                const success = await wallet.createSessionWallet();
+                if (!success) {
+                  return null;
+                }
+
+                // Get the private key from session storage (where WalletProvider stores it)
+                const privateKey =
+                  typeof window !== "undefined"
+                    ? sessionStorage.getItem("omega-session-wallet-key")
+                    : null;
+
+                if (!privateKey || !wallet.state.address) {
+                  return null;
+                }
+
+                return {
+                  address: wallet.state.address,
+                  privateKey: privateKey,
+                };
+              } catch (error) {
+                console.error("Error creating session wallet:", error);
+                return null;
               }
             },
-            miningState: {
-              isMining: miningState.isMining,
-              mineCount: miningState.mineCount,
-              totalEarned: miningState.totalEarned,
-              startMining,
-              stopMining,
+            importSessionWallet: async (privateKey: string) => {
+              try {
+                return await wallet.importSessionWallet(privateKey);
+              } catch (error) {
+                console.error("Error importing session wallet:", error);
+                return false;
+              }
             },
-            stressTestState: {
-              isStressTesting: stressTestState.isStressTesting,
-              stats: stressTestState.stats,
-              startStressTest,
-              stopStressTest,
+            getBalance: async () => {
+              try {
+                return await wallet.getBalance();
+              } catch (error) {
+                console.error("Error getting balance:", error);
+                return null;
+              }
             },
-            getContract,
-            multichain: {
-              solana: {
-                state: multichain.solanaState,
-                connectPhantom: multichain.connectSolanaPhantom,
-                generateWallet: multichain.generateSolanaWallet,
-                getBalance: multichain.getSolanaBalance,
-                sendTransaction: multichain.sendSolanaTransaction,
-              },
-              near: {
-                state: multichain.nearState,
-                connect: multichain.connectNear,
-                disconnect: multichain.disconnectNear,
-                getBalance: multichain.getNearBalance,
-                signAndSendTransaction: multichain.signAndSendNearTransaction,
-              },
-              eclipse: {
-                state: multichain.eclipseState,
-                connectPhantom: multichain.connectEclipsePhantom,
-                generateWallet: multichain.generateEclipseWallet,
-                getBalance: multichain.getEclipseBalance,
-                sendTransaction: multichain.sendEclipseTransaction,
-              },
+            getSigner: async () => {
+              try {
+                return await wallet.getSigner();
+              } catch (error) {
+                console.error("Error getting signer:", error);
+                return null;
+              }
             },
-            media: {
-              spotify: {
-                state: spotify.playerState,
-                authState: spotify.authState,
-                authenticate: spotify.authenticate,
-                logout: spotify.logout,
-                searchTracks: spotify.searchTracks,
-                playTrack: spotify.playTrack,
-                togglePlayPause: spotify.togglePlayPause,
-                skipNext: spotify.skipNext,
-                skipPrevious: spotify.skipPrevious,
-                setVolume: spotify.setVolume,
-                openPanel: spotify.openPanel,
-                closePanel: spotify.closePanel,
-              },
-              youtube: {
-                state: youtube.playerState,
-                searchVideos: youtube.searchVideos,
-                playVideo: youtube.playVideo,
-                togglePlayPause: youtube.togglePlayPause,
-                next: youtube.next,
-                previous: youtube.previous,
-                toggleMute: youtube.toggleMute,
-                openPanel: youtube.openPanel,
-                closePanel: youtube.closePanel,
-              },
-              news: {
-                state: newsReader.readerState,
-                loadNews: newsReader.loadNews,
-                refreshNews: newsReader.refreshNews,
-                setFilter: newsReader.setFilter,
-                openPanel: newsReader.openPanel,
-                closePanel: newsReader.closePanel,
-              },
+            getProvider: () => {
+              try {
+                return wallet.getProvider();
+              } catch (error) {
+                console.error("Error getting provider:", error);
+                return null;
+              }
             },
-          };
+            addOmegaNetwork: async () => {
+              try {
+                return await wallet.addOmegaNetwork();
+              } catch (error) {
+                console.error("Error adding Omega network:", error);
+                return false;
+              }
+            },
+            initializeExternalConnection: async (params) => {
+              try {
+                await wallet.initializeExternalConnection(params);
+              } catch (error) {
+                console.error(
+                  "Error initializing external wallet connection:",
+                  error
+                );
+                throw error;
+              }
+            },
+          },
+          config,
+          aiProvider,
+          setAiProvider: (provider: AIProvider) => {
+            setAiProviderState(provider);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("omega-ai-mode", provider);
+            }
+          },
+          // Pass the mutable state object properties directly
+          // Since we're passing the array/boolean from the ref object,
+          // mutations in callAI will update the ref object
+          get chatHistory() {
+            return aiStateRef.current.chatHistory;
+          },
+          get executingAICommands() {
+            return aiStateRef.current.executingAICommands;
+          },
+          set executingAICommands(value: boolean) {
+            aiStateRef.current.executingAICommands = value;
+          },
+          miningState: {
+            isMining: miningState.isMining,
+            mineCount: miningState.mineCount,
+            totalEarned: miningState.totalEarned,
+            startMining,
+            stopMining,
+          },
+          stressTestState: {
+            isStressTesting: stressTestState.isStressTesting,
+            stats: stressTestState.stats,
+            startStressTest,
+            stopStressTest,
+          },
+          getContract,
+          multichain: {
+            solana: {
+              state: multichain.solanaState,
+              connectPhantom: multichain.connectSolanaPhantom,
+              generateWallet: multichain.generateSolanaWallet,
+              getBalance: multichain.getSolanaBalance,
+              sendTransaction: multichain.sendSolanaTransaction,
+            },
+            near: {
+              state: multichain.nearState,
+              connect: multichain.connectNear,
+              disconnect: multichain.disconnectNear,
+              getBalance: multichain.getNearBalance,
+              signAndSendTransaction: multichain.signAndSendNearTransaction,
+            },
+            eclipse: {
+              state: multichain.eclipseState,
+              connectPhantom: multichain.connectEclipsePhantom,
+              generateWallet: multichain.generateEclipseWallet,
+              getBalance: multichain.getEclipseBalance,
+              sendTransaction: multichain.sendEclipseTransaction,
+            },
+          },
+          media: {
+            spotify: {
+              state: spotify.playerState,
+              authState: spotify.authState,
+              authenticate: spotify.authenticate,
+              logout: spotify.logout,
+              searchTracks: spotify.searchTracks,
+              playTrack: spotify.playTrack,
+              togglePlayPause: spotify.togglePlayPause,
+              skipNext: spotify.skipNext,
+              skipPrevious: spotify.skipPrevious,
+              setVolume: spotify.setVolume,
+              openPanel: spotify.openPanel,
+              closePanel: spotify.closePanel,
+            },
+            youtube: {
+              state: youtube.playerState,
+              searchVideos: youtube.searchVideos,
+              playVideo: youtube.playVideo,
+              togglePlayPause: youtube.togglePlayPause,
+              next: youtube.next,
+              previous: youtube.previous,
+              toggleMute: youtube.toggleMute,
+              openPanel: youtube.openPanel,
+              closePanel: youtube.closePanel,
+            },
+            news: {
+              state: newsReader.readerState,
+              loadNews: newsReader.loadNews,
+              refreshNews: newsReader.refreshNews,
+              setFilter: newsReader.setFilter,
+              openPanel: newsReader.openPanel,
+              closePanel: newsReader.closePanel,
+            },
+          },
+          games: {
+            state: games.gamesState,
+            openGame: games.openGame,
+            closeGame: games.closeGame,
+            submitLocalScore: games.submitLocalScore,
+            getLocalLeaderboard: games.getLocalLeaderboard,
+            submitOnChainScore: games.submitOnChainScore,
+            fetchOnChainLeaderboard: games.fetchOnChainLeaderboard,
+          },
+          sound: {
+            state: soundEffects.state,
+            playSound: soundEffects.playSound,
+            stopSound: soundEffects.stopSound,
+            stopAllSounds: soundEffects.stopAllSounds,
+            setVolume: soundEffects.setVolume,
+            setEnabled: soundEffects.setEnabled,
+            playWalletConnectSound: soundEffects.playWalletConnectSound,
+            playAIToggleSound: soundEffects.playAIToggleSound,
+            playBalanceWealthSound: soundEffects.playBalanceWealthSound,
+            playChartViewerSound: soundEffects.playChartViewerSound,
+            playBasicViewSound: soundEffects.playBasicViewSound,
+            playClearTerminalSound: soundEffects.playClearTerminalSound,
+            playModernUIThemeSound: soundEffects.playModernUIThemeSound,
+            playHelpCommandSound: soundEffects.playHelpCommandSound,
+          },
+          ui: {
+            viewMode: viewModeCtx.viewMode,
+            setViewMode: viewModeCtx.setViewMode,
+            toggleViewMode: viewModeCtx.toggleViewMode,
+            isBasicMode: viewModeCtx.isBasicMode,
+            isFuturisticMode: viewModeCtx.isFuturisticMode,
+            guiTheme: guiThemeCtx.guiTheme,
+            setGUITheme: guiThemeCtx.setGUITheme,
+            isTerminalMode: guiThemeCtx.isTerminalMode,
+            colorPalette: customizerCtx.colorPalette,
+            setColorPalette: customizerCtx.setColorPalette,
+            cycleColorPalette: customizerCtx.cycleColorPalette,
+            resetColorPalette: () => {
+              if (typeof customizerCtx.resetPalette === "function") {
+                customizerCtx.resetPalette();
+              } else {
+                customizerCtx.resetToDefaults();
+              }
+            },
+          },
+        };
 
-          // Execute command via registry
-          await commandRegistry.execute(trimmedCommand, context);
+        if (!commandsInitialized) {
+          await executeFallbackCommand(trimmedCommand, context);
+          continue;
+        }
+
+        try {
+          // Pass fromAI flag to registry (matches vanilla terminal.html line 4814)
+          await commandRegistry.execute(trimmedCommand, context, fromAI);
         } catch (error) {
-          // Log execution errors for this command
           const errorMessage =
             error instanceof Error ? error.message : String(error);
           log(`Error: ${errorMessage}`, "error");
@@ -575,6 +836,8 @@ export function useCommandExecution(): UseCommandExecutionReturn {
     spotify,
     youtube,
     newsReader,
+    games,
+    soundEffects,
     aiProvider,
     miningState,
     stressTestState,
@@ -583,21 +846,89 @@ export function useCommandExecution(): UseCommandExecutionReturn {
     startStressTest,
     stopStressTest,
     getContract,
+    viewModeCtx,
+    guiThemeCtx,
+    customizerCtx,
+    commandsInitialized,
+    executeFallbackCommand,
   ]);
+
+  const setCommandSystemStatus = useCallback(
+    (ready: boolean, errors?: string[]) => {
+      setCommandsInitialized(ready);
+      setCommandSystemErrors(errors ?? []);
+
+      if (ready) {
+        commandFailureLoggedRef.current = false;
+        return;
+      }
+
+      if (!commandFailureLoggedRef.current) {
+        commandFailureLoggedRef.current = true;
+        addLine(
+          "error",
+          "Command system initialization failed. Basic fallback commands are active."
+        );
+        if (errors && errors.length > 0) {
+          addLine("warning", `Failed modules: ${errors.join(", ")}`);
+        }
+        addLine("info", "Fallback commands: help, clear, connect");
+      }
+    },
+    [addLine]
+  );
 
   /**
    * Execute a command (adds to queue and starts processing if not already running)
    */
   const executeCommand = useCallback(
-    async (command: string): Promise<void> => {
+    async (command: string, fromAI: boolean = false): Promise<void> => {
       // Trim command and check if empty
       const trimmedCommand = command.trim();
       if (!trimmedCommand) {
         return;
       }
 
-      // Add to queue
-      commandQueue.current.push(trimmedCommand);
+      if (
+        trimmedCommand.toLowerCase() === "connect" &&
+        !hasUserGestureRef.current &&
+        !fromAI
+      ) {
+        if (!autoConnectBlockedRef.current) {
+          autoConnectBlockedRef.current = true;
+          addLine(
+            "warning",
+            "Awaiting user interaction before opening the wallet selector."
+          );
+        }
+        if (process.env.NODE_ENV !== "production") {
+          try {
+            // eslint-disable-next-line no-console
+            console.warn("[CommandQueue][guard] swallowed auto-connect", {
+              stack: new Error().stack,
+            });
+          } catch {
+            // ignore logging errors
+          }
+        }
+        return;
+      }
+
+      if (process.env.NODE_ENV !== "production") {
+        try {
+          // eslint-disable-next-line no-console
+          console.warn("[CommandQueue][trace] enqueue", {
+            command: trimmedCommand,
+            fromAI,
+            stack: new Error().stack,
+          });
+        } catch {
+          // ignore logging errors
+        }
+      }
+
+      // Add to queue with metadata (command string and fromAI flag)
+      commandQueue.current.push({ command: trimmedCommand, fromAI });
 
       // Start processing if not already processing
       if (!isProcessingQueue.current) {
@@ -748,6 +1079,10 @@ export function useCommandExecution(): UseCommandExecutionReturn {
     setAiProvider,
     miningState,
     stressTestState,
+    commandsInitialized,
+    commandSystemErrors,
+    setCommandSystemStatus,
+    isCommandAvailable,
   };
 }
 

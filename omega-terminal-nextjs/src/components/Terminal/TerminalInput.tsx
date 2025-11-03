@@ -9,6 +9,10 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from "react";
 import type { TerminalInputProps } from "@/types/terminal";
 import { TERMINAL_PROMPT } from "@/lib/constants";
+import {
+  handleTokenCreationInput,
+  isAwaitingTokenInput,
+} from "@/lib/commands/token-factory";
 import styles from "./TerminalInput.module.css";
 
 export function TerminalInput({
@@ -32,8 +36,19 @@ export function TerminalInput({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
       case "Enter":
-        // Submit command
+        // Submit command or handle token creation input
         if (inputValue.trim()) {
+          // Check if we're in token creation mode (matches vanilla terminal.html line 4028)
+          if (isAwaitingTokenInput()) {
+            const handled = handleTokenCreationInput(inputValue.trim());
+            if (handled) {
+              setInputValue("");
+              e.preventDefault();
+              return;
+            }
+          }
+
+          // Normal command execution
           onSubmit(inputValue.trim());
           setInputValue("");
         }
@@ -78,15 +93,18 @@ export function TerminalInput({
         const matches = onAutocomplete(inputValue.trim());
         if (matches.length === 1) {
           // Single match: autocomplete it
-          setInputValue(matches[0] + " ");
-          // Move cursor to end
-          setTimeout(() => {
-            if (inputRef.current) {
-              const len = matches[0].length + 1;
-              inputRef.current.selectionStart = len;
-              inputRef.current.selectionEnd = len;
-            }
-          }, 0);
+          const match = matches[0];
+          if (match) {
+            setInputValue(match + " ");
+            // Move cursor to end
+            setTimeout(() => {
+              if (inputRef.current) {
+                const len = match.length + 1;
+                inputRef.current.selectionStart = len;
+                inputRef.current.selectionEnd = len;
+              }
+            }, 0);
+          }
         } else if (matches.length > 1) {
           // Multiple matches: log them (future: show in output)
           console.log("Autocomplete matches:", matches);

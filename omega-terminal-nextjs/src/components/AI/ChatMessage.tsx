@@ -15,7 +15,7 @@
  * - Responsive design
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ChatMessage.module.css";
 
 export interface ChatMessageProps {
@@ -32,9 +32,8 @@ export interface ChatMessageProps {
 /**
  * Format timestamp as relative time
  */
-function formatRelativeTime(timestamp: number): string {
-  const now = Date.now();
-  const diff = now - timestamp;
+function formatRelativeTime(reference: number, timestamp: number): string {
+  const diff = Math.max(0, reference - timestamp);
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
@@ -55,6 +54,15 @@ export function ChatMessage({
   timestamp,
   isStreaming = false,
 }: ChatMessageProps) {
+  const [referenceTime, setReferenceTime] = useState<number>(0);
+
+  useEffect(() => {
+    const updateTime = () => setReferenceTime(Date.now());
+    updateTime();
+    const interval = setInterval(updateTime, 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
   const containerClass = `${styles.container} ${
     role === "user" ? styles.containerUser : styles.containerAssistant
   }`;
@@ -83,7 +91,9 @@ export function ChatMessage({
             </div>
           )}
         </div>
-        <div className={styles.timestamp}>{formatRelativeTime(timestamp)}</div>
+        <div className={styles.timestamp}>
+          {formatRelativeTime(referenceTime || timestamp, timestamp)}
+        </div>
       </div>
     </div>
   );

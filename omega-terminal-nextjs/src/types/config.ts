@@ -3,6 +3,8 @@
  * Type definitions for the Omega Terminal configuration system
  */
 
+import type { ChainGPTCapabilities } from "./chaingpt";
+
 /**
  * Network configuration for blockchain connections
  */
@@ -32,10 +34,6 @@ export interface NetworkConfig {
  * ChainGPT API configuration
  */
 export interface ChainGPTConfig {
-  /** Production API key from environment (nullable) */
-  PRODUCTION_API_KEY: string | null;
-  /** Fallback API keys for testing */
-  DEFAULT_API_KEYS: string[];
   /** ChainGPT API base URL */
   BASE_URL: string;
   /** Chat endpoint path */
@@ -52,14 +50,23 @@ export interface ChainGPTConfig {
   SMART_CONTRACT_MODEL: string;
   /** Contract auditor model */
   AUDITOR_MODEL: string;
-  /** Whether to auto-initialize with available keys */
+  /** Whether to auto-initialize with available server capabilities */
   AUTO_INITIALIZE: boolean;
-  /** Get the best available API key (production first, then defaults) */
-  getApiKey: () => string;
-  /** Get all available API keys */
-  getAllApiKeys: () => string[];
-  /** Load environment variables from API endpoint */
-  loadEnvVars: () => Promise<boolean>;
+  /** Static feature toggle defaults */
+  FEATURES: {
+    /** Chat and basic Q&A */
+    chat: boolean;
+    /** Streaming chat responses */
+    stream: boolean;
+    /** Smart contract generation */
+    contract: boolean;
+    /** Contract auditing */
+    auditor: boolean;
+    /** NFT generation */
+    nft: boolean;
+  };
+  /** Load sanitized capability flags from the server */
+  loadCapabilities: () => Promise<ChainGPTCapabilities>;
 }
 
 /**
@@ -102,10 +109,22 @@ export interface OmegaConfig {
   MIXER_ABI: any[];
   /** Omega NFT ERC-721 contract ABI */
   OMEGA_NFT_ABI: any[];
+  /** Arcade contract address for on-chain game leaderboards */
+  ARCADE_CONTRACT_ADDRESS: string;
+  /** Arcade contract ABI */
+  ARCADE_CONTRACT_ABI: any[];
+  /** Arcade base URL for external game hosting */
+  ARCADE_BASE_URL: string;
   /** OpenSea API base URL (v2) */
   OPENSEA_API_BASE_URL: string;
   /** OpenSea API v1 URL */
   OPENSEA_V1_URL: string;
+  /** Omega Network Wildcard API base URL for referral system */
+  REFERRAL_API_BASE?: string;
+  /** Omega Ambassador API base URL for leaderboards */
+  AMBASSADOR_API_BASE?: string;
+  /** Omega Perps trading interface base URL */
+  PERPS_BASE_URL?: string;
   /** Omega Network configuration */
   OMEGA_NETWORK: NetworkConfig;
   /** Available terminal commands for autocomplete */
@@ -116,6 +135,8 @@ export interface OmegaConfig {
   CHAINGPT: ChainGPTConfig;
   /** Solana mainnet RPC endpoint */
   SOLANA_RPC_URL: string;
+  /** Fallback Solana RPC endpoints */
+  SOLANA_FALLBACK_RPCS?: string[];
   /** NEAR Protocol mainnet RPC endpoint */
   NEAR_RPC_URL: string;
   /** NEAR wallet URL for authentication */

@@ -10,6 +10,22 @@ This document describes all environment variables needed for the Omega Terminal 
 
 ## Required Environment Variables
 
+### Phase 18 Server-Side Variables
+
+```bash
+# Relayer wallet private key for blockchain Server Actions (never expose publicly)
+RELAYER_PRIVATE_KEY=
+
+# Google Gemini API key for `/api/ai`
+GEMINI_API_KEY=
+
+# Upstash Redis credentials for rate limiting (optional, uses in-memory fallback when omitted)
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
+
+> These variables are server-only. Do **not** prefix them with `NEXT_PUBLIC_` and keep them out of client bundles.
+
 ### Network Configuration
 
 ```bash
@@ -85,6 +101,26 @@ NEXT_PUBLIC_OMEGA_TOKEN_ADDRESS=0x1234567890123456789012345678901234567890
 NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=0x1234567890123456789012345678901234567890
 NEXT_PUBLIC_USERNAME_REGISTRY_ADDRESS=0x1234567890123456789012345678901234567890
 ```
+
+### Games and Arcade Configuration
+
+```bash
+# Omega Arcade Leaderboard contract address on Omega Network
+# Default value is the deployed contract - only change if using a different contract
+NEXT_PUBLIC_ARCADE_CONTRACT_ADDRESS=0x1a196c1b6c22eb9389e286cc4b12fdebe8663996
+
+# Base URL for hosted arcade games (optional, uses Vercel deployment by default)
+# Only change if hosting games on a custom domain
+NEXT_PUBLIC_ARCADE_BASE_URL=https://omega-arcade.vercel.app
+```
+
+**Games System Notes:**
+
+- The arcade contract handles on-chain leaderboard submissions for competitive games
+- Local games (number guess, cookie clicker, speed clicker, snake, etc.) use localStorage leaderboards
+- Players can optionally submit their high scores to the blockchain
+- On-chain submissions require wallet connection and gas fees
+- Leaderboards are permanent and global when submitted on-chain
 
 ### Feature Flags
 

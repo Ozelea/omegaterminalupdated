@@ -22,6 +22,7 @@ import {
   THEME_STORAGE_KEY,
 } from "@/lib/themes";
 import { AVAILABLE_THEMES } from "@/lib/constants";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 /**
  * Theme context for providing theme state and methods to child components
@@ -45,6 +46,7 @@ export function ThemeProvider({
   initialTheme = "dark",
 }: ThemeProviderProps) {
   const [currentTheme, setCurrentTheme] = useState<Theme>(initialTheme);
+  const soundEffects = useSoundEffects();
 
   /**
    * Load saved theme from localStorage on mount
@@ -133,8 +135,15 @@ export function ThemeProvider({
       if (!silent) {
         console.log(`Theme set to ${theme} mode`);
       }
+
+      // Play sound for modern UI theme selection (non-blocking)
+      if (theme === "modern") {
+        try {
+          soundEffects.playModernUIThemeSound();
+        } catch {}
+      }
     },
-    [applyThemeClasses]
+    [applyThemeClasses, soundEffects]
   );
 
   /**
