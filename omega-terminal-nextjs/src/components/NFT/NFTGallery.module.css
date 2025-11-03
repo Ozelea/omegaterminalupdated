@@ -1,0 +1,47 @@
+/**
+ * NFTGallery Component Styles
+ * Responsive grid layout for NFT cards
+ */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.loadMoreContainer {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.loadMoreButton {
+  background: linear-gradient(135deg, #8a2be2, #9a4cf0);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .loadMoreButton {
+    width: 90%;
+    max-width: 300px;
+  }
+}

@@ -1,0 +1,148 @@
+/**
+ * TerminalOutput Component Styles
+ * Styles for terminal output display with color-coded line types
+ */
+
+.container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  font-family: "Courier New", Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.line {
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  padding: 2px 0;
+  user-select: text;
+}
+
+.prompt {
+  color: #00bcf2;
+  font-weight: bold;
+  margin-right: 10px;
+  user-select: text;
+}
+
+.command {
+  color: #ffffff;
+  font-weight: 500;
+  user-select: text;
+}
+
+.output {
+  color: #cccccc;
+  margin-left: 20px;
+  user-select: text;
+}
+
+.error {
+  color: #ff3333;
+  font-weight: 600;
+  margin-left: 20px;
+  user-select: text;
+}
+
+.success {
+  color: #00ff88;
+  font-weight: 600;
+  margin-left: 20px;
+  user-select: text;
+}
+
+.warning {
+  color: #ffaa00;
+  font-weight: 600;
+  margin-left: 20px;
+  user-select: text;
+}
+
+.info {
+  color: #00bcf2;
+  font-weight: 500;
+  margin-left: 20px;
+  user-select: text;
+}
+
+.html {
+  color: #ffffff;
+  margin-left: 20px;
+  user-select: text;
+  line-height: 1.6;
+}
+
+.html button {
+  background: rgba(0, 188, 242, 0.2);
+  border: 1px solid rgba(0, 188, 242, 0.5);
+  color: #00bcf2;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.html button:hover {
+  background: rgba(0, 188, 242, 0.3);
+  border-color: #00bcf2;
+  box-shadow: 0 0 8px rgba(0, 188, 242, 0.3);
+}
+
+.html a {
+  color: #00bcf2;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.html a:hover {
+  color: #00ff88;
+}
+
+/* Scrollbar Styles */
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #00bcf2;
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #00ff88;
+}
+
+/* Firefox Scrollbar */
+.container {
+  scrollbar-width: thin;
+  scrollbar-color: #00bcf2 #0a0a0f;
+}
+
+/* Ensure all text is selectable */
+.container *,
+.line *,
+.prompt,
+.command,
+.output,
+.error,
+.success,
+.warning,
+.info {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}

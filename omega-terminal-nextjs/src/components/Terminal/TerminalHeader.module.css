@@ -1,0 +1,217 @@
+/**
+ * TerminalHeader Component Styles
+ * Styles for the terminal header with controls and status
+ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 15px;
+  gap: 20px;
+}
+
+.headerLeft,
+.headerCenter,
+.headerRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.headerCenter {
+  justify-content: center;
+}
+
+.headerRight {
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00bcf2;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 15px;
+}
+
+.socialLink {
+  font-size: 20px;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.socialLink:hover {
+  opacity: 1;
+}
+
+.socialLink svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 188, 242, 0.3);
+  margin: 0 4px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.controlButton {
+  background: rgba(0, 188, 242, 0.1);
+  border: 1px solid rgba(0, 188, 242, 0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: #00bcf2;
+  font-family: "Courier New", Monaco, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.controlButton:hover {
+  background: rgba(0, 188, 242, 0.2);
+  border-color: #00bcf2;
+}
+
+.controlButton svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.aiLabel {
+  color: #00bcf2;
+  font-family: "Courier New", Monaco, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.aiSelect {
+  background: rgba(0, 188, 242, 0.1);
+  border: 1px solid rgba(0, 188, 242, 0.3);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #00bcf2;
+  font-family: "Courier New", Monaco, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 110px;
+}
+
+.aiSelect option {
+  background: #0a0a0f;
+  color: #00bcf2;
+}
+
+.connectionStatus {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+}
+
+.connected {
+  color: #00ff88;
+}
+
+.connecting {
+  color: #fbbf24;
+}
+
+.disconnected {
+  color: #ff3333;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 12px;
+  }
+
+  .headerLeft,
+  .headerCenter,
+  .headerRight {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .socialLinks {
+    gap: 12px;
+  }
+
+  .socialLink svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .controlButton {
+    font-size: 10px;
+    padding: 5px 10px;
+    gap: 4px;
+  }
+
+  .controlButton svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .aiLabel {
+    font-size: 10px;
+  }
+
+  .aiSelect {
+    font-size: 10px;
+    padding: 5px 8px;
+    min-width: 90px;
+  }
+
+  .connectionStatus {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+}

@@ -1,0 +1,47 @@
+/**
+ * MagicEdenGallery Component Styles
+ * Compact grid layout for Magic Eden NFT cards
+ */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 0 0;
+}
+
+.loadMoreButton {
+  padding: 6px 20px;
+  background: rgba(0, 212, 255, 0.08);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.loadMoreButton:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: #00d4ff;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+
+  .loadMoreButton {
+    font-size: 9px;
+    padding: 5px 16px;
+  }
+}

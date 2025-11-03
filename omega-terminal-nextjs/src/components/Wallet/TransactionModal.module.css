@@ -1,0 +1,221 @@
+/**
+ * TransactionModal Component Styles
+ * Styles for transaction confirmation modal with glass-morphism design
+ */
+
+/* Modal Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Modal Content */
+.modal {
+  background: rgba(10, 10, 15, 0.95);
+  border: 2px solid rgba(0, 188, 242, 0.5);
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(0, 188, 242, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Header */
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00bcf2;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: "Courier New", monospace;
+}
+
+/* Transaction Details Section */
+.details {
+  margin-bottom: 25px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailLabel {
+  color: #cccccc;
+  font-weight: 600;
+  font-family: "Courier New", monospace;
+}
+
+.detailValue {
+  color: #ffffff;
+  font-weight: bold;
+  word-break: break-all;
+  text-align: right;
+  max-width: 65%;
+  font-family: "Courier New", monospace;
+}
+
+/* Warning Message */
+.warning {
+  background: rgba(255, 170, 0, 0.1);
+  border: 1px solid rgba(255, 170, 0, 0.3);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 25px;
+  color: #ffaa00;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: "Courier New", monospace;
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* Base Button Styles */
+.button {
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Cancel Button */
+.cancelButton {
+  background: rgba(255, 51, 51, 0.2);
+  border: 1px solid rgba(255, 51, 51, 0.5);
+  color: #ff3333;
+}
+
+.cancelButton:hover:not(:disabled) {
+  background: rgba(255, 51, 51, 0.3);
+  border-color: #ff3333;
+  box-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+}
+
+/* Confirm Button */
+.confirmButton {
+  background: rgba(0, 188, 242, 0.2);
+  border: 1px solid rgba(0, 188, 242, 0.5);
+  color: #00bcf2;
+}
+
+.confirmButton:hover:not(:disabled) {
+  background: rgba(0, 188, 242, 0.3);
+  border-color: #00bcf2;
+  box-shadow: 0 0 10px rgba(0, 188, 242, 0.3);
+}
+
+/* Loading Spinner */
+.loading {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0, 188, 242, 0.3);
+  border-top-color: #00bcf2;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .modal {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  .header {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .detailRow {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .detailValue {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button {
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .warning {
+    font-size: 13px;
+    padding: 12px;
+  }
+}
