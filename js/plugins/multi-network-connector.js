@@ -102,26 +102,101 @@ window.MultiNetworkConnector = {
 
     // Show network selection modal
     showNetworkSelector: function(terminal) {
+        console.log('[MultiNetworkConnector] showNetworkSelector called');
+        
         // Remove existing modal if any
         const existing = document.getElementById('network-selector-modal');
-        if (existing) existing.remove();
+        if (existing) {
+            existing.remove();
+            console.log('[MultiNetworkConnector] Removed existing modal');
+        }
 
         const modal = document.createElement('div');
         modal.id = 'network-selector-modal';
         modal.className = 'network-modal';
         
+        // Add inline styles to ensure visibility (fallback if CSS not loaded)
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: auto;
+        `;
+        
         modal.innerHTML = `
-            <div class="network-modal-overlay" onclick="MultiNetworkConnector.closeModal()"></div>
-            <div class="network-modal-content">
-                <div class="network-modal-header">
-                    <h2>🌐 Select Network</h2>
-                    <button class="network-modal-close" onclick="MultiNetworkConnector.closeModal()">✕</button>
+            <div class="network-modal-overlay" onclick="MultiNetworkConnector.closeModal()" style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(10px);
+                z-index: 1;
+            "></div>
+            <div class="network-modal-content" style="
+                position: relative;
+                background: linear-gradient(135deg, rgba(10, 15, 30, 0.95) 0%, rgba(15, 20, 35, 0.95) 100%);
+                border: 2px solid #00d4ff;
+                border-radius: 12px;
+                box-shadow: 0 0 40px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 212, 255, 0.1);
+                max-width: 600px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                z-index: 2;
+                padding: 0;
+            ">
+                <div class="network-modal-header" style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 20px;
+                    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+                ">
+                    <h2 style="
+                        margin: 0;
+                        font-size: 20px;
+                        color: #00d4ff;
+                        font-family: 'Courier New', monospace;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                    ">🌐 Select Network</h2>
+                    <button class="network-modal-close" onclick="MultiNetworkConnector.closeModal()" style="
+                        background: none;
+                        border: none;
+                        color: #666;
+                        font-size: 24px;
+                        cursor: pointer;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        transition: all 0.2s;
+                    " onmouseover="this.style.color='#ff0000'; this.style.background='rgba(255,0,0,0.1)';" onmouseout="this.style.color='#666'; this.style.background='none';">✕</button>
                 </div>
                 
-                <div class="network-modal-body">
-                    <div class="network-section">
-                        <div class="network-section-title">⟠ EVM NETWORKS</div>
-                        <div class="network-grid">
+                <div class="network-modal-body" style="padding: 20px;">
+                    <div class="network-section" style="margin-bottom: 20px;">
+                        <div class="network-section-title" style="
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #00d4ff;
+                            margin-bottom: 12px;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                        ">⟠ EVM NETWORKS</div>
+                        <div class="network-grid" style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                            gap: 12px;
+                        ">
                             ${this.renderNetworkButton('ethereum', terminal)}
                             ${this.renderNetworkButton('bsc', terminal)}
                             ${this.renderNetworkButton('polygon', terminal)}
@@ -132,71 +207,137 @@ window.MultiNetworkConnector = {
                         </div>
                     </div>
                     
-                    <div class="network-section">
-                        <div class="network-section-title">◎ SOLANA</div>
-                        <div class="network-grid">
+                    <div class="network-section" style="margin-bottom: 20px;">
+                        <div class="network-section-title" style="
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #00d4ff;
+                            margin-bottom: 12px;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                        ">◎ SOLANA</div>
+                        <div class="network-grid" style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                            gap: 12px;
+                        ">
                             ${this.renderNetworkButton('solana', terminal)}
                         </div>
                     </div>
                 </div>
                 
-                <div class="network-modal-footer">
-                    <p>💡 Make sure you have MetaMask (EVM) or Phantom (Solana) installed</p>
+                <div class="network-modal-footer" style="
+                    padding: 20px;
+                    border-top: 1px solid rgba(0, 212, 255, 0.3);
+                    text-align: center;
+                ">
+                    <p style="
+                        margin: 0;
+                        color: #99ccff;
+                        font-size: 13px;
+                    ">💡 Make sure you have MetaMask (EVM) or Phantom (Solana) installed</p>
                 </div>
             </div>
         `;
         
         document.body.appendChild(modal);
+        console.log('[MultiNetworkConnector] Modal appended to body');
         
-        // Trigger animation
+        // Trigger animation - add active class and ensure visibility
         requestAnimationFrame(() => {
             modal.classList.add('active');
+            modal.style.opacity = '1';
+            console.log('[MultiNetworkConnector] Modal activated');
         });
+        
+        // Fallback: ensure modal is visible after a short delay
+        setTimeout(() => {
+            if (modal && modal.parentNode) {
+                modal.classList.add('active');
+                modal.style.opacity = '1';
+                modal.style.display = 'flex';
+                console.log('[MultiNetworkConnector] Modal visibility confirmed');
+            }
+        }, 100);
     },
 
     renderNetworkButton: function(networkKey, terminal) {
         const network = this.networks[networkKey];
         
+        // Base button styles
+        const buttonStyle = `
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 120px;
+        `;
+        
         // Special handling for Omega Network - always show Ω symbol
         if (networkKey === 'omega') {
             return `
-                <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)">
-                    <div class="network-logo-wrapper">
+                <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)" style="${buttonStyle}" onmouseover="this.style.background='rgba(0, 212, 255, 0.15)'; this.style.borderColor='#00d4ff'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(0, 212, 255, 0.05)'; this.style.borderColor='rgba(0, 212, 255, 0.3)'; this.style.transform='translateY(0)';">
+                    <div class="network-logo-wrapper" style="margin-bottom: 12px;">
                         <div class="network-icon omega-network-icon" style="
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             width: 48px;
                             height: 48px;
-                            background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
+                            background: rgba(0, 0, 0, 0.9);
                             border-radius: 50%;
                             font-size: 32px;
                             font-weight: bold;
                             font-family: serif, 'Times New Roman';
-                            color: var(--palette-primary, #ffffff);
-                            box-shadow: 0 0 12px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
-                            border: 2px solid var(--palette-primary, #ffffff);
+                            color: #ffffff;
+                            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+                            border: 2px solid #ffffff;
                             backdrop-filter: blur(10px);
                         ">Ω</div>
                     </div>
-                    <div class="network-name">${network.name}</div>
-                    <div class="network-symbol">${network.currency.symbol}</div>
+                    <div class="network-name" style="
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #00d4ff;
+                        margin-bottom: 4px;
+                    ">${network.name}</div>
+                    <div class="network-symbol" style="
+                        font-size: 12px;
+                        color: #99ccff;
+                    ">${network.currency.symbol}</div>
                 </button>
             `;
         }
         
         // Standard rendering for other networks
         return `
-            <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)">
-                <div class="network-logo-wrapper">
+            <button class="network-button" onclick="MultiNetworkConnector.connectToNetwork('${networkKey}', window.terminal)" style="${buttonStyle}" onmouseover="this.style.background='rgba(0, 212, 255, 0.15)'; this.style.borderColor='#00d4ff'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(0, 212, 255, 0.05)'; this.style.borderColor='rgba(0, 212, 255, 0.3)'; this.style.transform='translateY(0)';">
+                <div class="network-logo-wrapper" style="margin-bottom: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
                     <img src="${network.logo}" 
                          alt="${network.name}" 
                          class="network-logo"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="network-icon" style="display: none;">${network.icon}</div>
+                         style="width: 48px; height: 48px; object-fit: contain;"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="network-icon" style="display: none; font-size: 32px;">${network.icon}</div>
                 </div>
-                <div class="network-name">${network.name}</div>
-                <div class="network-symbol">${network.currency.symbol}</div>
+                <div class="network-name" style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #00d4ff;
+                    margin-bottom: 4px;
+                    text-align: center;
+                ">${network.name}</div>
+                <div class="network-symbol" style="
+                    font-size: 12px;
+                    color: #99ccff;
+                    text-align: center;
+                ">${network.currency.symbol}</div>
             </button>
         `;
     },
