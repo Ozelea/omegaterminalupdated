@@ -399,7 +399,7 @@ const rewardsByAddress = {};
 // 🛡️ NETWORK-RESILIENT /fund ENDPOINT (NONCE-FIXED)
 app.post("/fund", async (req, res) => {
   const { address, amount } = req.body;
-  if (!address || !ethers.utils.isAddress(address)) {
+  if (!address || !ethers.isAddress(address)) {
     return res.status(400).json({ error: "Invalid address" });
   }
 
