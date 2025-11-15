@@ -273,7 +273,7 @@ async function initializeProvider() {
     try {
       console.log(`[RPC] Connection attempt ${attempt}/3`);
 
-      const testProvider = new ethers.providers.JsonRpcProvider(rpcUrl);
+      const testProvider = new ethers.JsonRpcProvider(rpcUrl);
 
       // Test connection with shorter timeout
       const blockNumber = await Promise.race([
@@ -1081,7 +1081,7 @@ app.get("/stock/gdp", async (req, res) => {
 app.post("/mine", async (req, res) => {
   try {
     const { address } = req.body;
-    if (!address || !ethers.utils.isAddress(address)) {
+    if (!address || !ethers.isAddress(address)) {
       return res.status(400).json({ error: "User address required" });
     }
     const userAddr = normAddress(address);
@@ -1197,7 +1197,7 @@ app.post("/mine", async (req, res) => {
 app.post("/claim", async (req, res) => {
   try {
     const { address } = req.body;
-    if (!address || !ethers.utils.isAddress(address)) {
+    if (!address || !ethers.isAddress(address)) {
       return res.status(400).json({ error: "User address required" });
     }
     const userAddr = normAddress(address);
@@ -1233,7 +1233,7 @@ app.post("/claim", async (req, res) => {
 app.post("/claimable", async (req, res) => {
   try {
     const { address } = req.body;
-    if (!address || !ethers.utils.isAddress(address)) {
+    if (!address || !ethers.isAddress(address)) {
       return res.status(400).json({ error: "User address required" });
     }
     const userAddr = normAddress(address);
