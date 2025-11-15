@@ -4,8 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-2.0.1-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Web3](https://img.shields.io/badge/Web3-Multi--Chain-purple.svg)
 
-## Live Demo
-**[Try Omega Terminal](https://omeganetwork.co)** 
+
 
 ---
 
