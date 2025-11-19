@@ -1213,9 +1213,9 @@ app.post("/claim", async (req, res) => {
 
       const tx = await relayerSigner.sendTransaction({
         to: address,
-        value: ethers.utils.parseEther(reward.toString()),
+        value: ethers.parseEther(reward.toString()),
         gasLimit: 21000,
-        gasPrice: ethers.utils.parseUnits("20", "gwei"),
+        gasPrice: ethers.parseUnits("20", "gwei"),
         nonce: nonce, // Force fresh nonce
       });
       await tx.wait();
