@@ -119,7 +119,7 @@ db.serialize(() => {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 
-  // Faucet claims table
+  // Faucet claims table (Updated with ip_address)
   db.run(`CREATE TABLE IF NOT EXISTS faucet_claims (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         wallet_address TEXT NOT NULL,
@@ -127,8 +127,125 @@ db.serialize(() => {
         tx_hash TEXT,
         status TEXT DEFAULT 'PENDING',
         claim_type TEXT DEFAULT 'STANDARD',
+        ip_address TEXT,
         claimed_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+
+  // Migration: Add ip_address column if it doesn't exist
+  db.run(`ALTER TABLE faucet_claims ADD COLUMN ip_address TEXT`, (err) => {
+    // Ignore error if column already exists
+  });
+
+// ... (rest of the file until the claim endpoint)
+
+// Claim from Faucet (Enhanced)
+app.post("/api/faucet/claim", async (req, res) => {
+  try {
+    const { walletAddress, signature } = req.body;
+    
+    // 1. Bot Prevention: Check User-Agent
+    const userAgent = req.get('User-Agent') || '';
+    if (!userAgent || userAgent.length < 10) { // Basic check
+         return res.status(400).json({ error: "Suspicious request detected", status: 400 });
+    }
+
+    // 2. IP Extraction
+    const ipAddress = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+
+    if (!walletAddress) {
+      return res
+        .status(400)
+        .json({ error: "Wallet address required", status: 400 });
+    }
+
+    // 3. Check for recent claims (24 hour cooldown) - Wallet AND IP
+    db.get(
+      `SELECT claimed_at, wallet_address, ip_address FROM faucet_claims 
+       WHERE (wallet_address = ? OR ip_address = ?) 
+       AND status != 'FAILED'
+       ORDER BY claimed_at DESC LIMIT 1`,
+      [walletAddress, ipAddress],
+      (err, lastClaim) => {
+        if (err) {
+          console.error("Faucet check error:", err);
+          return res.status(500).json({ error: "Database error checking eligibility", status: 500 });
+        }
+
+        if (lastClaim) {
+          // Fix Timezone: SQLite returns UTC "YYYY-MM-DD HH:MM:SS" without Z.
+          // Appending Z forces JS to parse as UTC.
+          const timeStr = lastClaim.claimed_at.endsWith('Z') ? lastClaim.claimed_at : lastClaim.claimed_at + 'Z';
+          const lastClaimTime = new Date(timeStr).getTime();
+          const now = Date.now();
+          
+          const cooldown = 24 * 60 * 60 * 1000; // 24 hours in ms
+          
+          // Check if within cooldown period
+          if (now - lastClaimTime < cooldown) {
+             const remainingSeconds = Math.ceil((lastClaimTime + cooldown - now) / 1000);
+             const hours = Math.floor(remainingSeconds / 3600);
+             const minutes = Math.floor((remainingSeconds % 3600) / 60);
+             
+             const reason = lastClaim.wallet_address.toLowerCase() === walletAddress.toLowerCase() ? "Wallet" : "IP Address";
+             
+             return res.status(429).json({ 
+               error: "Faucet cooldown active", 
+               message: `${reason} limit reached. Please wait ${hours}h ${minutes}m before claiming again.`,
+               retryAfter: remainingSeconds 
+             });
+          }
+        }
+
+        // Record the claim attempt
+        const claimAmount = "0.01"; // Reduced from 0.1
+
+        db.run(
+          `INSERT INTO faucet_claims (wallet_address, amount, status, claim_type, ip_address) 
+                    VALUES (?, ?, 'PENDING', 'STANDARD', ?)`,
+          [walletAddress, claimAmount, ipAddress],
+          function (err) {
+            if (err) {
+              return res
+                .status(500)
+                .json({ error: "Failed to record claim", status: 500 });
+            }
+
+            const claimId = this.lastID;
+
+            // Try to send funds through existing /fund endpoint
+            fetch(`http://localhost:${PORT}/fund`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ address: walletAddress, amount: claimAmount }),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                // Update claim record with result
+                const newStatus = result.txHash ? "CONFIRMED" : "FAILED";
+                db.run(
+                  `UPDATE faucet_claims SET status = ?, tx_hash = ? WHERE id = ?`,
+                  [newStatus, result.txHash, claimId]
+                );
+              })
+              .catch(err => {
+                 console.error("Failed to trigger fund:", err);
+                 db.run(
+                  `UPDATE faucet_claims SET status = 'FAILED' WHERE id = ?`,
+                  [claimId]
+                );
+              });
+
+            res.json({ success: true, data: { claimId, status: "PENDING" } });
+          }
+        );
+      }
+    );
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to process faucet claim", status: 500 });
+  }
+});
 
   // Achievements table
   db.run(`CREATE TABLE IF NOT EXISTS achievements (
@@ -1193,6 +1310,13 @@ app.post("/mine", async (req, res) => {
   }
 });
 
+const TOMEGA_CONTRACT_ADDRESS = "0x82C88F75d3DA75dF268cda532CeC8B101da8Fa51";
+const ERC20_ABI = [
+  "function transfer(address to, uint256 amount) returns (bool)",
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)"
+];
+
 // 🛡️ NETWORK-RESILIENT /claim ENDPOINT (NONCE-FIXED)
 app.post("/claim", async (req, res) => {
   try {
@@ -1211,19 +1335,24 @@ app.post("/claim", async (req, res) => {
       // 🔧 CRITICAL: Get fresh nonce for claim transaction
       const nonce = await getFreshNonce();
 
-      const tx = await relayerSigner.sendTransaction({
-        to: address,
-        value: ethers.parseEther(reward.toString()),
-        gasLimit: 21000,
+      // Create Contract Instance
+      // Note: relayerSigner is required to sign the transaction
+      const tOmegaContract = new ethers.Contract(TOMEGA_CONTRACT_ADDRESS, ERC20_ABI, relayerSigner);
+
+      // ERC20 Transfer
+      // Using ethers.parseEther assuming 18 decimals. If tOmega has different decimals, this should be adjusted.
+      // Most implementation tokens use 18.
+      const tx = await tOmegaContract.transfer(address, ethers.parseEther(reward.toString()), {
+        gasLimit: 100000, // Higher gas limit for ERC20 execution
         gasPrice: ethers.parseUnits("20", "gwei"),
         nonce: nonce, // Force fresh nonce
       });
       await tx.wait();
       return tx;
-    }, "Claim Transaction");
+    }, "Claim Transaction (tOmega)");
 
     rewardsByAddress[userAddr] = 0;
-    res.json({ success: true, txHash: result.hash, amount: reward });
+    res.json({ success: true, txHash: result.hash, amount: reward, token: "tOmega" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -2405,39 +2534,82 @@ app.post("/api/faucet/claim", async (req, res) => {
         .json({ error: "Wallet address required", status: 400 });
     }
 
-    // Record the claim attempt
-    const claimAmount = "0.1";
-
-    db.run(
-      `INSERT INTO faucet_claims (wallet_address, amount, status, claim_type) 
-                VALUES (?, ?, 'PENDING', 'STANDARD')`,
-      [walletAddress, claimAmount],
-      function (err) {
+    // Check for recent claims (24 hour cooldown)
+    db.get(
+      `SELECT claimed_at FROM faucet_claims WHERE wallet_address = ? ORDER BY claimed_at DESC LIMIT 1`,
+      [walletAddress],
+      (err, lastClaim) => {
         if (err) {
-          return res
-            .status(500)
-            .json({ error: "Failed to record claim", status: 500 });
+          console.error("Faucet check error:", err);
+          return res.status(500).json({ error: "Database error checking eligibility", status: 500 });
         }
 
-        const claimId = this.lastID;
+        if (lastClaim) {
+          // Fix Timezone: SQLite returns UTC "YYYY-MM-DD HH:MM:SS" without Z.
+          // Appending Z forces JS to parse as UTC.
+          const timeStr = lastClaim.claimed_at.endsWith('Z') ? lastClaim.claimed_at : lastClaim.claimed_at + 'Z';
+          const lastClaimTime = new Date(timeStr).getTime();
+          const now = Date.now();
+          const cooldown = 24 * 60 * 60 * 1000; // 24 hours in ms
+          
+          // Check if within cooldown period
+          // Note: SQLite CURRENT_TIMESTAMP is in UTC. ensure we compare correctly.
+          // Usually new Date(timestamp_str) works well.
+          if (now - lastClaimTime < cooldown) {
+             const remainingSeconds = Math.ceil((lastClaimTime + cooldown - now) / 1000);
+             const hours = Math.floor(remainingSeconds / 3600);
+             const minutes = Math.floor((remainingSeconds % 3600) / 60);
+             
+             return res.status(429).json({ 
+               error: "Faucet cooldown active", 
+               message: `Please wait ${hours}h ${minutes}m before claiming again.`,
+               retryAfter: remainingSeconds 
+             });
+          }
+        }
 
-        // Try to send funds through existing /fund endpoint
-        fetch(`http://localhost:${PORT}/fund`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ address: walletAddress, amount: claimAmount }),
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            // Update claim record with result
-            const newStatus = result.txHash ? "CONFIRMED" : "FAILED";
-            db.run(
-              `UPDATE faucet_claims SET status = ?, tx_hash = ? WHERE id = ?`,
-              [newStatus, result.txHash, claimId]
-            );
-          });
+        // Record the claim attempt
+        const claimAmount = "0.1";
 
-        res.json({ success: true, data: { claimId, status: "PENDING" } });
+        db.run(
+          `INSERT INTO faucet_claims (wallet_address, amount, status, claim_type) 
+                    VALUES (?, ?, 'PENDING', 'STANDARD')`,
+          [walletAddress, claimAmount],
+          function (err) {
+            if (err) {
+              return res
+                .status(500)
+                .json({ error: "Failed to record claim", status: 500 });
+            }
+
+            const claimId = this.lastID;
+
+            // Try to send funds through existing /fund endpoint
+            fetch(`http://localhost:${PORT}/fund`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ address: walletAddress, amount: claimAmount }),
+            })
+              .then((response) => response.json())
+              .then((result) => {
+                // Update claim record with result
+                const newStatus = result.txHash ? "CONFIRMED" : "FAILED";
+                db.run(
+                  `UPDATE faucet_claims SET status = ?, tx_hash = ? WHERE id = ?`,
+                  [newStatus, result.txHash, claimId]
+                );
+              })
+              .catch(err => {
+                 console.error("Failed to trigger fund:", err);
+                 db.run(
+                  `UPDATE faucet_claims SET status = 'FAILED' WHERE id = ?`,
+                  [claimId]
+                );
+              });
+
+            res.json({ success: true, data: { claimId, status: "PENDING" } });
+          }
+        );
       }
     );
   } catch (error) {
