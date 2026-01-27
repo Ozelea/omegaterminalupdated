@@ -10,8 +10,7 @@
 
 ## Key Features
 
-### Multi-Chain Support
-- Ethereum, Solana, NEAR, Eclipse, BSC, Polygon, and more
+
 - Wallet Integration: MetaMask, Phantom, NEAR Wallet, Shade Agents
 - Cross-chain portfolio tracking and trading
 - Omega Network native support
@@ -52,7 +51,7 @@
 ## Quick Start
 
 ### 1. Open the Terminal
-Open `terminal.html` in your browser or visit the live demo at https://omeganetwork.co
+Open `terminal.html` in your browser
 
 ### 2. Connect a Wallet
 

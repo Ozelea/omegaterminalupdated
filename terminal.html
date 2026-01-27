@@ -14,6 +14,62 @@
     <meta http-equiv="Expires" content="0" />
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;"> -->
     <title>OMEGA TERMINAL - CLASSIFIED ACCESS SYSTEM v2.0.1</title>
+    <style>
+        /* Entertainment Command Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px currentColor; }
+            50% { text-shadow: 0 0 30px currentColor, 0 0 40px currentColor; }
+        }
+        
+            @keyframes matrixRain {
+                0% { transform: translateY(-100vh); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(100vh); opacity: 0; }
+            }
+            
+            @keyframes kalshiPulse {
+                0%, 100% { 
+                    transform: scale(1); 
+                    opacity: 0.7; 
+                    box-shadow: 0 0 10px #00d4ff;
+                }
+                50% { 
+                    transform: scale(1.2); 
+                    opacity: 1; 
+                    box-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff;
+                }
+            }
+            
+            @keyframes kalshiShimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            .entertainment-intro {
+                animation: pulse 2s ease-in-out infinite;
+            }
+        
+        .disco-intro {
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+        }
+        
+        .matrix-text {
+            animation: glow 1.5s ease-in-out infinite;
+        }
+    </style>
     <script>
       // Disable redirect loop - let page load normally
       console.log("✅ Page loading without redirect loop");
@@ -62,6 +118,7 @@
     <link rel="stylesheet" href="styles/futuristic-mode.css" />
     <link rel="stylesheet" href="styles/futuristic-terminal-integration.css" />
     <link rel="stylesheet" href="styles/futuristic-font-override.css" />
+    <link rel="stylesheet" href="styles/blues-player.css" />
     <link rel="stylesheet" href="styles/futuristic-welcome-screen-new.css" />
     <link rel="stylesheet" href="styles/svg-icons-system.css" />
     <link rel="stylesheet" href="styles/omega-logos.css" />
@@ -92,9 +149,13 @@
     <link rel="stylesheet" href="styles/core-modern-ui-terminal.css" />
     <link rel="stylesheet" href="styles/modern-ui-command-input-fix.css" />
     <link rel="stylesheet" href="styles/terminal-output-color-fix.css" />
+    <link rel="stylesheet" href="styles/custom-music-player.css" />
     <script src="js/plugins/dexscreener-analytics-ultimate.js"></script>
     <script src="js/plugins/omega-spotify-player.js"></script>
     <script src="js/plugins/omega-youtube-player.js"></script>
+    <script src="js/plugins/omega-blues-player.js"></script>
+    <script src="js/plugins/omega-custom-music-player.js"></script>
+    <script src="js/commands/custom-music-commands.js"></script>
     <script src="js/plugins/omega-news-reader.js"></script>
     <script src="js/commands/news-commands.js"></script>
     <script src="js/plugins/omega-perps-viewer.js"></script>
@@ -138,6 +199,7 @@
     <script src="js/commands/api.js"></script>
     <script src="js/commands/mining.js"></script>
     <script src="js/commands/entertainment.js"></script>
+    <script src="js/commands/blues.js"></script>
     <script src="js/commands/network.js"></script>
     <script src="js/commands/mixer.js"></script>
     <script src="js/commands/solana.js"></script>

@@ -1,0 +1,486 @@
+/**
+ * Omega Blues Player Styles
+ * Custom styling for the Blues music player
+ */
+
+/* Blues Player Panel */
+.blues-player-panel {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 350px;
+    max-height: calc(100vh - 100px);
+    background: var(--glass-bg, rgba(15, 15, 26, 0.95));
+    backdrop-filter: var(--glass-blur, blur(20px));
+    border: 1px solid var(--glass-border, rgba(0, 212, 255, 0.2));
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+}
+
+/* In dashboard mode, position within stats panel */
+.omega-stats .blues-player-panel {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    margin-top: 15px;
+    flex-shrink: 0;
+    margin-bottom: 15px;
+    max-height: none;
+    animation: none;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.blues-player-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header */
+.blues-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--glass-border, rgba(0, 212, 255, 0.2));
+}
+
+.blues-player-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--palette-primary, #00d4ff);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.blues-icon {
+    font-size: 18px;
+}
+
+.blues-close-btn {
+    background: none;
+    border: none;
+    color: var(--palette-text-secondary, #888);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.blues-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--palette-primary, #00d4ff);
+}
+
+/* Content */
+.blues-player-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Track Info */
+.blues-track-info {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.blues-track-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--palette-text-primary, #ffffff);
+    margin-bottom: 8px;
+}
+
+.blues-track-artist {
+    font-size: 14px;
+    color: var(--palette-text-secondary, #888);
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Controls */
+.blues-player-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Progress Bar */
+.blues-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.blues-progress-bar {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.blues-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--palette-primary, #00d4ff), var(--palette-secondary, #00ff88));
+    border-radius: 3px;
+    transition: width 0.1s ease;
+    width: 0%;
+}
+
+.blues-progress-handle {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 12px;
+    height: 12px;
+    background: var(--palette-primary, #00d4ff);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.1s ease;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.blues-time-display {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--palette-text-secondary, #888);
+}
+
+/* Control Buttons */
+.blues-control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.blues-btn {
+    background: none;
+    border: none;
+    color: var(--palette-text-secondary, #888);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blues-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--palette-primary, #00d4ff);
+}
+
+.blues-play-pause {
+    background: var(--palette-primary, #00d4ff);
+    color: #000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
+}
+
+.blues-play-pause:hover {
+    background: var(--palette-primary-glow, #00ffff);
+    transform: scale(1.05);
+}
+
+/* Volume Controls */
+.blues-volume-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+}
+
+.blues-volume-slider {
+    width: 100px;
+}
+
+.blues-volume-range {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.blues-volume-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--palette-primary, #00d4ff);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.blues-volume-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--palette-primary, #00d4ff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* Right Panel Integration */
+.omega-right-panel.blues-right-panel {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .omega-right-panel.blues-right-panel {
+        width: 100%;
+        right: 0;
+        left: 0;
+    }
+    
+    .blues-player-content {
+        padding: 16px;
+    }
+    
+    .blues-track-title {
+        font-size: 18px;
+    }
+    
+    .blues-control-buttons {
+        gap: 8px;
+    }
+    
+    .blues-btn {
+        padding: 6px;
+    }
+    
+    .blues-play-pause {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .blues-player-panel {
+        right: 10px;
+        top: 70px;
+        width: calc(100vw - 20px);
+        max-width: 350px;
+    }
+}
+
+/* Dark Theme Adjustments */
+body.dark-theme .blues-player-panel {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+body.dark-theme .blues-player-header {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Light Theme Adjustments */
+body.light-theme .blues-player-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .blues-player-header {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+body.light-theme .blues-track-title {
+    color: #000;
+}
+
+body.light-theme .blues-track-artist {
+    color: #666;
+}
+
+body.light-theme .blues-time-display {
+    color: #666;
+}
+
+body.light-theme .blues-btn {
+    color: #666;
+}
+
+body.light-theme .blues-btn:hover {
+    color: var(--palette-primary, #00d4ff);
+}
+
+/* Animation for loading state */
+.blues-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.blues-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--palette-primary, #00d4ff);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Waveform Styles */
+.blues-waveform-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 50, 100, 0.2));
+}
+
+.blues-waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 80px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.wave-bar {
+    width: 4px;
+    background: linear-gradient(to top, 
+        var(--palette-primary, #00d4ff) 0%, 
+        rgba(0, 212, 255, 0.6) 50%, 
+        rgba(0, 212, 255, 0.2) 100%);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    animation: wave-idle 2s ease-in-out infinite;
+    min-height: 20px;
+    max-height: 80px;
+}
+
+/* Waveform Animation States */
+.blues-waveform.waveform-playing .wave-bar {
+    animation: wave-playing 0.8s ease-in-out infinite;
+}
+
+/* Idle Wave Animation */
+@keyframes wave-idle {
+    0%, 100% { 
+        transform: scaleY(0.6);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* Playing Wave Animation */
+@keyframes wave-playing {
+    0%, 100% { 
+        transform: scaleY(0.8);
+        opacity: 0.8;
+    }
+    25% { 
+        transform: scaleY(1.2);
+        opacity: 1;
+    }
+    50% { 
+        transform: scaleY(0.9);
+        opacity: 0.9;
+    }
+    75% { 
+        transform: scaleY(1.1);
+        opacity: 1;
+    }
+}
+
+/* Individual bar animations for more dynamic effect */
+.blues-waveform.waveform-playing .wave-bar:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.blues-waveform.waveform-playing .wave-bar:nth-child(even) {
+    animation-delay: 0.3s;
+}
+
+.blues-waveform.waveform-playing .wave-bar:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+.blues-waveform.waveform-playing .wave-bar:nth-child(5n) {
+    animation-delay: 0.4s;
+}
+
+/* Responsive waveform */
+@media (max-width: 480px) {
+    .blues-waveform-container {
+        padding: 15px;
+        min-height: 100px;
+    }
+    
+    .blues-waveform {
+        height: 60px;
+        max-width: 250px;
+    }
+    
+    .wave-bar {
+        width: 3px;
+        gap: 2px;
+    }
+}

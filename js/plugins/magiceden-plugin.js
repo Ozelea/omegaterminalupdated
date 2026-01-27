@@ -238,6 +238,25 @@
         return;
       }
 
+      // Handle Blues commands
+      if (cmd === "blues") {
+        console.log("🎵 Blues: Command intercepted:", command);
+        if (window.OmegaCommands && window.OmegaCommands.Blues) {
+          try {
+            await window.OmegaCommands.Blues.blues(this, args.slice(1));
+          } catch (error) {
+            console.error("Blues Command Error:", error);
+            this.log(
+              "❌ Error executing Blues command: " + error.message,
+              "error"
+            );
+          }
+        } else {
+          this.log("❌ Blues commands not loaded", "error");
+        }
+        return;
+      }
+
       // For all other commands, use original handler
       if (originalExecuteCommand) {
         return originalExecuteCommand.call(this, command);

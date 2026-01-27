@@ -185,7 +185,18 @@ window.kalshiAPI = new KalshiAPI();
  * Kalshi command handler for Omega Terminal
  */
 async function handleKalshiCommand(args, terminal) {
+  // Add futuristic UI feedback
+  if (window.FuturisticDashboard) {
+    window.FuturisticDashboard.showCommandFeedback('kalshi', '🎯 INITIALIZING KALSHI PREDICTION MARKETS...');
+  }
+
   if (!args || args.length < 1) {
+    // Clear terminal and show dramatic intro
+    terminal.log('', '');
+    terminal.logHtml('<div style="text-align:center; padding:20px; background:linear-gradient(45deg, #1a1a2e, #16213e); border-radius:15px; margin:10px 0; border:2px solid #00d4ff;">', 'output');
+    terminal.logHtml('<h2 style="color:#00d4ff; text-shadow:0 0 20px #00d4ff; margin:0; font-family:monospace;">🎯 KALSHI PREDICTION MARKETS 🎯</h2>', 'output');
+    terminal.logHtml('</div>', 'output');
+    
     terminal.log("🎯 KALSHI PREDICTION MARKETS", "info");
     terminal.log("", "output");
     terminal.log("📊 Market Commands:", "info");
@@ -235,6 +246,63 @@ async function handleKalshiCommand(args, terminal) {
 
   try {
     switch (command) {
+      case "help":
+        // Clear terminal and show clean intro
+        terminal.log('', '');
+        terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+        terminal.log('🎯 KALSHI PREDICTION MARKETS', 'info');
+        terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+        terminal.log('', 'output');
+        terminal.log("📊 Market Commands:", "info");
+        terminal.log(
+          "  kalshi markets [limit] [status] - List markets (e.g., 'kalshi markets 10 open')",
+          "output"
+        );
+        terminal.log(
+          "  kalshi market <ticker>          - Get details (e.g., 'kalshi market KXNFL-25OCT28-BARB')",
+          "output"
+        );
+        terminal.log(
+          "  kalshi orderbook <ticker>       - View market order book",
+          "output"
+        );
+        terminal.log(
+          "  kalshi trades <ticker>          - View recent trades",
+          "output"
+        );
+        terminal.log("", "output");
+        terminal.log("📈 Event Commands:", "info");
+        terminal.log("  kalshi events [status] - Browse events", "output");
+        terminal.log(
+          "  kalshi event <ticker> - Get specific event details",
+          "output"
+        );
+        terminal.log("  kalshi series <ticker> - Get series information", "output");
+        terminal.log("", "output");
+        terminal.log("📚 Examples:", "info");
+        terminal.log("  kalshi markets 10 open", "output");
+        terminal.log("  kalshi market PRES-2024", "output");
+        terminal.log("  kalshi events open", "output");
+        terminal.log("", "output");
+        terminal.log("💡 Authentication Setup:", "info");
+        terminal.log(
+          "  1. Get your API Key ID and Private Key from https://kalshi.com/account/profile",
+          "output"
+        );
+        terminal.log(
+          "  2. Use: kalshi auth YOUR_KEY_ID 'YOUR_PRIVATE_KEY_IN_PEM_FORMAT'",
+          "output"
+        );
+        
+        // Update futuristic UI feedback
+        if (window.FuturisticDashboard) {
+          window.FuturisticDashboard.showCommandFeedback('kalshi', '✅ KALSHI HELP DISPLAYED!');
+        }
+        break;
+      case "trending":
+        terminal.log("📈 Fetching trending markets...", "info");
+        await handleMarketsCommand(['10', 'open'], terminal);
+        break;
       case "markets":
         await handleMarketsCommand(args.slice(1), terminal);
         break;
@@ -280,7 +348,16 @@ async function handleMarketsCommand(args, terminal) {
     options.status = args[1];
   }
 
-  terminal.log("🔍 Fetching prediction markets...", "info");
+  // Add futuristic UI feedback
+  if (window.FuturisticDashboard) {
+    window.FuturisticDashboard.showCommandFeedback('kalshi', '📊 FETCHING PREDICTION MARKETS...');
+  }
+
+  terminal.log('', '');
+  terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+  terminal.log('📊 KALSHI PREDICTION MARKETS', 'info');
+  terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+  terminal.log('', 'output');
 
   try {
     const response = await window.kalshiAPI.getMarkets(options);
@@ -290,41 +367,62 @@ async function handleMarketsCommand(args, terminal) {
       return;
     }
 
-    terminal.log(`📊 Found ${response.markets.length} markets:`, "info");
+    // De-duplicate markets by unique ticker to avoid repeated entries
+    const seenTickers = new Set();
+    const uniqueMarkets = response.markets.filter((m) => {
+      if (!m || !m.ticker) return false;
+      if (seenTickers.has(m.ticker)) return false;
+      seenTickers.add(m.ticker);
+      return true;
+    });
+
+    terminal.log(`Found ${uniqueMarkets.length} prediction markets:`, "info");
     terminal.log("", "output");
 
-    response.markets.forEach((market, index) => {
+    uniqueMarkets.forEach((market, index) => {
+      const marketNumber = String(index + 1).padStart(2, '0');
       const yesPrice = market.yes_bid_dollars || "0.00";
       const noPrice = market.no_bid_dollars || "0.00";
       const volume = market.volume_24h || 0;
       const status = market.status || "unknown";
-
-      terminal.log(
-        `${index + 1}. ${market.subtitle || market.title}`,
-        "output"
-      );
-      terminal.log(`   Ticker: ${market.ticker}`, "output");
-      terminal.log(
-        `   Yes: $${yesPrice} | No: $${noPrice} | Volume: ${volume}`,
-        "output"
-      );
-      terminal.log(
-        `   Status: ${status} | Close: ${new Date(
-          market.close_time
-        ).toLocaleString()}`,
-        "output"
-      );
-      terminal.log("", "output");
+      const closeTime = new Date(market.close_time).toLocaleString();
+      
+      // Market title with clickable link to Kalshi
+      const marketUrl = `https://kalshi.com/markets/${encodeURIComponent(market.ticker)}`;
+      const clickableTitle = `<a href="${marketUrl}" target="_blank" style="color: #00D4FF; text-decoration: none; cursor: pointer; font-weight: bold;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#00D4FF'">${market.subtitle || market.title}</a>`;
+      terminal.logHtml(`[${marketNumber}] ${clickableTitle}`, 'output');
+      
+      // Market details
+      terminal.log(`    Ticker: ${market.ticker}`, 'info');
+      terminal.log(`    Status: ${status.toUpperCase()}`, 'info');
+      terminal.log(`    Close Time: ${closeTime}`, 'info');
+      
+      // Price information in a clean format
+      terminal.log(`    Yes Price: $${yesPrice} | No Price: $${noPrice}`, 'output');
+      terminal.log(`    Volume (24h): ${Number.isFinite(+volume) ? volume : 'N/A'}`, 'output');
+      
+      // Clickable URL to Kalshi market page
+      const domain = 'kalshi.com';
+      const clickableUrl = `<a href="${marketUrl}" target="_blank" style="color: #ffffff; text-decoration: underline; cursor: pointer;" onmouseover="this.style.color='#00D4FF'" onmouseout="this.style.color='#ffffff'">[LINK] ${domain}/markets/${market.ticker}</a>`;
+      terminal.logHtml(`    ${clickableUrl}`, 'info');
+      terminal.log('');
     });
 
-    if (response.cursor) {
-      terminal.log(
-        `📄 More results available. Use cursor: ${response.cursor}`,
-        "info"
-      );
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log(`Total Markets: ${uniqueMarkets.length} | Use "kalshi help" for more commands`, 'info');
+    terminal.log('Click market titles or [LINK] to view on Kalshi.com', 'info');
+
+    // Update futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('kalshi', '✅ MARKETS DISPLAYED!');
     }
   } catch (error) {
     terminal.log(`❌ Failed to fetch markets: ${error.message}`, "error");
+    
+    // Update futuristic UI feedback
+    if (window.FuturisticDashboard) {
+      window.FuturisticDashboard.showCommandFeedback('kalshi', '❌ MARKETS LOAD FAILED!');
+    }
   }
 }
 
@@ -352,16 +450,22 @@ async function handleMarketCommand(args, terminal) {
     const response = await window.kalshiAPI.getMarket(ticker);
     const market = response.market;
 
-    terminal.log(
-      `📊 Market Details: ${market.subtitle || market.title}`,
-      "info"
-    );
-    terminal.log("", "output");
-    terminal.log(`Ticker: ${market.ticker}`, "output");
-    terminal.log(`Event: ${market.event_ticker}`, "output");
-    terminal.log(`Type: ${market.market_type}`, "output");
-    terminal.log(`Status: ${market.status}`, "output");
-    terminal.log("", "output");
+    terminal.log('', '');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('📊 KALSHI MARKET DETAILS', 'info');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('', 'output');
+
+    // Market title with clickable link to Kalshi
+    const marketUrl = `https://kalshi.com/markets/${encodeURIComponent(market.ticker)}`;
+    const clickableTitle = `<a href="${marketUrl}" target="_blank" style="color: #00D4FF; text-decoration: none; cursor: pointer; font-weight: bold;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#00D4FF'">${market.subtitle || market.title}</a>`;
+    terminal.logHtml(`Market: ${clickableTitle}`, 'output');
+    
+    terminal.log(`Ticker: ${market.ticker}`, 'info');
+    terminal.log(`Event: ${market.event_ticker}`, 'info');
+    terminal.log(`Type: ${market.market_type}`, 'info');
+    terminal.log(`Status: ${market.status.toUpperCase()}`, 'info');
+    terminal.log('', 'output');
 
     terminal.log("💰 Current Prices:", "info");
     terminal.log(
@@ -402,6 +506,15 @@ async function handleMarketCommand(args, terminal) {
       `Expires: ${new Date(market.expiration_time).toLocaleString()}`,
       "output"
     );
+    
+    // Clickable URL to Kalshi market page
+    const domain = 'kalshi.com';
+    const clickableUrl = `<a href="${marketUrl}" target="_blank" style="color: #ffffff; text-decoration: underline; cursor: pointer;" onmouseover="this.style.color='#00D4FF'" onmouseout="this.style.color='#ffffff'">[LINK] ${domain}/markets/${market.ticker}</a>`;
+    terminal.logHtml(`    ${clickableUrl}`, 'info');
+    
+    terminal.log('', 'output');
+    terminal.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'output');
+    terminal.log('Click market title or [LINK] to view on Kalshi.com', 'info');
   } catch (error) {
     terminal.log(`❌ Failed to fetch market: ${error.message}`, "error");
   }

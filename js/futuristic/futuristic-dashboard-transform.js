@@ -39,12 +39,11 @@
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/></svg>
                         <span>System Help</span>
                     </button>
-                    <button class="sidebar-button" onclick="MultiNetworkConnector.showNetworkSelector(window.terminal)">
+                    <button class="sidebar-button" onclick="if (window.MultiNetworkConnector && window.terminal) { MultiNetworkConnector.showNetworkSelector(window.terminal); } else { window.FuturisticDashboard.executeCommandDirect('connect'); }">
                         <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18H21M12,16V8H21V16H12Z"/></svg>
                         <span>Connect Wallet</span>
                     </button>
                     <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('faucet')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Claim Faucet</span>
                     </button>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'ai-assistant')">
@@ -69,7 +68,6 @@
                         <span>Clear Terminal</span>
                     </button>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'terminal-style')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Terminal Style</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -164,11 +162,9 @@
                         <span>Latest News</span>
                     </button>
                     <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('news hot')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Trending News</span>
                     </button>
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'crypto-news')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Crypto News</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -475,7 +471,6 @@
                     </div>
                     <!-- Solana Network Subsection -->
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'solana')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>Solana</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -530,7 +525,6 @@
                     </div>
                     <!-- ROME Network Subsection -->
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'rome')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>ROME Network</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -556,7 +550,6 @@
                     </div>
                     <!-- FAIR Blockchain Subsection -->
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'fair')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>FAIR Blockchain</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -582,7 +575,6 @@
                     </div>
                     <!-- MONAD Network Subsection -->
                     <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'monad')">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
                         <span>MONAD Network</span>
                         <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </button>
@@ -798,6 +790,26 @@
                             <span>→ Search Music</span>
                         </button>
                     </div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'custom-music')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,3V13.55C11.41,13.21 10.73,13 10,13A4,4 0 0,0 6,17A4,4 0 0,0 10,21A4,4 0 0,0 14,17V7H18V3H12Z"/></svg>
+                        <span>Custom Music</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="custom-music" style="display: none;">
+                        <button class="sub-action-button" onclick="window.OmegaCustomMusicPlayer && window.OmegaCustomMusicPlayer.createPanel()">
+                            <span>→ Open Custom Player</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('upload music')">
+                            <span>→ Upload Tracks</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('playlist')">
+                            <span>→ Manage Playlist</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('blues')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,3V13.55C11.41,13.21 10.73,13 10,13A4,4 0 0,0 6,17A4,4 0 0,0 10,21A4,4 0 0,0 14,17V7H18V3H12Z"/></svg>
+                        <span>Omega Player</span>
+                    </button>
                     </div>
                 </div>
                 
@@ -840,6 +852,161 @@
                     </div>
                     </div>
                 </div>
+                
+                <!-- Mining & Rewards Section -->
+                <div class="sidebar-section" data-section="mining-rewards">
+                    <div class="sidebar-title">
+                        <span>MINING & REWARDS</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.toggleSection('mining-rewards')" title="Minimize/Expand Section">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="sidebar-section-content">
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('mine')">
+                        <span>Start Mining</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('claim')">
+                        <span>Claim Rewards</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('status')">
+                        <span>Mining Status</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('stats')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6M16,17V15H14V17M14,13V7H12V13M10,17V11H8V17H10Z"/></svg>
+                        <span>Mining Stats</span>
+                    </button>
+                    </div>
+                </div>
+                
+                <!-- Advanced Trading Section -->
+                <div class="sidebar-section" data-section="advanced-trading">
+                    <div class="sidebar-title">
+                        <span>ADVANCED TRADING</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.toggleSection('advanced-trading')" title="Minimize/Expand Section">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="sidebar-section-content">
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'hyperliquid')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z"/></svg>
+                        <span>Hyperliquid</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="hyperliquid" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('hyperliquid help')">
+                            <span>→ Hyperliquid Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('hyperliquid markets')">
+                            <span>→ Markets</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('hyperliquid positions')">
+                            <span>→ Positions</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'polymarket')">
+                        <span>Polymarket</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="polymarket" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket markets')">
+                            <span>→ Active Markets</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket trending')">
+                            <span>→ Trending</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket politics')">
+                            <span>→ Politics</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket sports')">
+                            <span>→ Sports</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket crypto')">
+                            <span>→ Crypto</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket breaking')">
+                            <span>→ Breaking News</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandWithInput('polymarket search', 'Enter search query and press Enter:')">
+                            <span>→ Search Markets</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('polymarket help')">
+                            <span>→ Polymarket Help</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'kalshi')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Kalshi</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="kalshi" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('kalshi help')">
+                            <span>→ Kalshi Help</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('kalshi markets')">
+                            <span>→ Markets</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('kalshi trending')">
+                            <span>→ Trending</span>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Entertainment & Games Section -->
+                <div class="sidebar-section" data-section="entertainment">
+                    <div class="sidebar-title">
+                        <span>ENTERTAINMENT & GAMES</span>
+                        <button class="section-toggle" onclick="window.FuturisticDashboard.toggleSection('entertainment')" title="Minimize/Expand Section">
+                            <svg class="toggle-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="sidebar-section-content">
+                    <button class="sidebar-button sidebar-expandable" onclick="window.FuturisticDashboard.toggleSubActions(this, 'games')">
+                        <span>Games</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </button>
+                    <div class="sub-actions" data-parent="games" style="display: none;">
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('games')">
+                            <span>→ Game List</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('play snake')">
+                            <span>→ Snake Game</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('play pacman')">
+                            <span>→ Pacman</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('play clicker')">
+                            <span>→ Clicker Game</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('arcade')">
+                            <span>→ Arcade Mode</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('flappy')">
+                            <span>→ Flappy Bird</span>
+                        </button>
+                        <button class="sub-action-button" onclick="window.FuturisticDashboard.executeCommandDirect('mystery-box')">
+                            <span>→ Mystery Box</span>
+                        </button>
+                    </div>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('fortune')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Fortune Cookie</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('matrix')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M2,2V4H4V2H2M6,2V4H8V2H6M10,2V4H12V2H10M14,2V4H16V2H14M18,2V4H20V2H18M22,2V4H24V2H22M2,6V8H4V6H2M6,6V8H8V6H6M10,6V8H12V6H10M14,6V8H16V6H14M18,6V8H20V6H18M22,6V8H24V6H22M2,10V12H4V10H2M6,10V12H8V10H6M10,10V12H12V10H10M14,10V12H16V10H14M18,10V12H20V10H18M22,10V12H24V10H22M2,14V16H4V14H2M6,14V16H8V14H6M10,14V16H12V14H10M14,14V16H16V14H14M18,14V16H20V14H18M22,14V16H24V14H22M2,18V20H4V18H2M6,18V20H8V18H6M10,18V20H12V18H10M14,18V20H16V18H14M18,18V20H20V18H18M22,18V20H24V18H22M2,22V24H4V22H2M6,22V24H8V22H6M10,22V24H12V22H10M14,22V24H16V22H14M18,22V24H20V22H18M22,22V24H24V22H22Z"/></svg>
+                        <span>Matrix Effect</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('hack')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Hack Effect</span>
+                    </button>
+                    <button class="sidebar-button" onclick="window.FuturisticDashboard.executeCommandDirect('disco')">
+                        <svg class="sidebar-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/></svg>
+                        <span>Disco Mode</span>
+                    </button>
+                    </div>
+                </div>
+                
                 
             </aside>
             
@@ -1234,6 +1401,80 @@
         cancelable: true,
       });
       input.dispatchEvent(keydownEvent);
+    },
+
+    // Show command feedback in futuristic UI
+    showCommandFeedback: function(command, message) {
+        console.log('🎯 Showing command feedback:', command, message);
+        
+        // Create or update command feedback display
+        let feedbackEl = document.getElementById('futuristic-command-feedback');
+        if (!feedbackEl) {
+            feedbackEl = document.createElement('div');
+            feedbackEl.id = 'futuristic-command-feedback';
+            feedbackEl.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(20px);
+                border: 2px solid var(--palette-primary, #00d4ff);
+                border-radius: 12px;
+                padding: 16px 20px;
+                color: var(--palette-primary, #00d4ff);
+                font-family: 'Courier New', monospace;
+                font-size: 16px;
+                font-weight: 700;
+                z-index: 10001;
+                box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), inset 0 0 20px rgba(0, 212, 255, 0.1);
+                transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                max-width: 350px;
+                word-wrap: break-word;
+                text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+                animation: futuristicPulse 2s ease-in-out infinite;
+            `;
+            
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes futuristicPulse {
+                    0%, 100% { 
+                        box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), inset 0 0 20px rgba(0, 212, 255, 0.1);
+                        transform: scale(1);
+                    }
+                    50% { 
+                        box-shadow: 0 0 40px rgba(0, 212, 255, 0.8), inset 0 0 30px rgba(0, 212, 255, 0.2);
+                        transform: scale(1.02);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(feedbackEl);
+            console.log('✅ Created futuristic feedback element');
+        }
+        
+        // Update feedback message
+        feedbackEl.textContent = message;
+        feedbackEl.style.opacity = '1';
+        feedbackEl.style.transform = 'translateY(0) scale(1)';
+        feedbackEl.style.display = 'block';
+        
+        console.log('✅ Updated feedback message:', message);
+        
+        // Auto-hide after 4 seconds
+        setTimeout(() => {
+            if (feedbackEl) {
+                feedbackEl.style.opacity = '0';
+                feedbackEl.style.transform = 'translateY(-30px) scale(0.95)';
+                setTimeout(() => {
+                    if (feedbackEl && feedbackEl.parentNode) {
+                        feedbackEl.parentNode.removeChild(feedbackEl);
+                        console.log('✅ Removed feedback element');
+                    }
+                }, 400);
+            }
+        }, 4000);
     },
 
     // Direct command execution (bypasses input field)
@@ -1810,6 +2051,158 @@
           terminalWrapperHeader.style.visibility = "visible";
           terminalWrapperHeader.style.opacity = "1";
           terminalWrapperHeader.style.pointerEvents = "auto";
+          console.log("✅ Terminal wrapper header found and shown");
+        } else {
+          console.log("❌ Terminal wrapper header not found, creating one...");
+          // Create the header if it doesn't exist
+          const header = document.createElement("div");
+          header.className = "terminal-header";
+          header.innerHTML = `
+            <div class="terminal-title">
+              <span id="omega-title-symbol"></span>
+              <span>OMEGA TERMINAL v2.0.1</span>
+            </div>
+            <div class="terminal-controls">
+              <!-- Status Indicators -->
+              <div class="status-indicator">
+                <div class="status-dot" id="futuristic-connection-status"></div>
+                <span id="futuristic-connection-text">INITIALIZING</span>
+              </div>
+              
+              <div class="status-indicator">
+                <span id="futuristic-wallet-info">NO WALLET</span>
+              </div>
+              
+              <div class="status-indicator" id="network-status-display" style="display: none;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div id="network-logo-container" style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 20px;
+                    height: 20px;
+                    background: var(--palette-bg-primary, rgba(0, 0, 0, 0.9));
+                    border-radius: 50%;
+                    font-size: 14px;
+                    font-weight: bold;
+                    font-family: serif, 'Times New Roman';
+                    color: var(--palette-primary, #ffffff);
+                    box-shadow: 0 0 8px var(--palette-primary-glow, rgba(255, 255, 255, 0.6));
+                    border: 1px solid var(--palette-primary, #ffffff);
+                    backdrop-filter: blur(10px);
+                  ">Ω</div>
+                  <span id="network-name-display">Omega Network</span>
+                </div>
+                <span id="wallet-address-display">0x3d0e...133d</span>
+              </div>
+              
+              <div class="terminal-divider"></div>
+              
+              <!-- AI Provider Select -->
+              <label for="wrapperAiProviderSelect" style="color: var(--palette-text-primary, var(--cyber-blue-bright)); font-family: 'Courier New', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;">AI:</label>
+              <select id="wrapperAiProviderSelect" title="Select AI Provider" style="
+                background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.08));
+                border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3));
+                border-radius: 6px;
+                padding: 6px 10px;
+                color: var(--palette-text-primary, var(--cyber-blue-bright));
+                font-family: 'Courier New', monospace;
+                font-size: 11px;
+                font-weight: 600;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: linear-gradient(45deg, transparent 50%, var(--palette-primary, #00d4ff) 50%), linear-gradient(135deg, var(--palette-primary, #00d4ff) 50%, transparent 50%);
+                background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px);
+                background-size: 5px 5px, 5px 5px;
+                background-repeat: no-repeat;
+                min-width: 110px;
+                margin-right: 12px;
+              ">
+                <option value="off">Off</option>
+                <option value="near">NEAR AI</option>
+                <option value="openai">OpenAI</option>
+              </select>
+              
+              <!-- Theme Toggle -->
+              <button class="theme-toggle" id="theme-toggle-btn" title="Toggle Theme" style="
+                background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.08));
+                border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3));
+                border-radius: 6px;
+                padding: 6px 10px;
+                color: var(--palette-text-primary, var(--cyber-blue-bright));
+                font-family: 'Courier New', monospace;
+                font-size: 11px;
+                font-weight: 600;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-right: 12px;
+                min-width: 60px;
+              ">
+                <span id="theme-mode-label">Light</span>
+              </button>
+              
+              <!-- View Mode Toggle -->
+              <button class="view-mode-toggle" id="view-mode-toggle-btn" title="Toggle View Mode" style="
+                background: var(--palette-bg-overlay, rgba(0, 212, 255, 0.08));
+                border: 1px solid var(--palette-border, rgba(0, 212, 255, 0.3));
+                border-radius: 6px;
+                padding: 6px 10px;
+                color: var(--palette-text-primary, var(--cyber-blue-bright));
+                font-family: 'Courier New', monospace;
+                font-size: 11px;
+                font-weight: 600;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-right: 12px;
+                min-width: 80px;
+              ">
+                <span id="view-mode-label">Dashboard</span>
+              </button>
+              
+              <!-- Window Controls -->
+              <div class="window-controls" style="display: flex; gap: 8px;">
+                <button class="window-control minimize" title="Minimize" style="
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: #ffbd2e;
+                  border: none;
+                  cursor: pointer;
+                "></button>
+                <button class="window-control maximize" title="Maximize" style="
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: #28ca42;
+                  border: none;
+                  cursor: pointer;
+                "></button>
+                <button class="window-control close" title="Close" style="
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: #ff5f56;
+                  border: none;
+                  cursor: pointer;
+                "></button>
+              </div>
+            </div>
+          `;
+          
+          // Insert header at the beginning of terminal wrapper
+          terminalWrapper.insertBefore(header, terminalWrapper.firstChild);
+          console.log("✅ Terminal wrapper header created and inserted");
+          
+          // Initialize the header controls
+          setTimeout(() => {
+            this.initializeHeaderControls();
+          }, 100);
         }
 
         // Make sure terminal wrapper is visible
@@ -2107,7 +2500,20 @@
       );
       console.log("Restoring minimized sections:", minimizedSections);
 
+      // Ensure these sections are always expanded by default
+      const alwaysExpandedSections = ['mining-rewards', 'advanced-trading', 'entertainment'];
+      
+      // Remove these sections from localStorage to ensure they start expanded
+      const filteredSections = minimizedSections.filter(sectionId => !alwaysExpandedSections.includes(sectionId));
+      localStorage.setItem("omega-minimized-sections", JSON.stringify(filteredSections));
+      
       minimizedSections.forEach((sectionId) => {
+        // Skip sections that should always be expanded
+        if (alwaysExpandedSections.includes(sectionId)) {
+          console.log("Skipping restoration for always-expanded section:", sectionId);
+          return;
+        }
+        
         const section = document.querySelector(`[data-section="${sectionId}"]`);
         if (section) {
           const content =
@@ -2118,6 +2524,22 @@
           section.classList.add("minimized");
           content.style.display = "none";
           toggleIcon.style.transform = "rotate(-90deg)";
+          console.log("Restored minimized section:", sectionId);
+        }
+      });
+      
+      // Ensure critical sections are expanded
+      alwaysExpandedSections.forEach((sectionId) => {
+        const section = document.querySelector(`[data-section="${sectionId}"]`);
+        if (section) {
+          section.classList.remove("minimized");
+          const content = section.querySelector(".sidebar-section-content") || section;
+          const toggleButton = section.querySelector(".section-toggle");
+          const toggleIcon = toggleButton.querySelector(".toggle-icon");
+          
+          content.style.display = "block";
+          toggleIcon.style.transform = "rotate(0deg)";
+          console.log("Ensured section is expanded:", sectionId);
         }
       });
     },
@@ -2439,6 +2861,64 @@
       });
       
       console.log(`AI Dropdown colors updated: ${value} - ${colorScheme.color}`);
+    },
+
+    // Initialize header controls for basic mode
+    initializeHeaderControls: function() {
+      // Initialize AI provider select
+      const aiSelect = document.getElementById('wrapperAiProviderSelect');
+      if (aiSelect) {
+        aiSelect.addEventListener('change', (e) => {
+          const provider = e.target.value;
+          if (window.terminal && window.terminal.setAIProvider) {
+            window.terminal.setAIProvider(provider);
+          }
+        });
+      }
+
+      // Initialize theme toggle
+      const themeToggle = document.getElementById('theme-toggle-btn');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          this.toggleThemeMode();
+        });
+      }
+
+      // Initialize view mode toggle
+      const viewModeToggle = document.getElementById('view-mode-toggle-btn');
+      if (viewModeToggle) {
+        viewModeToggle.addEventListener('click', () => {
+          this.toggleViewMode();
+        });
+      }
+
+      // Initialize window controls
+      const minimizeBtn = document.querySelector('.window-control.minimize');
+      const maximizeBtn = document.querySelector('.window-control.maximize');
+      const closeBtn = document.querySelector('.window-control.close');
+
+      if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', () => {
+          // Minimize functionality
+          console.log('Minimize clicked');
+        });
+      }
+
+      if (maximizeBtn) {
+        maximizeBtn.addEventListener('click', () => {
+          // Maximize functionality
+          console.log('Maximize clicked');
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          // Close functionality
+          console.log('Close clicked');
+        });
+      }
+
+      console.log('✅ Header controls initialized');
     },
   };
 
