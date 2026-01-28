@@ -2417,8 +2417,8 @@ app.get("/api/faucet/status", async (req, res) => {
 // Claim from Faucet (Enhanced)
 app.post("/api/faucet/claim", async (req, res) => {
   try {
-    const { walletAddress, signature } = req.body;
-    
+    const { address, signature } = req.body;
+    let walletAddress = address
     // 1. Bot Prevention: Check User-Agent
     const userAgent = req.get('User-Agent') || '';
     if (!userAgent || userAgent.length < 10) { // Basic check
