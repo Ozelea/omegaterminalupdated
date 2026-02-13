@@ -180,7 +180,7 @@ const NETWORK_RETRY_CONFIG = {
 };
 
 // 🌐 RPC ENDPOINTS (Only the one you actually have)
-const RPC_ENDPOINTS = ["https://0x4e454228.rpc.aurora-cloud.dev"];
+const RPC_ENDPOINTS = ["https://0x4e4542bc.rpc.aurora-cloud.dev/"];
 
 let currentRpcIndex = 0;
 let provider = null;
@@ -2291,9 +2291,9 @@ app.get("/api/faucet/status", async (req, res) => {
                           uniqueUsers: globalStats?.unique_users || 0,
                         },
                         network: {
-                          chainId: "0x4e454228",
-                          rpcUrl: "https://0x4e454228.rpc.aurora-cloud.dev",
-                          explorerUrl: "https://explorer.omeganetwork.co",
+                          chainId: "0x4e4542bc",
+                          rpcUrl: "https://0x4e4542bc.rpc.aurora-cloud.dev/",
+                          explorerUrl: "https://0x4e4542bc.explorer.aurora-cloud.dev/",
                         },
                       },
                     });
@@ -2329,9 +2329,9 @@ app.get("/api/faucet/status", async (req, res) => {
                         recentClaims: userClaims.slice(0, 5),
                         globalStats: globalStats || {},
                         network: {
-                          chainId: "0x4e454228",
-                          rpcUrl: "https://0x4e454228.rpc.aurora-cloud.dev",
-                          explorerUrl: "https://explorer.omeganetwork.co",
+                          chainId: "0x4e4542bc",
+                          rpcUrl: "https://0x4e4542bc.rpc.aurora-cloud.dev/",
+                          explorerUrl: "https://0x4e4542bc.explorer.aurora-cloud.dev/",
                         },
                       },
                     });
@@ -2364,9 +2364,9 @@ app.get("/api/faucet/status", async (req, res) => {
                     recentClaims: userClaims.slice(0, 5),
                     globalStats: globalStats || {},
                     network: {
-                      chainId: "0x4e454228",
-                      rpcUrl: "https://0x4e454228.rpc.aurora-cloud.dev",
-                      explorerUrl: "https://explorer.omeganetwork.co",
+                      chainId: "0x4e4542bc",
+                      rpcUrl: "https://0x4e4542bc.rpc.aurora-cloud.dev/",
+                      explorerUrl: "https://0x4e4542bc.explorer.aurora-cloud.dev/",
                     },
                   },
                 });
