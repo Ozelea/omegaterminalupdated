@@ -1201,7 +1201,7 @@ app.post("/mine", async (req, res) => {
   }
 });
 
-const TOMEGA_CONTRACT_ADDRESS = "0x82C88F75d3DA75dF268cda532CeC8B101da8Fa51";
+const TOMEGA_CONTRACT_ADDRESS = "0x6092981E670B10873F7E260d2a12da267AF9C615";
 const ERC20_ABI = [
   "function transfer(address to, uint256 amount) returns (bool)",
   "function balanceOf(address owner) view returns (uint256)",
